@@ -1,0 +1,1196 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\migrations\\20251027153100_therapytypechangedtostring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\migrations\\20251027153100_therapytypechangedtostring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\seeders\\dynamicdataseedersforbloomia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\seeders\\dynamicdataseedersforbloomia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\therapistrelated\\therapytypeentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\therapistrelated\\therapytypeentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.api\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|solutionrelative:bloomia.api\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|solutionrelative:bloomia.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\appointmentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\appointmentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\chatsessionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\chatsessionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\clientconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\clientconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\messageconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\messageconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\paymentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\paymentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\reviewconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\reviewconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\savedtherapistsconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\savedtherapistsconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\therapistavailabilityconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\therapistavailabilityconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\therapistconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\therapistconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\therapiststherapytypesconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\therapiststherapytypesconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\userconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\userconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\adminconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\adminconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Migrations\\20251027130935_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6818B64-0B3F-4F4D-8747-14AA594E8502}|Bloomia.Tests\\Bloomia.Tests.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.tests\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C6818B64-0B3F-4F4D-8747-14AA594E8502}|Bloomia.Tests\\Bloomia.Tests.csproj|solutionrelative:bloomia.tests\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6818B64-0B3F-4F4D-8747-14AA594E8502}|Bloomia.Tests\\Bloomia.Tests.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C6818B64-0B3F-4F4D-8747-14AA594E8502}|Bloomia.Tests\\Bloomia.Tests.csproj|solutionrelative:bloomia.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|solutionrelative:bloomia.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\login\\logincommandvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\login\\logincommandvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\login\\logincommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\login\\logincommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\login\\logincommanddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\login\\logincommanddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\login\\logincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\login\\logincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|solutionrelative:bloomia.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|solutionrelative:bloomia.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\common\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\common\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\common\\appcurrentuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\common\\appcurrentuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\abstractions\\iappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\abstractions\\iappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\abstractions\\iappcurrentuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\abstractions\\iappcurrentuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.api\\middleware\\requestresponseloggingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|solutionrelative:bloomia.api\\middleware\\requestresponseloggingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\databaseinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\databaseinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA95173B-0EE1-430D-8597-3DCB7E44AB63}|Bloomia.Shared\\Bloomia.Shared.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.shared\\options\\connectionstringsoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA95173B-0EE1-430D-8597-3DCB7E44AB63}|Bloomia.Shared\\Bloomia.Shared.csproj|solutionrelative:bloomia.shared\\options\\connectionstringsoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA95173B-0EE1-430D-8597-3DCB7E44AB63}|Bloomia.Shared\\Bloomia.Shared.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.shared\\options\\jwtoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA95173B-0EE1-430D-8597-3DCB7E44AB63}|Bloomia.Shared\\Bloomia.Shared.csproj|solutionrelative:bloomia.shared\\options\\jwtoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\databaseconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\databaseconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\abstractions\\ijwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\abstractions\\ijwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\identity\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\identity\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\common\\marketexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\common\\marketexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\basics\\genderentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\basics\\genderentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\enums\\roleentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\enums\\roleentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\admin\\adminentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\admin\\adminentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\admin\\articleentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\admin\\articleentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\therapistrelated\\therapistavailabilityentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\therapistrelated\\therapistavailabilityentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\therapistentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\therapistentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\sessions\\messageentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\sessions\\messageentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\payments\\paymententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\payments\\paymententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\sessions\\appointmententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\sessions\\appointmententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\therapistrelated\\therapiststherapytypesentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\therapistrelated\\therapiststherapytypesentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\reviewsfolder\\reviewentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\reviewsfolder\\reviewentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\cliententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\cliententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.infrastructure\\database\\configurations\\identity\\refreshtokenentityconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D66E507-3657-40DB-BF88-D246F14ACA25}|Bloomia.Infrastructure\\Bloomia.Infrastructure.csproj|solutionrelative:bloomia.infrastructure\\database\\configurations\\identity\\refreshtokenentityconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\refresh\\refreshtokencommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\refresh\\refreshtokencommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\logout\\logoutcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\logout\\logoutcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\logout\\logoutcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\logout\\logoutcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\common\\pageresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\common\\pageresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\common\\pagerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\common\\pagerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\common\\basepagedquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\common\\basepagedquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\common\\exceptions\\marketbusinessruleexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\common\\exceptions\\marketbusinessruleexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\common\\behaviors\\validationbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\common\\behaviors\\validationbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.application\\modules\\auth\\commands\\logout\\logoutcommandvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EADBF014-BCDB-4D43-9E49-02DB418F4834}|Bloomia.Application\\Bloomia.Application.csproj|solutionrelative:bloomia.application\\modules\\auth\\commands\\logout\\logoutcommandvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\sessions\\chatsessionentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\sessions\\chatsessionentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\selftestsfolder\\selftestquestionentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\selftestsfolder\\selftestquestionentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\moodsfolder\\moodentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\moodsfolder\\moodentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\savedtherapistsentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\savedtherapistsentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\enums\\therapytype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\enums\\therapytype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\basics\\documententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\basics\\documententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.domain\\entities\\basics\\languageentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38B39B3A-A209-4CBA-A139-76C6E4057A69}|Bloomia.Domain\\Bloomia.Domain.csproj|solutionrelative:bloomia.domain\\entities\\basics\\languageentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|c:\\users\\nezir\\onedrive\\radna povr\u0161ina\\rs1-2025-26 - copy\\bloomia.backend\\bloomia.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1F8EDA9-8DE6-4273-AE6F-050AD5E1205F}|Bloomia.API\\Bloomia.API.csproj|solutionrelative:bloomia.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3fd5e0cc-709a-4f8c-94c3-7f0f8dff5bb2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20251027153100_TherapyTypeChangedToString.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Migrations\\20251027153100_TherapyTypeChangedToString.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Migrations\\20251027153100_TherapyTypeChangedToString.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Migrations\\20251027153100_TherapyTypeChangedToString.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Migrations\\20251027153100_TherapyTypeChangedToString.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T15:31:00.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "Bloomia.API\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\DependencyInjection.cs",
+              "RelativeToolTip": "Bloomia.API\\DependencyInjection.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAQwEwAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:08:19.021Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AppointmentConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\AppointmentConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\AppointmentConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\AppointmentConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\AppointmentConfiguration.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAAAB0AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T21:51:14.735Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DynamicDataSeedersForBloomia.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Seeders\\DynamicDataSeedersForBloomia.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Seeders\\DynamicDataSeedersForBloomia.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Seeders\\DynamicDataSeedersForBloomia.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Seeders\\DynamicDataSeedersForBloomia.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAAAF0AAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T23:27:28.839Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TherapyTypeEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistRelated\\TherapyTypeEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\TherapistRelated\\TherapyTypeEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistRelated\\TherapyTypeEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\TherapistRelated\\TherapyTypeEntity.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T14:54:15.568Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ChatSessionConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\ChatSessionConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\ChatSessionConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\ChatSessionConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\ChatSessionConfiguration.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABQAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:31:23.856Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ClientConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\ClientConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\ClientConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\ClientConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\ClientConfiguration.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAYwB8AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T21:04:14.555Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\Program.cs",
+              "RelativeDocumentMoniker": "Bloomia.API\\Program.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\Program.cs",
+              "RelativeToolTip": "Bloomia.API\\Program.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAQwCQAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:08:29.513Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MessageConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\MessageConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\MessageConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\MessageConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\MessageConfiguration.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:33:18.308Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PaymentConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\PaymentConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\PaymentConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\PaymentConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\PaymentConfiguration.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBgAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:29:51.682Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ReviewConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\ReviewConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\ReviewConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\ReviewConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\ReviewConfiguration.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:42:22.551Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SavedTherapistsConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\SavedTherapistsConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\SavedTherapistsConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\SavedTherapistsConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\SavedTherapistsConfiguration.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBQAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:44:20.357Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TherapistAvailabilityConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\TherapistAvailabilityConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\TherapistAvailabilityConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\TherapistAvailabilityConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\TherapistAvailabilityConfiguration.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBoAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:48:08.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "TherapistConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\TherapistConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\TherapistConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\TherapistConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\TherapistConfiguration.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBYAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:04:28.411Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "TherapistsTherapyTypesConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\TherapistsTherapyTypesConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\TherapistsTherapyTypesConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\TherapistsTherapyTypesConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\TherapistsTherapyTypesConfiguration.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBkAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T22:13:13.153Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\UserConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\UserConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\UserConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\UserConfiguration.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAQwDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T20:44:30.774Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AdminConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\AdminConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\AdminConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\AdminConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\AdminConfiguration.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:16:41.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "20251027130935_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Migrations\\20251027130935_InitialCreate.cs",
+              "RelativeDocumentMoniker": "..\\..\\rs1-2025-26\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Migrations\\20251027130935_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Migrations\\20251027130935_InitialCreate.cs",
+              "RelativeToolTip": "..\\..\\rs1-2025-26\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Migrations\\20251027130935_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:09:35.785Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "GlobalUsings.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Tests\\GlobalUsings.cs",
+              "RelativeDocumentMoniker": "Bloomia.Tests\\GlobalUsings.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Tests\\GlobalUsings.cs",
+              "RelativeToolTip": "Bloomia.Tests\\GlobalUsings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:08:33.615Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "CustomWebApplicationFactory.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Tests\\CustomWebApplicationFactory.cs",
+              "RelativeDocumentMoniker": "Bloomia.Tests\\CustomWebApplicationFactory.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Tests\\CustomWebApplicationFactory.cs",
+              "RelativeToolTip": "Bloomia.Tests\\CustomWebApplicationFactory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:08:31.423Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "GlobalUsings.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\GlobalUsings.cs",
+              "RelativeDocumentMoniker": "Bloomia.API\\GlobalUsings.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\GlobalUsings.cs",
+              "RelativeToolTip": "Bloomia.API\\GlobalUsings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:08:24.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "LoginCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwAUAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:51:26.581Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "LoginCommandDto.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandDto.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandDto.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandDto.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandDto.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:51:22.285Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "LoginCommandValidator.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandValidator.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandValidator.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandValidator.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommandValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:51:49.459Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "LoginCommand.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommand.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommand.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommand.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Login\\LoginCommand.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:51:13.412Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "GlobalUsings.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\GlobalUsings.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\GlobalUsings.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\GlobalUsings.cs",
+              "RelativeToolTip": "Bloomia.Application\\GlobalUsings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T13:06:14.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\appsettings.json",
+              "RelativeDocumentMoniker": "Bloomia.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\appsettings.json",
+              "RelativeToolTip": "Bloomia.API\\appsettings.json",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAB0AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-25T12:00:18.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Bloomia.API\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Bloomia.API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T11:37:46.002Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "JwtTokenService.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Common\\JwtTokenService.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Common\\JwtTokenService.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Common\\JwtTokenService.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Common\\JwtTokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:56:05.305Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "GlobalUsings.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\GlobalUsings.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\GlobalUsings.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\GlobalUsings.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\GlobalUsings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T11:45:05.973Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "AppCurrentUser.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Common\\AppCurrentUser.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Common\\AppCurrentUser.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Common\\AppCurrentUser.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Common\\AppCurrentUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:55:05.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\DependencyInjection.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\DependencyInjection.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAQwCsAAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T14:51:55.172Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "IAppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Abstractions\\IAppDbContext.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Abstractions\\IAppDbContext.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Abstractions\\IAppDbContext.cs",
+              "RelativeToolTip": "Bloomia.Application\\Abstractions\\IAppDbContext.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAcwBAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:24:42.827Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "IAppCurrentUser.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Abstractions\\IAppCurrentUser.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Abstractions\\IAppCurrentUser.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Abstractions\\IAppCurrentUser.cs",
+              "RelativeToolTip": "Bloomia.Application\\Abstractions\\IAppCurrentUser.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA1wCMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:55:23.044Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "RequestResponseLoggingMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\Middleware\\RequestResponseLoggingMiddleware.cs",
+              "RelativeDocumentMoniker": "Bloomia.API\\Middleware\\RequestResponseLoggingMiddleware.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\Middleware\\RequestResponseLoggingMiddleware.cs",
+              "RelativeToolTip": "Bloomia.API\\Middleware\\RequestResponseLoggingMiddleware.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T20:09:22.709Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "DatabaseInitializer.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\DatabaseInitializer.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\DatabaseInitializer.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\DatabaseInitializer.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\DatabaseInitializer.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBUAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T14:51:51.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "ConnectionStringsOptions.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Shared\\Options\\ConnectionStringsOptions.cs",
+              "RelativeDocumentMoniker": "Bloomia.Shared\\Options\\ConnectionStringsOptions.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Shared\\Options\\ConnectionStringsOptions.cs",
+              "RelativeToolTip": "Bloomia.Shared\\Options\\ConnectionStringsOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T11:43:37.752Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "JwtOptions.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Shared\\Options\\JwtOptions.cs",
+              "RelativeDocumentMoniker": "Bloomia.Shared\\Options\\JwtOptions.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Shared\\Options\\JwtOptions.cs",
+              "RelativeToolTip": "Bloomia.Shared\\Options\\JwtOptions.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T11:43:35Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "DatabaseContext.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\DatabaseContext.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\DatabaseContext.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\DatabaseContext.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\DatabaseContext.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACsAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T14:51:21.808Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "DatabaseConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\DatabaseConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\DatabaseConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\DatabaseConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\DatabaseConfiguration.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAswC8AAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T15:01:08.649Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "IJwtTokenService.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Abstractions\\IJwtTokenService.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Abstractions\\IJwtTokenService.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Abstractions\\IJwtTokenService.cs",
+              "RelativeToolTip": "Bloomia.Application\\Abstractions\\IJwtTokenService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAgwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:36:06.552Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "UserEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Identity\\UserEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Identity\\UserEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Identity\\UserEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Identity\\UserEntity.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAcwAwAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:22:52.492Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "MarketExceptionHandler.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Common\\MarketExceptionHandler.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Common\\MarketExceptionHandler.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Common\\MarketExceptionHandler.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Common\\MarketExceptionHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:23:46.264Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "RoleEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Enums\\RoleEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Enums\\RoleEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Enums\\RoleEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Enums\\RoleEntity.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:38:38.51Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "GenderEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Basics\\GenderEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Basics\\GenderEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Basics\\GenderEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Basics\\GenderEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:29:52.604Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "AdminEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Admin\\AdminEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Admin\\AdminEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Admin\\AdminEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Admin\\AdminEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T23:11:06.727Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "ArticleEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Admin\\ArticleEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Admin\\ArticleEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Admin\\ArticleEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Admin\\ArticleEntity.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T23:12:05.842Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "TherapistAvailabilityEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistRelated\\TherapistAvailabilityEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\TherapistRelated\\TherapistAvailabilityEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistRelated\\TherapistAvailabilityEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\TherapistRelated\\TherapistAvailabilityEntity.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAABYAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T15:03:22.025Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "TherapistEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\TherapistEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\TherapistEntity.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAA1wB8AAABtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T14:33:48.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "MessageEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Sessions\\MessageEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Sessions\\MessageEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Sessions\\MessageEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Sessions\\MessageEntity.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T15:49:20.606Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "AppointmentEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Sessions\\AppointmentEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Sessions\\AppointmentEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Sessions\\AppointmentEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Sessions\\AppointmentEntity.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAABUAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T15:21:38.308Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "PaymentEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Payments\\PaymentEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Payments\\PaymentEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Payments\\PaymentEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Payments\\PaymentEntity.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T22:45:14.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "TherapistsTherapyTypesEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistRelated\\TherapistsTherapyTypesEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\TherapistRelated\\TherapistsTherapyTypesEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\TherapistRelated\\TherapistsTherapyTypesEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\TherapistRelated\\TherapistsTherapyTypesEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T14:57:22.336Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "ReviewEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\ReviewsFolder\\ReviewEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\ReviewsFolder\\ReviewEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\ReviewsFolder\\ReviewEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\ReviewsFolder\\ReviewEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T15:14:18.214Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "ClientEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\ClientEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\ClientEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\ClientEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\ClientEntity.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwBgAAABrAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T14:30:17.656Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "RefreshTokenEntityConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\Identity\\RefreshTokenEntityConfiguration.cs",
+              "RelativeDocumentMoniker": "Bloomia.Infrastructure\\Database\\Configurations\\Identity\\RefreshTokenEntityConfiguration.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Infrastructure\\Database\\Configurations\\Identity\\RefreshTokenEntityConfiguration.cs",
+              "RelativeToolTip": "Bloomia.Infrastructure\\Database\\Configurations\\Identity\\RefreshTokenEntityConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:58:02.741Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "RefreshTokenCommand.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Refresh\\RefreshTokenCommand.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Refresh\\RefreshTokenCommand.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Refresh\\RefreshTokenCommand.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Refresh\\RefreshTokenCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T20:05:20.576Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "LogoutCommand.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommand.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommand.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommand.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:52:05.435Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "LogoutCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandHandler.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandHandler.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandHandler.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandHandler.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:52:08.431Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "PageResult.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\PageResult.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Common\\PageResult.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\PageResult.cs",
+              "RelativeToolTip": "Bloomia.Application\\Common\\PageResult.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAYwBsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:45:32.392Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "PageRequest.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\PageRequest.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Common\\PageRequest.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\PageRequest.cs",
+              "RelativeToolTip": "Bloomia.Application\\Common\\PageRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:45:30.159Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "BasePagedQuery.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\BasePagedQuery.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Common\\BasePagedQuery.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\BasePagedQuery.cs",
+              "RelativeToolTip": "Bloomia.Application\\Common\\BasePagedQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:45:27.35Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "MarketBusinessRuleException.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\Exceptions\\MarketBusinessRuleException.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Common\\Exceptions\\MarketBusinessRuleException.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\Exceptions\\MarketBusinessRuleException.cs",
+              "RelativeToolTip": "Bloomia.Application\\Common\\Exceptions\\MarketBusinessRuleException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:45:11.767Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "ValidationBehavior.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\Behaviors\\ValidationBehavior.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Common\\Behaviors\\ValidationBehavior.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Common\\Behaviors\\ValidationBehavior.cs",
+              "RelativeToolTip": "Bloomia.Application\\Common\\Behaviors\\ValidationBehavior.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T19:36:26.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "LogoutCommandValidator.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandValidator.cs",
+              "RelativeDocumentMoniker": "Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandValidator.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandValidator.cs",
+              "RelativeToolTip": "Bloomia.Application\\Modules\\Auth\\Commands\\Logout\\LogoutCommandValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T17:52:12.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "ChatSessionEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Sessions\\ChatSessionEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Sessions\\ChatSessionEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Sessions\\ChatSessionEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Sessions\\ChatSessionEntity.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T15:30:36.155Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "SelfTestQuestionEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\SelfTestsFolder\\SelfTestQuestionEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\SelfTestsFolder\\SelfTestQuestionEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\SelfTestsFolder\\SelfTestQuestionEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\SelfTestsFolder\\SelfTestQuestionEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T22:38:56.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "MoodEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\MoodsFolder\\MoodEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\MoodsFolder\\MoodEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\MoodsFolder\\MoodEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\MoodsFolder\\MoodEntity.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T22:33:50.058Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "SavedTherapistsEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\SavedTherapistsEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\SavedTherapistsEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\SavedTherapistsEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\SavedTherapistsEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T15:29:35.702Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "TherapyType.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Enums\\TherapyType.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Enums\\TherapyType.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Enums\\TherapyType.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Enums\\TherapyType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T14:46:21.887Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 70,
+              "Title": "DocumentEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Basics\\DocumentEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Basics\\DocumentEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Basics\\DocumentEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Basics\\DocumentEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T14:38:31.621Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 71,
+              "Title": "LanguageEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Basics\\LanguageEntity.cs",
+              "RelativeDocumentMoniker": "Bloomia.Domain\\Entities\\Basics\\LanguageEntity.cs",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.Domain\\Entities\\Basics\\LanguageEntity.cs",
+              "RelativeToolTip": "Bloomia.Domain\\Entities\\Basics\\LanguageEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:31:42.15Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 72,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "Bloomia.API\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\nezir\\OneDrive\\Radna povr\u0161ina\\rs1-2025-26 - Copy\\Bloomia.Backend\\Bloomia.API\\appsettings.Development.json",
+              "RelativeToolTip": "Bloomia.API\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-25T12:00:05.636Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
