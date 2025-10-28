@@ -427,10 +427,6 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f24f3a3 (Added .gitignore file)
 # Angular specific
 /dist/
 /out-tsc/
