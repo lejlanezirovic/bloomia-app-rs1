@@ -70,6 +70,8 @@ public sealed class RequestResponseLoggingMiddleware(
 
             logger.LogInformation("{Log}", logMessage.ToString());
 
+            responseBody.Seek(0, SeekOrigin.Begin);//dodato
+
             // Copy the response back to the original stream
             await responseBody.CopyToAsync(originalBodyStream);
         }

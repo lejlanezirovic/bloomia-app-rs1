@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Bloomia.Infrastructure.Common;
 
@@ -38,6 +39,23 @@ public sealed class MarketExceptionHandler(
 
 
         ctx.Response.ContentType = "application/json";
+
+        if(ex is ValidationException vex)
+        {
+            ctx.Response.StatusCode = StatusCodes.Status400BadRequest;
+            var err = new ErrorDto
+            {
+                Code = "validation.error",
+                Message = "Validation failed: " + string.Join(";", vex.Errors.Select(x => $"{x.PropertyName}: {x.ErrorMessage}")),
+                TraceId = traceId,
+                Details = env.IsDevelopment() ? ToString() : null
+
+            };
+            ctx.Response.ContentType= "application/json";
+            var json=JsonSerializer.Serialize(err);
+            await ctx.Response.WriteAsync(json);
+            return true;//ovo znaci uspjesno odradjen exception ne salji dalje
+        }
         ctx.Response.StatusCode = ex switch
         {
             MarketNotFoundException => StatusCodes.Status404NotFound,

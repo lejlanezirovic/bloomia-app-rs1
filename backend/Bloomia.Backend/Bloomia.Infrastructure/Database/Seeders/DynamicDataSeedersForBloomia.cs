@@ -115,7 +115,7 @@ namespace Bloomia.Infrastructure.Database.Seeders
             {
                 var role = new RoleEntity
                 {
-                    RoleName = "ADMIN"
+                    RoleName = RoleName.ADMIN.ToString()
                 };
                 context.Roles.Add(role);
             }
@@ -123,7 +123,7 @@ namespace Bloomia.Infrastructure.Database.Seeders
             {
                 var role = new RoleEntity
                 {
-                    RoleName = "CLIENT"
+                    RoleName = RoleName.CLIENT.ToString()
                 };
                 context.Roles.Add(role);
             }
@@ -131,7 +131,7 @@ namespace Bloomia.Infrastructure.Database.Seeders
             {
                 var role = new RoleEntity
                 {
-                    RoleName = "THERAPIST"
+                    RoleName = RoleName.THERAPIST.ToString()
                 };
                 context.Roles.Add(role);
             }
@@ -151,6 +151,7 @@ namespace Bloomia.Infrastructure.Database.Seeders
                 Username = "admin",
                 Email = "lejla.nezirovic@edu.fit.ba",
                 PasswordHash = hasher.HashPassword(null!, "Admin123!"),
+                Fullname="Lejla Admin",
                 RoleId = adminRole.Id,
                 IsEnabled = true,
                 GenderId=2,
@@ -165,6 +166,7 @@ namespace Bloomia.Infrastructure.Database.Seeders
                 Username = "Test",
                 Email = "test@gmail.com",
                 PasswordHash = hasher.HashPassword(null!, "test123!"),
+                Fullname = "Test Test",
                 RoleId = clientRole.Id,
                 IsEnabled = true,
                 GenderId = 2,
@@ -179,6 +181,7 @@ namespace Bloomia.Infrastructure.Database.Seeders
                 Username = "TU",
                 Email = "therapist.user@gmail.com",
                 PasswordHash = hasher.HashPassword(null!, "therrapist1!"),
+                Fullname = "T U",
                 RoleId = therapistRole.Id,
                 IsEnabled = true,
                 GenderId = 2,

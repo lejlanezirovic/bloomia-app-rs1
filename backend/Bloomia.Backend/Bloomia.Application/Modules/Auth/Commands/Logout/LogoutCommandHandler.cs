@@ -20,6 +20,7 @@ public sealed class LogoutCommandHandler(IAppDbContext ctx, IJwtTokenService tok
             return;
 
         rt.IsRevoked = true;
+        rt.RevokedAtUtc = DateTime.UtcNow;
         await ctx.SaveChangesAsync(ct);
     }
 }

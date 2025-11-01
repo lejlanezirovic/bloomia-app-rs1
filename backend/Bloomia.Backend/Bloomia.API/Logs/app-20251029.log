@@ -1,0 +1,344 @@
+[][2025-10-29 12:04:25 WRN] Entity 'UserEntity' has a global query filter defined and is the required end of a relationship with the entity 'AdminEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:25 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'JournalEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:25 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'MoodEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:25 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SavedTherapistsEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:25 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SelfTestResultEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:25 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'AppointmentEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:25 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistAvailabilityEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:25 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistsTherapyTypesEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 12:04:28 INF] Bloomia API started successfully.
+[][2025-10-29 12:04:29 INF] Now listening on: https://localhost:7260
+[][2025-10-29 12:04:29 INF] Now listening on: http://localhost:5177
+[][2025-10-29 12:04:29 INF] Application started. Press Ctrl+C to shut down.
+[][2025-10-29 12:04:29 INF] Hosting environment: Development
+[][2025-10-29 12:04:29 INF] Content root path: C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API
+[][2025-10-29 12:06:33 ERR] An unhandled exception has occurred while executing the request.
+FluentValidation.ValidationException: Validation failed: 
+ -- Email: Email domain must me @gmail, @yahoo or @edu  Severity: Error
+ -- Password: Password must contain at least one uppercase letter Severity: Error
+   at Bloomia.Application.Common.Behaviors.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Common\Behaviors\ValidationBehavior.cs:line 17
+   at AuthController.ClientRegistration(UserRegisterCommand command, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API\Controllers\AuthController.cs:line 20
+   at lambda_method15(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[][2025-10-29 12:06:33 ERR] Unhandled exception. Path: /api/auth/register-as-client, Method: POST, TraceId: 00-7c329428065cf28459ec568eb519e5dc-b99d5235d347bf6a-00, User: anonymous
+FluentValidation.ValidationException: Validation failed: 
+ -- Email: Email domain must me @gmail, @yahoo or @edu  Severity: Error
+ -- Password: Password must contain at least one uppercase letter Severity: Error
+   at Bloomia.Application.Common.Behaviors.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Common\Behaviors\ValidationBehavior.cs:line 17
+   at AuthController.ClientRegistration(UserRegisterCommand command, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API\Controllers\AuthController.cs:line 20
+   at lambda_method15(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[][2025-10-29 12:06:33 WRN] [SLOW REQUEST] /api/auth/register-as-client took 1415 ms
+[][2025-10-29 12:06:33 INF] HTTP Request/Response Log:
+  Path: /api/auth/register-as-client
+  Method: POST
+  Status: 400
+  Duration: 1415 ms
+  Request Body: {
+  "email": "notvalid@work.com",
+  "password": "string12",
+  "firstname": "Valid",
+  "lastname": "string",
+  "username": "stringVald"
+}
+  Response Body: {"Code":"validation.error","Message":"Validation failed: Email: Email domain must me @gmail, @yahoo or @edu ;Password: Password must contain at least one uppercase letter","TraceId":"00-7c329428065cf28459ec568eb519e5dc-b99d5235d347bf6a-00","Details":"Bloomia.Infrastructure.Common.MarketExceptionHandler"}
+
+[][2025-10-29 12:07:41 ERR] An unhandled exception has occurred while executing the request.
+FluentValidation.ValidationException: Validation failed: 
+ -- Password: Password must contain at least one uppercase letter Severity: Error
+   at Bloomia.Application.Common.Behaviors.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Common\Behaviors\ValidationBehavior.cs:line 17
+   at AuthController.ClientRegistration(UserRegisterCommand command, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API\Controllers\AuthController.cs:line 20
+   at lambda_method15(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[][2025-10-29 12:07:41 ERR] Unhandled exception. Path: /api/auth/register-as-client, Method: POST, TraceId: 00-7d81e40a2f55a20a61bc70e42f80b114-6cf4601adbcae283-00, User: anonymous
+FluentValidation.ValidationException: Validation failed: 
+ -- Password: Password must contain at least one uppercase letter Severity: Error
+   at Bloomia.Application.Common.Behaviors.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Common\Behaviors\ValidationBehavior.cs:line 17
+   at AuthController.ClientRegistration(UserRegisterCommand command, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API\Controllers\AuthController.cs:line 20
+   at lambda_method15(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[][2025-10-29 12:07:41 INF] HTTP Request/Response Log:
+  Path: /api/auth/register-as-client
+  Method: POST
+  Status: 400
+  Duration: 363 ms
+  Request Body: {
+  "email": "irena@gmail.com",
+  "password": "irena123",
+  "firstname": "Irena",
+  "lastname": "Sabic",
+  "username": "IrenaSabic"
+}
+  Response Body: {"Code":"validation.error","Message":"Validation failed: Password: Password must contain at least one uppercase letter","TraceId":"00-7d81e40a2f55a20a61bc70e42f80b114-6cf4601adbcae283-00","Details":"Bloomia.Infrastructure.Common.MarketExceptionHandler"}
+
+[][2025-10-29 12:07:54 WRN] [SLOW REQUEST] /api/auth/register-as-client took 2580 ms
+[][2025-10-29 12:07:54 INF] HTTP Request/Response Log:
+  Path: /api/auth/register-as-client
+  Method: POST
+  Status: 200
+  Duration: 2580 ms
+  Request Body: {
+  "email": "irena@gmail.com",
+  "password": "Irena123",
+  "firstname": "Irena",
+  "lastname": "Sabic",
+  "username": "IrenaSabic"
+}
+  Response Body: {"id":6,"fullname":"Irena Sabic","email":"irena@gmail.com","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiaXJlbmFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ0xJRU5UIiwiZnVsbG5hbWUiOiJJcmVuYSBTYWJpYyIsInZlciI6IjAiLCJpYXQiOjE3NjE3MzYwNzMsImp0aSI6IjgyYzM4YTdjNGNmYzQ0OThiNzA0MWY0M2I1NDBiYjk4IiwiYXVkIjpbIkJsb29taWEuU3BhIiwiQmxvb21pYS5TcGEiXSwibmJmIjoxNzYxNzM2MDczLCJleHAiOjE3NjE3MzcyNzMsImlzcyI6IkJsb29taWEuQXBpIn0.pW7wcMFWd9U5NZ-b8K_tCI5v35l5bkt9OUaYBhOjVJE","refreshToken":"AHhgzSJnZ9_D5r49pc2X-q0bbIHr9uSdMrnl73RHOqzAVNDMIegv_hxv8hOtJs_SU2YsXLKIg_rGVegymR9H_g","expiresAt":"2025-11-12T11:07:53.9751924Z","roleName":"CLIENT"}
+
+[][2025-10-29 12:09:06 WRN] [SLOW REQUEST] /api/auth/login took 857 ms
+[][2025-10-29 12:09:06 INF] HTTP Request/Response Log:
+  Path: /api/auth/login
+  Method: POST
+  Status: 200
+  Duration: 857 ms
+  Request Body: {
+  "email": "irena@gmail.com",
+  "password": "Irena123",
+  "fingerprint": "string"
+}
+  Response Body: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiaXJlbmFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ0xJRU5UIiwiZnVsbG5hbWUiOiJJcmVuYSBTYWJpYyIsInZlciI6IjAiLCJpYXQiOjE3NjE3MzYxNDYsImp0aSI6ImVmMGZmZWQ1MjRhNjRhYWJiOWQyOGM2YWJiZTZmZGU3IiwiYXVkIjpbIkJsb29taWEuU3BhIiwiQmxvb21pYS5TcGEiXSwibmJmIjoxNzYxNzM2MTQ2LCJleHAiOjE3NjE3MzczNDYsImlzcyI6IkJsb29taWEuQXBpIn0.ESU2yzkXuxavavq1FZn8yn-zpugujrdo0S8aTR5ASPg","refreshToken":"jgpKyXrwGvOjn5uE9OQhhiOY_pEJM0DAI3TRnzMYYb73njZOaLVg-a7_S6H7437mH5D-Bo46TS0Gh8fMDAVfRg","expiresAtUtc":"2025-11-12T11:09:06.4162113Z"}
+
+[][2025-10-29 12:09:29 INF] HTTP Request/Response Log:
+  Path: /api/auth/logout
+  Method: POST
+  Status: 200
+  Duration: 219 ms
+  Request Body: {
+  "refreshToken": "jgpKyXrwGvOjn5uE9OQhhiOY_pEJM0DAI3TRnzMYYb73njZOaLVg-a7_S6H7437mH5D-Bo46TS0Gh8fMDAVfRg"
+}
+
+[][2025-10-29 12:10:04 ERR] An unhandled exception has occurred while executing the request.
+Bloomia.Application.Common.Exceptions.MarketConflictException: Korisnik sa unesenim emailom već postoji.
+   at Bloomia.Application.Modules.Auth.Commands.Register.UserRegisterCommandHandler.Handle(UserRegisterCommand request, CancellationToken cancellationToken) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Modules\Auth\Commands\Register\UserRegisterCommandHandler.cs:line 20
+   at Bloomia.Application.Common.Behaviors.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Common\Behaviors\ValidationBehavior.cs:line 19
+   at AuthController.ClientRegistration(UserRegisterCommand command, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API\Controllers\AuthController.cs:line 20
+   at lambda_method15(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[][2025-10-29 12:10:05 ERR] Unhandled exception. Path: /api/auth/register-as-client, Method: POST, TraceId: 00-d75d331d76d8e9630355d8e3e7ebb26f-99fda2bd5e0e36a3-00, User: anonymous
+Bloomia.Application.Common.Exceptions.MarketConflictException: Korisnik sa unesenim emailom već postoji.
+   at Bloomia.Application.Modules.Auth.Commands.Register.UserRegisterCommandHandler.Handle(UserRegisterCommand request, CancellationToken cancellationToken) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Modules\Auth\Commands\Register\UserRegisterCommandHandler.cs:line 20
+   at Bloomia.Application.Common.Behaviors.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Application\Common\Behaviors\ValidationBehavior.cs:line 19
+   at AuthController.ClientRegistration(UserRegisterCommand command, CancellationToken ct) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API\Controllers\AuthController.cs:line 20
+   at lambda_method15(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[][2025-10-29 12:10:05 WRN] [SLOW REQUEST] /api/auth/register-as-client took 692 ms
+[][2025-10-29 12:10:05 INF] HTTP Request/Response Log:
+  Path: /api/auth/register-as-client
+  Method: POST
+  Status: 409
+  Duration: 692 ms
+  Request Body: {
+  "email": "irena@gmail.com",
+  "password": "Irena123",
+  "firstname": "Irena",
+  "lastname": "Sabic",
+  "username": "IrenaSabic"
+}
+  Response Body: {"code":"entity.error","message":"Korisnik sa unesenim emailom već postoji.","traceId":"00-d75d331d76d8e9630355d8e3e7ebb26f-99fda2bd5e0e36a3-00","details":"Bloomia.Application.Common.Exceptions.MarketConflictException: Korisnik sa unesenim emailom već postoji.\r\n   at Bloomia.Application.Modules.Auth.Commands.Register.UserRegisterCommandHandler.Handle(UserRegisterCommand request, CancellationToken cancellationToken) in C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.Application\\Modules\\Auth\\Commands\\Register\\UserRegisterCommandHandler.cs:line 20\r\n   at Bloomia.Application.Common.Behaviors.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken ct) in C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.Application\\Common\\Behaviors\\ValidationBehavior.cs:line 19\r\n   at AuthController.ClientRegistration(UserRegisterCommand command, CancellationToken ct) in C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.API\\Controllers\\AuthController.cs:line 20\r\n   at lambda_method15(Closure, Object)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)\r\n   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)\r\n   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)\r\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)"}
+
+[][2025-10-29 12:10:48 WRN] [SLOW REQUEST] /api/auth/login took 414 ms
+[][2025-10-29 12:10:48 INF] HTTP Request/Response Log:
+  Path: /api/auth/login
+  Method: POST
+  Status: 200
+  Duration: 414 ms
+  Request Body: {
+  "email": "irena@gmail.com",
+  "password": "Irena123",
+  "fingerprint": "string"
+}
+  Response Body: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiaXJlbmFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ0xJRU5UIiwiZnVsbG5hbWUiOiJJcmVuYSBTYWJpYyIsInZlciI6IjAiLCJpYXQiOjE3NjE3MzYyNDgsImp0aSI6ImU2ODczMWJiZjY5YTRkM2E4M2UxZmQxNmE5NjZiZjRkIiwiYXVkIjpbIkJsb29taWEuU3BhIiwiQmxvb21pYS5TcGEiXSwibmJmIjoxNzYxNzM2MjQ4LCJleHAiOjE3NjE3Mzc0NDgsImlzcyI6IkJsb29taWEuQXBpIn0.WihnCqEFDK2mjUQpsOlRHM6ce0wFZikBCK6zyunBwyo","refreshToken":"r4irh9wN9QJpFF3ipgFwFJEjpfKonvO06fRe2rvt2JMm6GehoyGWBUCKLKyeyoNS7VhCcPpcu6x22UTzn6MrzQ","expiresAtUtc":"2025-11-12T11:10:48.8600497Z"}
+
+[][2025-10-29 20:46:09 INF] Host aborted by EF Core tooling (design-time) - its ok.
+[][2025-10-29 20:46:30 INF] Host aborted by EF Core tooling (design-time) - its ok.
+[][2025-10-29 20:47:00 WRN] Entity 'UserEntity' has a global query filter defined and is the required end of a relationship with the entity 'AdminEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:01 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'JournalEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:01 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'MoodEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:01 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SavedTherapistsEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:01 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SelfTestResultEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:01 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'AppointmentEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:01 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistAvailabilityEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:01 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistsTherapyTypesEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 20:47:03 ERR] Failed executing DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Documents] (
+    [Id] int NOT NULL IDENTITY,
+    [DocumentType] nvarchar(max) NOT NULL,
+    [FilePath] nvarchar(max) NOT NULL,
+    [FileName] nvarchar(max) NOT NULL,
+    [FileExtension] nvarchar(max) NOT NULL,
+    [UploadedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Documents] PRIMARY KEY ([Id])
+);
+[][2025-10-29 20:47:03 FTL] Bloomia API terminated unexpectedly.
+Microsoft.Data.SqlClient.SqlException (0x80131904): There is already an object named 'Documents' in the database.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__210_1(IAsyncResult result)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Bloomia.Infrastructure.DatabaseInitializer.InitializeDatabaseAsync(IServiceProvider services, IHostEnvironment env) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Infrastructure\DatabaseInitializer.cs:line 27
+   at Bloomia.Infrastructure.DatabaseInitializer.InitializeDatabaseAsync(IServiceProvider services, IHostEnvironment env) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Infrastructure\DatabaseInitializer.cs:line 32
+   at Program.Main(String[] args) in C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API\Program.cs:line 77
+ClientConnectionId:80f21829-56ae-4233-991f-e8dbee4e944c
+Error Number:2714,State:6,Class:16
+[][2025-10-29 21:41:29 WRN] Entity 'UserEntity' has a global query filter defined and is the required end of a relationship with the entity 'AdminEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:29 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'JournalEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:29 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'MoodEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:29 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SavedTherapistsEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:29 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SelfTestResultEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:29 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'AppointmentEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:29 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistAvailabilityEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:29 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistsTherapyTypesEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'UserEntity' has a global query filter defined and is the required end of a relationship with the entity 'AdminEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'JournalEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'MoodEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SavedTherapistsEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SelfTestResultEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'AppointmentEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistAvailabilityEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:32 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistsTherapyTypesEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:41:36 INF] Bloomia API started successfully.
+[][2025-10-29 21:41:38 INF] Now listening on: https://localhost:7260
+[][2025-10-29 21:41:38 INF] Now listening on: http://localhost:5177
+[][2025-10-29 21:41:38 INF] Application started. Press Ctrl+C to shut down.
+[][2025-10-29 21:41:38 INF] Hosting environment: Development
+[][2025-10-29 21:41:38 INF] Content root path: C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API
+[][2025-10-29 21:44:34 WRN] [SLOW REQUEST] /api/auth/register-as-client took 3082 ms
+[][2025-10-29 21:44:35 INF] HTTP Request/Response Log:
+  Path: /api/auth/register-as-client
+  Method: POST
+  Status: 200
+  Duration: 3082 ms
+  Request Body: {
+  "email": "neziroviclejla@gmail.com",
+  "password": "Lejla123",
+  "firstname": "Lejla",
+  "lastname": "Nezirovic",
+  "username": "lejlanezirovic"
+}
+  Response Body: {"id":4,"fullname":"Lejla Nezirovic","email":"neziroviclejla@gmail.com","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoibmV6aXJvdmljbGVqbGFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ0xJRU5UIiwiZnVsbG5hbWUiOiJMZWpsYSBOZXppcm92aWMiLCJ2ZXIiOiIwIiwiaWF0IjoxNzYxNzcwNjc0LCJqdGkiOiJmYzQxZTdkMjU1MzU0NTAwYjYyOWZlMzk0ZjcxMDA2OSIsImF1ZCI6WyJCbG9vbWlhLlNwYSIsIkJsb29taWEuU3BhIl0sIm5iZiI6MTc2MTc3MDY3NCwiZXhwIjoxNzYxNzcxODc0LCJpc3MiOiJCbG9vbWlhLkFwaSJ9.-M9B_0f7tqKFNcf-HF2J6L_E7mgBOkPB--nDiqYXCbg","refreshToken":"vGQyO_ECUo7gXb9dUdnwNrX-nZfMtz-Uy4gu28ApgL6CxjhrZio5E8ibAW0F_6Vy7KnTOlU07mFlZqwfjPzQgg","expiresAt":"2025-11-12T20:44:34.6177253Z","roleName":"CLIENT"}
+
+[][2025-10-29 21:46:15 WRN] [SLOW REQUEST] /api/auth/login took 840 ms
+[][2025-10-29 21:46:15 INF] HTTP Request/Response Log:
+  Path: /api/auth/login
+  Method: POST
+  Status: 200
+  Duration: 840 ms
+  Request Body: {
+  "email": "neziroviclejla@gmail.com",
+  "password": "Lejla123",
+  "fingerprint": "string"
+}
+  Response Body: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoibmV6aXJvdmljbGVqbGFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ0xJRU5UIiwiZnVsbG5hbWUiOiJMZWpsYSBOZXppcm92aWMiLCJ2ZXIiOiIwIiwiaWF0IjoxNzYxNzcwNzc0LCJqdGkiOiJlMGMzZWJhZmFlZjM0NjBjOGYyYTJmMGRmOTQ2YjkwMSIsImF1ZCI6WyJCbG9vbWlhLlNwYSIsIkJsb29taWEuU3BhIl0sIm5iZiI6MTc2MTc3MDc3NCwiZXhwIjoxNzYxNzcxOTc0LCJpc3MiOiJCbG9vbWlhLkFwaSJ9.1px1txgZk4fYeGewfxvfTg7xWiBE7kjPFml6lnxQ0TU","refreshToken":"_Q_khNTMrZ9PkM1MBhtOXVgrfcAyYV6mAmoy-q2534XYhO1SUunHg44R6CWc98bEhTBcOvodTDi2HD2eun0OnQ","expiresAtUtc":"2025-11-12T20:46:14.9694281Z"}
+
+[][2025-10-29 21:50:07 WRN] Entity 'UserEntity' has a global query filter defined and is the required end of a relationship with the entity 'AdminEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:07 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'JournalEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:07 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'MoodEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:07 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SavedTherapistsEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:07 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'SelfTestResultEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:07 WRN] Entity 'ClientEntity' has a global query filter defined and is the required end of a relationship with the entity 'AppointmentEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:07 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistAvailabilityEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:07 WRN] Entity 'TherapistEntity' has a global query filter defined and is the required end of a relationship with the entity 'TherapistsTherapyTypesEntity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+[][2025-10-29 21:50:10 INF] Bloomia API started successfully.
+[][2025-10-29 21:50:11 INF] Now listening on: https://localhost:7260
+[][2025-10-29 21:50:11 INF] Now listening on: http://localhost:5177
+[][2025-10-29 21:50:12 INF] Application started. Press Ctrl+C to shut down.
+[][2025-10-29 21:50:12 INF] Hosting environment: Development
+[][2025-10-29 21:50:12 INF] Content root path: C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.API
+[][2025-10-29 21:54:12 WRN] [SLOW REQUEST] /api/auth/login took 3650 ms
+[][2025-10-29 21:54:12 INF] HTTP Request/Response Log:
+  Path: /api/auth/login
+  Method: POST
+  Status: 200
+  Duration: 3650 ms
+  Request Body: {
+  "email": "neziroviclejla@gmail.com",
+  "password": "Lejla123",
+  "fingerprint": "string"
+}
+  Response Body: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoibmV6aXJvdmljbGVqbGFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ0xJRU5UIiwiZnVsbG5hbWUiOiJMZWpsYSBOZXppcm92aWMiLCJ2ZXIiOiIwIiwiaWF0IjoxNzYxNzcxMjUxLCJqdGkiOiIxMzUwNWQ3M2NmNzQ0ZTc0YmQxOTE1M2JiYTA1NjQ5NCIsImF1ZCI6WyJCbG9vbWlhLlNwYSIsIkJsb29taWEuU3BhIl0sIm5iZiI6MTc2MTc3MTI1MSwiZXhwIjoxNzYxNzcyNDUxLCJpc3MiOiJCbG9vbWlhLkFwaSJ9.6CYt5JJUd_oulrhRi7UgypVADDM1j-Rqutwc8czYTHA","refreshToken":"XA1BigkAYr7oKR4-rO-uj0VViVn7WVXNwDVGFC3i9HfyHRccXRP4daJy3lK0Q2z94lKc4kWAKuPEW2Og26I1Vg","expiresAtUtc":"2025-11-12T20:54:11.1078028Z"}
+

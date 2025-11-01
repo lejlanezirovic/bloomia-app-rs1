@@ -2,6 +2,7 @@
 using Bloomia.API.Middlewares;
 using Bloomia.Application;
 using Bloomia.Infrastructure;
+using Bloomia.Infrastructure.Common;
 using Serilog;
 
 public partial class Program
@@ -49,6 +50,8 @@ public partial class Program
                 .AddInfrastructure(builder.Configuration, builder.Environment)
                 .AddApplication();
 
+            builder.Services.AddExceptionHandler<MarketExceptionHandler>();
+            builder.Services.AddProblemDetails();
             var app = builder.Build();
 
             // ---------------------------------------------------------
@@ -60,9 +63,9 @@ public partial class Program
                 app.UseSwaggerUI();
             }
 
-            // Global exception handler (IExceptionHandler)
-            app.UseExceptionHandler();
+            // Global exception handler (IExceptionHandler) 
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            app.UseExceptionHandler();
 
             app.UseHttpsRedirection();
             app.UseAuthentication();

@@ -1,0 +1,13 @@
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\bin\Debug\net8.0\Bloomia.Domain.deps.json
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\bin\Debug\net8.0\Bloomia.Domain.dll
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\bin\Debug\net8.0\Bloomia.Domain.pdb
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.csproj.AssemblyReference.cache
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.AssemblyInfoInputs.cache
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.AssemblyInfo.cs
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.csproj.CoreCompileInputs.cache
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.sourcelink.json
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.dll
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\refint\Bloomia.Domain.dll
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\Bloomia.Domain.pdb
+C:\Users\nezir\bloomia-app\backend\Bloomia.Backend\Bloomia.Domain\obj\Debug\net8.0\ref\Bloomia.Domain.dll

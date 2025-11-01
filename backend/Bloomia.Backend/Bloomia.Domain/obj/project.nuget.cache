@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "tqsakpZnvVA=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.Domain\\Bloomia.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\nezir\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.9\\microsoft.extensions.dependencyinjection.abstractions.9.0.9.nupkg.sha512",
+    "C:\\Users\\nezir\\.nuget\\packages\\microsoft.extensions.options\\9.0.9\\microsoft.extensions.options.9.0.9.nupkg.sha512",
+    "C:\\Users\\nezir\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.9\\microsoft.extensions.primitives.9.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
