@@ -35,3 +35,11 @@
 2025-11-03 21:04:26Z | /api/auth/login | 839 ms
 2025-11-03 21:18:27Z | /api/auth/login | 1151 ms
 2025-11-03 21:18:54Z | /api/auth/login | 503 ms
+2025-11-03 22:20:30Z | /api/auth/login | 1151 ms
+2025-11-04 14:45:33Z | /api/auth/register-as-therapist | 1359 ms
+2025-11-04 14:50:39Z | /api/auth/register-as-therapist | 688 ms
+2025-11-04 14:51:49Z | /api/auth/register-as-therapist | 575 ms
+2025-11-04 14:59:30Z | /api/auth/register-as-therapist | 1263 ms
+2025-11-04 15:05:00Z | /api/auth/register-as-therapist | 666 ms
+2025-11-04 15:09:52Z | /api/auth/register-as-therapist | 621 ms
+2025-11-04 15:16:54Z | /api/auth/register-as-therapist | 495 ms

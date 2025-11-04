@@ -20,7 +20,36 @@ namespace Bloomia.Infrastructure.Database.Seeders
             await SeedGenders(context);
             await SeedLocation(context);
             await SeedTherapyTypes(context);
+            await SeedDocuments(context);
             await SeedUsersAsync(context);
+        }
+
+        public static async Task SeedDocuments(DatabaseContext context)
+        {
+            if (await context.Documents.AnyAsync())
+                return;
+
+            var demoDocument1 = new DocumentEntity
+            {
+                DocumentType = "CV",
+                FilePath="/uploads/documents/CV.pdf",
+                FileName = "CV.pdf",
+                FileExtension = ".pdf",
+                UploadedAt=DateTime.UtcNow
+            };
+
+            var demoDocument2 = new DocumentEntity 
+            {
+                DocumentType = "CV",
+                FilePath = "/uploads/documents/CV2.pdf",
+                FileName = "CV2.pdf",
+                FileExtension = ".pdf",
+                UploadedAt = DateTime.UtcNow 
+            };
+
+            context.Documents.AddRange(demoDocument1, demoDocument2);
+            await context.SaveChangesAsync();
+
         }
 
         public static async Task SeedGenders(DatabaseContext context)
