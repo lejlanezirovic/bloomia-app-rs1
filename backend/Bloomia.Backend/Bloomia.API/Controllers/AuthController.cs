@@ -2,6 +2,7 @@
 using Bloomia.Application.Modules.Auth.Commands.Logout;
 using Bloomia.Application.Modules.Auth.Commands.Refresh;
 using Bloomia.Application.Modules.Auth.Commands.Register;
+using Bloomia.Application.Modules.Auth.Commands.Register.Therapist;
 
 [ApiController]
 [Route("api/auth")]
@@ -16,6 +17,13 @@ public sealed class AuthController(IMediator mediator) : ControllerBase
     [HttpPost("register-as-client")]
     [AllowAnonymous]
     public async Task<ActionResult<UserRegisterCommandDto>> ClientRegistration([FromBody] UserRegisterCommand command, CancellationToken ct)
+    {
+        return Ok(await mediator.Send(command, ct));
+    }
+
+    [HttpPost("register-as-therapist")]
+    [AllowAnonymous]
+    public async Task<ActionResult<TherapistRegisterCommandDto>> TherapistRegistration([FromBody] TherapistRegisterCommand command, CancellationToken ct)
     {
         return Ok(await mediator.Send(command, ct));
     }
