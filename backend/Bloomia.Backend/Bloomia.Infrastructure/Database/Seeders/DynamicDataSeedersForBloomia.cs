@@ -1,5 +1,7 @@
 ﻿using Bloomia.Domain.Entities.Basics;
 using Bloomia.Domain.Entities.Enums;
+using Bloomia.Domain.Entities.JournalsFolder;
+using Bloomia.Domain.Entities.SelfTestsFolder;
 using Bloomia.Domain.Entities.TherapistRelated;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,8 @@ namespace Bloomia.Infrastructure.Database.Seeders
             // Osiguraj da baza postoji (bez migracija)
             await context.Database.EnsureCreatedAsync();
 
+            await SeedSelfTestsAndSelfTestQuestions(context);
+            await SeedJournalQuestions(context);
             await SeedLanguage(context);
             await SeedGenders(context);
             await SeedLocation(context);
@@ -99,6 +103,155 @@ namespace Bloomia.Infrastructure.Database.Seeders
                 Country = "Bosnia and Herzegovina"
             };
             context.Locations.AddRange(loc1);
+            await context.SaveChangesAsync();
+        }
+        public static async Task SeedJournalQuestions(DatabaseContext context)
+        {
+            if(await context.JournalQuestions.AnyAsync())
+                return;
+
+            var q1 = new JournalQuestionEntity
+            {
+                QuestionText = "What is going well in my life right now?"
+            };
+            var q2 = new JournalQuestionEntity
+            {
+                QuestionText = "What can I do to be 1% closer to my goal(s)?"
+            };
+            var q3 = new JournalQuestionEntity
+            {
+                QuestionText = "What worries me the most currently? What are my steps to overcome this?"
+            };
+            var q4 = new JournalQuestionEntity
+            {
+                QuestionText = "What personal achievements am I most proud of in the past period?"
+            };
+            var q5 = new JournalQuestionEntity
+            {
+                QuestionText = "What am I grateful for today?"
+            };
+            context.JournalQuestions.AddRange(q1,q2,q3,q4,q5);
+            await context.SaveChangesAsync();
+            
+        }
+        public static async Task SeedSelfTestsAndSelfTestQuestions(DatabaseContext context)
+        {
+            if (await context.SelfTests.AnyAsync())
+                return;
+            if (await context.SelfTestQuestions.AnyAsync())
+                return;
+
+            var selfTest1 = new SelfTestEntity
+            {
+                TestName = "Emotional Regulation Test"
+            };
+            var selfTest2 = new SelfTestEntity
+            {
+                TestName = "Relationship and Communication Test"
+            };
+            var selfTest3 = new SelfTestEntity
+            {
+                TestName = "Burnout Test"
+            };
+            context.SelfTests.AddRange(selfTest1,selfTest2,selfTest3);
+
+
+            var q1 = new SelfTestQuestionEntity
+            {
+                Text = "My mood changes quickly.",
+                SelfTest = selfTest1,
+                SelfTestId = selfTest1.Id
+
+            };
+            var q2 = new SelfTestQuestionEntity
+            {
+                Text = "My emotions frequently overwhelm me.",
+                SelfTest = selfTest1,
+                SelfTestId = selfTest1.Id
+            };
+            var q3 = new SelfTestQuestionEntity
+            {
+                Text = "I find it hard to express what I feel.",
+                SelfTest = selfTest1,
+                SelfTestId = selfTest1.Id
+            };
+            var q4 = new SelfTestQuestionEntity
+            {
+                Text = "I don't often experience a sense of inner peace.",
+                SelfTest = selfTest1,
+                SelfTestId = selfTest1.Id
+            };
+            var q5 = new SelfTestQuestionEntity
+            {
+                Text = "I can't identify my emotions clearly when they arise.",
+                SelfTest = selfTest1,
+                SelfTestId = selfTest1.Id
+            };
+
+
+            var q6 = new SelfTestQuestionEntity
+            {
+                Text = "I find it difficult to tell others how I truly feel.",
+                SelfTest = selfTest2,
+                SelfTestId = selfTest2.Id
+            };
+            var q7 = new SelfTestQuestionEntity
+            {
+                Text = "I’m afraid of conflicts and tend to avoid them.",
+                SelfTest = selfTest2,
+                SelfTestId = selfTest2.Id
+            };
+            var q8 = new SelfTestQuestionEntity
+            {
+                Text = "I struggle to set boundaries in relationships.",
+                SelfTest = selfTest2,
+                SelfTestId = selfTest2.Id
+            };
+            var q9 = new SelfTestQuestionEntity
+            {
+                Text = "I don't express my needs clearly in relationships.",
+                SelfTest = selfTest2,
+                SelfTestId = selfTest2.Id
+            };
+            var q10 = new SelfTestQuestionEntity
+            {
+                Text = "I don't communicate openly.",
+                SelfTest = selfTest2,
+                SelfTestId = selfTest2.Id
+            };
+
+
+            var q11 = new SelfTestQuestionEntity
+            {
+                Text = "I feel tired even after getting enough sleep.",
+                SelfTest = selfTest3,
+                SelfTestId = selfTest3.Id
+            };
+            var q12 = new SelfTestQuestionEntity
+            {
+                Text = "I have no energy for small daily tasks.",
+                SelfTest = selfTest3,
+                SelfTestId = selfTest3.Id
+            };
+            var q13 = new SelfTestQuestionEntity
+            {
+                Text = "I find it difficult to concentrate on simple things.",
+                SelfTest = selfTest3,
+                SelfTestId = selfTest3.Id
+            };
+            var q14 = new SelfTestQuestionEntity
+            {
+                Text = "My work or daily responsibilities drain me.",
+                SelfTest = selfTest3,
+                SelfTestId = selfTest3.Id
+            };
+            var q15 = new SelfTestQuestionEntity
+            {
+                Text = "It’s hard for me to find motivation to start the day.",
+                SelfTest = selfTest3,
+                SelfTestId = selfTest3.Id
+            };
+            context.SelfTestQuestions.AddRange(q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15);
             await context.SaveChangesAsync();
         }
         public static async Task SeedTherapyTypes(DatabaseContext context)

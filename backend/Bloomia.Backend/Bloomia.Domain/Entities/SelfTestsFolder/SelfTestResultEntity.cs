@@ -13,7 +13,7 @@ namespace Bloomia.Domain.Entities.SelfTestsFolder
         public ClientEntity Client { get; set; }
         public DateTime CompletedAt { get; set; }=DateTime.UtcNow;
         public double AverageScore { get; set; }
-
+        public string? Description { get; set; }
         public List<SelfTestAnswerEntity> TestAnswers { get; set; }= new List<SelfTestAnswerEntity>();
     }
 }
