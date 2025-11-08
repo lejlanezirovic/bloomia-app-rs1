@@ -75,6 +75,7 @@ public static class DependencyInjection
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bloomia API", Version = "v1" });
+
             var xml = Path.Combine(AppContext.BaseDirectory, "Bloomia.API.xml");
             if (File.Exists(xml))
                 c.IncludeXmlComments(xml, includeControllerXmlComments: true);

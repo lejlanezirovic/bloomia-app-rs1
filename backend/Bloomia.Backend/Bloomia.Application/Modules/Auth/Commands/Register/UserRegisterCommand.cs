@@ -14,10 +14,11 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register
         public string Lastname { get; init; }
         public string Username { get; init; }
 
-        //public string GenderName { get; init; }
-        //public string LocationCityName { get; init; }// city
-        //public string LocationCountryName { get; init; } // country
-        //public string LanguageName { get; init; }
+        public string GenderName { get; init; }
+        public string LocationCityName { get; init; }// city
+        public string LocationCountryName { get; init; } // country
+        public string LanguageName { get; init; }
+        public DateTime? DateOfBirth { get; init; }
 
     }
 }
