@@ -1,7 +1,0 @@
-{
-  "Bloomia.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.API",
-  "Bloomia.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.Application",
-  "Bloomia.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.Domain",
-  "Bloomia.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.Infrastructure",
-  "Bloomia.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\nezir\\bloomia-app\\backend\\Bloomia.Backend\\Bloomia.Shared"
-}
