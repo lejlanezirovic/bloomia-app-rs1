@@ -1,4 +1,5 @@
-﻿using Bloomia.Domain.Entities.Basics;
+﻿using Bloomia.Domain.Entities.Admin;
+using Bloomia.Domain.Entities.Basics;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.JournalsFolder;
 using Bloomia.Domain.Entities.SelfTestsFolder;
@@ -342,6 +343,8 @@ namespace Bloomia.Infrastructure.Database.Seeders
                 LocationId=1
             };
 
+            
+
             var clientUser = new UserEntity
             {
                 Firstname = "Test",
@@ -374,6 +377,7 @@ namespace Bloomia.Infrastructure.Database.Seeders
 
             context.Users.AddRange(adminUser, clientUser, therapistUser);
             await context.SaveChangesAsync();
+
             Console.WriteLine("Dynamic seed for Bloomia: demo usersE added.");
         }
     }

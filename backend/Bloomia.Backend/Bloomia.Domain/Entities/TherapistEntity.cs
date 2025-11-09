@@ -13,7 +13,6 @@ namespace Bloomia.Domain.Entities
 {
     public class TherapistEntity: BaseEntity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public UserEntity User { get; set; }
 
