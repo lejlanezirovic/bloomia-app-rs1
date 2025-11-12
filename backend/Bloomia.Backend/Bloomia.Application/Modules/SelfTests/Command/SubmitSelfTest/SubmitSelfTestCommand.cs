@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bloomia.Application.Modules.SelfTests.Command
+namespace Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest
 {
     public class SubmitSelfTestCommand:IRequest<SubmitSelfTestCommandDto>
     {

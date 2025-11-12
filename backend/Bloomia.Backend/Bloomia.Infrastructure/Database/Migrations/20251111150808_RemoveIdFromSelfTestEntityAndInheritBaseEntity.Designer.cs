@@ -4,6 +4,7 @@ using Bloomia.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloomia.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251111150808_RemoveIdFromSelfTestEntityAndInheritBaseEntity")]
+    partial class RemoveIdFromSelfTestEntityAndInheritBaseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -566,15 +569,6 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedAtUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
@@ -627,15 +621,6 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedAtUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("SelfTestId")
                         .HasColumnType("int");
 
@@ -667,17 +652,8 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.Property<DateTime>("CompletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedAtUtc")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

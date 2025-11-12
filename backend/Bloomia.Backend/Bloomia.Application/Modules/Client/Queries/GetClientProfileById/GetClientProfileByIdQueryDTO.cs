@@ -1,5 +1,5 @@
 ﻿using Bloomia.Application.Modules.Journals.Commands;
-using Bloomia.Application.Modules.SelfTests.Command;
+using Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest;
 using Bloomia.Domain.Entities.JournalsFolder;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,7 @@
-﻿using Bloomia.Application.Modules.SelfTests.Command;
+﻿using Bloomia.Application.Modules.SelfTests.Command.CreateSelfTest;
+using Bloomia.Application.Modules.SelfTests.Command.DeleteSelfTest;
+using Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest;
+using Bloomia.Application.Modules.SelfTests.Command.UpdateSelfTest;
 using Bloomia.Application.Modules.SelfTests.Queries.GetById;
 using Bloomia.Application.Modules.SelfTests.Queries.List;
 using Microsoft.AspNetCore.Http;
@@ -49,5 +52,31 @@ namespace Bloomia.API.Controllers
             return result;
         }
 
+        [Authorize(Roles ="ADMIN")]
+        [HttpPost("create-self-test")]
+        public async Task<ActionResult<CreateSelfTestCommandDto>> CreateNewSelfTest([FromBody] CreateSelfTestCommand request, CancellationToken ct)
+        {
+            var result= await sender.Send(request, ct);
+            return result;
+        }
+        [Authorize(Roles = "ADMIN")]
+        [HttpDelete("remove-self-test-by-id/{id:int}")]
+        public async Task<ActionResult> DeleteSelfTestById(int id, CancellationToken ct)
+        {
+            var deleteRequest = new DeleteSelfTestCommand
+            {
+                SelfTestId = id
+            };
+            await sender.Send(deleteRequest, ct);
+            return Ok("Self test disabled!");
+        }
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("update-self-test-by-id/{id:int}")]
+        public async Task<ActionResult<UpdateSelfTestCommandDto>> UpdateSelfTestById(int id, [FromBody] UpdateSelfTestCommand request, CancellationToken ct)
+        {
+            request.SelfTestId = id;
+            var result = await sender.Send(request, ct);
+            return result;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Domain.Entities.SelfTestsFolder
 {
-    public class SelfTestResultEntity
+    public class SelfTestResultEntity: BaseEntity
     {
-        public int Id { get; set; }
+      //  public int Id { get; set; }
         public int ClientId { get; set; }
         public ClientEntity Client { get; set; }
         public DateTime CompletedAt { get; set; }=DateTime.UtcNow;

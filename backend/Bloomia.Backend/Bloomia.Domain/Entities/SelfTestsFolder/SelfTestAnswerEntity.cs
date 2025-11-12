@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Domain.Entities.SelfTestsFolder
 {
-    public class SelfTestAnswerEntity
+    public class SelfTestAnswerEntity:BaseEntity
     {
-        public int Id { get; set; }
         public int SelfTestQuestionId { get; set; }
         public SelfTestQuestionEntity SelfTestQuestion { get; set; }
 
