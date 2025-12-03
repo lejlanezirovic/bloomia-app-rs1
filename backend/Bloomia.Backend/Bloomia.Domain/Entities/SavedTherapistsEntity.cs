@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Domain.Entities
 {
-    public class SavedTherapistsEntity
+    public class SavedTherapistsEntity:BaseEntity
     {
-        public int Id { get; set; }
         public int ClientId { get; set; }
         public ClientEntity Client { get; set; }
         public int TherapistId { get; set; }
