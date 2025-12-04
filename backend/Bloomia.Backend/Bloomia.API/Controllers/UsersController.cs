@@ -25,15 +25,6 @@ namespace Bloomia.API.Controllers
             return user; // if NotFoundException -> 404 via middleware
         }
 
-        [HttpPut("{id}")]
-        [Authorize] //samo autentifikovani korisnici (admin ili sam korisnik)
-        public async Task<IActionResult> Update(int id, UpdateUserCommand command, CancellationToken ct)
-        {
-            command.Id = id;
-            await sender.Send(command, ct);
-            return NoContent();
-        }
-
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> Delete(int id, CancellationToken ct)
