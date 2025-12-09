@@ -17,6 +17,6 @@ namespace Bloomia.Domain.Entities.TherapistRelated
         public bool IsBooked { get; set; }
 
         public AppointmentEntity? Appointment { get; set; }
-        public int AppointmentId { get; set; }
+        public int? AppointmentId { get; set; }
     }
 }

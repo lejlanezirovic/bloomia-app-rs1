@@ -20,11 +20,6 @@ namespace Bloomia.Infrastructure.Database.Configurations
                   .WithMany(x => x.Availability)
                  .HasForeignKey(x => x.TherapistId)
                  .OnDelete(DeleteBehavior.Restrict);
-
-           builder.HasOne(x=>x.Appointment)
-                .WithOne(x=>x.TherapistAvailability)
-                .HasForeignKey<AppointmentEntity>(x=>x.TherapistAvailabilityId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
