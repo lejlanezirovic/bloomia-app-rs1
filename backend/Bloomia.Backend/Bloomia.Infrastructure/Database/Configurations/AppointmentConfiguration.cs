@@ -1,6 +1,7 @@
 ﻿using Bloomia.Domain.Entities.Payments;
 using Bloomia.Domain.Entities.ReviewsFolder;
 using Bloomia.Domain.Entities.Sessions;
+using Bloomia.Domain.Entities.TherapistRelated;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,14 +28,17 @@ namespace Bloomia.Infrastructure.Database.Configurations
               .HasForeignKey(x => x.AppointmentId)
               .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.HasOne(x => x.Review)
-            //    .WithOne(x => x.Appointment)
-            //    .HasForeignKey<ReviewEntity>(x => x.AppointmentId);
+            //added unique index with filter IsDeleted=0,  da mozemo adresirati ponovo termin koji je oslobodjen nakon otkazivanja
+            builder.HasIndex(x => x.TherapistAvailabilityId)
+                    .IsUnique()
+                    .HasFilter("[IsDeleted]=0");
+
 
             builder.HasOne(x => x.TherapistAvailability)
-            .WithOne(x => x.Appointment)
-            .HasForeignKey<AppointmentEntity>(x => x.TherapistAvailabilityId)
-            .OnDelete(DeleteBehavior.Restrict);
+                .WithOne(x => x.Appointment)
+                .HasForeignKey<AppointmentEntity>(x => x.TherapistAvailabilityId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

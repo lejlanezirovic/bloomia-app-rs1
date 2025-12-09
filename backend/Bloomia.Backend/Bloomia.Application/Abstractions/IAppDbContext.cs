@@ -9,6 +9,7 @@ using Bloomia.Domain.Entities.ReviewsFolder;
 using Bloomia.Domain.Entities.SelfTestsFolder;
 using Bloomia.Domain.Entities.Sessions;
 using Bloomia.Domain.Entities.TherapistRelated;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Bloomia.Application.Abstractions;
 
@@ -43,6 +44,6 @@ public interface IAppDbContext
     public DbSet<AdminEntity> Admins { get; }
     public DbSet<RoleEntity> Roles { get; }
     public DbSet<ArticleEntity> Articles { get; }
-
+    DatabaseFacade Database { get; }
     Task<int> SaveChangesAsync(CancellationToken ct);
 }
