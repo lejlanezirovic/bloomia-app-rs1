@@ -4,6 +4,7 @@ using Bloomia.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloomia.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251209161414_AppointmentInheritsBaseEntity")]
+    partial class AppointmentInheritsBaseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -732,8 +735,7 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("TherapistAvailabilityId")
-                        .IsUnique()
-                        .HasFilter("[IsDeleted]=0");
+                        .IsUnique();
 
                     b.ToTable("Appointments", (string)null);
                 });
@@ -1129,7 +1131,8 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.HasOne("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", "TherapistAvailability")
                         .WithOne("Appointment")
                         .HasForeignKey("Bloomia.Domain.Entities.Sessions.AppointmentEntity", "TherapistAvailabilityId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Client");
 

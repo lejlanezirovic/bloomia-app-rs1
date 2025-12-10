@@ -10,6 +10,7 @@ using Bloomia.Domain.Entities.ReviewsFolder;
 using Bloomia.Domain.Entities.SelfTestsFolder;
 using Bloomia.Domain.Entities.Sessions;
 using Bloomia.Domain.Entities.TherapistRelated;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Bloomia.Infrastructure.Database;
 
@@ -46,6 +47,7 @@ public partial class DatabaseContext : DbContext, IAppDbContext
     public DbSet<ArticleEntity> Articles => Set<ArticleEntity>();
 
     private readonly TimeProvider _clock;
+    public DatabaseFacade Database => base.Database;
     public DatabaseContext(DbContextOptions<DatabaseContext> options, TimeProvider clock) : base(options)
     {
         _clock = clock;

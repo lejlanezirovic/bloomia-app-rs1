@@ -4,6 +4,7 @@ using Bloomia.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloomia.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251209210621_FixAvailabilityRelation")]
+    partial class FixAvailabilityRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -732,8 +735,7 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("TherapistAvailabilityId")
-                        .IsUnique()
-                        .HasFilter("[IsDeleted]=0");
+                        .IsUnique();
 
                     b.ToTable("Appointments", (string)null);
                 });
@@ -873,6 +875,10 @@ namespace Bloomia.Infrastructure.Database.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId")
+                        .IsUnique()
+                        .HasFilter("[AppointmentId] IS NOT NULL");
 
                     b.HasIndex("TherapistId");
 
@@ -1126,14 +1132,7 @@ namespace Bloomia.Infrastructure.Database.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", "TherapistAvailability")
-                        .WithOne("Appointment")
-                        .HasForeignKey("Bloomia.Domain.Entities.Sessions.AppointmentEntity", "TherapistAvailabilityId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("Client");
-
-                    b.Navigation("TherapistAvailability");
                 });
 
             modelBuilder.Entity("Bloomia.Domain.Entities.Sessions.ChatSessionEntity", b =>
@@ -1179,11 +1178,18 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", b =>
                 {
+                    b.HasOne("Bloomia.Domain.Entities.Sessions.AppointmentEntity", "Appointment")
+                        .WithOne("TherapistAvailability")
+                        .HasForeignKey("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", "AppointmentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Bloomia.Domain.Entities.TherapistEntity", "Therapist")
                         .WithMany("Availability")
                         .HasForeignKey("TherapistId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Appointment");
 
                     b.Navigation("Therapist");
                 });
@@ -1250,6 +1256,9 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.Navigation("ChatSessions");
 
                     b.Navigation("Review");
+
+                    b.Navigation("TherapistAvailability")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Bloomia.Domain.Entities.Sessions.ChatSessionEntity", b =>
@@ -1264,11 +1273,6 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.Navigation("MyTherapyTypesList");
 
                     b.Navigation("SavedByClients");
-                });
-
-            modelBuilder.Entity("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", b =>
-                {
-                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("Bloomia.Domain.Entities.TherapistRelated.TherapyTypeEntity", b =>
