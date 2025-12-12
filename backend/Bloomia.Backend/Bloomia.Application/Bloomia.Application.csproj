@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Modules\Moods\Queries\List\" />
     <Folder Include="Modules\TherapistAvailability\Command\Delete\DeleteDateFromAvailability\" />
     <Folder Include="Modules\Users\Commands\Status\" />
   </ItemGroup>

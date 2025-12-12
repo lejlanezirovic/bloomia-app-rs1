@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bloomia.Domain.Common;
 
 namespace Bloomia.Domain.Entities.MoodsFolder
 {
-    public class MoodEntity
+    public class MoodEntity : BaseEntity
     {
         public int Id { get; set; }
      
@@ -21,7 +22,7 @@ namespace Bloomia.Domain.Entities.MoodsFolder
         public int stress { get; set; }
         public int depression { get; set; }
         public int anxiety { get; set; }
-
+        public int WeekNumber { get; set; }
 
     }
 }
