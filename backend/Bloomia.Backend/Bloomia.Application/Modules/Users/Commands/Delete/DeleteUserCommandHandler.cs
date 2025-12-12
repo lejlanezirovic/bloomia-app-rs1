@@ -12,11 +12,11 @@ namespace Bloomia.Application.Modules.Users.Commands.Delete
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken ct)
         {
             if (currentUser.UserId is null)
-                throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Korinsik nije autentifikovan.");
+                throw new BloomiaBusinessRuleException("NOT_LOGGED_IN", "You have to be logged in.");
 
             //samo admin može obrisati korisnički račun 
             if (!currentUser.IsAdmin)
-                throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Samo admin može obrisati korisnika.");
+                throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Only admins can delete users.");
 
 
             var user = await context.Users
@@ -24,7 +24,7 @@ namespace Bloomia.Application.Modules.Users.Commands.Delete
                 .FirstOrDefaultAsync(u => u.Id == request.Id, ct);
 
             if (user is null)
-                throw new BloomiaNotFoundException("Korisnik nije pronađen.");
+                throw new BloomiaNotFoundException("User not found.");
 
 
             user.IsEnabled = false;
