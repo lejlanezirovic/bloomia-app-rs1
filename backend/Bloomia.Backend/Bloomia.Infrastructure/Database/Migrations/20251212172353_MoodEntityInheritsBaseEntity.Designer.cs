@@ -4,6 +4,7 @@ using Bloomia.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloomia.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251212172353_MoodEntityInheritsBaseEntity")]
+    partial class MoodEntityInheritsBaseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -721,15 +724,6 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedAtUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ReviewId")
                         .HasColumnType("int");
 
@@ -744,8 +738,7 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("TherapistAvailabilityId")
-                        .IsUnique()
-                        .HasFilter("[IsDeleted]=0");
+                        .IsUnique();
 
                     b.ToTable("Appointments", (string)null);
                 });
@@ -860,7 +853,7 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AppointmentId")
+                    b.Property<int>("AppointmentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAtUtc")
@@ -1141,7 +1134,8 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.HasOne("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", "TherapistAvailability")
                         .WithOne("Appointment")
                         .HasForeignKey("Bloomia.Domain.Entities.Sessions.AppointmentEntity", "TherapistAvailabilityId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Client");
 
