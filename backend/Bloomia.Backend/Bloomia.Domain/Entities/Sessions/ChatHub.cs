@@ -12,7 +12,7 @@ namespace Bloomia.Domain.Entities.Sessions
     {
         public override Task OnConnectedAsync()
         {
-            var userId = Context.UserIdentifier; // ovdje SignalR čita NameIdentifier
+            var userId = Context.UserIdentifier;
             Console.WriteLine("Client connected: " + Context.ConnectionId);
             return base.OnConnectedAsync();
         }

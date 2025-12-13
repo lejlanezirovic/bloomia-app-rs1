@@ -14,12 +14,5 @@ namespace Bloomia.Domain.Entities.Sessions
         public int TherapistId { get; set; }
         public TherapistEntity Therapist { get; set; }
         public List<MessageEntity> Messages { get; set; } = new List<MessageEntity>();
-        /*Svaki (client, therapist) par ima najviše jedan chat.
-
-            Chat postoji bez obzira na appointment.
-
-            Slanje poruke radi odmah → ništa ne treba zakazivati.
-        
-         DirectChat → "besplatno slanje poruka"*/
     }
 }
