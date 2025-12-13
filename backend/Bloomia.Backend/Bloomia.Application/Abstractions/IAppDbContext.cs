@@ -44,6 +44,7 @@ public interface IAppDbContext
     public DbSet<AdminEntity> Admins { get; }
     public DbSet<RoleEntity> Roles { get; }
     public DbSet<ArticleEntity> Articles { get; }
+    public DbSet<DirectChatEntity> DirectChats { get; }
     DatabaseFacade Database { get; }
     Task<int> SaveChangesAsync(CancellationToken ct);
 }
