@@ -1,8 +1,11 @@
 ﻿using Bloomia.API;
 using Bloomia.API.Middlewares;
 using Bloomia.Application;
+using Bloomia.Domain.Entities.Sessions;
 using Bloomia.Infrastructure;
 using Bloomia.Infrastructure.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 public partial class Program
@@ -56,6 +59,21 @@ public partial class Program
 
             builder.Services.AddExceptionHandler<MarketExceptionHandler>();
             builder.Services.AddProblemDetails();
+            builder.Services.AddSignalR();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDev",
+                    policy =>
+                    {
+                        policy
+                            .WithOrigins("http://localhost:4200") // kao string array može i više URL-ova
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+
             var app = builder.Build();
 
             // ---------------------------------------------------------
@@ -72,10 +90,13 @@ public partial class Program
             app.UseExceptionHandler();
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
+            app.UseCors("AllowAngularDev");
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.MapControllers();
+            app.MapHub<ChatHub>("/chat");
+
 
             // Database migrations + seeding
             await app.Services.InitializeDatabaseAsync(app.Environment);

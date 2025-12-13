@@ -45,6 +45,7 @@ public partial class DatabaseContext : DbContext, IAppDbContext
     public DbSet<AdminEntity> Admins => Set<AdminEntity>();
     public DbSet<RoleEntity> Roles => Set<RoleEntity>();
     public DbSet<ArticleEntity> Articles => Set<ArticleEntity>();
+    public DbSet<DirectChatEntity> DirectChats => Set<DirectChatEntity>();
 
     private readonly TimeProvider _clock;
     public DatabaseFacade Database => base.Database;
