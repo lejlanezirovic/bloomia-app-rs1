@@ -17,10 +17,9 @@ namespace Bloomia.Domain.Entities.Sessions
         public int TherapistAvailabilityId { get; set; }
         public TherapistAvailabilityEntity TherapistAvailability { get; set; }
         public SessionType SessionType { get; set; }
-
-        public int ReviewId { get; set; }
         public ReviewEntity? Review { get; set; }
         public DateTime BookedAt { get; set; }
+        public DateTime ScheduledAtUtc { get; set; }
 
         //list
         public List<ChatSessionEntity>? ChatSessions { get; set; } = new List<ChatSessionEntity>();

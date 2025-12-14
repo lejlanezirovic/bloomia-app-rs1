@@ -14,7 +14,7 @@ namespace Bloomia.Application.Modules.Articles.Commands.Create
         {
             if (!currentUser.IsAuthenticated)
                 throw new BloomiaBusinessRuleException("NOT_LOGGED_IN", "You have to be logged in.");
-
+            
             if (!currentUser.IsAdmin)
                 throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Only admins can add new articles.");
 

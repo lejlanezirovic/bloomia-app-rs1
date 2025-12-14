@@ -24,8 +24,12 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
             {
                 throw new BloomiaNotFoundException("That start time is not found!");
             }
-           
-            if(availableTime.Date<DateOnly.FromDateTime(DateTime.UtcNow) || availableTime.Date==DateOnly.FromDateTime(DateTime.UtcNow)&& availableTime.StartTime<=TimeOnly.FromDateTime(DateTime.UtcNow))
+
+            var localDateTime = availableTime.Date.ToDateTime(availableTime.StartTime);
+            var BiHTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+            var scheduledUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime, BiHTimeZone);
+
+            if(scheduledUtc <= DateTime.UtcNow)
             {
                 throw new BloomiaConflictException("You can not book an appointment in the past!");
             }
@@ -44,7 +48,8 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 TherapistAvailabilityId = availableTime.Id,
                 TherapistAvailability = availableTime,
                 SessionType = request.SessionType,
-                CreatedAtUtc = DateTime.UtcNow
+                CreatedAtUtc = DateTime.UtcNow,
+                ScheduledAtUtc = scheduledUtc
             };
             context.Appointments.Add(appointment);
 

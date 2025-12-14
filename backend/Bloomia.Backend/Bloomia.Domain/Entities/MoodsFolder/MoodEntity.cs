@@ -9,7 +9,6 @@ namespace Bloomia.Domain.Entities.MoodsFolder
 {
     public class MoodEntity : BaseEntity
     {
-        public int Id { get; set; }
      
         public int ClientId { get; set; }
         public ClientEntity Client { get; set; }

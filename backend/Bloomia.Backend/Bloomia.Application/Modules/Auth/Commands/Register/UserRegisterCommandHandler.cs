@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bloomia.Domain.Entities;
 
 namespace Bloomia.Application.Modules.Auth.Commands.Register
 {
@@ -38,6 +39,16 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register
             };
             newUser.PasswordHash = hasher.HashPassword(newUser, request.Password);
             db.Users.Add(newUser);
+            await db.SaveChangesAsync(cancellationToken);
+
+            var newClient = new ClientEntity
+            {
+                UserId = newUser.Id,
+                User = newUser,
+                CreatedAtUtc = DateTime.UtcNow
+            };
+
+            db.Clients.Add(newClient);
             await db.SaveChangesAsync(cancellationToken);
 
             newUser= await db.Users.Include(x => x.Role).FirstOrDefaultAsync(x=>x.Id==newUser.Id, cancellationToken);

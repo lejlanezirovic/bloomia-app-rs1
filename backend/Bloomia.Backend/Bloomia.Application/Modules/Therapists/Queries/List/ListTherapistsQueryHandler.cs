@@ -30,10 +30,11 @@ namespace Bloomia.Application.Modules.Therapists.Queries.List
             if (request.GenderId.HasValue)
                 query = query.Where(x => x.User.GenderId == request.GenderId.Value);
 
-            if(request.SortByRatingDesc != false)
+            if(request.SortByRatingDesc)
                 query = query.OrderByDescending(x => x.RatingAvg);
+           
 
-            var projectedQuery = query.OrderByDescending(x => x.RatingAvg)
+            var projectedQuery = query
                 .Select(x => new ListTherapistsQueryDto
                 {
                     Id = x.Id,

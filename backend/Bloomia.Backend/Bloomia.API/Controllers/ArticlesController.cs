@@ -3,9 +3,6 @@ using Bloomia.Application.Modules.Articles.Commands.Delete;
 using Bloomia.Application.Modules.Articles.Commands.Update;
 using Bloomia.Application.Modules.Articles.Queries.GetById;
 using Bloomia.Application.Modules.Articles.Queries.List;
-using Bloomia.Application.Modules.Users.Commands.Delete;
-using Bloomia.Application.Modules.Users.Queries.GetById;
-using Bloomia.Application.Modules.Users.Queries.List;
 
 namespace Bloomia.API.Controllers
 {
