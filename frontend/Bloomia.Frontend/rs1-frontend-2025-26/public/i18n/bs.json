@@ -12,7 +12,20 @@
       "PASSWORD_PLACEHOLDER": "Unesite lozinku",
       "REMEMBER_ME": "Zapamti me",
       "BUTTON": "Prijavi se",
-      "LOADING": "Prijavljivanje..."
+      "LOADING": "Prijavljivanje...",
+      "FORGOT_PASSWORD": "Zaboravili ste lozinku?",
+      "INVALID_CREDENTIALS": "Neispravan email ili lozinka",
+      "ENTER_LOGIN_DETAILS": "Unesite vaše podatke za prijavu",
+      "SUCCESS": "Uspješna prijava!",
+      "WELCOME_BACK": "Dobrodošli nazad!",
+      "DONT_HAVE_ACCOUNT": "Nemate nalog?",
+      "SIGN_UP": "Registruj se",
+      "BACK_TO_HOME": "Nazad na početnu stranicu",
+      "SIGNIN_IN": "Prijavljivanje...",
+      "OR": "ili",
+      "REQUIRED_PASSWORD": "Lozinka je obavezna",
+      "REQUIRED_EMAIL": "Email je obavezan",
+      "INVALID_EMAIL": "Unesite validan email"
     },
     "LOGOUT": {
       "TITLE": "Odjava",

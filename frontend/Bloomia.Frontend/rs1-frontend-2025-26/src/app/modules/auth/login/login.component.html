@@ -10,16 +10,16 @@
   <div class="auth-content">
     <!-- Logo & Brand -->
     <div class="auth-brand">
-      <mat-icon class="brand-icon">storefront</mat-icon>
-      <h1 class="brand-name">FIT Market</h1>
-      <p class="brand-tagline">Dobrodošli nazad</p>
+      <!-- <mat-icon class="brand-icon">storefront</mat-icon> -->
+      <h1 class="brand-name">Bloomia</h1>
+      <p class="brand-tagline">{{ 'AUTH.LOGIN.WELCOME_BACK' | translate }}</p>
     </div>
 
     <!-- Login Card -->
     <mat-card class="auth-card mat-elevation-z8">
       <mat-card-header>
         <mat-card-title>{{ 'AUTH.LOGIN.TITLE' | translate }}</mat-card-title>
-        <mat-card-subtitle>Unesite vaše podatke za pristup</mat-card-subtitle>
+        <mat-card-subtitle>{{ 'AUTH.LOGIN.ENTER_LOGIN_DETAILS' | translate }}</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content>
@@ -42,10 +42,10 @@
             />
             <mat-icon matPrefix>person</mat-icon>
             <mat-error *ngIf="form.get('email')?.hasError('required')">
-              Email je obavezan
+              {{ 'AUTH.LOGIN.REQUIRED_EMAIL' | translate }}
             </mat-error>
             <mat-error *ngIf="form.get('email')?.hasError('email')">
-              Unesite validan email
+              {{ 'AUTH.LOGIN.INVALID_EMAIL' | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -70,7 +70,7 @@
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
             <mat-error *ngIf="form.get('password')?.hasError('required')">
-              Lozinka je obavezna
+              {{ 'AUTH.LOGIN.REQUIRED_PASSWORD' | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -79,7 +79,7 @@
             <mat-checkbox formControlName="rememberMe" color="primary">
               {{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}
             </mat-checkbox>
-            <a href="#" class="forgot-link">Zaboravili ste lozinku?</a>
+            <a href="#" class="forgot-link">{{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}</a>
           </div>
 
           <!-- Submit Button -->
@@ -101,20 +101,20 @@
                   diameter="20"
                   strokeWidth="3"
                 ></mat-progress-spinner>
-                <span>Prijava u toku...</span>
+                <span>{{ 'AUTH.LOGIN.SIGNIN_IN' | translate }}</span>
               </ng-template>
             </button>
           </div>
 
           <!-- Divider -->
           <div class="divider">
-            <span>ili</span>
+            <span>{{ 'AUTH.LOGIN.OR' | translate }}</span>
           </div>
 
           <!-- Register Link -->
           <div class="register-prompt">
-            <span>Nemate nalog?</span>
-            <a routerLink="/auth/register" class="register-link">Registrujte se</a>
+            <span>{{ 'AUTH.LOGIN.DONT_HAVE_ACCOUNT' | translate }}</span>
+            <a routerLink="/auth/register" class="register-link">{{ 'AUTH.LOGIN.SIGN_UP' | translate }}</a>
           </div>
         </form>
       </mat-card-content>
@@ -124,7 +124,7 @@
     <div class="auth-footer">
       <a routerLink="/" class="back-link">
         <mat-icon>arrow_back</mat-icon>
-        Nazad na početnu
+        {{ 'AUTH.LOGIN.BACK_TO_HOME' | translate }}
       </a>
     </div>
   </div>

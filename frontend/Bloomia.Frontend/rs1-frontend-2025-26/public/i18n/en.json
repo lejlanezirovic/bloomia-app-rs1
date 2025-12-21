@@ -12,7 +12,20 @@
       "PASSWORD_PLACEHOLDER": "Enter password",
       "REMEMBER_ME": "Remember me",
       "BUTTON": "Login",
-      "LOADING": "Logging in..."
+      "LOADING": "Logging in...",
+      "FORGOT_PASSWORD": "Forgot password?",
+      "INVALID_CREDENTIALS": "Invalid email or password",
+      "ENTER_LOGIN_DETAILS": "Enter your login details",
+      "SUCCESS": "Login successful!",
+      "WELCOME_BACK": "Welcome back!",
+      "DONT_HAVE_ACCOUNT": "Don't have an account?",
+      "SIGN_UP": "Sign Up",
+      "BACK_TO_HOME": "Back to Homepage",
+      "SIGNIN_IN": "Signing in...",
+      "OR": "OR",
+      "REQUIRED_PASSWORD": "Password is required",
+      "REQUIRED_EMAIL": "Email is required",
+      "INVALID_EMAIL": "Enter a valid email address"
     },
     "LOGOUT": {
       "TITLE": "Logout",

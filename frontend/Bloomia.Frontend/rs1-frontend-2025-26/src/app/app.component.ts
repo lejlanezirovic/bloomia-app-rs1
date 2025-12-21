@@ -9,17 +9,17 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
   protected readonly title = signal('rs1-frontend-2025-26');
-  currentLang: string = 'bs';
+  currentLang: string = 'en';
 
   constructor(private translate: TranslateService) {
     console.log('AppComponent constructor - initializing TranslateService');
 
     // Inicijalizacija translate servisa
     this.translate.addLangs(['en', 'bs']);
-    this.translate.setDefaultLang('bs');
+    this.translate.setDefaultLang('en');
 
     // Učitaj jezik iz localStorage ili koristi default
-    const savedLang = localStorage.getItem('language') || 'bs';
+    const savedLang = localStorage.getItem('language') || 'en';
     this.currentLang = savedLang;
 
     this.translate.use(savedLang).subscribe({
