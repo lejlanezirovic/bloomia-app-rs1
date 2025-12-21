@@ -12,6 +12,10 @@ $white: #ffffff;
 $error-red: #f44336;
 $success-green: #4caf50;
 
+$text-color: #4A5759;
+$background-color: #B0C4B1;
+$light-color: #DEDBD2;
+
 // === ANIMATIONS ===
 @keyframes float {
   0%,
@@ -76,8 +80,12 @@ $success-green: #4caf50;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, $lighter-blue 0%, $light-blue 50%, $lighter-blue 100%);
+  background-color: $background-color;
   z-index: 0;
+}
+
+.brand-name {
+  color: $text-color;
 }
 
 .bg-shape {
@@ -145,22 +153,20 @@ $success-green: #4caf50;
   margin: 0 0 8px 0;
   padding-top: 5px;
   padding-bottom: 5px;
-  background: linear-gradient(135deg, $primary-blue 0%, $dark-blue 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: $white;
 }
 
 .brand-tagline {
   font-size: 16px;
   color: $text-light;
   margin: 0;
-  font-weight: 500;
+  font-weight: 500;;
 }
 
 // === CARD ===
 .auth-card {
-  background: $white;
+  background: $light-color;
   border-radius: 24px;
   padding: 40px;
   animation: slideInUp 0.6s ease-out 0.2s both;
@@ -216,7 +222,7 @@ form {
     }
 
     .mat-mdc-text-field-wrapper {
-      background-color: $lighter-blue;
+      background-color: lightgrey;
       border-radius: 12px;
       transition: all 0.3s ease;
     }
@@ -246,12 +252,13 @@ form {
 
     .mat-mdc-form-field-icon-prefix,
     .mat-mdc-form-field-icon-suffix {
-      color: $primary-blue;
+      color: $text-color;
     }
 
     input {
       font-size: 15px;
       padding: 16px 12px;
+      color: $text-dark;
     }
 
     .mat-mdc-form-field-error {
@@ -299,11 +306,11 @@ form {
 
 ::ng-deep .mat-mdc-checkbox {
   .mdc-checkbox__background {
-    border-color: $primary-blue !important;
+    border-color: $text-color !important;
   }
 
   &.mat-mdc-checkbox-checked .mdc-checkbox__background {
-    background-color: $primary-blue !important;
+    background-color: #4a5759 !important;
   }
 
   .mdc-label {
@@ -313,7 +320,7 @@ form {
 }
 
 .forgot-link {
-  color: $primary-blue;
+  color: $text-color;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -338,6 +345,7 @@ form {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
   transition: all 0.3s ease;
+  color: $text-color;
 
   &:not(:disabled):hover {
     transform: translateY(-2px);
@@ -389,7 +397,7 @@ form {
 .register-prompt {
   text-align: center;
   font-size: 14px;
-  color: $text-light;
+  color: $text-color;
 
   span {
     margin-right: 8px;
@@ -397,7 +405,7 @@ form {
 }
 
 .register-link {
-  color: $primary-blue;
+  color: #6b705c;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -428,7 +436,7 @@ form {
   border-radius: 8px;
 
   &:hover {
-    color: $primary-blue;
+    color: $light-color;
     background: rgba(74, 144, 226, 0.1);
 
     mat-icon {
