@@ -50,6 +50,17 @@ export interface TherapistAvailabilityDto {
     isbooked?: boolean | null;
 } 
 
+export interface UpdateTherapistCommand {
+    specialization?: string | null;
+    description?: string | null;
+    documentId?: number | null;
+    therapyTypeIds?: number[] | null;
+    profileImage?: number | null;
+    email?: string | null;
+    phoneNumber?: string | null;
+    locationId?: number | null;
+}
+
 export interface ChangeTherapistPasswordCommand {
     id: number;
     currentPassword?: string | null;
