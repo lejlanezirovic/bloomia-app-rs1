@@ -152,7 +152,11 @@ export class AuthFacadeService {
     try {
       const payload = jwtDecode<JwtPayloadDto>(token);
 
-      const role = (payload.role ?? '').toUpperCase();
+      const role = (
+      payload.role ?? 
+      payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ?? 
+      ''
+    ).toUpperCase();
 
       const user: CurrentUserDto = {
         userId: Number(payload.sub) || undefined,

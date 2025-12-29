@@ -21,6 +21,11 @@ export class CurrentUserService {
   /** Pravilo: admin > ostali → client */
   getDefaultRoute(): string {
     const user = this.snapshot;
+
+    console.log('getDefaultRoute: user =', user);
+    console.log('getDefaultRoute: user.role =', user?.role);
+    console.log('getDefaultRoute: role.toUpperCase() =', user?.role?.toUpperCase());
+
     if (!user) return '/login';
 
 
