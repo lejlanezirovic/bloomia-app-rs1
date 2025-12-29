@@ -12,7 +12,7 @@ import { ListTherapistsRequest, ListTherapistsResponse, GetTherapistByIdQueryDto
 })
 
 export class TherapistsApiService {
-    private readonly baseUrl = '${environment.apiUrl}/therapists';
+    private readonly baseUrl = `${environment.apiUrl}/api/therapists`;
     private http = inject(HttpClient);
 
     list(request?: ListTherapistsRequest): Observable<ListTherapistsResponse> {

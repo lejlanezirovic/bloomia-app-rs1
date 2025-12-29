@@ -1,1 +1,21 @@
+<div class="profile-container">
 
+    <div *ngIf="isLoading" class="loading-state">
+        <mat-spinner></mat-spinner>
+        <p>Profile loading...</p>
+    </div>
+
+    <div *ngIf="errorMessage && !isLoading" class="error-state">
+        <mat-icon>error</mat-icon>
+        <p>{{ errorMessage }}</p>
+        <button mat-raised-button color="primary" (click)="loadProfile()">Retry</button>
+    </div>
+
+    <div *ngIf="therapist && !isLoading">
+        <div class="profile-header">
+            <div class="profile-image-section">
+                <img src="/public/images/user.png" class="profile-image">
+            </div>
+        </div>
+    </div>
+</div>
