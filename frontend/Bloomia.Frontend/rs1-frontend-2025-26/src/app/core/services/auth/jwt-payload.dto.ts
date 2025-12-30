@@ -9,7 +9,7 @@ export interface JwtPayloadDto {
   // backend returns a single role string like "CLIENT", "THERAPIST", "ADMIN"
   role?: string;
   'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'?: string;
-  
+  therapistId?: string;
   ver: string;
   iat: number;
   exp: number;

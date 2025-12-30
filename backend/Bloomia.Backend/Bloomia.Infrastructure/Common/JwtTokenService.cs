@@ -13,11 +13,13 @@ public sealed class JwtTokenService : IJwtTokenService
 {
     private readonly JwtOptions _jwt;
     private readonly TimeProvider _time;
+    private readonly IAppDbContext _context;
 
-    public JwtTokenService(IOptions<JwtOptions> options, TimeProvider time)
+    public JwtTokenService(IOptions<JwtOptions> options, TimeProvider time, IAppDbContext context)
     {
         _jwt = options?.Value ?? throw new ArgumentNullException(nameof(options));
         _time = time ?? throw new ArgumentNullException(nameof(time));
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     public JwtTokenPair IssueTokens(UserEntity user)
@@ -41,6 +43,17 @@ public sealed class JwtTokenService : IJwtTokenService
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
             new(JwtRegisteredClaimNames.Aud, _jwt.Audience)
         };
+
+        //dodala
+        if(user.Role.RoleName.Equals("Therapist", StringComparison.OrdinalIgnoreCase))
+        {
+            var therapist = _context.Therapists.FirstOrDefault(t => t.UserId == user.Id);
+
+            if(therapist != null)
+            {
+                claims.Add(new Claim("therapistId", therapist.Id.ToString()));
+            }
+        }
 
         // --- Signature ---
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key));

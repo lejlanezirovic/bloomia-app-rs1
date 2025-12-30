@@ -160,6 +160,7 @@ export class AuthFacadeService {
 
       const user: CurrentUserDto = {
         userId: Number(payload.sub) || undefined,
+        therapistId: payload.therapistId ? Number(payload.therapistId) : undefined,
         nameIdentifier: payload.nameIdentifier ?? undefined,
         fullname: payload.fullname ?? undefined,
         email: payload.email ?? payload.emailAdress ?? undefined,

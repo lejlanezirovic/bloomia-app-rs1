@@ -1,5 +1,6 @@
 export interface CurrentUserDto {
   userId?: number;
+  therapistId?: number;
   nameIdentifier?: string;
   email?: string;
   fullname?: string;

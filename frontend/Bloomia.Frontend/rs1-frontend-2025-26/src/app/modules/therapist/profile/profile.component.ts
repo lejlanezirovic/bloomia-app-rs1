@@ -27,10 +27,10 @@ export class ProfileComponent implements OnInit {
     this.errorMessage = null;
 
     const currentUser = this.currentUserService.snapshot;
-    const therapistId = currentUser?.userId;
+    const therapistId = currentUser?.therapistId;
 
     if(!therapistId) {
-      this.errorMessage = 'User not found';
+      this.errorMessage = 'TherapistId not found';
       this.isLoading = false;
       return;
     }
@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
         this.therapist = response;
         this.isLoading = false;
         console.log('Therapist profile loaded:', response);
+        console.log('TherapistId:', response.id);
       },
       error: (error) => {
         console.error('Error loading therapist profile:', error);
