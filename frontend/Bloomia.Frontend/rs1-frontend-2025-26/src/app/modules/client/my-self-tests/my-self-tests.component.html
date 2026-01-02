@@ -1,0 +1,27 @@
+<div class="selfTest-page">
+<div *ngIf="isLoading">Loading your self tests..</div>
+<div *ngIf="errorMessage">{{errorMessage}}</div>
+  <div *ngIf="!isLoading && selfTests.length===0">
+        No self tests found!
+  </div>
+
+  <div class="self-tests-space">
+  
+  <div *ngFor="let test of selfTests" class="selftest-card">           
+        <h1 class="selftest-title">{{test.selfTestName}}</h1>
+        
+        <div class="selftest-questions">
+            <div class="selfTest-answers-card" *ngFor="let ans of test.selfTestAnswers">
+                 <span class="question-text">{{ans.questionName}}</span>    
+                 <span class="rating">Your rating: {{ans.rating}}/5</span>
+            </div>
+        </div>
+        
+        <div class="result-box">
+             <h2>Test average: {{test.testAverage}}</h2>
+             <p>Result description: {{test.resultDescription}}</p>  
+        </div>
+          
+  </div>
+</div>
+ </div>

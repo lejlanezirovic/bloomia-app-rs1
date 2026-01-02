@@ -1,0 +1,21 @@
+<div *ngIf="isLoading">Loading your profile..</div>
+<div *ngIf="errorMessage">{{errorMessage}}</div>
+
+<div *ngIf="client">
+    <div class="Basic-informations">
+        <h1 class="fl">{{client.firstname}} {{client.lastname}}</h1> 
+        <h2>{{client.username}}</h2>
+        <h3>{{client.city}}, {{client.country}}</h3>
+        <h3>Language: {{client.nativeLanguage}}</h3>
+        <h3>{{client.gender}}</h3> 
+        <h3>{{client.age}}</h3>
+    </div>
+
+    <div class="journal-selfTests">
+    
+        <button class="button" (click)="goToSelfTests()" >Self Tests</button>
+        <button class="button" (click)="goToJournals()" >Journal</button>
+    </div>
+
+   
+</div>

@@ -1,0 +1,19 @@
+<div class="jorunal-page">
+    <div *ngIf="isLoading">Loading your journals..</div>
+    <div *ngIf="errorMessage">{{errorMessage}}</div>
+
+    <div *ngIf="!isLoading && journals.length===0">
+        No journals found!
+    </div>
+    <h1 class="myJournals">My journals</h1>
+    <div class="journal-space"> 
+        <div *ngFor="let journal of journals" class="journal-card"> 
+            <h1 class="journal-title">{{journal.journalName}}</h1>
+            <h4 class="date">Created at: {{journal.createdAt}}</h4>
+            <div *ngFor="let ans of journal.journalAnswers" class="jorunal-answer-card">
+                <div class="question-text">{{ans.questionText}}</div>
+                <div class="answer">{{ans.answerText}}</div>
+            </div>
+        </div>
+    </div>
+ </div>

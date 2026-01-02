@@ -1,0 +1,36 @@
+<div class="client-header">
+    <div class="navbar">
+        <div class="hero-content">
+                <div class="hero-text">
+                    <div class="logo-container">
+                        <h1 class="brand-name">Bloomia</h1>
+                    </div>
+                </div>
+
+            <div class="hero-buttons"> 
+                <div class="floating-card home-card" >
+                    <mat-icon>home</mat-icon>
+                    <span>Home</span> 
+                </div>
+                <div class="floating-card therapists-card" >
+                    <mat-icon>person</mat-icon>
+                    <span>Therapists</span> 
+                </div>
+                <div class="floating-card selfTests-card" >
+                    <mat-icon>list</mat-icon>
+                    <span>Self-Tests</span> 
+                </div>
+            
+                <div class="floating-card profile-card" routerLink="/client/my-profile" routerLinkActive="active">
+                    <mat-icon>person</mat-icon>
+                    <span>My Profile</span> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<router-outlet>
+
+</router-outlet>
