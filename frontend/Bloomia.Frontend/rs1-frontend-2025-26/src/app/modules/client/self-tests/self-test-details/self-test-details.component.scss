@@ -1,0 +1,56 @@
+$text-color: #4A5759;
+$background-color: #B0C4B1;
+$light-color: #DEDBD2;
+
+$self-bg: #f7f7f5;
+$card-bg: #ffffff;
+$text-color: #4A5759;
+$accent: #B0C4B1;
+
+.selftest-title{
+    text-align: center;
+    color: $text-color;
+   margin-top: 100px;
+    padding-top: 80px;
+    font-size: 50px;
+    font-weight: 700;
+}
+.main-details-container{
+    background-color: $light-color;
+    width: 1400px;
+    height: auto;
+    border-radius: 12px;
+    margin-left: 250px;
+    align-items: center;
+}
+.questions-container{
+    margin-top: 60px;
+    padding-top: 20px;
+    align-items: center;
+}
+.question-card{
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 50px;
+    background-color: $self-bg;
+    border-radius: 12px;
+    height: 100px;
+    width: 1300px;
+    text-align: center;
+    margin-left: 50px;
+    padding-top: 20px;
+    color: $text-color;
+
+}
+.introduction{
+    margin-top: 50px;
+    font-size: 36px;
+    font-weight: 600;
+    color:  #8c8c7d;
+    text-align: center;
+   
+}
+.intro{
+     height: 110px;
+     
+}

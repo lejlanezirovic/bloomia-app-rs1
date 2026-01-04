@@ -1,0 +1,52 @@
+<div *ngIf="isLoading">Loading your profile..</div>
+<div *ngIf="errorMessage">{{errorMessage}}</div>
+
+
+<h1 class="page-title">Find a therapist</h1>
+<p class="page-subtitle">
+  Search by name, filter by gender or rating and choose the therapist that fits you best.
+</p> 
+<div class="filter-sort-search-container">
+
+    <input type="text" placeholder="  search by firstname" (input)="onSearchInput($event)" class="search-by-name"/><br>
+  
+    <div class="filter-sort-containter">
+    
+        <div class="filters-containter">
+            <span class="filter-text">Filter by: </span>
+            <div class="filter-cards">
+                <div class="filter-card male-filter" (click)="getMaleGender()">Male</div>
+                <div class="filter-card female-filter" (click)="getFemaleGender()">Female</div>
+            </div>
+        </div>
+        <div class="sort-container"> 
+            <span class="sort-text">Sort by: </span>
+            <div class="filter-card sort-desc" (click)="sortByrating()">Rating</div>
+        </div>
+    </div>
+</div>
+
+<div class="therapists">
+
+<div *ngFor="let therapist of therapistsList" class="therapist-card">
+    <div class="add-therapist">+</div>
+    <div>{{therapist.profileImage}}</div>
+
+    <div class="basic-info">
+        <h1 class="fullname">{{therapist.fullname}}</h1>
+        <p>{{therapist.specialization}}</p>
+        <div class="rating" *ngIf="therapist.ratingAvg>0;else noRating">
+            <mat-icon *ngFor="let r of getStars(therapist.ratingAvg)" color="warn">star</mat-icon>
+            <mat-icon *ngFor="let e of getEmptyStars(therapist.ratingAvg)" color="warn">star_border</mat-icon>
+            <span class="rating-value">
+                {{therapist.ratingAvg| number:'1.1-1'}}
+            </span>
+        </div>
+        <ng-template #noRating>
+            <span class="no-rating">No ratings yet</span>
+        </ng-template>
+    </div>
+   
+
+</div>
+</div>

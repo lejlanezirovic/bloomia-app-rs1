@@ -37,6 +37,9 @@ $light-color: #DEDBD2;
 .journal-selfTests{
     align-items: center;
     margin-top: 200px;
+
+    margin-left: 700px;
+
     margin-left: 800px;
 }
 .button{
@@ -44,12 +47,23 @@ $light-color: #DEDBD2;
     padding: 15px 32px;
     text-align: center;
     display: inline-block;
+
+    font-size: 18px;
+    font-weight: 600;
+  
+    cursor: pointer;
+    margin-right: 25px;
+    border-radius: 12px;
+    width: 200px;
+    height: 70px;
+    color: #efebdf;
+   
+    box-shadow: 2px 2px #899389;
     font-size: 15px;
     font-weight: 600;
     color:  #4A5759;
     cursor: pointer;
     margin-right: 20px;
-
     &:hover{
         background-color: #4A5759;
         color:#DEDBD2;

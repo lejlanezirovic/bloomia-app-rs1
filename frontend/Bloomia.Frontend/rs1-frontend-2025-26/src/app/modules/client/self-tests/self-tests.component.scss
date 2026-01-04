@@ -1,0 +1,85 @@
+$text-color: #4A5759;
+$background-color: #B0C4B1;
+$light-color: #DEDBD2;
+
+$self-bg: #f7f7f5;
+$card-bg: #ffffff;
+$text-color: #4A5759;
+$accent: #B0C4B1;
+
+
+$bg-page: #eef3ee;        // pozadina cijele stranice
+$card-bg: #ffffff;       // kartice
+$card-border: #e2e8e2;
+
+$text-primary: #3f4f4c;  // tamna sivo-zelena
+$text-muted: #6b7c77;
+
+$accent-soft: #b8cfc1;   // sage green
+$accent-hover: #9fb7a9;  // tamnija sage
+$accent-glow: rgba(159, 183, 169, 0.35);
+.main-container{
+    display: flex;
+    gap:120px;
+    background-color:rgba(211, 217, 211, 0.4) ;
+    margin-top: 100px;
+    justify-content: center;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgb(211, 217, 211);
+}
+.self-test-card{
+    background: linear-gradient(
+    135deg,
+    $card-bg,
+    #f0f4f1
+  );
+
+    width: 520px;
+    height: 300px;
+    border-radius: 18px;
+    padding-top: 20px;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    border: 1px solid $card-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  transition: 
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+    &:hover{
+       transform: translateY(-10px) scale(1.02);
+
+        background: linear-gradient(
+        135deg,
+        $accent-soft,
+        #e8f0eb); 
+         box-shadow:0 16px 35px $accent-glow;
+    }
+}
+.selftest-title{
+    text-align: center;
+    color:   #677968;
+   margin-top: 130px;
+  color: $text-primary;
+  line-height: 1.4;
+    transition: color 0.3s ease;
+
+  .self-test-card:hover & {
+    color: #2f3e3b;
+  }
+}
+.questions-container{
+    margin-top: 50px;
+}
+.text-title{
+    font-size: 30px;
+    font-weight: 600;
+   text-align: center;
+   padding-top: 90px;
+}
