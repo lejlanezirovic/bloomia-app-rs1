@@ -46,6 +46,45 @@ const routes: Routes = [
         {
           path:'self-tests/submit-self-test/:id',
           component:SubmitSelfTestComponent
+
+
+import { ListTherapistsComponent } from './list-therapists/list-therapists.component';
+import { SelfTestsComponent } from './self-tests/self-tests.component';
+import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-test-details.component';
+const routes: Routes = [
+    {
+      path:'',
+      component:ClientLayoutComponent,
+      children:[
+        {
+          path:'',
+          redirectTo:'my-profile',
+          pathMatch:'full'
+        },
+        {
+          path:'my-profile',
+          component:MyProfileComponent
+        },
+        {
+          path:'my-self-tests',
+          component:MySelfTestsComponent
+        },
+        {
+          path:'my-journals',
+          component:MyJournalsComponent
+        },
+        {
+          path:'list-therapists',
+          component:ListTherapistsComponent
+        },
+        {
+          path:'self-tests',
+          component:SelfTestsComponent
+        },
+        {
+          path:'self-tests/self-test-details/:id',
+          component:SelfTestDetailsComponent
+
         }
       ]
     }

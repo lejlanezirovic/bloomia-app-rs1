@@ -37,13 +37,20 @@ $light-color: #DEDBD2;
 .journal-selfTests{
     align-items: center;
     margin-top: 200px;
+
     margin-left: 700px;
+
+    margin-left: 700px;
+
+    margin-left: 800px;
+
 }
 .button{
      background-color: #B0C4B1;
     padding: 15px 32px;
     text-align: center;
     display: inline-block;
+
     font-size: 18px;
     font-weight: 600;
   
@@ -55,9 +62,16 @@ $light-color: #DEDBD2;
     color: #efebdf;
    
     box-shadow: 2px 2px #899389;
+
+    font-size: 15px;
+    font-weight: 600;
+    color:  #4A5759;
+    cursor: pointer;
+    margin-right: 20px;
+
     &:hover{
         background-color: #4A5759;
         color:#DEDBD2;
     }
-    //napravila sam novu komponentu za my selftest da mi se na klik buttona ne prikazuju na istom page my profile vec da ide na novi 
+
 }

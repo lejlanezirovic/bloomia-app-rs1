@@ -2,9 +2,15 @@
     <p class="introduction">Bloomia believes in personal growth through self-awareness.</p>
     <p class="introduction"> These self-tests are a tool that helps you get to know yourself better and take small but significant steps forward.</p>
 </div>
+
 <div class="main-details-container" *ngIf="test as t"><!-- ovo smo dodali jer nam se javlja greska zato sto je test bio tipa selfTest ili null pa id kad saljemo nije bio siguran-->
 
     <h1 class="selftest-title">{{t.selfTestName}}</h1>
+
+<div class="main-details-container">
+
+    <h1 class="selftest-title">{{test?.selfTestName}}</h1>
+
 
     <div class="questions-container">
         <div *ngFor="let q of test?.selfTestQuestions" class="question-card">
@@ -12,5 +18,9 @@
             
         </div>
     </div>
+
     <button (click)="showSelfTestToSubmit(t.id)" class="button" >Uradi</button>
+
+    <button>Uradi</button>
+
 </div>

@@ -8,6 +8,7 @@ export interface SubmitSelfTestCommandDto{
 }
 export interface SelfTestAnswersCommandDto{
     questionId:number;
+
     questionName?:string;
     rating: number;
 }
@@ -16,6 +17,11 @@ export interface SubmitSelfTestCommand{
     testId:number;
     testName?:string;
     testAnswers:SelfTestAnswersCommandDto[];
+
+    questionName:string;
+    rating: number;
+
+
 }
 
 export interface  ListAllSelfTestsQueryDto{
@@ -39,4 +45,5 @@ export interface GetSelfTestByIdQueryDto{
 export interface GetSelfTestByIdQueryQuestionsDto{
     questionId:number;
     question:string;
+
 }

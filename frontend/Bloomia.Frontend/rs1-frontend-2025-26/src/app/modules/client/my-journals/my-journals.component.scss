@@ -16,9 +16,14 @@ $accent: #B0C4B1;
     font-weight: 600;
 }
 .journal-space{
+
     display: grid;
     grid-template-columns: repeat(2,1fr);
     margin-left: 100px;
+
+    display: flex;
+    justify-content: center;
+
 }
 .journal-card{
     max-width:600px ;

@@ -10,6 +10,7 @@ $accent: #B0C4B1;
   max-width: 900px;
   margin: 60px auto;
   padding: 0 20px;
+
   height: auto;
 }
 .self-tests-space{
@@ -17,6 +18,12 @@ $accent: #B0C4B1;
    grid-template-columns: repeat(3, 1fr);
    position: static;
    gap:60px;
+
+
+}
+.self-tests-space{
+    display: flex;
+
 }
 
 .selftest-card{
@@ -72,8 +79,12 @@ $accent: #B0C4B1;
 }
 @media (max-width: 768px) {
     .self-tests-space{
+
    // display: list-item;
    grid-template-columns: 1fr;
+
+    display: list-item;
+
     }
   .self-test-card {
     padding: 10px;
