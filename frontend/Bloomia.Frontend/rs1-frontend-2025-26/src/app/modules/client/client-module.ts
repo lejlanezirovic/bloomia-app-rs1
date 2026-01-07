@@ -11,6 +11,12 @@ import { MyJournalsComponent } from './my-journals/my-journals.component';
 import { ListTherapistsComponent } from './list-therapists/list-therapists.component';
 import { SelfTestsComponent } from './self-tests/self-tests.component';
 import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-test-details.component';
+import { SubmitSelfTestComponent } from './self-tests/submit-self-test/submit-self-test.component';
+
+
+import { ListTherapistsComponent } from './list-therapists/list-therapists.component';
+import { SelfTestsComponent } from './self-tests/self-tests.component';
+import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-test-details.component';
 
 
 @NgModule({
@@ -18,6 +24,12 @@ import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-te
     MyProfileComponent,
     ClientLayoutComponent,
     MySelfTestsComponent,
+
+    MyJournalsComponent,
+    ListTherapistsComponent,
+    SelfTestsComponent,
+    SelfTestDetailsComponent,
+    SubmitSelfTestComponent
 
     MyJournalsComponent,
     ListTherapistsComponent,
