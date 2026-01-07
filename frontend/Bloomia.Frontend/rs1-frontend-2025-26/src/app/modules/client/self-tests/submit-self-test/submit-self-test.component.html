@@ -1,0 +1,31 @@
+<div *ngIf="isLoading">Loading your profile..</div>
+<div *ngIf="errorMessage" class="error-message">{{errorMessage}}</div>
+<div class="intro">
+    <p class="introduction">Bloomia believes in personal growth through self-awareness.</p>
+    <p class="introduction"> These self-tests are a tool that helps you get to know yourself better and take small but significant steps forward.</p>
+</div>
+<div class="main-details-container" >
+
+    <h1 class="selftest-title">{{selfTest?.selfTestName}}</h1>
+
+    <div class="questions-container">
+        <div *ngFor="let q of selfTest?.selfTestQuestions" class="question-card">
+            <p>{{q.question}}</p> 
+          
+                 <input type="number" placeholder="ocjeni od 1-5" min="1" max="5" class="rating" (input)="onRatingChange(q.questionId,$event)">
+           
+        </div>
+    </div>
+    <button (click)="submitSelfTest()"   [disabled]="!isFormValid()" class="button">Zavrsi</button>
+</div>
+
+<div class="overlay" *ngIf="submitSuccess">
+    <div class="success-message">
+        <h2>Test successfully submitted</h2>
+
+        <p class="avg">Test average:<strong>{{submitResponse?.testAverage}}</strong> </p>
+        <p class="desc">Description: {{submitResponse?.resultDescription}}</p>
+        <button class="popupButton" (click)="submitSuccess=false">OK</button>
+    </div>
+
+</div>
