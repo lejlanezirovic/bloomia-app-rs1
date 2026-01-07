@@ -8,9 +8,11 @@ import { ListTherapistsComponent } from './list-therapists/list-therapists.compo
 import { SelfTestsComponent } from './self-tests/self-tests.component';
 import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-test-details.component';
 import { SubmitSelfTestComponent } from './self-tests/submit-self-test/submit-self-test.component';
+
 import { JournalsComponent } from './journals/journals.component';
 import { HomeComponent } from './home/home.component';
 import { JournalDetailsComponent } from './journals/journal-details/journal-details.component';
+
 const routes: Routes = [
     {
       path:'',
@@ -49,6 +51,7 @@ const routes: Routes = [
         {
           path:'self-tests/submit-self-test/:id',
           component:SubmitSelfTestComponent
+
         },
         {
           path:'journals',
@@ -61,6 +64,44 @@ const routes: Routes = [
         {
           path:'journals/journal-details',
           component:JournalDetailsComponent
+
+
+import { ListTherapistsComponent } from './list-therapists/list-therapists.component';
+import { SelfTestsComponent } from './self-tests/self-tests.component';
+import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-test-details.component';
+const routes: Routes = [
+    {
+      path:'',
+      component:ClientLayoutComponent,
+      children:[
+        {
+          path:'',
+          redirectTo:'my-profile',
+          pathMatch:'full'
+        },
+        {
+          path:'my-profile',
+          component:MyProfileComponent
+        },
+        {
+          path:'my-self-tests',
+          component:MySelfTestsComponent
+        },
+        {
+          path:'my-journals',
+          component:MyJournalsComponent
+        },
+        {
+          path:'list-therapists',
+          component:ListTherapistsComponent
+        },
+        {
+          path:'self-tests',
+          component:SelfTestsComponent
+        },
+        {
+          path:'self-tests/self-test-details/:id',
+          component:SelfTestDetailsComponent
         }
       ]
     }

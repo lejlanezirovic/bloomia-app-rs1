@@ -9,6 +9,7 @@ export interface CreateJournalAnswerCommandDto{
     questionId:number;
     questionText:string;
     answerText:string;
+
 }
 export interface CreateJournalCommand{
     title:string;
@@ -23,4 +24,5 @@ export interface ListQuestionsQueryDto{
 export interface ListQuestions{
     questionId:number;
     question:string;
+
 }

@@ -11,9 +11,14 @@ import { ListTherapistsComponent } from './list-therapists/list-therapists.compo
 import { SelfTestsComponent } from './self-tests/self-tests.component';
 import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-test-details.component';
 import { SubmitSelfTestComponent } from './self-tests/submit-self-test/submit-self-test.component';
+
 import { JournalsComponent } from './journals/journals.component';
 import { HomeComponent } from './home/home.component';
 import { JournalDetailsComponent } from './journals/journal-details/journal-details.component';
+
+import { ListTherapistsComponent } from './list-therapists/list-therapists.component';
+import { SelfTestsComponent } from './self-tests/self-tests.component';
+import { SelfTestDetailsComponent } from './self-tests/self-test-details/self-test-details.component';
 
 
 @NgModule({
@@ -25,10 +30,20 @@ import { JournalDetailsComponent } from './journals/journal-details/journal-deta
     ListTherapistsComponent,
     SelfTestsComponent,
     SelfTestDetailsComponent,
+
     SubmitSelfTestComponent,
     JournalsComponent,
     HomeComponent,
     JournalDetailsComponent
+
+    SubmitSelfTestComponent
+
+    MyJournalsComponent,
+    ListTherapistsComponent,
+    SelfTestsComponent,
+    SelfTestDetailsComponent
+    MyJournalsComponent
+
   ],
   imports: [
     SharedModule,
