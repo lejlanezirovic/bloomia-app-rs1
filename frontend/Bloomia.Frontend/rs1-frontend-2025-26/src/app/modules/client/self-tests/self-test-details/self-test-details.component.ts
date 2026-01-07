@@ -1,7 +1,7 @@
 import { Component,inject,OnInit } from '@angular/core';
 import { SelfTestsApiService } from '../../../../api-services/selfTests/selfTests-api.service';
 import { GetSelfTestByIdQueryDto, ListAllSelfTestsQueryDto,ListSelfTestQueryDto,ListSelfTestQuerySelfTestQuestionsDto } from '../../../../api-services/selfTests/selfTests-api.models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-self-test-details',
@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class SelfTestDetailsComponent implements OnInit{
    private apiService=inject(SelfTestsApiService);
    private route=inject(ActivatedRoute);
+  private router=inject(Router);
 
    test:GetSelfTestByIdQueryDto|null=null;
    isLoading=false;
@@ -38,4 +39,7 @@ export class SelfTestDetailsComponent implements OnInit{
     });
   }
 
+  showSelfTestToSubmit(id:number){
+    this.router.navigate(['client/self-tests/submit-self-test', id]);
+  }
 }
