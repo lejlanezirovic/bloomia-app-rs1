@@ -16,4 +16,7 @@ export class TherapistLayoutComponent {
     });
   }
 
+  onLogout(): void {
+    this.router.navigate(['/logout']);
+  }
 }

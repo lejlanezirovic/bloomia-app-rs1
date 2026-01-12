@@ -16,5 +16,9 @@ export class ClientLayoutComponent {
       }
    }) ;
   }
+
+  onLogout(): void {
+    this.router.navigate(['/logout']);
+  }
 }
 //samo sam napravila servis, dodala neku rutu u client-routing-module.ts pocela navbar ali nista jos konretno nema na stranici
