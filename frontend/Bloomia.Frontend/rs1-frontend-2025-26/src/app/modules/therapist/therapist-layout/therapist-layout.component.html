@@ -18,10 +18,25 @@
                 <span>My Clients</span> 
             </div>
 
-            <div class="floating-card profile-card" routerLink="/therapist/profile" routerLinkActive="active">
+            <div class="floating-card profile-card" [matMenuTriggerFor]="userMenu">
                 <mat-icon>account_circle</mat-icon>
                 <span>My Profile</span> 
+                <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
             </div>
+
+            <mat-menu #userMenu="matMenu" class="profile-menu">
+                <button mat-menu-item routerLink="/therapist/my-profile">
+                    <mat-icon>person</mat-icon>
+                    <span>View Profile</span>
+                </button>
+                
+                <mat-divider></mat-divider>
+                
+                <button mat-menu-item (click)="onLogout()" class="logout-item">
+                    <mat-icon>logout</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
       </div>
     </div>
     </nav>

@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {myAuthData, myAuthGuard} from './core/guards/my-auth-guard';
+import { LogoutComponent } from './modules/auth/logout/logout.component';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth-module').then(m => m.AuthModule)
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent
   },
   {
     path: 'client',
