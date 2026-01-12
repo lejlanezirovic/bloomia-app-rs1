@@ -5,6 +5,7 @@ import { BaseComponent } from '../../../core/components/base-classes/base-compon
 import { AuthFacadeService } from '../../../core/services/auth/auth-facade.service';
 import { LoginCommand } from '../../../api-services/auth/auth-api.model';
 import { CurrentUserService } from '../../../core/services/auth/current-user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -17,13 +18,30 @@ export class LoginComponent extends BaseComponent {
   private auth = inject(AuthFacadeService);
   private router = inject(Router);
   private currentUser = inject(CurrentUserService);
+
+  translate = inject(TranslateService);
+
   hidePassword = true;
+  currentLang:  string = 'en';
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
     rememberMe: [false],
   });
+
+  constructor() {
+    super();
+    const savedLang = localStorage.getItem('language') || 'en';
+    this.currentLang = savedLang;
+    this.translate.use(savedLang);
+  }
+
+  switchLanguage(lang: string): void {
+    this.currentLang = lang;
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
+  }
 
   onSubmit(): void {
     if (this.form.invalid || this.isLoading) return;

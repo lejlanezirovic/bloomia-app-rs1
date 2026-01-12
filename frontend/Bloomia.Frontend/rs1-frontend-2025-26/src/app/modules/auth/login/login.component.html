@@ -8,6 +8,14 @@
   </div>
 
   <div class="auth-content">
+
+    <div class="language-switcher">
+      <button type="button" class="lang-btn" [class.active]="currentLang === 'en'"
+      (click)="switchLanguage('en')">EN</button>
+      <button type="button" class="lang-btn" [class.active]="currentLang === 'bs'"
+      (click)="switchLanguage('bs')">BS</button>
+    </div>
+
     <!-- Logo & Brand -->
     <div class="auth-brand">
       <!-- <mat-icon class="brand-icon">storefront</mat-icon> -->
