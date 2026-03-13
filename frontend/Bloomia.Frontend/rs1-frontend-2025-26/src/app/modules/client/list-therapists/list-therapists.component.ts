@@ -14,6 +14,7 @@ import { ToasterService } from '../../../core/services/toaster.service';
   styleUrl: './list-therapists.component.scss',
 })
 export class ListTherapistsComponent implements OnInit {
+//ima paging mozemo implementirati
 
   private router=inject(Router);
   private apiService=inject(TherapistsApiService);

@@ -18,6 +18,9 @@
 <div class="saved-therapists-container" *ngIf="isSearching===false">
     <div class="saved-therapist-card" *ngFor="let st of savedTherapists">
          <div class="remove-therapist" (click)="removeTherapistFromSavedTherapists(st.therapistId)">-</div>
+         <div class="therapist-avatar">
+            <mat-icon class="therapist-avatar-icon">person</mat-icon>
+         </div>
          <div class="basic-info">
               <h1 class="fullname">{{st.fullname}}</h1>
              <p>{{st.specialization}}</p>
@@ -39,8 +42,10 @@
 <div class="saved-therapists-container" *ngIf="isSearching==true">
     <div class="saved-therapist-card" *ngFor="let st of searchedSavedTherapists">
          <div class="remove-therapist" (click)="removeTherapistFromSavedTherapists(st.therapistId)">-</div>
+         <div class="therapist-avatar">
+            <mat-icon class="therapist-avatar-icon">person</mat-icon>
+         </div>
          <div class="basic-info">
-            <div>{{st.therapistProfilePictureUrl}}</div>
               <h1 class="fullname">{{st.fullName}}</h1>
              <p>{{st.specialization}}</p>
             <div class="rating" *ngIf="st.ratingAvg>0;else noRating">

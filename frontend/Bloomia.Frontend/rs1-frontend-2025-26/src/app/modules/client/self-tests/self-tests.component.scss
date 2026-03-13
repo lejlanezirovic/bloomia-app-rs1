@@ -38,13 +38,14 @@ $accent-glow: rgba(159, 183, 169, 0.35);
     width: 520px;
     height: 300px;
     border-radius: 18px;
-    padding-top: 20px;
-    justify-content: center;
+    padding: 32px 24px;
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 
     border: 1px solid $card-border;
     display: flex;
+    flex-direction: column;
+    gap: 18px;
     align-items: center;
     justify-content: center;
   
@@ -62,10 +63,24 @@ $accent-glow: rgba(159, 183, 169, 0.35);
          box-shadow:0 16px 35px $accent-glow;
     }
 }
+
+.self-test-icon{
+  font-size: 68px;
+  width: 68px;
+  height: 68px;
+  color: $accent-hover;
+  transition: color 0.3s ease, transform 0.3s ease;
+
+  .self-test-card:hover & {
+    color: #2f3e3b;
+    transform: scale(1.08);
+  }
+}
+
 .selftest-title{
     text-align: center;
     color:   #677968;
-   margin-top: 130px;
+   margin-top: 0;
   color: $text-primary;
   line-height: 1.4;
     transition: color 0.3s ease;

@@ -30,8 +30,10 @@
 
 <div *ngFor="let therapist of therapistsList" class="therapist-card">
     <div class="add-therapist" (click)="addTherapistToSavedTherapists(therapist.id)">+</div>
-    <div>{{therapist.profileImage}}</div>
-
+    <div class="therapist-avatar">
+        <mat-icon class="therapist-avatar-icon">person</mat-icon>
+    </div>
+  
     <div class="basic-info">
         <h1 class="fullname">{{therapist.fullname}}</h1>
         <p>{{therapist.specialization}}</p>
