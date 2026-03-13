@@ -153,9 +153,6 @@ $light-color: #DEDBD2;
   padding-bottom: 7px;
   color: $white;
   margin: 0;
-  // background: linear-gradient(135deg, $dark-green 0%, $dark-green 100%);
-  // -webkit-background-clip: text;
-  // -webkit-text-fill-color: transparent;
   background-clip: text;
 
 }
@@ -521,7 +518,7 @@ $light-color: #DEDBD2;
   color: $text-color;
 }
 
-// === CTA SECTION ===
+
 .cta-section {
  // @include section-padding;
   height:550px;
@@ -577,7 +574,6 @@ $light-color: #DEDBD2;
   background-color: $text-color;
   padding-top: 40px;
   border-radius: 15px;
-  color: red;
 
   @for $i from 1 through 4 {
     &:nth-child(#{$i}) {

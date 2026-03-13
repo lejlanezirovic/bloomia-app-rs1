@@ -5,7 +5,7 @@ import { BasePagedQuery } from '../../../core/models/paging/base-paged-query';
 import { PageRequest } from '../../../core/models/paging/page-request';
 import { ToasterService } from '../../../core/services/toaster.service';
 import { FitConfirmDialogComponent } from '../../shared/components/fit-confirm-dialog/fit-confirm-dialog.component';
-import { DialogType,DialogButton } from '../../shared/models/dialog-config.model';
+import { DialogType,DialogButton, DialogResult } from '../../shared/models/dialog-config.model';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -113,8 +113,8 @@ export class SavedTherapistsComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result=>{
-        if(result){
+    dialogRef.afterClosed().subscribe((result: DialogResult | undefined)=>{
+        if(result?.button === DialogButton.DELETE){
           this.removeAllSavedTherapists();
         }
     })

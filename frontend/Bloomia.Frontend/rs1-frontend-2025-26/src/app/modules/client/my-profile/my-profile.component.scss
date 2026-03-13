@@ -2,16 +2,41 @@ $text-color: #4A5759;
 $background-color: #B0C4B1;
 $light-color: #DEDBD2;
 
+.profile-header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 70px;
+    padding: 24px 32px;
+}
+
+.profile-icon-wrapper{
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d8e4d8, #b0c4b1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 28px rgba(74, 87, 89, 0.16);
+    border: 4px solid rgba(255, 255, 255, 0.7);
+    flex-shrink: 0;
+}
+
+.profile-icon{
+    width: 110px;
+    height: 110px;
+    font-size: 110px;
+    color: $text-color;
+}
 
 
 .Basic-informations{
     color: $text-color;
-    justify-content: space-between;
     width: 400px;   
-    height: 250px;
-    padding-top: 30px;
-    margin-top: 70px;
-    margin-left: 1160px;
+    padding-left: 100px;
+    min-height: 250px;
     & .fl{
         font-size: 50px;
         
@@ -19,12 +44,15 @@ $light-color: #DEDBD2;
     & h2{
          font-size: 33px;
     }
+    & h3{
+        margin-bottom: 12px;
+    }
     @media(max-width:768px) {
         width: 100%;
-        height: auto;
-        margin: 50px 0;
-        padding: 20px;
+        min-height: auto;
+        padding: 0;
         align-items: center;
+        text-align: center;
 
         & .fl{
             font-size: 33px;
@@ -37,7 +65,7 @@ $light-color: #DEDBD2;
 .journal-selfTests{
     align-items: center;
     margin-top: 200px;
-    margin-left: 700px;
+    margin-left: 620px;
 }
 .button{
      background-color: #B0C4B1;
@@ -60,4 +88,37 @@ $light-color: #DEDBD2;
         color:#DEDBD2;
     }
     //napravila sam novu komponentu za my selftest da mi se na klik buttona ne prikazuju na istom page my profile vec da ide na novi 
+}
+
+@media(max-width:768px) {
+    .profile-header{
+        flex-direction: column;
+        gap: 24px;
+        margin-top: 40px;
+        padding: 16px;
+    }
+
+    .profile-icon-wrapper{
+        width: 160px;
+        height: 160px;
+    }
+
+    .profile-icon{
+        width: 84px;
+        height: 84px;
+        font-size: 84px;
+    }
+
+    .journal-selfTests{
+        margin-top: 80px;
+        margin-left: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .button{
+        margin-right: 0;
+    }
 }
