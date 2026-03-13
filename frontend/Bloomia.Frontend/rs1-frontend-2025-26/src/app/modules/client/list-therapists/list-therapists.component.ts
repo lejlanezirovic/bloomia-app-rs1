@@ -6,6 +6,7 @@ import { ListTherapistsQueryDto, ListTherapistsRequest, ListTherapistsResponse }
 import { SavedTherapistsApiService } from '../../../api-services/savedTherapists/savedTherapists-api.service';
 import { AddTherapistToSavedTherapistsCommandDto } from '../../../api-services/savedTherapists/savedTherapists-api.models';
 import { ToasterService } from '../../../core/services/toaster.service';
+import { BaseListPagedComponent } from '../../../core/components/base-classes/base-list-paged-component';
 
 @Component({
   selector: 'app-list-therapists',
@@ -13,7 +14,8 @@ import { ToasterService } from '../../../core/services/toaster.service';
   templateUrl: './list-therapists.component.html',
   styleUrl: './list-therapists.component.scss',
 })
-export class ListTherapistsComponent implements OnInit {
+export class ListTherapistsComponent extends BaseListPagedComponent<ListTherapistsQueryDto,ListTherapistsRequest> implements OnInit {
+
 //ima paging mozemo implementirati
 
   private router=inject(Router);
@@ -22,27 +24,22 @@ export class ListTherapistsComponent implements OnInit {
   private toastService=inject(ToasterService);
 
   therapistsList:ListTherapistsQueryDto[]=[];
-  total=0;
-
-  isLoading=false;
-  errorMessage:string|null=null;
-
-  request=new ListTherapistsRequest();
   private searchTimeout:any;
   savedTherapistDto:AddTherapistToSavedTherapistsCommandDto|null=null;
 
+  constructor(){
+    super();
+    this.request=new ListTherapistsRequest();
+  }
   ngOnInit(): void {
-    this.loadAllTherapists();
+   this.initList();
   }
 
   loadAllTherapists():void{
-    this.isLoading=true;
-    this.errorMessage=null;
-
+   
     this.apiService.list(this.request).subscribe({
       next:(response)=>{
         this.therapistsList=response.items;
-        this.total=response.totalItems;
         this.isLoading=false;
       },
       error:(err)=>{
@@ -52,6 +49,25 @@ export class ListTherapistsComponent implements OnInit {
       }
     });
   }
+
+  loadPagedData(): void {
+    this.startLoading();
+
+     this.apiService.list(this.request).subscribe({
+      next:(response)=>{
+        this.handlePageResult(response);
+        console.info(response);
+        this.therapistsList=response.items;
+        this.stopLoading();
+      },
+      error:(err)=>{
+        this.errorMessage='Failed to load therapists.';
+        console.error(err);
+       this.stopLoading();
+      }
+    });
+  }
+
 
   //rating - stars
   getStars(rating:number): number[]{
@@ -63,17 +79,20 @@ export class ListTherapistsComponent implements OnInit {
 
   getFemaleGender(){
     this.request.genderId=2;
-    this.loadAllTherapists();
+
+    this.request.paging.page=1;
+    this.loadPagedData();
   }
   getMaleGender(){
     this.request.genderId=1;
-    this.loadAllTherapists();
+    this.request.paging.page=1;
+    this.loadPagedData();
   }
 
   //sort
   sortByrating(){
     this.request.sortByRatingDesc=!this.request.sortByRatingDesc;
-    this.loadAllTherapists();
+    this.loadPagedData();
   }
   searchByName(payload:string|null){
     const name=payload?.trim();
@@ -87,7 +106,7 @@ export class ListTherapistsComponent implements OnInit {
     }
 
     this.request.paging.page=1;
-    this.loadAllTherapists();
+     this.loadPagedData();
   }
   onSearchInput(event:Event):void{
     const value=(event.target as HTMLInputElement).value;
