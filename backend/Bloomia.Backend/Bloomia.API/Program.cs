@@ -1,9 +1,13 @@
 ﻿using Bloomia.API;
 using Bloomia.API.Middlewares;
 using Bloomia.Application;
+using Bloomia.Application.Abstractions;
 using Bloomia.Domain.Entities.Sessions;
 using Bloomia.Infrastructure;
 using Bloomia.Infrastructure.Common;
+using Bloomia.Infrastructure.Services;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -49,6 +53,14 @@ public partial class Program
             // Optional: remove default providers to have only Serilog
             builder.Logging.ClearProviders();
 
+            if (FirebaseApp.DefaultInstance == null)
+            {
+                FirebaseApp.Create(new AppOptions()
+                {
+                    Credential = GoogleCredential.FromFile("firebase-service-account.json")
+                });
+            }
+
             // ---------------------------------------------------------
             // 3. Layer registrations
             // ---------------------------------------------------------
@@ -60,6 +72,7 @@ public partial class Program
             builder.Services.AddExceptionHandler<MarketExceptionHandler>();
             builder.Services.AddProblemDetails();
             builder.Services.AddSignalR();
+            builder.Services.AddScoped<IPushNotificationService, PushNotificationService>();
 
             builder.Services.AddCors(options =>
             {

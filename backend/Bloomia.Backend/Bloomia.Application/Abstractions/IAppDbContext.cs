@@ -4,6 +4,7 @@ using Bloomia.Domain.Entities.Basics;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.JournalsFolder;
 using Bloomia.Domain.Entities.MoodsFolder;
+using Bloomia.Domain.Entities.Notifications;
 using Bloomia.Domain.Entities.Payments;
 using Bloomia.Domain.Entities.ReviewsFolder;
 using Bloomia.Domain.Entities.SelfTestsFolder;
@@ -45,6 +46,7 @@ public interface IAppDbContext
     public DbSet<RoleEntity> Roles { get; }
     public DbSet<ArticleEntity> Articles { get; }
     public DbSet<DirectChatEntity> DirectChats { get; }
+    public DbSet<NotificationTokenEntity> NotificationTokens { get; }
     DatabaseFacade Database { get; }
     Task<int> SaveChangesAsync(CancellationToken ct);
 }

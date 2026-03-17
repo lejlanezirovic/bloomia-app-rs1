@@ -540,3 +540,6 @@ http-client.private.env.json
 .idea/.cache/.Apifox_Helper
 .idea/ApifoxUploaderProjectSetting.xml
 .vs/
+
+*-firebase-adminsdk-*.json
+firebase-service-account.json
