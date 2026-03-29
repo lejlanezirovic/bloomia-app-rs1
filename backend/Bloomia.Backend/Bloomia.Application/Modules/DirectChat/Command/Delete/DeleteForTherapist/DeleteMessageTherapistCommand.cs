@@ -8,7 +8,6 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForTherapi
 {
     public sealed class DeleteMessageTherapistCommand:IRequest<DeleteMessageTherapistCommandDto>
     {
-        public int DirectChatId { get; set; }
         public int MessageId { get; set; }
         [JsonIgnore]
         public int UserId { get; set; }

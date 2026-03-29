@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapist
 {
-    public class SendMessageTherapistCommandHandler(IAppDbContext context, IHubContext<ChatHub> hubContext) : IRequestHandler<SendMessageTherapistCommand, SendMessageTherapistCommandDto>
+    public class SendMessageTherapistCommandHandler(IAppDbContext context, IChatNotifier chatNotifier) : IRequestHandler<SendMessageTherapistCommand, SendMessageTherapistCommandDto>
     {
         public async Task<SendMessageTherapistCommandDto> Handle(SendMessageTherapistCommand request, CancellationToken cancellationToken)
         {
@@ -23,7 +23,9 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapi
                 throw new Exception("Client or Therapist not found");
             }
             //provjera postoji li DIREKTAN chat izmedju njih
-            var directChat = await context.DirectChats.Include(x => x.Client).ThenInclude(x=>x.User).Include(x => x.Therapist)
+            var directChat = await context.DirectChats
+                      .Include(x => x.Client).ThenInclude(x=>x.User)
+                      .Include(x => x.Therapist)
                       .Include(x => x.Messages)
                       .FirstOrDefaultAsync(x => x.TherapistId == therapist.Id && x.ClientId == client.Id, cancellationToken);
             if (directChat == null)
@@ -44,7 +46,7 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapi
                 DirectChat = directChat,
                 Content = request.Content,
                 SenderId = therapist.Id,
-                SenderType = SenderType.TTHERAPIST,
+                SenderType = SenderType.THERAPIST,
                 CreatedAtUtc = DateTime.UtcNow,
                 isRead = false,
                 SentAt = DateTime.UtcNow
@@ -56,16 +58,19 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapi
             {
                 Note = "Sent!",
                 Message = message.Content,
-                SentAt = message.SentAt
+                SentAt = message.SentAt,
+                DirectChatId=directChat.Id,
+                MessageId=message.Id
             };
-            await hubContext.Clients.User(client.User.Id.ToString())
-                .SendAsync("ReceiveDirectMessage", new
-                {
-                    DirectChatId = directChat.Id,
-                    Sender = "Therapist",
-                    Message = message.Content,
-                    message.SentAt
-                }, cancellationToken);
+            await chatNotifier.NotifyUserAsync(client.UserId.ToString(), "ReceiveMessage", new
+            {
+                DirectChatId = directChat.Id,
+                 MessageId = message.Id,
+                Sender = "Therapist",
+                Content = message.Content,
+                SentAt = message.SentAt,
+                IsRead = message.isRead
+            }, cancellationToken);     
             return dto;
         }
     }

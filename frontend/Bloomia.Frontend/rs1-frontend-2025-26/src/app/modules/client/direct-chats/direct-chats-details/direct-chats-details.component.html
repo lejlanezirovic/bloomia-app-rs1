@@ -1,0 +1,109 @@
+<div class="chat-page">
+  <div class="chat-shell">
+    <div class="chat-header">
+      <div class="chat-user">
+        <div class="chat-user-avatar">
+          <span>{{ (directChatDetails?.therapistFullname || 'Therapist').charAt(0) }}</span>
+        </div>
+
+        <div class="chat-user-info">
+          <h2>{{ directChatDetails?.therapistFullname || 'Therapist' }}</h2>
+          <p>{{ directChatDetails?.messages?.length ? 'Online conversation' : 'Say hello to start chatting' }}</p>
+        </div>
+      </div>
+
+      <div class="chat-header-actions">
+        <button type="button" class="header-icon-button" aria-label="Call">
+          <i class="fa-solid fa-phone"></i>
+        </button>
+        <button type="button" class="header-icon-button" aria-label="More">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="chat-status">
+      <div class="chat-status-spinner"></div>
+      <p>Loading chat...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="chat-status chat-status--error">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div class="chat-body" *ngIf="!isLoading">
+      <div *ngIf="(directChatDetails?.messages && directChatDetails?.messages?.length) || messageDTO; else emptyConversation"
+        class="messages-list" >
+        <div class="messages-date-chip">Messages</div>
+
+        <div
+          *ngFor="let message of directChatDetails?.messages"
+          class="message-row"
+          [ngClass]="{
+            'my-message': message.senderType === 'CLIENT',
+            'their-message': message.senderType !== 'CLIENT'
+          }"
+        >
+          <div class="message-bubble"
+          [matMenuTriggerFor]="messageMenu"
+          (click)="selectMessage(message)"
+          >
+            <p class="message-text">{{ message.content }}</p>
+
+            <div class="message-meta">
+              <span class="message-time">{{ message.sentAt | date:'shortTime' }}</span>
+              <span class="message-read" *ngIf="message.senderType === 'CLIENT'">
+                {{ message.isRead ? 'Seen' : 'Sent' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <mat-menu #messageMenu="matMenu">
+          <button mat-menu-item (click)="editSelectedMessage(selectedMessage)">
+            Edit
+          </button>
+          <button mat-menu-item (click)="openConfirmDialogToRemoveTheMessage()">
+            Delete
+          </button>
+        </mat-menu>
+      </div>
+
+      <ng-template #emptyConversation>
+        <div class="empty-chat">
+          <div class="empty-chat-icon">
+            <i class="fa-regular fa-comments"></i>
+          </div>
+          <h3>No messages yet</h3>
+          <p>Start the conversation with this therapist.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="chat-input-section">
+      <div class="chat-input-wrapper">
+        <input
+          type="text"
+          [(ngModel)]="newMessage"
+          placeholder="Write a message..."
+          class="chat-input"
+          (keyup.enter)="sendMessage(); newMessage=''"
+        />
+        <div *ngIf="editingMessageId !== null" class="edit-banner">
+             Editing message...
+             <button type="button" (click)="cancelEdit()">Cancel</button>
+        </div>
+        <button
+          type="button"
+          class="send-button"
+          (click)="sendMessage(); newMessage=''"
+          
+        >
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

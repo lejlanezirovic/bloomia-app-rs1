@@ -6,17 +6,29 @@ import { TherapistLayoutComponent } from './therapist-layout/therapist-layout.co
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import {SharedModule} from '../shared/shared-module';
+import { DirectChatsComponent } from './direct-chats/direct-chats.component';
+import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details/direct-chats-details.component';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     TherapistLayoutComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    DirectChatsComponent,
+    DirectChatsDetailsComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    TherapistRoutingModule
+    TherapistRoutingModule,
+    FormsModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
   ]
 })
 export class TherapistModule { }

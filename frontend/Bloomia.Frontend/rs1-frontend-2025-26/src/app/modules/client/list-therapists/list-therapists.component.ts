@@ -127,4 +127,13 @@ export class ListTherapistsComponent extends BaseListPagedComponent<ListTherapis
       }
     })
   }
+
+  //messageClick(therapistId:number){
+    //this.router.navigate(['client/direct-chats'], {
+      //queryParams:{therapistId}
+    //});
+  //}
+  messageIconClick(therapistId:number){
+      this.router.navigate([`client/direct-chats/${therapistId}/details`]);
+  }
 }
