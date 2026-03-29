@@ -1,0 +1,63 @@
+<p>direct-chats works!</p>
+<div class="direct-chats-page">
+  <div class="page-header">
+    <span class="eyebrow">Messages</span>
+    <h1 class="page-title">Dear therapist, your direct chats</h1>
+    <p class="page-subtitle">
+      A clean conversation list, unread chats stand out immediately.
+    </p>
+  </div>
+
+  <div *ngIf="isLoading" class="info-state">Loading your chats...</div>
+  <div *ngIf="errorMessage" class="info-state error-state">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage" class="direct-chats-shell">
+    <div class="list-header">
+      <div>
+        <p class="list-title">Recent conversations</p>
+        <span class="list-count">{{ listChats.length }} active chats</span>
+      </div>
+    </div>
+
+    <div *ngIf="listChats.length === 0" class="empty-state">
+      <div class="empty-icon">
+      <!--   <mat-icon>chat_bubble_outline</mat-icon>-->
+      </div>
+      <h2>No chats yet</h2>
+      <p>Your future conversations with therapists will appear here.</p>
+    </div>
+
+    <div *ngIf="listChats.length > 0" class="direct-chats-space">
+      <button
+        *ngFor="let chat of listChats"
+        type="button"
+        class="chat-line"
+        [class.unread-chat]="!chat.isReadLAstMessage"
+        (click)="redirectToChatDetails(chat)"
+      >
+        <div class="therapist-avatar" [class.avatar-unread]="!chat.isReadLAstMessage">
+          <img
+            *ngIf="chat.profileImage; else initialsAvatar"
+            [src]="chat.profileImage"
+            [alt]="chat.clientFullname"
+          />
+          <ng-template #initialsAvatar>
+            <span>{{ getInitials(chat.clientFullname) }}</span>
+          </ng-template>
+        </div>
+
+        <div class="chat-main">
+          <div class="chat-top-row">
+            <h2>{{ chat.clientFullname }}</h2>
+            <span class="chat-time">{{ chat.isReadLAstMessage ? 'Seen' : 'New' }}</span>
+          </div>
+
+          <div class="chat-bottom-row">
+            <p class="chat-preview">{{ getPreviewText(chat.isReadLAstMessage) }}</p>
+            <span *ngIf="!chat.isReadLAstMessage" class="unread-badge">1</span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForClient
 {
-    public class SendMessageCommandHandler(IAppDbContext context, IHubContext<ChatHub> hubContext) : IRequestHandler<SendMessageCommand, SendMessageCommandDto>
+    public class SendMessageCommandHandler(IAppDbContext context, IChatNotifier chatNotifier) : IRequestHandler<SendMessageCommand, SendMessageCommandDto>
     {
         public async Task<SendMessageCommandDto> Handle(SendMessageCommand request, CancellationToken cancellationToken)
         {
@@ -20,8 +20,8 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForClient
                 throw new Exception("Client or Therapist not found");
             }
             //provjera postoji li DIREKTAN chat izmedju njih
-            var directChat = await context.DirectChats.Include(x => x.Client).Include(x => x.Therapist).ThenInclude(x=>x.User)
-                      .Include(x => x.Messages)
+            var directChat = await context.DirectChats.Include(x => x.Client)
+                      .Include(x => x.Therapist).ThenInclude(x=>x.User).Include(x => x.Messages)
                       .FirstOrDefaultAsync(x => x.TherapistId == therapist.Id && x.ClientId == client.Id, cancellationToken);
             if (directChat==null)
             { 
@@ -53,18 +53,26 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForClient
             {
                 Note = "Sent!",
                 Message = message.Content,
-                SentAt = message.SentAt
+                SentAt = message.SentAt,
+                DirectChatId= directChat.Id,
+                MessageId=message.Id
             };
-            await hubContext.Clients.User(therapist.User.Id.ToString())
-                .SendAsync("ReceiveMessage", new
-                {
-                    DirectChatId = directChat.Id,
-                    SenderId = client.Id,
-                    SenderType = "CLIENT",
-                    message.Content,
-                    message.SentAt
-                });
+            await chatNotifier.NotifyUserAsync(therapist.UserId.ToString(), "ReceiveMessage",
+                 new
+                 {
+                     DirectChatId = directChat.Id,
+                     MessageId = message.Id,
+                     SenderId = client.Id,
+                     SenderType = "CLIENT",
+                     Content=message.Content,
+                     SentAt= message.SentAt,
+                     IsRead=message.isRead
+                 }, cancellationToken
+            );
+            
             return dto;
+
+            ////Klijent salje poruku terapeutu i ovim NotifiyUserAsync() zelimo poslati obavjestenje terapeutu da je dobio poruku
         }
     }
 }

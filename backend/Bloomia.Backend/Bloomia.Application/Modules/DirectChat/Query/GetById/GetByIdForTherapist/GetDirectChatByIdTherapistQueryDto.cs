@@ -9,6 +9,7 @@ namespace Bloomia.Application.Modules.DirectChat.Query.NewFolder.GetByIdForThera
 {
     public class GetDirectChatByIdTherapistQueryDto
     {
+        public int DirectChatId { get; set; }
         public int ClientId { get; set; }
         public string ClientFullname { get; set; }
         public string ProfileImage { get; set; }
