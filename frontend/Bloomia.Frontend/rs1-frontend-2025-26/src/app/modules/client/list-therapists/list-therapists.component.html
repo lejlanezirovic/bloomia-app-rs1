@@ -30,7 +30,9 @@
 
 <div *ngFor="let therapist of therapistsList" class="therapist-card">
     <div class="add-therapist" (click)="addTherapistToSavedTherapists(therapist.id)">+</div>
+
     <div class="msg-therapist" (click)="messageIconClick(therapist.id)"> <mat-icon class="message-icon">message</mat-icon> </div>
+
     <div class="therapist-avatar">
         <mat-icon class="therapist-avatar-icon">person</mat-icon>
     </div>
@@ -53,6 +55,10 @@
 
 </div>
 
+
+  <!--<div class="paginator-wrapper"> <app-fit-paginator-bar [vm]="this"></app-fit-paginator-bar> --> 
+     
+    <!--</div> -->
 
 </div>
 <div class="paginator-wrapper"> 
