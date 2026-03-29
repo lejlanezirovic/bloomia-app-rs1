@@ -32,6 +32,7 @@
     "@angular/material": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@microsoft/signalr": "^10.0.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
     "firebase": "^12.10.0",

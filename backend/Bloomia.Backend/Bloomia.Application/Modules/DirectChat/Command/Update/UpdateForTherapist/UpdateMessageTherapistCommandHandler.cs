@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForTherapist
 {
-    public class UpdateMessageTherapistCommandHandler(IAppDbContext context) : IRequestHandler<UpdateMessageTherapistCommand, UpdateMessageTherapistCommandDto>
+    public class UpdateMessageTherapistCommandHandler(IAppDbContext context,IChatNotifier chatNotifier) : IRequestHandler<UpdateMessageTherapistCommand, UpdateMessageTherapistCommandDto>
     {
         public async Task<UpdateMessageTherapistCommandDto> Handle(UpdateMessageTherapistCommand request, CancellationToken cancellationToken)
         {
@@ -16,7 +16,7 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForTherapi
             {
                 throw new BloomiaNotFoundException("Therapist not found");
             }
-            var message= await context.Messages.Include(x => x.DirectChat)
+            var message= await context.Messages.Include(x => x.DirectChat).ThenInclude(x=>x.Client).ThenInclude(x=>x.User)
                 .FirstOrDefaultAsync(x => x.Id == request.MessageId && x.DirectChatId == request.DirectChatId
                                     && x.DirectChat.TherapistId == therapist.Id, cancellationToken);
 
@@ -38,6 +38,16 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForTherapi
             };
             message.Content = request.NewContent;
             await context.SaveChangesAsync(cancellationToken);
+
+            await chatNotifier.NotifyUserAsync(message.DirectChat.Client.User.Id.ToString(),
+               "MessageUpdated", new
+               {
+                   DirectChatId = message.DirectChatId,
+                   MessageId = message.Id,
+                   IsDeleted = message.IsDeleted,
+                   Content = message.Content
+               }, cancellationToken
+            );
             return dto;
         }
     }

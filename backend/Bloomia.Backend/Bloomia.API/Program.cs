@@ -1,5 +1,7 @@
 ﻿using Bloomia.API;
+using Bloomia.API.Hubs;
 using Bloomia.API.Middlewares;
+using Bloomia.API.Realtime;
 using Bloomia.Application;
 using Bloomia.Application.Abstractions;
 using Bloomia.Domain.Entities.Sessions;
@@ -73,6 +75,9 @@ public partial class Program
             builder.Services.AddProblemDetails();
             builder.Services.AddSignalR();
             builder.Services.AddScoped<IPushNotificationService, PushNotificationService>();
+
+            builder.Services.AddScoped<IChatNotifier, ChatNotifier>();
+
 
             builder.Services.AddCors(options =>
             {
