@@ -1,7 +1,11 @@
- <div class="text-title">Find all self tests</div>
- <div class="main-container">
-    <div *ngFor="let test of selfTests.allSelfTests" class="self-test-card" (click)="showSelfTestByid(test.testId)">
-        <h1 class="selftest-title">{{test.selfTestName}}</h1>
-
-    </div>
+<div class="text-title">Find all self tests</div>
+<div class="main-container">
+  <div
+    *ngFor="let test of selfTests.allSelfTests"
+    class="self-test-card"
+    (click)="showSelfTestByid(test.testId)"
+  >
+    <mat-icon class="self-test-icon">assignment</mat-icon>
+    <h1 class="selftest-title">{{ test.selfTestName }}</h1>
+  </div>
 </div>

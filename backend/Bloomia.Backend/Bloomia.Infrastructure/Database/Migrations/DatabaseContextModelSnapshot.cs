@@ -478,6 +478,43 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.ToTable("Moods");
                 });
 
+            modelBuilder.Entity("Bloomia.Domain.Entities.Notifications.NotificationTokenEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NotificationTokens", (string)null);
+                });
+
             modelBuilder.Entity("Bloomia.Domain.Entities.Payments.PaymentEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -1097,6 +1134,17 @@ namespace Bloomia.Infrastructure.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("Bloomia.Domain.Entities.Notifications.NotificationTokenEntity", b =>
+                {
+                    b.HasOne("Bloomia.Domain.Entities.Identity.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Bloomia.Domain.Entities.Payments.PaymentEntity", b =>

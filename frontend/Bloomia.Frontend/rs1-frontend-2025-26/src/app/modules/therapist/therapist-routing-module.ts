@@ -4,6 +4,8 @@ import { TherapistLayoutComponent } from './therapist-layout/therapist-layout.co
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MyClientsComponent } from './my-clients/my-clients.component';
+import { DirectChatsComponent } from './direct-chats/direct-chats.component';
+import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details/direct-chats-details.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,14 @@ const routes: Routes = [
       {
         path: 'my-clients',
         component: MyClientsComponent
+      },
+      {
+        path: 'direct-chats',
+        component: DirectChatsComponent
+      },
+      {
+        path:'direct-chats/:clientId/direct-chats-details',
+        component:DirectChatsDetailsComponent
       }
     ]
   }

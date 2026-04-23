@@ -5,8 +5,9 @@ import { BasePagedQuery } from '../../../core/models/paging/base-paged-query';
 import { PageRequest } from '../../../core/models/paging/page-request';
 import { ToasterService } from '../../../core/services/toaster.service';
 import { FitConfirmDialogComponent } from '../../shared/components/fit-confirm-dialog/fit-confirm-dialog.component';
-import { DialogType,DialogButton } from '../../shared/models/dialog-config.model';
+import { DialogType,DialogButton, DialogResult } from '../../shared/models/dialog-config.model';
 import { MatDialog } from '@angular/material/dialog';
+import { BaseListPagedComponent } from '../../../core/components/base-classes/base-list-paged-component';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './saved-therapists.component.html',
   styleUrl: './saved-therapists.component.scss',
 })
-export class SavedTherapistsComponent implements OnInit {
+export class SavedTherapistsComponent extends BaseListPagedComponent<ListSavedTherapistInfoDto,ListSavedTherapistsQuery> implements OnInit {
+ 
 
   private apiService=inject(SavedTherapistsApiService);
   private toasterService=inject(ToasterService);
@@ -27,8 +29,8 @@ export class SavedTherapistsComponent implements OnInit {
   pageSize=10;
   totalCount=0;
 
-  isLoading = false;
-  errorMessage: string | null = null;
+ // isLoading = false;
+  //errorMessage: string | null = null;
   isSearching=false;
 
   removeSavedTherapistMessage:string|null=null;
@@ -37,35 +39,36 @@ export class SavedTherapistsComponent implements OnInit {
   therapist:ListSavedTherapistInfoDto|null=null;
   searchedSavedTherapists:GetSavedTherapistByNameResponse|null=null;
   
-  ngOnInit(): void {    
-    this.loadSavedTherapists();
+  constructor(){
+    super();
+    this.request=new ListSavedTherapistsQuery();
   }
+  ngOnInit(): void {    
 
-//list terapeuta, paging
-  loadSavedTherapists(){
-    this.isLoading=true;
-    this.errorMessage=null;
+   this.initList();
+  }
+  loadPagedData(): void {
+    this.startLoading();
 
-    const query:ListSavedTherapistsQuery={
-        paging: {
-          page: this.page,
-          pageSize:this.pageSize
-        }
-    };
-
-    this.apiService.getAllSavedTherapists(query).subscribe({
+     this.apiService.getAllSavedTherapists(this.request).subscribe({
       next:(response)=>{
+        this.handlePageResult(response);
         this.savedTherapists=response.items;
         this.totalCount=response.totalItems;
-        this.isLoading=false;
+       this.stopLoading();
       },
       error:(err)=>{
         this.errorMessage = "Failed to load saved therapists";
         this.toasterService.error("No saved therapists found.");
+        this.stopLoading();
       }
     });
   }
-   getStars(rating:number): number[]{
+
+
+//list terapeuta, paging
+
+  getStars(rating:number): number[]{
       return Array(Math.floor(rating)).fill(0);
   }
   getEmptyStars(rating:number):number[]{
@@ -113,8 +116,8 @@ export class SavedTherapistsComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result=>{
-        if(result){
+    dialogRef.afterClosed().subscribe((result: DialogResult | undefined)=>{
+        if(result?.button === DialogButton.DELETE){
           this.removeAllSavedTherapists();
         }
     })
@@ -146,7 +149,7 @@ export class SavedTherapistsComponent implements OnInit {
     if(searchInput.length===0){
       this.isSearching=false;
       this.searchedSavedTherapists=[];
-      this.loadSavedTherapists();
+      this.loadPagedData();
     }
     if(searchInput.length<2)
       return;

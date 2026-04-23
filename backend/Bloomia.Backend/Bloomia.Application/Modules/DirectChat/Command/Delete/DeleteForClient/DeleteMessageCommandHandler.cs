@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForClient
 {
-    public class DeleteMessageCommandHandler(IAppDbContext context) : IRequestHandler<DeleteMessageCommand, DeleteMessageCommandDto>
+    public class DeleteMessageCommandHandler(IAppDbContext context, IChatNotifier chatNotifier) : IRequestHandler<DeleteMessageCommand, DeleteMessageCommandDto>
     {
         public async Task<DeleteMessageCommandDto> Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
         {
@@ -16,8 +16,9 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForClient
                 throw new BloomiaNotFoundException("Client not found");
             }
             var msg = await context.Messages.Include(x => x.DirectChat)
-                .FirstOrDefaultAsync(x => x.Id == request.MessageId && x.DirectChatId == request.DirectChatId
-                                    && x.DirectChat.ClientId == client.Id, cancellationToken);
+                        .ThenInclude(x=>x.Therapist).ThenInclude(x=>x.User)
+                       .FirstOrDefaultAsync(x => x.Id == request.MessageId &&
+                       x.DirectChat.ClientId == client.Id, cancellationToken);
             
             if(msg == null || msg.IsDeleted)
             {
@@ -37,6 +38,16 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForClient
                  Message = msg.Content,
                  IsDeleted = msg.IsDeleted
             };
+            await chatNotifier.NotifyUserAsync(msg.DirectChat.Therapist.User.Id.ToString(),
+                "MessageDeleted", new
+                {
+                    DirectChatId = msg.DirectChatId,
+                    MessageId = msg.Id,
+                    IsDeleted = msg.IsDeleted,
+                    Content = msg.Content
+                }, cancellationToken
+            );
+
             return dto;
         }
     }

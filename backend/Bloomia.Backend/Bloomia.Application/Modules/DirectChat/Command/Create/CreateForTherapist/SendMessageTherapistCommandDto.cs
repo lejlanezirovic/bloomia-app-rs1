@@ -11,5 +11,7 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapi
         public string Note { get; set; }
         public string Message { get; set; }
         public DateTime SentAt { get; set; }
+        public int DirectChatId { get; set; }
+        public int MessageId { get; set; }
     }
 }

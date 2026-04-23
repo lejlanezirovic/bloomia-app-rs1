@@ -12,6 +12,8 @@ import { JournalsComponent } from './journals/journals.component';
 import { HomeComponent } from './home/home.component';
 import { JournalDetailsComponent } from './journals/journal-details/journal-details.component';
 import { SavedTherapistsComponent } from './saved-therapists/saved-therapists.component';
+import { DirectChatsComponent } from './direct-chats/direct-chats.component';
+import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details/direct-chats-details.component';
 const routes: Routes = [
     {
       path:'',
@@ -66,6 +68,14 @@ const routes: Routes = [
         {
           path:'saved-therapists',
           component:SavedTherapistsComponent
+        },
+        {
+          path:'direct-chats',
+          component:DirectChatsComponent
+        },
+        {
+          path:'direct-chats/:therapistId/details', //id terapeuta se salje
+          component:DirectChatsDetailsComponent
         }
       ]
     }

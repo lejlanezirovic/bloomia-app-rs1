@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForTherapist
 {
-    public class DeleteMessageTherapistCommandHandler(IAppDbContext context) : IRequestHandler<DeleteMessageTherapistCommand, DeleteMessageTherapistCommandDto>
+    public class DeleteMessageTherapistCommandHandler(IAppDbContext context, IChatNotifier chatNotifier) : IRequestHandler<DeleteMessageTherapistCommand, DeleteMessageTherapistCommandDto>
     {
         public async Task<DeleteMessageTherapistCommandDto> Handle(DeleteMessageTherapistCommand request, CancellationToken cancellationToken)
         {
@@ -17,8 +17,9 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForTherapi
             }
 
             var message = await context.Messages.Include(x => x.DirectChat)
-                    .FirstOrDefaultAsync(x => x.Id == request.MessageId && x.DirectChatId == request.DirectChatId 
-                            && x.DirectChat.TherapistId == therapist.Id, cancellationToken);
+                    .ThenInclude(x=>x.Client).ThenInclude(x=>x.User)
+                    .FirstOrDefaultAsync(x => x.Id == request.MessageId &&
+                    x.DirectChat.TherapistId == therapist.Id, cancellationToken);
 
             if(message == null || message.IsDeleted)
             {
@@ -37,6 +38,17 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForTherapi
                 SenderType = message.SenderType.ToString(),
                 IsDeleted = message.IsDeleted
             };
+            await chatNotifier.NotifyUserAsync(message.DirectChat.Client.User.Id.ToString(),
+                "MessageDeleted",
+                new
+                {
+                    DirectChatId = message.DirectChatId,
+                    MessageId = message.Id,
+                    IsDeleted = message.IsDeleted,
+                    Content = message.Content
+                }, cancellationToken
+            );
+            
             return dto;
         }
     }

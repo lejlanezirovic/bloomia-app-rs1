@@ -5,6 +5,7 @@ using Bloomia.Domain.Entities.Basics;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.JournalsFolder;
 using Bloomia.Domain.Entities.MoodsFolder;
+using Bloomia.Domain.Entities.Notifications;
 using Bloomia.Domain.Entities.Payments;
 using Bloomia.Domain.Entities.ReviewsFolder;
 using Bloomia.Domain.Entities.SelfTestsFolder;
@@ -45,6 +46,7 @@ public partial class DatabaseContext : DbContext, IAppDbContext
     public DbSet<AdminEntity> Admins => Set<AdminEntity>();
     public DbSet<RoleEntity> Roles => Set<RoleEntity>();
     public DbSet<ArticleEntity> Articles => Set<ArticleEntity>();
+    public DbSet<NotificationTokenEntity> NotificationTokens => Set<NotificationTokenEntity>();
     public DbSet<DirectChatEntity> DirectChats => Set<DirectChatEntity>();
 
     private readonly TimeProvider _clock;
