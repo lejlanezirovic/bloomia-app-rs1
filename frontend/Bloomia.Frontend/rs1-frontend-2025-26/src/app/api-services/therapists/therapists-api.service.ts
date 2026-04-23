@@ -13,6 +13,7 @@ import { ListTherapistsRequest, ListTherapistsResponse, GetTherapistByIdQueryDto
 
 export class TherapistsApiService {
     private readonly baseUrl = `${environment.apiUrl}/api/therapists`;
+    private readonly availabilityBaseUrl = `${environment.apiUrl}/api/TherapistAvailability`;
     private http = inject(HttpClient);
 
     list(request?: ListTherapistsRequest): Observable<ListTherapistsResponse> {
@@ -32,4 +33,5 @@ export class TherapistsApiService {
     changePassword(id:number, payload: ChangeTherapistPasswordCommand): Observable<void> {
         return this.http.put<void>(`${this.baseUrl}/${id}/change-password`, payload);
     }
+
 }

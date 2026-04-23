@@ -6,8 +6,9 @@ import { TherapistLayoutComponent } from './therapist-layout/therapist-layout.co
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import {SharedModule} from '../shared/shared-module';
-import { DirectChatsComponent } from './direct-chats/direct-chats.component';
+import { MyClientsComponent } from './my-clients/my-clients.component';
 import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details/direct-chats-details.component';
+import { DirectChatsComponent } from './direct-chats/direct-chats.component';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,8 +19,9 @@ import { MatMenuModule } from '@angular/material/menu';
     TherapistLayoutComponent,
     HomeComponent,
     ProfileComponent,
+    MyClientsComponent,
     DirectChatsComponent,
-    DirectChatsDetailsComponent
+    DirectChatsDetailsComponent,
   ],
   imports: [
     CommonModule,

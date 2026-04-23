@@ -75,9 +75,7 @@ public partial class Program
             builder.Services.AddProblemDetails();
             builder.Services.AddSignalR();
             builder.Services.AddScoped<IPushNotificationService, PushNotificationService>();
-
             builder.Services.AddScoped<IChatNotifier, ChatNotifier>();
-
 
             builder.Services.AddCors(options =>
             {

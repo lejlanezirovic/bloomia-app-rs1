@@ -38,17 +38,18 @@ export interface GetTherapistByIdQueryDto {
     availability: TherapistAvailabilityDto[];
 }
 
+export interface TherapistAvailabilityDto {
+    id: number;
+    date: string;
+    startTime: string;
+    isBooked?: boolean | null;
+} 
+
 export interface TherapyTypeDto {
     id: number;
     name?: string | null;
 }
 
-export interface TherapistAvailabilityDto {
-    id: number;
-    date: string;
-    startTime: string;
-    isbooked?: boolean | null;
-} 
 
 export interface UpdateTherapistCommand {
     specialization?: string | null;
