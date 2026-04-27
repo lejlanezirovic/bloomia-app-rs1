@@ -128,6 +128,12 @@ export class ListTherapistsComponent extends BaseListPagedComponent<ListTherapis
     })
   }
 
+  openTherapistProfile(therapistId: number): void {
+    this.router.navigate([`client/therapist-details/${therapistId}`], {
+      queryParams: { from: 'list' }
+    });
+  }
+
   //messageClick(therapistId:number){
     //this.router.navigate(['client/direct-chats'], {
       //queryParams:{therapistId}

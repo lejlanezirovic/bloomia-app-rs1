@@ -8,6 +8,8 @@ import { FitConfirmDialogComponent } from '../../shared/components/fit-confirm-d
 import { DialogType,DialogButton, DialogResult } from '../../shared/models/dialog-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseListPagedComponent } from '../../../core/components/base-classes/base-list-paged-component';
+import { Router } from '@angular/router';
+import { from } from 'rxjs';
 
 
 @Component({
@@ -22,7 +24,7 @@ export class SavedTherapistsComponent extends BaseListPagedComponent<ListSavedTh
   private apiService=inject(SavedTherapistsApiService);
   private toasterService=inject(ToasterService);
   private dialog=inject(MatDialog);
-
+  private router=inject(Router);
 
   savedTherapists:ListSavedTherapistInfoDto[]=[];
   page=1;
@@ -164,5 +166,11 @@ export class SavedTherapistsComponent extends BaseListPagedComponent<ListSavedTh
         console.error(err);
      }
    });
+  }
+
+  openTherapistProfile(therapistId: number): void {
+    this.router.navigate([`client/therapist-details/${therapistId}`], {
+      queryParams: { from: 'saved' }
+    });
   }
 }

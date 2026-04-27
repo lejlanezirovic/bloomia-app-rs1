@@ -17,6 +17,7 @@ import { JournalDetailsComponent } from './journals/journal-details/journal-deta
 import { SavedTherapistsComponent } from './saved-therapists/saved-therapists.component';
 import { DirectChatsComponent } from './direct-chats/direct-chats.component';
 import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details/direct-chats-details.component';
+import { TherapistDetailsComponent } from './therapist-details/therapist-details.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details
     JournalDetailsComponent,
     SavedTherapistsComponent,
     DirectChatsComponent,
-    DirectChatsDetailsComponent
+    DirectChatsDetailsComponent,
+    TherapistDetailsComponent
   ],
   imports: [
     SharedModule,

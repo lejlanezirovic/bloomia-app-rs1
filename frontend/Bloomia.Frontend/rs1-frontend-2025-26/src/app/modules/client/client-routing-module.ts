@@ -14,6 +14,7 @@ import { JournalDetailsComponent } from './journals/journal-details/journal-deta
 import { SavedTherapistsComponent } from './saved-therapists/saved-therapists.component';
 import { DirectChatsComponent } from './direct-chats/direct-chats.component';
 import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details/direct-chats-details.component';
+import { TherapistDetailsComponent } from './therapist-details/therapist-details.component';
 const routes: Routes = [
     {
       path:'',
@@ -76,6 +77,10 @@ const routes: Routes = [
         {
           path:'direct-chats/:therapistId/details', //id terapeuta se salje
           component:DirectChatsDetailsComponent
+        },
+        {
+          path:'therapist-details/:id',
+          component:TherapistDetailsComponent
         }
       ]
     }
