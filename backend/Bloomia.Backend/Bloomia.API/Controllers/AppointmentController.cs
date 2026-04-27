@@ -1,6 +1,7 @@
 ﻿using Bloomia.Application.Modules.Appointments.Command.Create;
 using Bloomia.Application.Modules.Appointments.Command.Delete;
 using Bloomia.Application.Modules.Appointments.Query.List;
+using Bloomia.Application.Modules.Appointments.Query.List.AppointmentsForReview;
 using Bloomia.Domain.Entities.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,19 @@ namespace Bloomia.API.Controllers
             var result = await sender.Send(request, ct);
             return result;
         }
+
+        [Authorize(Roles = "CLIENT")]
+        [HttpGet("get-appointments-for-review")]
+        public async Task<ActionResult<List<ListAppointmentsForReviewQueryDto>>> ListAppointmentsForReview(int therapistId, CancellationToken ct)
+        {
+            var result = await sender.Send(new ListAppointmentsForReviewQuery
+            {
+                TherapistId = therapistId,
+            }, ct);
+
+            return Ok(result);
+        }
+
         [Authorize(Roles = "CLIENT, THERAPIST")]
         [HttpDelete("delete-appointment")]
         public async Task<ActionResult<string>> DeleteAppointmentForClientAndTherapist(int id, CancellationToken ct)
