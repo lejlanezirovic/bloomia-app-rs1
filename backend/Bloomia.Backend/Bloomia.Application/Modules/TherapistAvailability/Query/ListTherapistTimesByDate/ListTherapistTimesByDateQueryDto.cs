@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListAllTimesByDate
+namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistTimesByDate
 {
     public class ListTherapistTimesByDateQueryDto
     {
