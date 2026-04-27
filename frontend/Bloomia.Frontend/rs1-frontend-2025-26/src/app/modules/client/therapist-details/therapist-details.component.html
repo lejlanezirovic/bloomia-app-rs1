@@ -1,0 +1,208 @@
+<div class="profile-container">
+  <div *ngIf="isLoading" class="loading-state">
+    <mat-spinner></mat-spinner>
+    <p>Profile loading...</p>
+  </div>
+
+  <mat-card *ngIf="errorMessage && !isLoading" class="error-card">
+    <div class="error-content">
+      <mat-icon>error</mat-icon>
+      <p>{{ errorMessage }}</p>
+      <button mat-raised-button class="primary-btn" (click)="loadData()">Retry</button>
+    </div>
+  </mat-card>
+
+  <div *ngIf="therapist && !isLoading" class="profile-content">
+    <div class="top-bar">
+      <button mat-stroked-button class="secondary-btn back-btn" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Back</span>
+      </button>
+    </div>
+
+    <div class="profile-grid">
+      <mat-card class="left-card">
+        <div class="image-wrapper">
+          <img
+            [src]="therapist.profileImage || 'assets/images/user.png'"
+            alt="Therapist profile"
+            class="profile-image"
+          />
+        </div>
+
+        <div class="basic-info">
+          <div class="info-item">
+            <span class="info-label">Ime i prezime</span>
+            <span class="info-value">{{ fullName }}</span>
+          </div>
+
+          <div class="info-item" *ngIf="therapist.username">
+            <span class="info-label">Korisničko ime</span>
+            <span class="info-value">{{ therapist.username }}</span>
+          </div>
+
+          <div class="info-item" *ngIf="therapist.email">
+            <span class="info-label">Email</span>
+            <span class="info-value">{{ therapist.email }}</span>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">Status</span>
+            <span class="info-value">
+              {{ therapist.isVerified ? 'Verifikovan' : 'Nije verifikovan' }}
+            </span>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="right-card">
+        <div class="header-section">
+          <h1 class="therapist-name">{{ fullName }}</h1>
+
+          <div class="rating-row">
+            <div class="stars">
+              <mat-icon *ngFor="let star of getStarsArray(therapist.ratingAvg)">star</mat-icon>
+              <mat-icon *ngFor="let empty of getEmptyStarsArray(therapist.ratingAvg)">star_border</mat-icon>
+            </div>
+            <span class="rating-value">{{ therapist.ratingAvg | number:'1.1-1' }}</span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <section class="section">
+          <div class="section-title">Specijalizacija</div>
+          <p class="section-text">
+            {{ therapist.specialization || 'Nije unesena specijalizacija.' }}
+          </p>
+        </section>
+
+        <mat-divider></mat-divider>
+
+        <section class="section">
+          <div class="section-title">Opis</div>
+          <p class="section-text">
+            {{ therapist.description || 'Opis nije unesen.' }}
+          </p>
+        </section>
+
+        <mat-divider></mat-divider>
+
+        <section class="section">
+          <div class="section-title">Tipovi terapije</div>
+
+          <mat-chip-set *ngIf="therapyTypes.length > 0" class="chips-wrapper">
+            <mat-chip *ngFor="let therapyType of therapyTypes">
+              {{ therapyType }}
+            </mat-chip>
+          </mat-chip-set>
+
+          <p *ngIf="therapyTypes.length === 0" class="section-text empty-text">
+            Nema dodanih tipova terapije.
+          </p>
+        </section>
+
+        <mat-divider></mat-divider>
+
+        <section class="section">
+          <div class="section-title">Dokument</div>
+          <p class="section-text">
+            {{ therapist.documentName || 'Dokument nije dodan.' }}
+          </p>
+        </section>
+
+        <mat-divider></mat-divider>
+
+        <section class="section">
+          <div class="section-title">Recenzije</div>
+
+          <div *ngIf="reviews.length > 0; else noReviews" class="reviews-list">
+            <mat-card class="review-card" *ngFor="let review of reviews">
+              <div class="review-top">
+                <div class="review-client">{{ review.clientInitials }}</div>
+                <div class="review-stars">
+                  <mat-icon *ngFor="let star of getStarsArray(review.rating)">star</mat-icon>
+                </div>
+              </div>
+
+              <div class="review-date">{{ formatDate(review.createdAt) }}</div>
+
+              <p class="review-comment">
+                {{ review.comment }}
+              </p>
+            </mat-card>
+          </div>
+
+          <ng-template #noReviews>
+            <p class="section-text empty-text">Terapeut nema recenzija.</p>
+          </ng-template>
+
+          <button
+            *ngIf="reviewsTotalCount > reviews.length"
+            mat-stroked-button
+            class="secondary-btn load-more-btn"
+            (click)="loadAllReviews()">
+            View all reviews
+          </button>
+        </section>
+
+        <mat-divider></mat-divider>
+
+        <section class="section">
+          <div class="section-title">Ostavi recenziju</div>
+
+          <div *ngIf="canReview; else noEligibleAppointment">
+            <mat-form-field
+              *ngIf="shouldShowAppointmentSelect"
+              appearance="outline"
+              class="full-width">
+              <mat-label>Choose completed session</mat-label>
+              <mat-select [formControl]="reviewForm.controls.appointmentId">
+                <mat-option
+                  *ngFor="let item of appointmentsForReview"
+                  [value]="item.appointmentId">
+                  {{ formatAppointment(item.scheduledAtUtc) }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div class="rating-picker">
+              <button
+                type="button"
+                mat-icon-button
+                *ngFor="let star of [1,2,3,4,5]"
+                (click)="selectRating(star)">
+                <mat-icon>
+                  {{ (reviewForm.value.rating || 0) >= star ? 'star' : 'star_border' }}
+                </mat-icon>
+              </button>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Komentar</mat-label>
+              <textarea
+                matInput
+                rows="4"
+                [formControl]="reviewForm.controls.comment">
+              </textarea>
+            </mat-form-field>
+
+            <button
+              mat-raised-button
+              class="primary-btn submit-btn"
+              (click)="submitReview()"
+              [disabled]="isSubmitting">
+              Submit review
+            </button>
+          </div>
+
+          <ng-template #noEligibleAppointment>
+            <p class="section-text empty-text">
+              Recenziju možete ostaviti ako imate najmanje jednu nerecenziranu sesiju sa ovim terapeutom.
+            </p>
+          </ng-template>
+        </section>
+      </mat-card>
+    </div>
+  </div>
+</div>
