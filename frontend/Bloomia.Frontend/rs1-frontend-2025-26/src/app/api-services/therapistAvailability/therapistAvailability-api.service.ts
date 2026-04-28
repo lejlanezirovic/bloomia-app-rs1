@@ -19,4 +19,10 @@ export class TherapistAvailabilityApiService {
             `${this.baseUrl}/list-my-working-dates-and-times`
         );
     }
+
+    getWorkingDatesAndTimesForClient(therapistId: number): Observable<ListMyWorkingDatesAndTimesResponse> {
+        return this.http.get<ListMyWorkingDatesAndTimesResponse>(
+            `${this.baseUrl}/therapists/${therapistId}/working-dates-and-times`
+        );
+    }
 }
