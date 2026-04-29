@@ -196,6 +196,76 @@
             </button>
           </div>
 
+          <section class="section">
+            <div class="section-title">Dostupni termini</div>
+
+            <div *ngIf="workingTimes?.workingDates?.length" class="calendar-layout">
+              <div class="calendar-panel">
+                <div class="calendar-header">
+                  <button mat-icon-button type="button" class="month-nav-btn" (click)="previousMonth()">
+                    <mat-icon>chevron_left</mat-icon>
+                  </button>
+
+                  <div class="month-label">{{ currentMonthLabel }}</div>
+
+                  <button mat-icon-button type="button" class="month-nav-btn" (click)="nextMonth()">
+                    <mat-icon>chevron_right</mat-icon>
+                  </button>
+                </div>
+
+                <div class="weekdays-row">
+                  <div class="weekday-cell" *ngFor="let label of weekDayLabels">
+                    {{ label }}
+                  </div>
+                </div>
+
+                <div class="calendar-grid">
+                  <button
+                    type="button"
+                    *ngFor="let day of calendarDays"
+                    class="day-cell"
+                    [class.outside-month]="!day.inCurrentMonth"
+                    [class.today]="day.isToday"
+                    [class.selected]="day.isSelected"
+                    [class.has-slots]="day.hasSlots"
+                    [class.has-free]="day.hasFreeSlots"
+                    [class.has-booked]="day.hasBookedSlots"
+                    [disabled]="!day.hasSlots"
+                    (click)="selectDay(day)">
+                    <span class="day-number">{{ day.dayNumber }}</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="slots-panel">
+                <div class="slots-title"> {{ selectedDateLabel }}</div>
+
+                <div *ngIf="selectedDateSlots.length > 0" class="slots-list">
+                  <button type="button" class="slot-button" *ngFor="let slot of selectedDateSlots"
+                  [class.booked]="slot.isBooked"
+                  [class.free]="!slot.isBooked"
+                  (click)="slot.isBooked ? onBookedSlotClick(slot) : onSlotClick(slot)">
+                  
+                  <span class="slot-time"> {{ formatTime(slot.startTime) }} </span>
+                  <span class="slot-status">{{ slot.isBooked ? 'Zauzeto' : 'Slobodno'}}</span>
+                </button>
+                </div>
+
+                <p *ngIf="selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
+                  Nema termina za odabrani datum.
+                </p>
+
+                <p *ngIf="!selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
+                  Odaberite datum sa kalendara.
+                </p>
+              </div>
+            </div>
+
+            <p *ngIf="!workingTimes?.workingDates?.length" class="section-text empty-text">
+                  Nema dostupnih termina.
+            </p>
+          </section>
+
           <ng-template #noEligibleAppointment>
             <p class="section-text empty-text">
               Recenziju možete ostaviti ako imate najmanje jednu nerecenziranu sesiju sa ovim terapeutom.

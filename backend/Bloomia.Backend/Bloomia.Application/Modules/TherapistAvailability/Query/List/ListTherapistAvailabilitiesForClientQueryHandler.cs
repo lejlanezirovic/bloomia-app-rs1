@@ -17,7 +17,10 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.List
             if (!therapistExists)
                 throw new BloomiaNotFoundException("Therapist not found.");
 
-            var availabilities = await context.TherapistAvailabilities
+            var bihTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+            var nowUtc = DateTime.UtcNow;
+
+            var rawAvailabilities = await context.TherapistAvailabilities
                 .Where(x => x.TherapistId == request.TherapistId && !x.IsDeleted)
                 .OrderBy(x => x.Date)
                 .ThenBy(x => x.StartTime)
@@ -29,10 +32,18 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.List
                     x.IsBooked
                 }).ToListAsync(ct);
 
+            var futureAvailabilities = rawAvailabilities
+                .Where(x =>
+                {
+                    var localDateTime = x.Date.ToDateTime(x.StartTime);
+                    var slotUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime, bihTimeZone);
+                    return slotUtc > nowUtc;
+                }).ToList();
+
             var dto = new ListAllTherapistAvailabilitiesQueryDto
             {
                 TherapistId = request.TherapistId,
-                WorkingDates = availabilities
+                WorkingDates = futureAvailabilities
                     .GroupBy(x => x.Date)
                     .Select(g => new ListDateAndSlotsDto
                     {

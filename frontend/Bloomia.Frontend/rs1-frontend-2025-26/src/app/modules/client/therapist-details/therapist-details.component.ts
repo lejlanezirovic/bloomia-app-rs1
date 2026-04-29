@@ -13,6 +13,20 @@ import {
 import { AppointmentsForReviewDto } from '../../../api-services/appointments/appointments-api.models';
 import { ToasterService } from '../../../core/services/toaster.service';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
+import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
+import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
+
+interface CalendarDayVm {
+  date: Date;
+  dateKey: string;
+  dayNumber: number;
+  inCurrentMonth: boolean;
+  isToday: boolean;
+  isSelected: boolean;
+  hasSlots: boolean;
+  hasFreeSlots: boolean;
+  hasBookedSlots: boolean;
+}
 
 @Component({
   selector: 'app-therapist-details',
@@ -28,10 +42,16 @@ export class TherapistDetailsComponent implements OnInit {
   private appointmentsApiService = inject(AppointmentsApiService);
   private toasterService = inject(ToasterService);
   private fb = inject(FormBuilder);
+  private therapistAvailabilityApiService = inject(TherapistAvailabilityApiService);
 
   therapist: GetTherapistByIdQueryDto | null = null;
   reviews: GetReviewsByTherapistIdQueryDto[] = [];
   appointmentsForReview: AppointmentsForReviewDto[] = [];
+
+  workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
+  currentMonth = new Date();
+  selectedDateKey: string | null = null;
+  selectedSlot: WorkingTimeSlotsDto | null = null;
 
   therapistId = 0;
   isLoading = true;
@@ -73,18 +93,26 @@ export class TherapistDetailsComponent implements OnInit {
     forkJoin({
       therapist: this.therapistsApiService.getById(this.therapistId),
       reviewsResponse: this.reviewsApiService.getByTherapistId(this.therapistId, { page: 1, pageSize: 5 }),
-      appointmentsForReview: this.appointmentsApiService.getAppointmentsForReview(this.therapistId)
+      appointmentsForReview: this.appointmentsApiService.getAppointmentsForReview(this.therapistId),
+      workingTimes: this.therapistAvailabilityApiService.getWorkingDatesAndTimesForClient(this.therapistId)
     }).subscribe({
-      next: ({ therapist, reviewsResponse, appointmentsForReview }) => {
+      next: ({ therapist, reviewsResponse, appointmentsForReview, workingTimes }) => {
         this.therapist = therapist;
         this.reviews = reviewsResponse.items;
         this.reviewsTotalCount = reviewsResponse.totalItems;
         this.appointmentsForReview = appointmentsForReview;
+        this.workingTimes = workingTimes;
         
         if(this.appointmentsForReview.length === 1) {
           this.reviewForm.patchValue({
             appointmentId: this.appointmentsForReview[0].appointmentId
           });
+        }
+
+        const firstDate = this.workingTimes.workingDates?.[0]?.date ?? null;
+        if(firstDate) {
+          this.selectedDateKey = firstDate;
+          this.currentMonth = this.parseLocalDate(firstDate);
         }
 
         this.isLoading = false;
@@ -95,6 +123,11 @@ export class TherapistDetailsComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  private parseLocalDate(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
   }
 
   get fullName(): string {
@@ -214,4 +247,142 @@ export class TherapistDetailsComponent implements OnInit {
     }
   }
 
+  get currentMonthLabel(): string {
+    return this.currentMonth.toLocaleDateString('bs-BA', { month: 'long', year: 'numeric' });
+  }
+
+  get weekDayLabels(): string[] {
+    return ['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'];
+  }
+
+  get selectedDateLabel(): string {
+    if(!this.selectedDateKey) 
+      return 'Odaberite datum';
+
+    return this.parseLocalDate(this.selectedDateKey).toLocaleDateString('bs-BA', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+
+  get SelectedWorkingDate() {
+    if(!this.selectedDateKey || !this.workingTimes)
+      return null;
+
+    return this.workingTimes.workingDates.find(x => x.date === this.selectedDateKey) ?? null;
+  }
+
+  get selectedDateSlots(): WorkingTimeSlotsDto[] {
+    return this.SelectedWorkingDate?.allSlotsOfDate ?? [];
+  }
+
+  selectDay(day: CalendarDayVm): void {
+    if(!day.hasSlots)
+      return;
+
+    this.selectedDateKey = day.dateKey;
+    this.selectedSlot = null;
+
+    if(!day.inCurrentMonth) {
+      this.currentMonth = new Date(day.date.getFullYear(), day.date.getMonth(), 1);
+    }
+  }
+
+  get calendarDays(): CalendarDayVm[] {
+    const year = this.currentMonth.getFullYear();
+    const month = this.currentMonth.getMonth();
+
+    const firstDayOfMonth = new Date(year, month, 1);
+    const startOffset = this.getMondayBasedDayIndex(firstDayOfMonth);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const days : CalendarDayVm[] = [];
+
+    for(let i = startOffset; i > 0; i--) {
+      const date = new Date(year, month, 1 - i);
+      days.push(this.buildCalendarDay(date, false));
+    }
+
+    for(let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      days.push(this.buildCalendarDay(date, true));
+    }
+
+    while(days.length % 7 !== 0) {
+      const nextDay = days.length - (startOffset + daysInMonth) + 1;
+      const date = new Date(year, month + 1, nextDay);
+      days.push(this.buildCalendarDay(date, false));
+    }
+
+    return days;
+  }
+
+  private buildCalendarDay(date: Date, inCurrentMonth: boolean): CalendarDayVm {
+    const dateKey = this.toDateKey(date);
+    const slots = this.getSlotsForDate(dateKey);
+
+    return {
+      date,
+      dateKey,
+      dayNumber: date.getDate(),
+      inCurrentMonth,
+      isToday: this.toDateKey(new Date()) === dateKey,
+      isSelected: this.selectedDateKey === dateKey,
+      hasSlots: slots.length > 0,
+      hasFreeSlots: slots.some(x => !x.isBooked),
+      hasBookedSlots: slots.some(x => x.isBooked)
+    };
+  }
+
+  private getSlotsForDate(dateKey: string): WorkingTimeSlotsDto[] {
+    const workingDate = this.workingTimes?.workingDates?.find(x => x.date === dateKey);
+    return workingDate?.allSlotsOfDate ?? [];
+  }
+
+  private getMondayBasedDayIndex(date: Date): number {
+    const jsDay = date.getDay();
+    return jsDay === 0 ? 6 : jsDay - 1;
+  }
+
+  private toDateKey(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`; 
+  }
+
+  formatTime(time: string): string {
+    if(!time) return '';
+
+    return time.length >= 5 ? time.substring(0, 5) : time;
+  }
+
+  previousMonth(): void {
+    this.currentMonth = new Date(
+      this.currentMonth.getFullYear(),
+      this.currentMonth.getMonth() - 1,
+      1
+    );
+  }
+
+  nextMonth(): void {
+    this.currentMonth = new Date(
+      this.currentMonth.getFullYear(),
+      this.currentMonth.getMonth() + 1,
+      1
+    );
+  }
+
+  onSlotClick(slot: WorkingTimeSlotsDto): void {
+    if(slot.isBooked) 
+      return;
+
+    this.selectedSlot = slot;
+  }
+
+  onBookedSlotClick(slot: WorkingTimeSlotsDto): void {
+    console.log('Booked slot clicked:', slot);
+  }
 }
