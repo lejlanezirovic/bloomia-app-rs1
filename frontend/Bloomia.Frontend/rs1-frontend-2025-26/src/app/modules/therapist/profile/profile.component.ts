@@ -5,6 +5,7 @@ import { GetTherapistByIdQueryDto, TherapistAvailabilityDto } from '../../../api
 import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
 import { forkJoin } from 'rxjs';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
+import { BaseComponent } from '../../../core/components/base-classes/base-component';
 
 interface CalendarDayVm {
   date: Date;
@@ -24,7 +25,7 @@ interface CalendarDayVm {
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent extends BaseComponent implements OnInit {
 
   private therapistsApi = inject(TherapistsApiService);
   private therapistAvailabilityApi = inject(TherapistAvailabilityApiService);
@@ -33,8 +34,6 @@ export class ProfileComponent implements OnInit {
   therapist: GetTherapistByIdQueryDto | null = null;
   workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
 
-  isLoading = true;
-  errorMessage: string | null = null;
 
   currentMonth = new Date();
   selectedDateKey: string | null = null;
@@ -44,15 +43,13 @@ export class ProfileComponent implements OnInit {
   }
 
   loadProfile(): void {
-    this.isLoading = true;
-    this.errorMessage = null;
+    this.startLoading();
 
     const currentUser = this.currentUserService.snapshot;
     const therapistId = currentUser?.therapistId;
 
     if (!therapistId) {
-      this.errorMessage = 'TherapistId not found';
-      this.isLoading = false;
+      this.stopLoading('TherapistId not found');
       return;
     }
 
@@ -70,18 +67,18 @@ export class ProfileComponent implements OnInit {
           this.currentMonth = this.parseLocalDate(firstDate);
         }
 
-        this.isLoading = false;
+        this.stopLoading();
       },
       error: (error) => {
         console.error('Error loading therapist profile/calendar:', error);
-        this.errorMessage = 'Failed to load profile. Please try again later.';
-        this.isLoading = false;
+        this.stopLoading('Failed to load profile. Please try again later.');
       }
     });
   }
 
   get currentMonthLabel(): string {
-    return this.currentMonth.toLocaleDateString('bs-BA', { month: 'long', year: 'numeric' });
+    return this.currentMonth.toLocaleDateString('en-US', 
+      { month: 'long', year: 'numeric' });
   }
 
   get weekDayLabels(): string[] {
@@ -89,14 +86,22 @@ export class ProfileComponent implements OnInit {
   }
 
   get selectedDateLabel(): string {
-  if (!this.selectedDateKey) return 'Odaberite datum';
+  if (!this.selectedDateKey) 
+    return 'Odaberite datum';
 
-  return this.parseLocalDate(this.selectedDateKey).toLocaleDateString('bs-BA', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
+  const date = this.parseLocalDate(this.selectedDateKey);
+
+  const weekday = date.toLocaleDateString('en-US', {
+    weekday: 'long'
+  });
+
+  const formattedDate = date.toLocaleDateString('bs-BA', {
+    day: '2-digit',
+    month:'2-digit',
     year: 'numeric'
   });
+
+  return `${weekday}, ${formattedDate}`;
 }
 
 get selectedWorkingDate() {

@@ -17,27 +17,51 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.List
             {
                 throw new BloomiaNotFoundException(message: "Therapist not found try to login first!");
             }
-            var availabilities =context.TherapistAvailabilities.Where(x => x.TherapistId == therapist.Id && !x.IsDeleted).AsNoTracking();
 
-            if (availabilities.Count() == 0)
-            {
-                throw new BloomiaNotFoundException("Nije pronadjen niti jedan zakazan termin!");
-            }
-            var AvailabilityDto = new ListAllTherapistAvailabilitiesQueryDto
-            {
-                TherapistId=therapist.Id,
-                WorkingDates=availabilities.GroupBy(x=>x.Date).Select(g=> new ListDateAndSlotsDto
+            var bihTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+            var nowUtc = DateTime.UtcNow;
+
+            var rawAvailabilities = await context.TherapistAvailabilities
+                .Where(x => x.TherapistId == therapist.Id && !x.IsDeleted)
+                .OrderBy(x => x.Date)
+                .ThenBy(x => x.StartTime)
+                .Select(x => new
                 {
-                    Date=g.Key,
-                    AllSlotsOfDate=g.Select(x=> new ListTimesDto
+                    x.Date,
+                    x.Id,
+                    x.StartTime,
+                    x.IsBooked
+                }).ToListAsync(cancellationToken);
+
+            var futureAvailabilities = rawAvailabilities
+                .Where(x =>
+                {
+                    var localDateTime = x.Date.ToDateTime(x.StartTime);
+                    var slotUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime, bihTimeZone);
+                    return slotUtc > nowUtc;
+                }).ToList();
+
+            var availabilityDto = new ListAllTherapistAvailabilitiesQueryDto
+            {
+                TherapistId = therapist.Id,
+                WorkingDates = futureAvailabilities
+                    .GroupBy(x => x.Date)
+                    .Select(g => new ListDateAndSlotsDto
                     {
-                        TherapyAvailabilityId=x.Id,
-                        StartTime=x.StartTime,
-                        IsBooked=x.IsBooked
-                    }).OrderBy(x=>x.StartTime).ToList()
-                }).OrderBy(x=>x.Date).ToList()
+                        Date = g.Key,
+                        AllSlotsOfDate = g
+                            .Select(x => new ListTimesDto
+                            {
+                                TherapyAvailabilityId = x.Id,
+                                StartTime = x.StartTime,
+                                IsBooked = x.IsBooked
+                            })
+                            .OrderBy(x => x.StartTime)
+                            .ToList()
+                    }).OrderBy(x => x.Date).ToList()
             };
-            return AvailabilityDto;
+
+            return availabilityDto;
         }
     }
 }

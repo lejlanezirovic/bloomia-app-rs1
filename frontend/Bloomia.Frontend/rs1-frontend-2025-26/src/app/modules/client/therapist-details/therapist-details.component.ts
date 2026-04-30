@@ -15,6 +15,7 @@ import { ToasterService } from '../../../core/services/toaster.service';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
 import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
+import { BaseComponent } from '../../../core/components/base-classes/base-component';
 
 interface CalendarDayVm {
   date: Date;
@@ -34,7 +35,7 @@ interface CalendarDayVm {
   templateUrl: './therapist-details.component.html',
   styleUrl: './therapist-details.component.scss',
 })
-export class TherapistDetailsComponent implements OnInit {
+export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private therapistsApiService = inject(TherapistsApiService);
@@ -54,9 +55,7 @@ export class TherapistDetailsComponent implements OnInit {
   selectedSlot: WorkingTimeSlotsDto | null = null;
 
   therapistId = 0;
-  isLoading = true;
   isSubmitting = false;
-  errorMessage: string | null = null;
   reviewsTotalCount = 0;
   returnTo: 'list' | 'saved' = 'list';
 
@@ -67,6 +66,7 @@ export class TherapistDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     const from = this.activatedRoute.snapshot.queryParamMap.get('from');
 
@@ -77,8 +77,7 @@ export class TherapistDetailsComponent implements OnInit {
     }
 
     if(!id) {
-      this.errorMessage = 'Invalid therapist id.';
-      this.isLoading = false;
+      this.stopLoading('Invalid therapist id.');
       return;
     }
 
@@ -87,8 +86,7 @@ export class TherapistDetailsComponent implements OnInit {
   }
 
   loadData(): void {
-    this.isLoading = true;
-    this.errorMessage = null;
+    this.startLoading();
 
     forkJoin({
       therapist: this.therapistsApiService.getById(this.therapistId),
@@ -115,12 +113,11 @@ export class TherapistDetailsComponent implements OnInit {
           this.currentMonth = this.parseLocalDate(firstDate);
         }
 
-        this.isLoading = false;
+        this.stopLoading();
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = 'An error occurred while loading therapist details. Please try again later.';
-        this.isLoading = false;
+        this.stopLoading('An error occurred while loading therapist details. Please try again later.');
       }
     });
   }
@@ -248,7 +245,9 @@ export class TherapistDetailsComponent implements OnInit {
   }
 
   get currentMonthLabel(): string {
-    return this.currentMonth.toLocaleDateString('bs-BA', { month: 'long', year: 'numeric' });
+    return this.currentMonth.toLocaleDateString('en-US',
+       { month: 'long',
+         year: 'numeric' });
   }
 
   get weekDayLabels(): string[] {
@@ -259,12 +258,19 @@ export class TherapistDetailsComponent implements OnInit {
     if(!this.selectedDateKey) 
       return 'Odaberite datum';
 
-    return this.parseLocalDate(this.selectedDateKey).toLocaleDateString('bs-BA', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
+    const date = this.parseLocalDate(this.selectedDateKey);
+
+    const weekday = date.toLocaleDateString('en-US', 
+      { weekday: 'long'}
+    );
+
+    const formattedDate = date.toLocaleDateString('bs-BA', {
+      day: '2-digit',
+      month: '2-digit',
       year: 'numeric'
     });
+
+    return `${weekday}, ${formattedDate}`;
   }
 
   get SelectedWorkingDate() {
