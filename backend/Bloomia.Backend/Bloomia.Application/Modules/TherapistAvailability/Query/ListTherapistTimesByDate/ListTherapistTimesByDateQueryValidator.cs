@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistTimesByDate;
 
 namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListAllTimesByDate
 {

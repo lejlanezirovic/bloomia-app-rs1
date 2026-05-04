@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListAllTimesByDate
+namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistTimesByDate
 {
     public class ListTherapistTimesByDateQueryHandler(IAppDbContext context) : IRequestHandler<ListTherapistTimesByDateQuery, ListTherapistTimesByDateQueryDto>
     {
@@ -29,7 +28,7 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListAllTimesBy
             {
                 var dtoTime = new ListTimesDto
                 {
-                    TherapyAvailabilityId=i.Id,
+                    TherapistAvailabilityId=i.Id,
                     StartTime = i.StartTime,
                     IsBooked = i.IsBooked
                 };

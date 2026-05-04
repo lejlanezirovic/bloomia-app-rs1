@@ -1,4 +1,5 @@
 ﻿using Bloomia.Application.Modules.TherapistAvailability.Query.ListAllTimesByDate;
+using Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistTimesByDate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,7 +2,7 @@
 using Bloomia.Application.Modules.TherapistAvailability.Command.Delete.DeleteTimeByDate;
 using Bloomia.Application.Modules.TherapistAvailability.Command.Update;
 using Bloomia.Application.Modules.TherapistAvailability.Query.List;
-using Bloomia.Application.Modules.TherapistAvailability.Query.ListAllTimesByDate;
+using Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistTimesByDate;
 using Bloomia.Application.Modules.TherapistAvailability.Query.ListBookedTimesByDate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -89,6 +89,18 @@ namespace Bloomia.API.Controllers
             var userId = int.Parse(userClaim.Value);
             request.UserId = userId;
             var result = await sender.Send(request, ct);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "CLIENT")]
+        [HttpGet("therapists/{therapistId}/working-dates-and-times")]
+        public async Task<ActionResult<ListAllTherapistAvailabilitiesQueryDto>> GetWorkingDatesAndTimesForClient(int therapistId, CancellationToken ct)
+        {
+            var result = await sender.Send(new ListTherapistAvailabilitiesForClientQuery
+            {
+                TherapistId = therapistId
+            }, ct);
+
             return Ok(result);
         }
     }
