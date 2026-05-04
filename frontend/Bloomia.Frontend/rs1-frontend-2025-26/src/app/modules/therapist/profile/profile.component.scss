@@ -56,6 +56,7 @@ $light-color: #DEDBD2;
 
 .right-card {
   padding: 32px;
+  overflow: hidden;
 }
 
 .image-wrapper {
@@ -213,126 +214,147 @@ mat-chip {
 
 .calendar-layout {
   display: grid;
-  grid-template-columns: 320px minmax(260px, 1fr);
-  gap: 24px;
+  grid-template-columns: minmax(360px, 420px) minmax(0, 1fr);
+  gap: 32px;
   align-items: start;
+  width: 100%;
 }
 
 .calendar-panel,
 .slots-panel {
   background: rgba(176, 196, 177, 0.14);
   border: 1px solid rgba(74, 87, 89, 0.1);
-  border-radius: 22px;
-  padding: 18px;
+  border-radius: 28px;
+  padding: 22px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.calendar-panel {
+  min-width: 0;
+  max-width: 420px;
+}
+
+.slots-panel {
+  min-width: 0;
 }
 
 .calendar-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 52px 1fr 52px;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .month-label {
-  font-size: 18px;
+  text-align: center;
+  font-size: 20px;
   font-weight: 700;
-  text-transform: capitalize;
   color: $text-color;
+  text-transform: none;
 }
 
 .month-nav-btn {
+  width: 52px;
+  height: 52px;
   color: $text-color !important;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
 }
 
 .weekdays-row {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  margin-bottom: 8px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  column-gap: 6px;
+  margin-bottom: 12px;
 }
 
 .weekday-cell {
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  opacity: 0.75;
-  padding: 6px 0;
+  color: rgba(74, 87, 89, 0.75);
+  padding: 4px 0;
 }
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  column-gap: 6px;
+  row-gap: 12px;
 }
 
 .day-cell {
-  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
   border: none;
   border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  margin: 0 auto;
   background: transparent;
-  color: $text-color;
-  font-weight: 600;
+  color: rgba(74, 87, 89, 0.42);
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  position: relative;
   cursor: pointer;
   transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 
   &:disabled {
     cursor: default;
-    opacity: 0.35;
+    opacity: 1;
   }
 
   &:not(:disabled):hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 }
 
 .day-cell.outside-month {
-  opacity: 0.3;
+  color: rgba(74, 87, 89, 0.22);
 }
 
 .day-cell.today {
-  border: 1px solid rgba(74, 87, 89, 0.35);
+  border: 1px solid rgba(74, 87, 89, 0.22);
 }
 
 .day-cell.has-slots {
   background: rgba(176, 196, 177, 0.45);
-}
-
-.day-cell.has-free {
-  box-shadow: inset 0 0 0 1px rgba(74, 87, 89, 0.08);
+  color: $text-color;
 }
 
 .day-cell.has-booked::after {
   content: '';
   position: absolute;
-  right: 3px;
-  bottom: 3px;
+  right: 4px;
+  bottom: 4px;
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: $text-color;
-  opacity: 0.75;
+  opacity: 0.7;
 }
 
 .day-cell.selected {
   background: $text-color;
   color: white;
-  box-shadow: 0 6px 18px rgba(74, 87, 89, 0.22);
+  box-shadow: 0 8px 20px rgba(74, 87, 89, 0.18);
 }
 
 .day-number {
-  font-size: 13px;
+  line-height: 1;
 }
 
 .slots-title {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   font-size: 18px;
   font-weight: 700;
-  text-transform: capitalize;
+  color: $text-color;
+  text-transform: none;
 }
 
 .slots-list {
@@ -343,9 +365,9 @@ mat-chip {
 
 .slot-button {
   width: 100%;
-  border: 1px solid rgba(74, 87, 89, 0.12);
-  border-radius: 14px;
-  padding: 14px 16px;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 18px;
   background: white;
   color: $text-color;
   text-align: left;
@@ -354,15 +376,11 @@ mat-chip {
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
     box-shadow: 0 8px 18px rgba(74, 87, 89, 0.08);
-  }
-
-  &:disabled {
-    cursor: not-allowed;
   }
 }
 
@@ -384,7 +402,7 @@ mat-chip {
 
 .slot-status {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 @media (max-width: 992px) {
@@ -403,14 +421,21 @@ mat-chip {
 
   .right-card {
     padding: 24px;
+    overflow: hidden;
   }
 
   .calendar-layout {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .calendar-panel,
+  .slots-panel {
+    max-width: 100%;
   }
 
   .calendar-panel {
-    max-width: 360px;
+    min-width: 0;
   }
 }
 
@@ -447,20 +472,34 @@ mat-chip {
     height: 160px;
   }
 
+  .calendar-layout {
+    gap: 18px;
+  }
+
   .calendar-panel,
   .slots-panel {
-    padding: 14px;
-    border-radius: 18px;
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .calendar-header {
+    grid-template-columns: 46px 1fr 46px;
+  }
+
+  .month-nav-btn {
+    width: 46px;
+    height: 46px;
   }
 
   .day-cell {
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
   }
 
   .month-label,
   .slots-title {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .slot-button {

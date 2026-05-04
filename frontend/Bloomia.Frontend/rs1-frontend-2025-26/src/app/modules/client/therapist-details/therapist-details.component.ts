@@ -10,9 +10,24 @@ import {
   CreateReviewCommand,
   GetReviewsByTherapistIdQueryDto
 } from '../../../api-services/reviews/reviews-api.models';
-import { AppointmentsForReviewDto } from '../../../api-services/appointments/appointments-api.models';
+import { AppointmentsForReviewDto, SessionType } from '../../../api-services/appointments/appointments-api.models';
 import { ToasterService } from '../../../core/services/toaster.service';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
+import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
+import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
+import { BaseComponent } from '../../../core/components/base-classes/base-component';
+
+interface CalendarDayVm {
+  date: Date;
+  dateKey: string;
+  dayNumber: number;
+  inCurrentMonth: boolean;
+  isToday: boolean;
+  isSelected: boolean;
+  hasSlots: boolean;
+  hasFreeSlots: boolean;
+  hasBookedSlots: boolean;
+}
 
 @Component({
   selector: 'app-therapist-details',
@@ -20,7 +35,7 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
   templateUrl: './therapist-details.component.html',
   styleUrl: './therapist-details.component.scss',
 })
-export class TherapistDetailsComponent implements OnInit {
+export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private therapistsApiService = inject(TherapistsApiService);
@@ -28,17 +43,25 @@ export class TherapistDetailsComponent implements OnInit {
   private appointmentsApiService = inject(AppointmentsApiService);
   private toasterService = inject(ToasterService);
   private fb = inject(FormBuilder);
+  private therapistAvailabilityApiService = inject(TherapistAvailabilityApiService);
 
   therapist: GetTherapistByIdQueryDto | null = null;
   reviews: GetReviewsByTherapistIdQueryDto[] = [];
   appointmentsForReview: AppointmentsForReviewDto[] = [];
 
+  workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
+  currentMonth = new Date();
+  selectedDateKey: string | null = null;
+  selectedSlot: WorkingTimeSlotsDto | null = null;
+
   therapistId = 0;
-  isLoading = true;
   isSubmitting = false;
-  errorMessage: string | null = null;
   reviewsTotalCount = 0;
   returnTo: 'list' | 'saved' = 'list';
+
+  selectedSessionType: SessionType | null = null;
+  isBooking = false;
+  readonly SessionType = SessionType;
 
   reviewForm = this.fb.group({
     appointmentId: [null as number | null],
@@ -47,6 +70,7 @@ export class TherapistDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     const from = this.activatedRoute.snapshot.queryParamMap.get('from');
 
@@ -57,8 +81,7 @@ export class TherapistDetailsComponent implements OnInit {
     }
 
     if(!id) {
-      this.errorMessage = 'Invalid therapist id.';
-      this.isLoading = false;
+      this.stopLoading('Invalid therapist id.');
       return;
     }
 
@@ -67,19 +90,20 @@ export class TherapistDetailsComponent implements OnInit {
   }
 
   loadData(): void {
-    this.isLoading = true;
-    this.errorMessage = null;
+    this.startLoading();
 
     forkJoin({
       therapist: this.therapistsApiService.getById(this.therapistId),
       reviewsResponse: this.reviewsApiService.getByTherapistId(this.therapistId, { page: 1, pageSize: 5 }),
-      appointmentsForReview: this.appointmentsApiService.getAppointmentsForReview(this.therapistId)
+      appointmentsForReview: this.appointmentsApiService.getAppointmentsForReview(this.therapistId),
+      workingTimes: this.therapistAvailabilityApiService.getWorkingDatesAndTimesForClient(this.therapistId)
     }).subscribe({
-      next: ({ therapist, reviewsResponse, appointmentsForReview }) => {
+      next: ({ therapist, reviewsResponse, appointmentsForReview, workingTimes }) => {
         this.therapist = therapist;
         this.reviews = reviewsResponse.items;
         this.reviewsTotalCount = reviewsResponse.totalItems;
         this.appointmentsForReview = appointmentsForReview;
+        this.workingTimes = workingTimes;
         
         if(this.appointmentsForReview.length === 1) {
           this.reviewForm.patchValue({
@@ -87,14 +111,37 @@ export class TherapistDetailsComponent implements OnInit {
           });
         }
 
-        this.isLoading = false;
+        const stillExists = this.selectedDateKey ? this.workingTimes.workingDates?.some(x => x.date === this.selectedDateKey)
+        : false;
+
+        if(stillExists && this.selectedDateKey) {
+          this.currentMonth = this.parseLocalDate(this.selectedDateKey);
+        } else {
+          const firstDate = this.workingTimes.workingDates?.[0]?.date ?? null;
+          if(firstDate) {
+            this.selectedDateKey = firstDate;
+            this.currentMonth = this.parseLocalDate(firstDate);
+          } else {
+            this.selectedDateKey = null;
+          }
+        }
+
+        this.stopLoading();
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = 'An error occurred while loading therapist details. Please try again later.';
-        this.isLoading = false;
+        this.stopLoading('An error occurred while loading therapist details. Please try again later.');
       }
     });
+  }
+
+  private parseLocalDate(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  get canBookAppointment(): boolean {
+    return !!this.selectedSlot && this.selectedSessionType !== null && !this.isBooking;
   }
 
   get fullName(): string {
@@ -214,4 +261,209 @@ export class TherapistDetailsComponent implements OnInit {
     }
   }
 
+  get currentMonthLabel(): string {
+    return this.currentMonth.toLocaleDateString('en-US',
+       { month: 'long',
+         year: 'numeric' });
+  }
+
+  get weekDayLabels(): string[] {
+    return ['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'];
+  }
+
+  get selectedDateLabel(): string {
+    if(!this.selectedDateKey) 
+      return 'Odaberite datum';
+
+    const date = this.parseLocalDate(this.selectedDateKey);
+
+    const weekday = date.toLocaleDateString('en-US', 
+      { weekday: 'long'}
+    );
+
+    const formattedDate = date.toLocaleDateString('bs-BA', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+
+    return `${weekday}, ${formattedDate}`;
+  }
+
+  get SelectedWorkingDate() {
+    if(!this.selectedDateKey || !this.workingTimes)
+      return null;
+
+    return this.workingTimes.workingDates.find(x => x.date === this.selectedDateKey) ?? null;
+  }
+
+  get selectedDateSlots(): WorkingTimeSlotsDto[] {
+    return this.SelectedWorkingDate?.allSlotsOfDate ?? [];
+  }
+
+  selectDay(day: CalendarDayVm): void {
+    if(!day.hasSlots)
+      return;
+
+    this.selectedDateKey = day.dateKey;
+    this.selectedSlot = null;
+
+    if(!day.inCurrentMonth) {
+      this.currentMonth = new Date(day.date.getFullYear(), day.date.getMonth(), 1);
+    }
+  }
+
+  get calendarDays(): CalendarDayVm[] {
+    const year = this.currentMonth.getFullYear();
+    const month = this.currentMonth.getMonth();
+
+    const firstDayOfMonth = new Date(year, month, 1);
+    const startOffset = this.getMondayBasedDayIndex(firstDayOfMonth);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const days : CalendarDayVm[] = [];
+
+    for(let i = startOffset; i > 0; i--) {
+      const date = new Date(year, month, 1 - i);
+      days.push(this.buildCalendarDay(date, false));
+    }
+
+    for(let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      days.push(this.buildCalendarDay(date, true));
+    }
+
+    while(days.length % 7 !== 0) {
+      const nextDay = days.length - (startOffset + daysInMonth) + 1;
+      const date = new Date(year, month + 1, nextDay);
+      days.push(this.buildCalendarDay(date, false));
+    }
+
+    return days;
+  }
+
+  private buildCalendarDay(date: Date, inCurrentMonth: boolean): CalendarDayVm {
+    const dateKey = this.toDateKey(date);
+    const slots = this.getSlotsForDate(dateKey);
+
+    return {
+      date,
+      dateKey,
+      dayNumber: date.getDate(),
+      inCurrentMonth,
+      isToday: this.toDateKey(new Date()) === dateKey,
+      isSelected: this.selectedDateKey === dateKey,
+      hasSlots: slots.length > 0,
+      hasFreeSlots: slots.some(x => !x.isBooked),
+      hasBookedSlots: slots.some(x => x.isBooked)
+    };
+  }
+
+  private getSlotsForDate(dateKey: string): WorkingTimeSlotsDto[] {
+    const workingDate = this.workingTimes?.workingDates?.find(x => x.date === dateKey);
+    return workingDate?.allSlotsOfDate ?? [];
+  }
+
+  private getMondayBasedDayIndex(date: Date): number {
+    const jsDay = date.getDay();
+    return jsDay === 0 ? 6 : jsDay - 1;
+  }
+
+  private toDateKey(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`; 
+  }
+
+  formatTime(time: string): string {
+    if(!time) return '';
+
+    return time.length >= 5 ? time.substring(0, 5) : time;
+  }
+
+  previousMonth(): void {
+    this.currentMonth = new Date(
+      this.currentMonth.getFullYear(),
+      this.currentMonth.getMonth() - 1,
+      1
+    );
+  }
+
+  nextMonth(): void {
+    this.currentMonth = new Date(
+      this.currentMonth.getFullYear(),
+      this.currentMonth.getMonth() + 1,
+      1
+    );
+  }
+
+  onSlotClick(slot: WorkingTimeSlotsDto): void {
+    if(slot.isBooked) 
+      return;
+
+    this.selectedSlot = slot;
+    this.selectedSessionType = null;
+  }
+
+  selectSessionType(type: SessionType): void {
+    this.selectedSessionType = type;
+  }
+
+  getSessionTypeLabel(type: SessionType): string {
+    switch(type) {
+      case SessionType.VIDEO_CALL:
+        return 'Video call';
+      case SessionType.CALL:
+        return 'Call';
+      case SessionType.MESSAGE:
+        return 'Message';
+      default:
+        return '';
+    }
+  }
+
+  onBookedSlotClick(slot: WorkingTimeSlotsDto): void {
+    console.log('Booked slot clicked:', slot);
+  }
+
+  bookAppointment(): void {
+    if(!this.selectedSlot) {
+      this.toasterService.error('Please select a time slot.');
+      return;
+    }
+
+    if(this.selectedSessionType === null) {
+      this.toasterService.error('Please select a session type.');
+      return;
+    }
+
+    const sessionType = this.selectedSessionType;
+    const therapistAvailabilityId = this.selectedSlot.therapistAvailabilityId;
+
+    this.isBooking = true;
+
+    this.appointmentsApiService.createAppointment(therapistAvailabilityId, sessionType)
+    .subscribe({
+      next: (response) => {
+        this.toasterService.success(response.note || 'Appointment booked successfully.');
+
+        this.selectedSlot = null;
+        this.selectedSessionType = null;
+
+        this.loadData();
+        this.isBooking = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.toasterService.error('Failed to book appointment.');
+        this.isBooking = false;
+      }
+    });
+  }
+
+  clearBookingSelection(): void {
+    this.selectedSlot = null;
+    this.selectedSessionType = null;
+  }
 }
