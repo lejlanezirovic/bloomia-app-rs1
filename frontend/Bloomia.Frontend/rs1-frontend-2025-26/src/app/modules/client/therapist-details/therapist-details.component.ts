@@ -10,7 +10,7 @@ import {
   CreateReviewCommand,
   GetReviewsByTherapistIdQueryDto
 } from '../../../api-services/reviews/reviews-api.models';
-import { AppointmentsForReviewDto } from '../../../api-services/appointments/appointments-api.models';
+import { AppointmentsForReviewDto, SessionType } from '../../../api-services/appointments/appointments-api.models';
 import { ToasterService } from '../../../core/services/toaster.service';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
@@ -58,6 +58,10 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   isSubmitting = false;
   reviewsTotalCount = 0;
   returnTo: 'list' | 'saved' = 'list';
+
+  selectedSessionType: SessionType | null = null;
+  isBooking = false;
+  readonly SessionType = SessionType;
 
   reviewForm = this.fb.group({
     appointmentId: [null as number | null],
@@ -107,10 +111,19 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
           });
         }
 
-        const firstDate = this.workingTimes.workingDates?.[0]?.date ?? null;
-        if(firstDate) {
-          this.selectedDateKey = firstDate;
-          this.currentMonth = this.parseLocalDate(firstDate);
+        const stillExists = this.selectedDateKey ? this.workingTimes.workingDates?.some(x => x.date === this.selectedDateKey)
+        : false;
+
+        if(stillExists && this.selectedDateKey) {
+          this.currentMonth = this.parseLocalDate(this.selectedDateKey);
+        } else {
+          const firstDate = this.workingTimes.workingDates?.[0]?.date ?? null;
+          if(firstDate) {
+            this.selectedDateKey = firstDate;
+            this.currentMonth = this.parseLocalDate(firstDate);
+          } else {
+            this.selectedDateKey = null;
+          }
         }
 
         this.stopLoading();
@@ -125,6 +138,10 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   private parseLocalDate(dateString: string): Date {
     const [year, month, day] = dateString.split('-').map(Number);
     return new Date(year, month - 1, day);
+  }
+
+  get canBookAppointment(): boolean {
+    return !!this.selectedSlot && this.selectedSessionType !== null && !this.isBooking;
   }
 
   get fullName(): string {
@@ -386,9 +403,67 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
       return;
 
     this.selectedSlot = slot;
+    this.selectedSessionType = null;
+  }
+
+  selectSessionType(type: SessionType): void {
+    this.selectedSessionType = type;
+  }
+
+  getSessionTypeLabel(type: SessionType): string {
+    switch(type) {
+      case SessionType.VIDEO_CALL:
+        return 'Video call';
+      case SessionType.CALL:
+        return 'Call';
+      case SessionType.MESSAGE:
+        return 'Message';
+      default:
+        return '';
+    }
   }
 
   onBookedSlotClick(slot: WorkingTimeSlotsDto): void {
     console.log('Booked slot clicked:', slot);
+  }
+
+  bookAppointment(): void {
+    if(!this.selectedSlot) {
+      this.toasterService.error('Please select a time slot.');
+      return;
+    }
+
+    if(this.selectedSessionType === null) {
+      this.toasterService.error('Please select a session type.');
+      return;
+    }
+
+    const sessionType = this.selectedSessionType;
+    const therapistAvailabilityId = this.selectedSlot.therapistAvailabilityId;
+
+    this.isBooking = true;
+
+    this.appointmentsApiService.createAppointment(therapistAvailabilityId, sessionType)
+    .subscribe({
+      next: (response) => {
+        this.toasterService.success(response.note || 'Appointment booked successfully.');
+
+        this.selectedSlot = null;
+        this.selectedSessionType = null;
+
+        this.loadData();
+        this.isBooking = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.toasterService.error('Failed to book appointment.');
+        this.isBooking = false;
+      }
+    });
+  }
+
+  clearBookingSelection(): void {
+    this.selectedSlot = null;
+    this.selectedSessionType = null;
   }
 }

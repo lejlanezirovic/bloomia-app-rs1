@@ -13,7 +13,7 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistT
     }
     public class ListTimesDto
     {
-        public int TherapyAvailabilityId { get; set; }
+        public int TherapistAvailabilityId { get; set; }
         public TimeOnly StartTime { get; set; }
         public bool IsBooked { get; set; }
     }

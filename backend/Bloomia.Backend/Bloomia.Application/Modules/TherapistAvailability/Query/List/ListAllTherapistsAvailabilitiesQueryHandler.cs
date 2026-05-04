@@ -52,7 +52,7 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.List
                         AllSlotsOfDate = g
                             .Select(x => new ListTimesDto
                             {
-                                TherapyAvailabilityId = x.Id,
+                                TherapistAvailabilityId = x.Id,
                                 StartTime = x.StartTime,
                                 IsBooked = x.IsBooked
                             })

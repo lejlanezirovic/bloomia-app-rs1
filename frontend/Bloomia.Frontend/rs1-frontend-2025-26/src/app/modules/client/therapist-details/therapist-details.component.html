@@ -251,6 +251,41 @@
                 </button>
                 </div>
 
+                <div *ngIf="selectedSlot && !selectedSlot.isBooked" class="booking-panel">
+                  <div class="booking-title">Book selected slot</div>
+
+                  <div class="booking-summary">
+                    <div class="booking-summary-row">
+                      <span class="booking-label">Date</span>
+                      <span class="booking-value">{{ selectedDateLabel }}</span>
+                    </div>
+
+                    <div class="booking-summary-row">
+                      <span class="booking-label">Time</span>
+                      <span class="booking-value">{{ formatTime(selectedSlot.startTime) }} </span>
+                    </div>
+                  </div>
+
+                  <div class="booking-subtitle">Choose session type</div>
+                  
+                  <div class="session-type-options">
+                    <button type="button" class="session-type-btn" [class.active]="selectedSessionType === SessionType.VIDEO_CALL"
+                    (click)="selectSessionType(SessionType.VIDEO_CALL)">Video call</button>
+                    <button type="button" class="session-type-btn" [class.active]="selectedSessionType === SessionType.CALL"
+                    (click)="selectSessionType(SessionType.CALL)">Call</button>
+                    <button type="button" class="session-type-btn" [class.active]="selectedSessionType === SessionType.MESSAGE"
+                    (click)="selectSessionType(SessionType.MESSAGE)">Message</button>
+                  </div>
+
+                  <div class="booking-actions">
+                    <button type="button" class="secondary-action-btn" 
+                      (click)="clearBookingSelection()" [disabled]="isBooking">Cancel</button>
+                    <button type="button" class="primary-action-btn" (click)="bookAppointment()" [disabled]="!canBookAppointment">
+                      {{ isBooking ? 'Booking...' : 'Confirm booking' }}</button>
+                    </div>
+
+                </div>
+
                 <p *ngIf="selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
                   Nema termina za odabrani datum.
                 </p>

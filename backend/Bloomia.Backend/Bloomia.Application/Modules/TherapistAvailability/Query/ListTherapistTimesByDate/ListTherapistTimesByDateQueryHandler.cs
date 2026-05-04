@@ -28,7 +28,7 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistT
             {
                 var dtoTime = new ListTimesDto
                 {
-                    TherapyAvailabilityId=i.Id,
+                    TherapistAvailabilityId=i.Id,
                     StartTime = i.StartTime,
                     IsBooked = i.IsBooked
                 };
