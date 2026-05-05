@@ -20,8 +20,7 @@ namespace Bloomia.Domain.Entities
         public string Description { get; set; }
         public float RatingAvg { get; set; }
         public bool isVerified { get; set; }
-        public int DocumentId { get; set; }
-        public DocumentEntity Document { get; set; }
+        public List<DocumentEntity> Documents { get; set; } = new();
 
         //liste
         //1. 

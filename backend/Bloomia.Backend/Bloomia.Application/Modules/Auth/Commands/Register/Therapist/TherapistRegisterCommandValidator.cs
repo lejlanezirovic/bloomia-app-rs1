@@ -33,8 +33,6 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
             RuleFor(x => x.Description)
                 .MaximumLength(500);
 
-            RuleFor(x => x.DocumentId)
-                .GreaterThan(0).WithMessage("Neispravan ID dokumenta.");
         }
     }
 }

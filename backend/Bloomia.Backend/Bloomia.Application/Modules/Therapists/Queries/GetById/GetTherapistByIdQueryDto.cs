@@ -20,9 +20,17 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
         public string? Description { get; set; }
         public float RatingAvg { get; set; }
         public bool IsVerified { get; set; }
-        public string? DocumentName { get; set; }
+        public List<TherapistDocumentDto> Documents { get; set; } = new();
         public List<TherapyTypeDto> TherapyTypes { get; set; } = new List<TherapyTypeDto>();
         public List<TherapistAvailabilityDto> Availability { get; set; } = new List<TherapistAvailabilityDto>();
+    }
+
+    public class TherapistDocumentDto
+    {
+        public int Id { get; set; }
+        public string DocumentType { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
+        public string FilePath { get; set; } = string.Empty;
     }
 
     public class TherapyTypeDto

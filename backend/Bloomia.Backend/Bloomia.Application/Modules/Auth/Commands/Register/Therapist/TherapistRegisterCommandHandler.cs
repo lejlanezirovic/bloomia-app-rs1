@@ -52,7 +52,6 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
                 UserId = newUser.Id,
                 Specialization = request.Specialization,
                 Description = request.Description,
-                DocumentId = request.DocumentId,
                 RatingAvg = 0,
                 isVerified = false,
                 CreatedAtUtc = DateTime.UtcNow

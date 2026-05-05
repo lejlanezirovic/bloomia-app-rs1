@@ -17,7 +17,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
             var therapist = await context.Therapists
                 .Include(x => x.User)
                 .Include(x => x.MyTherapyTypesList)
-                .Include(x => x.Document)
+                .Include(x => x.Documents)
                 .Where(x => x.Id == request.Id)
                 .FirstOrDefaultAsync(ct);
 
