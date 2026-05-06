@@ -73,5 +73,46 @@ namespace Bloomia.Infrastructure.Services
             if (File.Exists(fullPath))
                 File.Delete(fullPath);
         }
+
+        public async Task<(string RelativePath, string FileName, string FileExtension)> SaveTherapistDocumentAsync(IFormFile file, CancellationToken ct)
+        {
+            if (file == null || file.Length == 0)
+                throw new Exception("Document file is empty.");
+
+            var allowedExtensions = new[] { ".pdf" };
+            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(extension))
+                throw new Exception("Only .pdf files are allowed.");
+
+            var allowedContentTypes = new[]
+            {
+                "application/pdf"
+            };
+
+            if (!allowedContentTypes.Contains(file.ContentType.ToLowerInvariant()))
+                throw new Exception("Invalid document content type.");
+
+            const long maxSize = 10 * 1024 * 1024;
+            if(file.Length > maxSize)
+                throw new Exception("Document must be smaller than 10 MB.");
+
+            var webRoot = _environment.WebRootPath;
+            if (string.IsNullOrWhiteSpace(webRoot))
+                webRoot = Path.Combine(_environment.ContentRootPath, "wwwroot");
+
+            var folderPath = Path.Combine(webRoot, "uploads", "documents");
+            Directory.CreateDirectory(folderPath);
+
+            var generatedFileName = $"{Guid.NewGuid()}{extension}";
+            var fullPath = Path.Combine(folderPath, generatedFileName);
+
+            await using var stream = new FileStream(fullPath, FileMode.Create);
+            await file.CopyToAsync(stream, ct);
+
+            var relativePath = $"/uploads/documents/{generatedFileName}";
+
+            return (relativePath, generatedFileName, extension);
+        }
     }
 }

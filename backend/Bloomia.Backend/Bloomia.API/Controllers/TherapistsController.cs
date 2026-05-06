@@ -1,6 +1,8 @@
-﻿using Bloomia.Application.Modules.Articles.Commands.Update;
+﻿using System.Security.Claims;
+using Bloomia.Application.Modules.Articles.Commands.Update;
 using Bloomia.Application.Modules.Therapists.Commands.Update;
 using Bloomia.Application.Modules.Therapists.Commands.Update.ChangeTherapistPassword;
+using Bloomia.Application.Modules.Therapists.Commands.UploadDocument;
 using Bloomia.Application.Modules.Therapists.Queries.GetById;
 using Bloomia.Application.Modules.Therapists.Queries.List;
 using Bloomia.Application.Modules.Users.Queries.GetById;
@@ -12,6 +14,19 @@ namespace Bloomia.API.Controllers
     [Route("api/therapists")]
     public sealed class TherapistsController(ISender sender) : ControllerBase
     {
+        [Authorize(Roles = "THERAPIST")]
+        [HttpPost("upload-document")]
+        public async Task<ActionResult<UploadTherapistDocumentCommandDto>> UploadDocument([FromForm] UploadTherapistDocumentCommand request, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim!.Value);
+
+            request.UserId = userId;
+
+            var result = await sender.Send(request, ct);
+            return Ok(result);
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<PageResult<ListTherapistsQueryDto>> List([FromQuery] ListTherapistsQuery query, CancellationToken ct)
