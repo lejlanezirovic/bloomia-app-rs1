@@ -17,7 +17,6 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
             var therapist = await context.Therapists
                 .Include(x => x.User)
                 .Include(x => x.MyTherapyTypesList)
-                .Include(x => x.Documents)
                 .Where(x => x.Id == request.Id)
                 .FirstOrDefaultAsync(ct);
 
@@ -91,12 +90,6 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
                 user.LocationId = request.LocationId.Value;
             }
 
-            if (!string.IsNullOrEmpty(request.ProfileImage))
-                user.ProfileImage = request.ProfileImage;
-
-
-            if (request.ProfileImage != null)
-                user.ProfileImage = request.ProfileImage;
 
             await context.SaveChangesAsync(ct);
 
