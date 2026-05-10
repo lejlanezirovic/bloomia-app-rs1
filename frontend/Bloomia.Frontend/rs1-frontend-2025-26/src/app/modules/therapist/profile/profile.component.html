@@ -16,9 +16,14 @@
     <div *ngIf="therapist && !isLoading" class="profile-content">
         <div class="profile-grid">
             <mat-card class="left-card">
-                <div class="image-wrapper">
-                    <img [src]="therapist.profileImage || 'assets/images/user.png'" alt="Therapist profile" class="profile-image">
+                <div class="image-wrapper" [class.editable]="isEditMode" (click)="triggerProfileImageInput(profileImageInput)">
+                    <img [src]="profileImageSrc" alt="Therapist profile" class="profile-image">
+                    <div *ngIf="isEditMode" class="image-overlay">
+                        <span class="image-plus">+</span>
+                    </div>
                 </div>
+
+                <input #profileImageInput type="file" accept="image/*" hidden (change)="onProfileImageSelected($event)">
 
                 <div class="basic-info">
                     <div class="info-item">
@@ -49,26 +54,19 @@
                     </div>
                 </div>
 
-                <div class="left-actions">
+                <div class="left-actions" *ngIf="!isEditMode">
                     <button mat-raised-button class="primary-btn full-width" (click)="onEditProfile()">
-                        Uredi profil
+                        Edit profile
                     </button>
                 </div>
 
-                <div class="upload-actions">
-                    <label for="photoUpload" class="upload-label">
-                        <button mat-stroked-button class="secondary-btn full-width" type="button">
-                            Upload Photo
-                        </button>
-                    </label>
-                    <input id="photoUpload" type="file" accept="image/*" hidden (change)="onUploadPhoto($event)">
-                
-                    <label for="documentUpload" class="upload-label">
-                        <button mat-stroked-button class="secondary-btn full-width" type="button">
-                            Dodaj dokument
-                        </button>
-                    </label>
-                    <input id="documentUpload" type="file" hidden (change)="onUploadDocument($event)">
+                <div class="upload-actions" *ngIf="isEditMode">
+                    <button mat-raised-button class="primary-btn full-width" (click)="saveProfileChanges()">
+                        Save changes
+                    </button>
+                    <button mat-stroked-button class="secondary-btn full-width" (click)="cancelEdit()">
+                        Cancel
+                    </button>
                 </div>
             </mat-card>
 
@@ -88,18 +86,32 @@
 
                 <section class="section">
                     <div class="section-title">Specijalizacija</div>
-                    <p class="section-text">
-                        {{therapist.specialization || 'Nije unesena specijalizacija.'}}
-                    </p>
+
+                    <ng-container *ngIf="!isEditMode"; else editSpecializationBlock>
+                        <p class="section-text">
+                            {{ therapist.specialization || 'No specialization info available.' }}
+                        </p>
+                    </ng-container>
+
+                    <ng-template #editSpecializationBlock>
+                        <input class="edit-input" type="text" [(ngModel)]="editSpecialization" placeholder="Enter specialization">
+                    </ng-template>
                 </section>
 
                 <mat-divider></mat-divider>
 
                 <section class="section">
                     <div class="section-title">Opis</div>
-                    <p class="section-text">
-                        {{ therapist.description || 'Opis nije unesen.' }}
-                    </p>
+
+                    <ng-container *ngIf="!isEditMode; else editDescriptionBlock">
+                        <p class="section-text">
+                            {{ therapist.description || 'No description available.' }}
+                        </p>
+                    </ng-container>
+
+                    <ng-template #editDescriptionBlock>
+                        <textarea class="edit-textarea" rows="5" [(ngModel)]="editDescription" placeholder="Enter description"></textarea>
+                    </ng-template>
                 </section>
 
                 <mat-divider></mat-divider>
@@ -107,24 +119,58 @@
                 <section class="section">
                     <div class="section-title">Tipovi terapije</div>
 
-                    <mat-chip-set *ngIf="therapyTypes.length > 0" class="chips-wrapper">
-                        <mat-chip *ngFor="let therapyType of therapyTypes">
-                        {{ therapyType }}
-                        </mat-chip>
-                    </mat-chip-set>
+                    <ng-container *ngIf="!isEditMode; else editTherapyTypesBlock">
+                        <mat-chip-set *ngIf="therapyTypes.length > 0" class="chips-wrapper">
+                            <mat-chip *ngFor="let therapyType of therapyTypes">
+                                {{ therapyType }}
+                            </mat-chip>
+                        </mat-chip-set>
 
-                    <p *ngIf="therapyTypes.length === 0" class="section-text empty-text">
-                        Nema dodanih tipova terapije.
-                    </p>
+                        <p *ngIf="therapyTypes.length===0" class="section-text empty-text">
+                            No therapy types added.
+                        </p>
+                    </ng-container>
+
+                    <ng-template #editTherapyTypesBlock>
+                        <div class="therapy-types-edit-list">
+                            <label class="therapy-type-option" *ngFor="let type of allTherapyTypes">
+                                <input type="checkbox" [checked]="isTherapyTypeSelected(type.id)"
+                                (change)="toggleTherapyType(type.id)">
+                                <span>{{ type.name }}</span>
+                            </label>
+                        </div>
+                    </ng-template>
                 </section>
 
             <mat-divider></mat-divider>
 
             <section class="section">
-                <div class="section-title">Dokument</div>
-                <p class="section-text">
-                    {{ therapist.documentName || 'Dokument nije dodan.' }}
-                </p>
+                <div class="section-header-row">
+                    <div class="section-title">Documents</div>
+
+                    <button *ngIf="isEditMode" type="button" class="add-document-btn" (click)="triggerDocumentInput(documentInput)">
+                        + Dodaj dokument
+                    </button>
+                </div>
+
+                <input #documentInput type="file" accept=".pdf" hidden (change)="onUploadDocument($event)">
+
+                <div *ngIf="therapistDocuments.length > 0; else noDocumentsBlock" class="document-list">
+                    <div class="document-item" *ngFor="let document of therapistDocuments">
+                        <span class="document-name">{{ document.fileName }}</span>
+                    </div>
+                </div>
+
+                <ng-template #noDocumentsBlock>
+                    <p class="section-text empty-text">
+                        No files added.
+                    </p>
+                </ng-template>
+
+                <div *ngIf="isEditMode && selectedDocumentFile" class="pending-document">
+                    Chosen file: <strong>{{ selectedDocumentFile.name }}</strong>
+                </div>
+
             </section>
 
             <mat-divider></mat-divider>

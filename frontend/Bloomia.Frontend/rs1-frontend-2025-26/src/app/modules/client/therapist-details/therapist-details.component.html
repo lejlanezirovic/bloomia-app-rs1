@@ -105,10 +105,21 @@
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Dokument</div>
-          <p class="section-text">
-            {{ therapist.documentName || 'Dokument nije dodan.' }}
-          </p>
+          <div class="section-title">Files</div>
+          <div *ngIf="(therapist.documents?.length ?? 0) > 0; else noDocumentsBlock" class="document-list">
+            <div class="document-item" *ngFor="let document of therapist.documents">
+              <a [href]="document.filePath" class="document-link" target="_blank" rel="noopener noreferrer">
+                {{ document.fileName }}
+              </a>
+            </div>
+          </div>
+
+          <ng-template #noDocumentsBlock>
+            <p class="section-text">
+              No file added.
+            </p>
+          </ng-template>
+
         </section>
 
         <mat-divider></mat-divider>

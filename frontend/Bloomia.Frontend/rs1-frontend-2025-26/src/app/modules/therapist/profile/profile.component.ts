@@ -3,9 +3,11 @@ import { TherapistsApiService } from '../../../api-services/therapists/therapist
 import { CurrentUserService } from '../../../core/services/auth/current-user.service';
 import { GetTherapistByIdQueryDto, TherapistAvailabilityDto } from '../../../api-services/therapists/therapists-api.models';
 import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
 import { BaseComponent } from '../../../core/components/base-classes/base-component';
+import { TherapyTypesApiService } from '../../../api-services/therapy-types/therapy-types-api.service';
+import { TherapyTypeOptionDto } from '../../../api-services/therapy-types/therapy-types-api.models';
 
 interface CalendarDayVm {
   date: Date;
@@ -30,10 +32,22 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   private therapistsApi = inject(TherapistsApiService);
   private therapistAvailabilityApi = inject(TherapistAvailabilityApiService);
   private currentUserService = inject(CurrentUserService);
+  private therapyTypesApi = inject(TherapyTypesApiService);
 
   therapist: GetTherapistByIdQueryDto | null = null;
   workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
 
+  isEditMode = false;
+
+  editSpecialization = '';
+  editDescription = '';
+
+  allTherapyTypes: TherapyTypeOptionDto[] = [];
+  selectedTherapyTypeIds: number[] = [];
+
+  selectedProfileImageFile: File | null = null;
+  selectedDocumentFile: File | null = null;
+  profileImagePreviewUrl: string | null = null;
 
   currentMonth = new Date();
   selectedDateKey: string | null = null;
@@ -55,11 +69,13 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
     forkJoin({
       profile: this.therapistsApi.getById(therapistId),
-      workingTimes: this.therapistAvailabilityApi.listMyWorkingDatesAndTimes()
+      workingTimes: this.therapistAvailabilityApi.listMyWorkingDatesAndTimes(),
+      therapyTypes: this.therapyTypesApi.list()
     }).subscribe({
-      next: ({ profile, workingTimes }) => {
-        this.therapist = profile;
-        this.workingTimes = workingTimes;
+      next: (result) => {
+        this.therapist = result.profile;
+        this.workingTimes = result.workingTimes;
+        this.allTherapyTypes = result.therapyTypes;
 
         const firstDate = this.workingTimes.workingDates?.[0]?.date ?? null;
         if (firstDate) {
@@ -74,6 +90,15 @@ export class ProfileComponent extends BaseComponent implements OnInit {
         this.stopLoading('Failed to load profile. Please try again later.');
       }
     });
+  }
+
+  get profileImageSrc(): string {
+    return this.profileImagePreviewUrl || this.therapist?.profileImage
+           || 'assets/images/user.png'; 
+  }
+
+  get therapistDocuments() {
+    return this.therapist?.documents || [];
   }
 
   get currentMonthLabel(): string {
@@ -231,7 +256,7 @@ selectDay(day: CalendarDayVm): void {
     return time.length >= 5 ? time.substring(0, 5) : time;
   }
 
-  get specializations(): string {
+  get specializationText(): string {
     return this.therapist?.specialization || 'Not specified';
   }
 
@@ -261,27 +286,130 @@ selectDay(day: CalendarDayVm): void {
 
 
   onEditProfile(): void {
-    console.log('Edit profile clicked');
+    if(!this.therapist)
+      return;
+
+    this.isEditMode = true;
+    this.editSpecialization = this.therapist.specialization || '';
+    this.editDescription = this.therapist.description || '';
+    this.selectedTherapyTypeIds = this.therapist.therapyTypes?.map(x => x.id) || [];
+
+    this.selectedProfileImageFile = null;
+    this.selectedDocumentFile = null;
+    this.profileImagePreviewUrl = null;
   }
 
-  //TODO
-  onUploadPhoto(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if(input.files && input.files[0]) {
-      const file = input.files[0];
-      console.log('Uploading photo:', file);
-      // TODO
+  cancelEdit(): void {
+    this.isEditMode = false;
+    this.editSpecialization = '';
+    this.editDescription = '';
+    this.selectedTherapyTypeIds = [];
+    this.selectedProfileImageFile = null;
+    this.selectedDocumentFile = null;
+    this.profileImagePreviewUrl = null;
+  }
+
+  toggleTherapyType(therapyTypeId: number): void {
+    if(this.selectedTherapyTypeIds.includes(therapyTypeId)) {
+      this.selectedTherapyTypeIds = this.selectedTherapyTypeIds.filter(x => x !== therapyTypeId);
+    } else {
+      this.selectedTherapyTypeIds = [...this.selectedTherapyTypeIds, therapyTypeId];
     }
   }
+
+  isTherapyTypeSelected(therapyTypeId: number): boolean {
+    return this.selectedTherapyTypeIds.includes(therapyTypeId);
+  }
+
+  triggerProfileImageInput(fileInput: HTMLInputElement): void {
+    if(!this.isEditMode)
+      return;
+
+    fileInput.click();
+  }
+
+  triggerDocumentInput(fileInput: HTMLInputElement): void {
+    if(!this.isEditMode)
+      return;
+    fileInput.click();
+  }
+
+  onProfileImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if(!input.files || !input.files.length)
+      return;
+
+    const file = input.files[0];
+    this.selectedProfileImageFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.profileImagePreviewUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
 
   onUploadDocument(event: Event): void {
     const input = event.target as HTMLInputElement;
 
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      console.log('Uploading document:', file);
-      // TODO: upload dokumenta
+    if(!input.files || !input.files.length)
+      return;
+    
+    this.selectedDocumentFile = input.files[0];
+  }
+
+  saveProfileChanges(): void {
+    if(!this.therapist)
+      return;
+
+    this.startLoading();
+
+    const payload = {
+      specialization: this.editSpecialization,
+      description: this.editDescription,
+      therapyTypeIds: this.selectedTherapyTypeIds
+    };
+
+    this.therapistsApi.update(this.therapist.id, payload).subscribe({
+      next: () => {
+        this.uploadOptionalFilesAfterUpdate();
+      },
+      error: (error) => {
+        console.error('Error updating therapist profile:', error);
+        this.stopLoading('Failed to update profile. Please try again later.');
+      }
+    });
+  }
+
+  private uploadOptionalFilesAfterUpdate(): void {
+    const uploadCalls: any[] = [];
+
+    if(this.selectedProfileImageFile) {
+      uploadCalls.push(this.therapistsApi.uploadProfileImage(this.selectedProfileImageFile));
     }
+
+    if(this.selectedDocumentFile) {
+      uploadCalls.push(this.therapistsApi.uploadTherapistDocument(this.selectedDocumentFile, 1));
+    }
+
+    if(uploadCalls.length === 0) {
+      this.finishSaveFlow();
+      return;
+    }
+
+    forkJoin(uploadCalls).subscribe({
+      next: () => this.finishSaveFlow(),
+      error: (error) => {
+        console.error('Error uploading files:', error);
+        this.stopLoading('Profile updated but failed to upload files. Please try uploading them separately.');
+      }
+    })
+  }
+
+  private finishSaveFlow(): void {
+    this.isEditMode = false;
+    this.loadProfile();
   }
 }
 

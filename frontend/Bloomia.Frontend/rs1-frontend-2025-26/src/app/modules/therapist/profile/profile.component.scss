@@ -60,9 +60,16 @@ $light-color: #DEDBD2;
 }
 
 .image-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 24px auto;
+  border-radius: 50%;
+  overflow: hidden;
+
+  &.editable {
+    cursor: pointer;
+  }
 }
 
 .profile-image {
@@ -73,6 +80,30 @@ $light-color: #DEDBD2;
   border: 5px solid $background-color;
   background: white;
   box-shadow: 0 8px 22px rgba(74, 87, 89, 0.12);
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(74, 87, 89, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.image-wrapper.editable:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-plus {
+  color: white;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .basic-info {
@@ -105,19 +136,14 @@ $light-color: #DEDBD2;
   word-break: break-word;
 }
 
-.left-actions,
-.upload-actions {
+.left-actions {
   margin-top: 20px;
 }
 
-.upload-actions {
+.edit-actions {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.upload-label {
-  display: block;
 }
 
 .full-width {
@@ -188,6 +214,18 @@ $light-color: #DEDBD2;
   font-weight: 500;
 }
 
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .section-title {
+    margin-bottom: 0;
+  }
+}
+
 .section-text {
   margin: 0;
   font-size: 18px;
@@ -197,6 +235,30 @@ $light-color: #DEDBD2;
 
 .empty-text {
   opacity: 0.8;
+}
+
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  border: 1px solid rgba(74, 87, 89, 0.18);
+  border-radius: 14px;
+  background: white;
+  color: $text-color;
+  padding: 14px 16px;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+
+  &:focus {
+    border-color: $background-color;
+    box-shadow: 0 0 0 3px rgba(176, 196, 177, 0.18);
+  }
+}
+
+.edit-textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.5;
 }
 
 .chips-wrapper {
@@ -210,7 +272,55 @@ mat-chip {
   color: $text-color !important;
 }
 
-/* KALENDAR */
+.therapy-types-edit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.therapy-type-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: $text-color;
+}
+
+.add-document-btn {
+  background: transparent;
+  border: none;
+  color: $text-color;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.document-item {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(74, 87, 89, 0.08);
+}
+
+.document-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-color;
+}
+
+.pending-document {
+  margin-top: 14px;
+  font-size: 14px;
+  color: $text-color;
+  opacity: 0.9;
+}
 
 .calendar-layout {
   display: grid;
@@ -414,7 +524,8 @@ mat-chip {
     font-size: 34px;
   }
 
-  .profile-image {
+  .profile-image,
+  .image-wrapper {
     width: 190px;
     height: 190px;
   }
@@ -467,7 +578,8 @@ mat-chip {
     font-size: 20px;
   }
 
-  .profile-image {
+  .profile-image,
+  .image-wrapper {
     width: 160px;
     height: 160px;
   }
@@ -505,5 +617,9 @@ mat-chip {
   .slot-button {
     flex-wrap: wrap;
     align-items: flex-start;
+  }
+
+  .therapy-types-edit-list {
+    gap: 8px;
   }
 }

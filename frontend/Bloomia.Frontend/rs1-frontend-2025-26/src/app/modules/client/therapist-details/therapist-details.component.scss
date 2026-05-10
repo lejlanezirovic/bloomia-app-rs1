@@ -209,6 +209,35 @@ mat-chip {
   color: $text-color !important;
 }
 
+
+.document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.document-item {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(74, 87, 89, 0.08);
+}
+
+.document-link {
+  color: $text-color;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  word-break: break-word;
+  transition: opacity 0.15s ease, text-decoration-color 0.15s ease;
+
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+  }
+}
+
+
 .reviews-list {
   display: flex;
   flex-direction: column;
@@ -254,7 +283,6 @@ mat-chip {
 .load-more-btn {
   margin-top: 12px;
 }
-
 
 .calendar-layout {
   display: grid;
@@ -453,6 +481,108 @@ mat-chip {
   font-weight: 700;
 }
 
+/* BOOKING PANEL */
+
+.booking-panel {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(74, 87, 89, 0.1);
+}
+
+.booking-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: $text-color;
+  margin-bottom: 14px;
+}
+
+.booking-subtitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: $text-color;
+  margin-bottom: 12px;
+}
+
+.booking-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.booking-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.booking-label {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.booking-value {
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.session-type-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.session-type-btn {
+  border: 1px solid rgba(74, 87, 89, 0.18);
+  background: white;
+  color: $text-color;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: $background-color;
+    border-color: $text-color;
+  }
+}
+
+.booking-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.primary-action-btn,
+.secondary-action-btn {
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-action-btn {
+  border: none;
+  background: $background-color;
+  color: $text-color;
+}
+
+.secondary-action-btn {
+  border: 1px solid rgba(74, 87, 89, 0.2);
+  background: white;
+  color: $text-color;
+}
+
 @media (max-width: 992px) {
   .profile-grid {
     grid-template-columns: 1fr;
@@ -558,104 +688,4 @@ mat-chip {
     flex-wrap: wrap;
     align-items: flex-start;
   }
-}
-
-.booking-panel {
-  margin-top: 18px;
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(74, 87, 89, 0.1);
-}
-
-.booking-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: $text-color;
-  margin-bottom: 14px;
-}
-
-.booking-subtitle {
-  font-size: 15px;
-  font-weight: 700;
-  color: $text-color;
-  margin-bottom: 12px;
-}
-
-.booking-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.booking-summary-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.booking-label {
-  font-size: 14px;
-  opacity: 0.75;
-}
-
-.booking-value {
-  font-size: 14px;
-  font-weight: 700;
-  text-align: right;
-}
-
-.session-type-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.session-type-btn {
-  border: 1px solid rgba(74, 87, 89, 0.18);
-  background: white;
-  color: $text-color;
-  border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.15s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-
-  &.active {
-    background: $background-color;
-    border-color: $text-color;
-  }
-}
-
-.booking-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.primary-action-btn,
-.secondary-action-btn {
-  border-radius: 12px;
-  padding: 10px 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.primary-action-btn {
-  border: none;
-  background: $background-color;
-  color: $text-color;
-}
-
-.secondary-action-btn {
-  border: 1px solid rgba(74, 87, 89, 0.2);
-  background: white;
-  color: $text-color;
 }

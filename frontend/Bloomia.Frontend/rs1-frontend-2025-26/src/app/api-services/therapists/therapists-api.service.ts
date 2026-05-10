@@ -30,6 +30,24 @@ export class TherapistsApiService {
         return this.http.put<void>(`${this.baseUrl}/${id}`, payload);
     }
 
+    uploadProfileImage(file: File): Observable<{ note: string; profileImage: string }> {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return this.http.post<{ note: string; profileImage: string }>(
+            `${environment.apiUrl}/api/users/upload-profile-image`,
+            formData
+        );
+    }
+
+    uploadTherapistDocument(file: File, documentType: number): Observable<any> {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('documentType', documentType.toString());
+
+        return this.http.post<any>(`${this.baseUrl}/upload-document`, formData);
+    }
+
     changePassword(id:number, payload: ChangeTherapistPasswordCommand): Observable<void> {
         return this.http.put<void>(`${this.baseUrl}/${id}/change-password`, payload);
     }
