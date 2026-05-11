@@ -12,10 +12,11 @@ import {
 } from '../../../api-services/reviews/reviews-api.models';
 import { AppointmentsForReviewDto, SessionType } from '../../../api-services/appointments/appointments-api.models';
 import { ToasterService } from '../../../core/services/toaster.service';
-import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
 import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
 import { BaseComponent } from '../../../core/components/base-classes/base-component';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from '../../../../environments/environment';
 
 interface CalendarDayVm {
   date: Date;
@@ -44,6 +45,7 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   private toasterService = inject(ToasterService);
   private fb = inject(FormBuilder);
   private therapistAvailabilityApiService = inject(TherapistAvailabilityApiService);
+  private sanitizer = inject(DomSanitizer);
 
   therapist: GetTherapistByIdQueryDto | null = null;
   reviews: GetReviewsByTherapistIdQueryDto[] = [];
@@ -58,6 +60,10 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   isSubmitting = false;
   reviewsTotalCount = 0;
   returnTo: 'list' | 'saved' = 'list';
+
+  selectedDocumentUrl: SafeResourceUrl | null = null;
+  selectedDocumentName: string | null = null;
+
 
   selectedSessionType: SessionType | null = null;
   isBooking = false;
@@ -290,7 +296,7 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     return `${weekday}, ${formattedDate}`;
   }
 
-  get SelectedWorkingDate() {
+  get selectedWorkingDate() {
     if(!this.selectedDateKey || !this.workingTimes)
       return null;
 
@@ -298,7 +304,7 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   }
 
   get selectedDateSlots(): WorkingTimeSlotsDto[] {
-    return this.SelectedWorkingDate?.allSlotsOfDate ?? [];
+    return this.selectedWorkingDate?.allSlotsOfDate ?? [];
   }
 
   selectDay(day: CalendarDayVm): void {
@@ -465,5 +471,45 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   clearBookingSelection(): void {
     this.selectedSlot = null;
     this.selectedSessionType = null;
+  }
+
+  get therapistDocuments() {
+    return this.therapist?.documents || [];
+  }
+
+  get profileImageSrc(): string {
+    const profileImage = this.therapist?.profileImage;
+
+    if (!profileImage) {
+      return 'assets/images/user.png';
+    }
+
+    if (profileImage.startsWith('http://') || profileImage.startsWith('https://')) {
+      return profileImage;
+    }
+
+    return `${environment.apiUrl}${profileImage}`;
+  }
+
+  getAbsoluteFileUrl(relativePath: string): string {
+    if(!relativePath) 
+      return '';
+    
+    if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+      return relativePath;
+    }
+
+    return `${environment.apiUrl}${relativePath}`;
+  }
+
+  openDocument(document: { filePath: string; fileName: string }): void {
+    const url = this.getAbsoluteFileUrl(document.filePath);
+    this.selectedDocumentUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.selectedDocumentName = document.fileName;
+  }
+
+  closeDocumentViewer(): void {
+    this.selectedDocumentUrl = null;
+    this.selectedDocumentName = null;
   }
 }

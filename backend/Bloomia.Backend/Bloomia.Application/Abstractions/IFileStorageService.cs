@@ -10,7 +10,7 @@ namespace Bloomia.Application.Abstractions
     public interface IFileStorageService
     {
         Task<string> SaveProfileImageAsync(IFormFile file, CancellationToken ct);
-        Task<(string RelativePath, string FileName, string FileExtension)> SaveTherapistDocumentAsync(IFormFile file, CancellationToken ct);
+        Task<(string RelativePath, string StoredFileName, string OriginalFileName, string FileExtension)> SaveTherapistDocumentAsync(IFormFile file, CancellationToken ct);
         void DeleteIfExists(string? relativePath);
     }
 }

@@ -8,6 +8,10 @@ import { TherapistAvailabilityApiService } from '../../../api-services/therapist
 import { BaseComponent } from '../../../core/components/base-classes/base-component';
 import { TherapyTypesApiService } from '../../../api-services/therapy-types/therapy-types-api.service';
 import { TherapyTypeOptionDto } from '../../../api-services/therapy-types/therapy-types-api.models';
+import { environment } from '../../../../environments/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DialogHelperService } from '../../shared/services/dialog-helper.service';
+import { DialogButton } from '../../shared/models/dialog-config.model';
 
 interface CalendarDayVm {
   date: Date;
@@ -33,6 +37,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   private therapistAvailabilityApi = inject(TherapistAvailabilityApiService);
   private currentUserService = inject(CurrentUserService);
   private therapyTypesApi = inject(TherapyTypesApiService);
+  private sanitizier = inject(DomSanitizer);
+  private dialogHelper = inject(DialogHelperService);
 
   therapist: GetTherapistByIdQueryDto | null = null;
   workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
@@ -51,6 +57,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   currentMonth = new Date();
   selectedDateKey: string | null = null;
+
+  selectedDocumentUrl: SafeResourceUrl | null = null;
+  selectedDocumentName: string | null = null;
+  private pendingDocumentObjectUrl: string | null = null;
   
   ngOnInit(): void {
     this.loadProfile();
@@ -93,8 +103,20 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   }
 
   get profileImageSrc(): string {
-    return this.profileImagePreviewUrl || this.therapist?.profileImage
-           || 'assets/images/user.png'; 
+    if (this.profileImagePreviewUrl) {
+      return this.profileImagePreviewUrl;
+    }
+
+    const profileImage = this.therapist?.profileImage;
+    if (!profileImage) {
+      return 'assets/images/user.png';
+    }
+
+    if (profileImage.startsWith('http://') || profileImage.startsWith('https://')) {
+      return profileImage;
+    }
+
+    return `${environment.apiUrl}${profileImage}`;
   }
 
   get therapistDocuments() {
@@ -307,6 +329,11 @@ selectDay(day: CalendarDayVm): void {
     this.selectedProfileImageFile = null;
     this.selectedDocumentFile = null;
     this.profileImagePreviewUrl = null;
+
+    if(this.pendingDocumentObjectUrl) {
+      URL.revokeObjectURL(this.pendingDocumentObjectUrl);
+      this.pendingDocumentObjectUrl = null;
+    }
   }
 
   toggleTherapyType(therapyTypeId: number): void {
@@ -409,7 +436,93 @@ selectDay(day: CalendarDayVm): void {
 
   private finishSaveFlow(): void {
     this.isEditMode = false;
+
+    if (this.pendingDocumentObjectUrl) {
+      URL.revokeObjectURL(this.pendingDocumentObjectUrl);
+      this.pendingDocumentObjectUrl = null;
+    }
+
     this.loadProfile();
   }
+
+  getAbsoluteFileUrl(relativePath: string): string {
+    if(!relativePath) 
+      return '';
+    if(relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+      return relativePath;
+    }
+    return `${environment.apiUrl}${relativePath}`;
+  }
+
+  openExistingDocument(document: { filePath: string; fileName: string }): void {
+    const url = this.getAbsoluteFileUrl(document.filePath);
+    this.selectedDocumentUrl = this.sanitizier.bypassSecurityTrustResourceUrl(url);
+    this.selectedDocumentName = document.fileName;
+  }
+
+  openPendingDocument(): void {
+    if(!this.selectedDocumentFile)
+      return;
+
+    if(this.pendingDocumentObjectUrl) {
+      URL.revokeObjectURL(this.pendingDocumentObjectUrl);
+    }
+
+    this.pendingDocumentObjectUrl = URL.createObjectURL(this.selectedDocumentFile);
+    this.selectedDocumentUrl = this.sanitizier.bypassSecurityTrustResourceUrl(this.pendingDocumentObjectUrl);
+    this.selectedDocumentName = this.selectedDocumentFile.name;
+  }
+
+  removePendingDocument(): void {
+    const pendingName = this.selectedDocumentFile?.name ?? 'selected file';
+
+    this.dialogHelper.confirmDelete(pendingName).subscribe((result) => {
+      if(!result || result.button !== DialogButton.DELETE) {
+        return;
+      }
+
+      if (this.pendingDocumentObjectUrl) {
+        URL.revokeObjectURL(this.pendingDocumentObjectUrl);
+        this.pendingDocumentObjectUrl = null;
+      }
+
+      if (this.selectedDocumentName === pendingName) {
+        this.selectedDocumentName = null;
+        this.selectedDocumentUrl = null;
+      }
+
+      this.selectedDocumentFile = null;
+    });
+  }
+
+  deleteExistingDocument(documentId: number, fileName: string): void {
+    this.dialogHelper.confirmDelete(fileName).subscribe((result) => {
+      if(!result || result.button !== DialogButton.DELETE) {
+        return;
+      }
+      this.startLoading();
+
+      this.therapistsApi.deleteTherapistDocument(documentId).subscribe({
+        next: () => {
+          if(this.selectedDocumentUrl) {
+            this.closeDocumentViewer();
+          }
+
+          this.loadProfile();
+        },
+        error: (error) => {
+          console.error('Error deleting document:', error);
+          this.stopLoading('Failed to delete document. Please try again later.');
+        }
+      });
+
+    });
+  }
+
+  closeDocumentViewer(): void {
+    this.selectedDocumentUrl = null;
+    this.selectedDocumentName = null;
+  }
+
 }
 

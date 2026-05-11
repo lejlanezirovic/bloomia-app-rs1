@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using Bloomia.Application.Modules.Articles.Commands.Update;
+using Bloomia.Application.Modules.TherapistAvailability.Command.Delete.DeleteTimeByDate;
+using Bloomia.Application.Modules.Therapists.Commands.DeleteDocument;
 using Bloomia.Application.Modules.Therapists.Commands.Update;
 using Bloomia.Application.Modules.Therapists.Commands.Update.ChangeTherapistPassword;
 using Bloomia.Application.Modules.Therapists.Commands.UploadDocument;
@@ -25,6 +27,22 @@ namespace Bloomia.API.Controllers
 
             var result = await sender.Send(request, ct);
             return Ok(result);
+        }
+
+        [Authorize(Roles = "THERAPIST")]
+        [HttpDelete("documents/{documentId}")]
+        public async Task<IActionResult> DeleteDocument(int documentId, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim!.Value);
+
+            await sender.Send(new DeleteTherapistDocumentCommand
+            {
+                DocumentId = documentId,
+                UserId = userId
+            }, ct);
+
+            return NoContent();
         }
 
         [HttpGet]

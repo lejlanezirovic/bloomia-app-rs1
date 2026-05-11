@@ -24,7 +24,7 @@
       <mat-card class="left-card">
         <div class="image-wrapper">
           <img
-            [src]="therapist.profileImage || 'assets/images/user.png'"
+            [src]="profileImageSrc"
             alt="Therapist profile"
             class="profile-image"
           />
@@ -106,11 +106,9 @@
 
         <section class="section">
           <div class="section-title">Files</div>
-          <div *ngIf="(therapist.documents?.length ?? 0) > 0; else noDocumentsBlock" class="document-list">
-            <div class="document-item" *ngFor="let document of therapist.documents">
-              <a [href]="document.filePath" class="document-link" target="_blank" rel="noopener noreferrer">
-                {{ document.fileName }}
-              </a>
+          <div *ngIf="therapistDocuments.length > 0; else noDocumentsBlock" class="document-list">
+            <div class="document-item clickable-document" *ngFor="let document of therapist.documents" (click)="openDocument(document)">
+              <span class="document-name">{{ document.fileName }}</span>
             </div>
           </div>
 
@@ -321,4 +319,20 @@
       </mat-card>
     </div>
   </div>
+
+  <div class="document-viewer-backdrop" *ngIf="selectedDocumentUrl" (click)="closeDocumentViewer()">
+    <div class="document-viewer-modal" (click)="$event.stopPropagation()">
+      <div class="document-viewer-header">
+        <span class="document-viewer-title">{{ selectedDocumentName }}</span>
+        <button type="button" class="document-viewer-close" (click)="closeDocumentViewer()">x</button>
+      </div>
+
+      <object [data]="selectedDocumentUrl" type="application/pdf" class="document-viewer-frame">
+        <div class="document-fallback-message">
+          PDF preview not supported.
+        </div>
+      </object>
+    </div>
+  </div>
+
 </div>

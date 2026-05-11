@@ -26,7 +26,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.UploadDocument
                 TherapistId = therapist.Id,
                 DocumentType = request.DocumentType,
                 FilePath = savedFile.RelativePath,
-                FileName = savedFile.FileName,
+                FileName = savedFile.OriginalFileName,
                 FileExtension = savedFile.FileExtension,
                 UploadedAt = DateTime.UtcNow
             };

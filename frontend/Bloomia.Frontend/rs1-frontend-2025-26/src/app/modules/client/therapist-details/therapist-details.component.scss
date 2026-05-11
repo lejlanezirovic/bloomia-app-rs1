@@ -2,6 +2,83 @@ $text-color: #4A5759;
 $background-color: #B0C4B1;
 $light-color: #DEDBD2;
 
+.clickable-document {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(74, 87, 89, 0.08);
+    border-color: rgba(74, 87, 89, 0.18);
+  }
+}
+
+.document-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-color;
+  word-break: break-word;
+}
+
+.document-viewer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(74, 87, 89, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.document-viewer-modal {
+  width: min(1000px, 100%);
+  height: min(85vh, 900px);
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.document-fallback-message {
+  margin: 24px;
+  font-size: 15px;
+  color: $text-color;
+}
+
+.document-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(74, 87, 89, 0.08);
+}
+
+.document-viewer-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: $text-color;
+  word-break: break-word;
+}
+
+.document-viewer-close {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: $text-color;
+}
+
+.document-viewer-frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+}
+
 .profile-container {
   min-height: 100vh;
   padding: 24px;

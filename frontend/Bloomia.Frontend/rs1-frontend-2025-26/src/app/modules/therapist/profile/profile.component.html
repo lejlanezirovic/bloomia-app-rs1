@@ -85,9 +85,9 @@
                 <mat-divider></mat-divider>
 
                 <section class="section">
-                    <div class="section-title">Specijalizacija</div>
+                    <div class="section-title">Specialization</div>
 
-                    <ng-container *ngIf="!isEditMode"; else editSpecializationBlock>
+                    <ng-container *ngIf="!isEditMode; else editSpecializationBlock">
                         <p class="section-text">
                             {{ therapist.specialization || 'No specialization info available.' }}
                         </p>
@@ -156,8 +156,10 @@
                 <input #documentInput type="file" accept=".pdf" hidden (change)="onUploadDocument($event)">
 
                 <div *ngIf="therapistDocuments.length > 0; else noDocumentsBlock" class="document-list">
-                    <div class="document-item" *ngFor="let document of therapistDocuments">
+                    <div class="document-item clickable-document" *ngFor="let document of therapistDocuments" (click)="openExistingDocument(document)">
                         <span class="document-name">{{ document.fileName }}</span>
+
+                        <button *ngIf="isEditMode" type="button" class="document-delete-btn" (click)="$event.stopPropagation(); deleteExistingDocument(document.id, document.fileName)">x</button>
                     </div>
                 </div>
 
@@ -167,10 +169,15 @@
                     </p>
                 </ng-template>
 
-                <div *ngIf="isEditMode && selectedDocumentFile" class="pending-document">
-                    Chosen file: <strong>{{ selectedDocumentFile.name }}</strong>
-                </div>
+                <div *ngIf="isEditMode && selectedDocumentFile" class="document-item pending-document-item">
+                    <span class="document-name clickable-name" (click)="openPendingDocument()">
+                        {{ selectedDocumentFile.name }}
+                    </span>
 
+                    <button type="button" class="document-delete-btn" (click)="$event.stopPropagation(); removePendingDocument()">
+                        ×
+                    </button>
+                </div>
             </section>
 
             <mat-divider></mat-divider>
@@ -252,4 +259,20 @@
             </mat-card>
         </div>
     </div>
+
+    <div class="document-viewer-backdrop" *ngIf="selectedDocumentUrl" (click)="closeDocumentViewer()">
+        <div class="document-viewer-modal" (click)="$event.stopPropagation()">
+            <div class="document-viewer-header">
+                <span class="document-viewer-title"> {{ selectedDocumentName }}</span>
+                <button type="button" class="document-viewer-close" (click)="closeDocumentViewer()">x</button>
+            </div>
+
+            <object [data]="selectedDocumentUrl" type="application/pdf" class="document-viewer-frame">
+                <div class="document-fallback-message">
+                    PDF preview not supported.
+                </div>
+            </object>
+        </div>
+    </div>
+
 </div>

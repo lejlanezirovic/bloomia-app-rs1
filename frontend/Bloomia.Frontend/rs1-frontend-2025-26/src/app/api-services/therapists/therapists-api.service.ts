@@ -6,6 +6,7 @@ import { ListTherapistsRequest, ListTherapistsResponse, GetTherapistByIdQueryDto
     ChangeTherapistPasswordCommand, UpdateTherapistCommand
  } from "./therapists-api.models";
  import { buildHttpParams } from "../../core/models/build-http-params";
+import { observableToBeFn } from "rxjs/internal/testing/TestScheduler";
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,10 @@ export class TherapistsApiService {
         formData.append('documentType', documentType.toString());
 
         return this.http.post<any>(`${this.baseUrl}/upload-document`, formData);
+    }
+
+    deleteTherapistDocument(documentId: number): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/documents/${documentId}`);
     }
 
     changePassword(id:number, payload: ChangeTherapistPasswordCommand): Observable<void> {
