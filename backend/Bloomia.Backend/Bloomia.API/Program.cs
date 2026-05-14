@@ -71,6 +71,7 @@ public partial class Program
                 .AddInfrastructure(builder.Configuration, builder.Environment)
                 .AddApplication();
 
+            builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
             builder.Services.AddExceptionHandler<MarketExceptionHandler>();
             builder.Services.AddProblemDetails();
             builder.Services.AddSignalR();
@@ -107,6 +108,7 @@ public partial class Program
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAngularDev");
+            app.UseStaticFiles();
             app.UseAuthentication(); 
             app.UseAuthorization();
 

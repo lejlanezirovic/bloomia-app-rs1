@@ -16,7 +16,7 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
                 .Include(x => x.MyTherapyTypesList)
                     .ThenInclude(tt => tt.TherapyType)
                 .Include(x => x.Availability)
-                .Include(x => x.Document)
+                .Include(x => x.Documents)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, ct);
 
             if (therapist == null)
@@ -36,7 +36,14 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
                 Description = therapist.Description,
                 RatingAvg = therapist.RatingAvg,
                 IsVerified = therapist.isVerified,
-                DocumentName = therapist.Document.DocumentType.ToString(),
+                Documents = therapist.Documents
+                            .Select(td => new TherapistDocumentDto
+                            {
+                                Id = td.Id,
+                                DocumentType = td.DocumentType.ToString(),
+                                FileName = td.FileName,
+                                FilePath = td.FilePath,
+                            }).ToList(),
                 TherapyTypes = therapist.MyTherapyTypesList
                             .Select(tt => new TherapyTypeDto
                             {

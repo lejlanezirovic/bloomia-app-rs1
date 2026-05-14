@@ -15,9 +15,9 @@ namespace Bloomia.Infrastructure.Database.Configurations
 
             builder.HasKey(t => t.Id);
 
-            builder.HasOne(x=>x.Document)
-                .WithOne()
-                .HasForeignKey<TherapistEntity>(x=>x.DocumentId)
+            builder.HasMany(x => x.Documents)
+                .WithOne(x => x.Therapist)
+                .HasForeignKey(x => x.TherapistId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(x=>x.Availability)

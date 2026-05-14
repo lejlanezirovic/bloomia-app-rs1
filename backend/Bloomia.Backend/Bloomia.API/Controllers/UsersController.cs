@@ -1,4 +1,6 @@
-﻿using Bloomia.Application.Modules.Users.Commands.Delete;
+﻿using System.Security.Claims;
+using Bloomia.Application.Modules.Users.Commands.Delete;
+using Bloomia.Application.Modules.Users.Commands.UploadProfileImage;
 using Bloomia.Application.Modules.Users.Queries.GetById;
 using Bloomia.Application.Modules.Users.Queries.List;
 
@@ -8,6 +10,19 @@ namespace Bloomia.API.Controllers
     [Route("api/users")]
     public sealed class UsersController(ISender sender) : ControllerBase
     {
+        [Authorize]
+        [HttpPost("upload-profile-image")]
+        public async Task<ActionResult<UploadProfileImageCommandDto>> UploadProfileImage([FromForm] UploadProfileImageCommand request, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim!.Value);
+
+            request.UserId = userId;
+
+            var result = await sender.Send(request, ct);
+            return Ok(result);
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<PageResult<ListUsersQueryDto>> List([FromQuery] ListUsersQuery query, CancellationToken ct)
