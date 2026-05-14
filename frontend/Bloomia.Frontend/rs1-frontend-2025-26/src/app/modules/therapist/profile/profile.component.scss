@@ -60,9 +60,31 @@ $light-color: #DEDBD2;
 }
 
 .image-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 24px auto;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: transform 0.15s ease;
+
+  &.editable {
+    cursor: pointer;
+  }
+}
+
+.image-wrapper.drag-active {
+  transform: scale(1.01);
+}
+
+.image-wrapper.drag-active .profile-image {
+  border-color: $text-color;
+  box-shadow: 0 10px 24px rgba(74, 87, 89, 0.18);
+}
+
+.image-wrapper.drag-active .image-overlay {
+  opacity: 1;
+  background: rgba(74, 87, 89, 0.22);
 }
 
 .profile-image {
@@ -73,6 +95,30 @@ $light-color: #DEDBD2;
   border: 5px solid $background-color;
   background: white;
   box-shadow: 0 8px 22px rgba(74, 87, 89, 0.12);
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(74, 87, 89, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.image-wrapper.editable:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-plus {
+  color: white;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .basic-info {
@@ -105,19 +151,14 @@ $light-color: #DEDBD2;
   word-break: break-word;
 }
 
-.left-actions,
-.upload-actions {
+.left-actions {
   margin-top: 20px;
 }
 
-.upload-actions {
+.edit-actions {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.upload-label {
-  display: block;
 }
 
 .full-width {
@@ -129,6 +170,8 @@ $light-color: #DEDBD2;
   color: $text-color !important;
   border-radius: 12px !important;
   font-weight: 600 !important;
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 .secondary-btn {
@@ -180,12 +223,20 @@ $light-color: #DEDBD2;
 
 .section-title {
   display: inline-block;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   padding: 7px 16px;
   border: 1.5px solid $text-color;
   border-radius: 999px;
   font-size: 17px;
   font-weight: 500;
+}
+
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .section-text {
@@ -199,6 +250,30 @@ $light-color: #DEDBD2;
   opacity: 0.8;
 }
 
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  border: 1px solid rgba(74, 87, 89, 0.18);
+  border-radius: 14px;
+  background: white;
+  color: $text-color;
+  padding: 14px 16px;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+
+  &:focus {
+    border-color: $background-color;
+    box-shadow: 0 0 0 3px rgba(176, 196, 177, 0.18);
+  }
+}
+
+.edit-textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
 .chips-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -210,7 +285,189 @@ mat-chip {
   color: $text-color !important;
 }
 
-/* KALENDAR */
+.therapy-types-edit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.therapy-type-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: $text-color;
+}
+
+.add-document-btn {
+  background: transparent;
+  border: none;
+  color: $text-color;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    opacity: 0.75;
+    transform: translateY(-1px);
+    text-decoration: underline;
+  }
+}
+
+.file-drop-zone {
+  margin-bottom: 14px;
+  margin-top: 14px;
+  padding: 18px;
+  border: 2px dashed rgba(74, 87, 89, 0.25);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  color: $text-color;
+  text-align: center;
+  font-size: 14px;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.file-drop-zone.drag-active {
+  border-color: $text-color;
+  background: rgba(176, 196, 177, 0.18);
+  transform: translateY(-1px);
+}
+
+.document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.document-item {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(74, 87, 89, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.clickable-name {
+  cursor: pointer;
+  flex: 1;
+  word-break: break-word;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.document-fallback-message {
+  margin: 24px;
+  font-size: 15px;
+  color: $text-color;
+}
+
+.document-delete-btn {
+  border: none;
+  background: transparent;
+  color: $text-color;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.clickable-document {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(74, 87, 89, 0.08);
+    border-color: rgba(74, 87, 89, 0.18);
+  }
+}
+
+.pending-document-item {
+  margin-top: 12px;
+}
+
+.document-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-color;
+  word-break: break-word;
+}
+
+.pending-document {
+  margin-top: 14px;
+  font-size: 14px;
+  color: $text-color;
+  opacity: 0.9;
+}
+
+.document-viewer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(74, 87, 89, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.document-viewer-modal {
+  width: min(1000px, 100%);
+  height: min(85vh, 900px);
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.document-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(74, 87, 89, 0.08);
+}
+
+.document-viewer-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: $text-color;
+  word-break: break-word;
+}
+
+.document-viewer-close {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: $text-color;
+}
+
+.document-viewer-frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+}
+
 
 .calendar-layout {
   display: grid;
@@ -414,7 +671,8 @@ mat-chip {
     font-size: 34px;
   }
 
-  .profile-image {
+  .profile-image,
+  .image-wrapper {
     width: 190px;
     height: 190px;
   }
@@ -467,7 +725,8 @@ mat-chip {
     font-size: 20px;
   }
 
-  .profile-image {
+  .profile-image,
+  .image-wrapper {
     width: 160px;
     height: 160px;
   }
@@ -505,5 +764,9 @@ mat-chip {
   .slot-button {
     flex-wrap: wrap;
     align-items: flex-start;
+  }
+
+  .therapy-types-edit-list {
+    gap: 8px;
   }
 }

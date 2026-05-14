@@ -24,7 +24,7 @@
       <mat-card class="left-card">
         <div class="image-wrapper">
           <img
-            [src]="therapist.profileImage || 'assets/images/user.png'"
+            [src]="profileImageSrc"
             alt="Therapist profile"
             class="profile-image"
           />
@@ -32,12 +32,12 @@
 
         <div class="basic-info">
           <div class="info-item">
-            <span class="info-label">Ime i prezime</span>
+            <span class="info-label">First and last name</span>
             <span class="info-value">{{ fullName }}</span>
           </div>
 
           <div class="info-item" *ngIf="therapist.username">
-            <span class="info-label">Korisničko ime</span>
+            <span class="info-label">Username</span>
             <span class="info-value">{{ therapist.username }}</span>
           </div>
 
@@ -47,9 +47,14 @@
           </div>
 
           <div class="info-item">
+            <span class="info-label">Phone number</span>
+            <span class="info-value">{{ therapist.phoneNumber ||'-' }}</span>
+          </div>
+
+          <div class="info-item">
             <span class="info-label">Status</span>
             <span class="info-value">
-              {{ therapist.isVerified ? 'Verifikovan' : 'Nije verifikovan' }}
+              {{ therapist.isVerified ? 'Verified' : 'Not verified' }}
             </span>
           </div>
         </div>
@@ -71,25 +76,25 @@
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Specijalizacija</div>
+          <div class="section-title">Specialization</div>
           <p class="section-text">
-            {{ therapist.specialization || 'Nije unesena specijalizacija.' }}
+            {{ therapist.specialization || 'No specialization added.' }}
           </p>
         </section>
 
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Opis</div>
+          <div class="section-title">Description</div>
           <p class="section-text">
-            {{ therapist.description || 'Opis nije unesen.' }}
+            {{ therapist.description || 'No description added.' }}
           </p>
         </section>
 
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Tipovi terapije</div>
+          <div class="section-title">Therapy types</div>
 
           <mat-chip-set *ngIf="therapyTypes.length > 0" class="chips-wrapper">
             <mat-chip *ngFor="let therapyType of therapyTypes">
@@ -98,23 +103,32 @@
           </mat-chip-set>
 
           <p *ngIf="therapyTypes.length === 0" class="section-text empty-text">
-            Nema dodanih tipova terapije.
+            No therapy types added.
           </p>
         </section>
 
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Dokument</div>
-          <p class="section-text">
-            {{ therapist.documentName || 'Dokument nije dodan.' }}
-          </p>
+          <div class="section-title">Files</div>
+          <div *ngIf="therapistDocuments.length > 0; else noDocumentsBlock" class="document-list">
+            <div class="document-item clickable-document" *ngFor="let document of therapist.documents" (click)="openDocument(document)">
+              <span class="document-name">{{ document.fileName }}</span>
+            </div>
+          </div>
+
+          <ng-template #noDocumentsBlock>
+            <p class="section-text">
+              No files added.
+            </p>
+          </ng-template>
+
         </section>
 
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Recenzije</div>
+          <div class="section-title">Reviews</div>
 
           <div *ngIf="reviews.length > 0; else noReviews" class="reviews-list">
             <mat-card class="review-card" *ngFor="let review of reviews">
@@ -134,7 +148,7 @@
           </div>
 
           <ng-template #noReviews>
-            <p class="section-text empty-text">Terapeut nema recenzija.</p>
+            <p class="section-text empty-text">Therapist has no reviews.</p>
           </ng-template>
 
           <button
@@ -149,7 +163,7 @@
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Ostavi recenziju</div>
+          <div class="section-title">Leave a review</div>
 
           <div *ngIf="canReview; else noEligibleAppointment">
             <mat-form-field
@@ -179,7 +193,7 @@
             </div>
 
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Komentar</mat-label>
+              <mat-label>Comment</mat-label>
               <textarea
                 matInput
                 rows="4"
@@ -197,7 +211,7 @@
           </div>
 
           <section class="section">
-            <div class="section-title">Dostupni termini</div>
+            <div class="section-title">Available appointments</div>
 
             <div *ngIf="workingTimes?.workingDates?.length" class="calendar-layout">
               <div class="calendar-panel">
@@ -247,7 +261,7 @@
                   (click)="slot.isBooked ? onBookedSlotClick(slot) : onSlotClick(slot)">
                   
                   <span class="slot-time"> {{ formatTime(slot.startTime) }} </span>
-                  <span class="slot-status">{{ slot.isBooked ? 'Zauzeto' : 'Slobodno'}}</span>
+                  <span class="slot-status">{{ slot.isBooked ? 'Booked' : 'Available'}}</span>
                 </button>
                 </div>
 
@@ -287,27 +301,43 @@
                 </div>
 
                 <p *ngIf="selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
-                  Nema termina za odabrani datum.
+                  No available slots for selected date.
                 </p>
 
                 <p *ngIf="!selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
-                  Odaberite datum sa kalendara.
+                  Choose a date from the calendar.
                 </p>
               </div>
             </div>
 
             <p *ngIf="!workingTimes?.workingDates?.length" class="section-text empty-text">
-                  Nema dostupnih termina.
+                  No available appointments.
             </p>
           </section>
 
           <ng-template #noEligibleAppointment>
             <p class="section-text empty-text">
-              Recenziju možete ostaviti ako imate najmanje jednu nerecenziranu sesiju sa ovim terapeutom.
+              You can leave a review only if you have at least one unreviewed appointment with your therapist.
             </p>
           </ng-template>
         </section>
       </mat-card>
     </div>
   </div>
+
+  <div class="document-viewer-backdrop" *ngIf="selectedDocumentUrl" (click)="closeDocumentViewer()">
+    <div class="document-viewer-modal" (click)="$event.stopPropagation()">
+      <div class="document-viewer-header">
+        <span class="document-viewer-title">{{ selectedDocumentName }}</span>
+        <button type="button" class="document-viewer-close" (click)="closeDocumentViewer()">x</button>
+      </div>
+
+      <object [data]="selectedDocumentUrl" type="application/pdf" class="document-viewer-frame">
+        <div class="document-fallback-message">
+          PDF preview not supported.
+        </div>
+      </object>
+    </div>
+  </div>
+
 </div>

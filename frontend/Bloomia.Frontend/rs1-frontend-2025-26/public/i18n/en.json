@@ -154,6 +154,20 @@
       "CONFIRM_CANCEL": "Do you want to cancel changes and go back?"
     }
   },
+  "FILES": {
+    "DIALOGS": {
+      "DELETE_TITLE": "Deleting file",
+      "DELETE_MESSAGE": "Are you sure you want to delete the file \"{{name}}\"?",
+      "SUCCESS_DELETE": "File deleted successfully.",
+      "ERROR_DELETE": "Error while deleting file.",
+      "UNSAVED_CHANGES": "You hvae unsaved changes.",
+      "CONFIRM_CANCEL": "Do you want to undo your changes and cancel?",
+      "BUTTONS": {
+        "CANCEL": "Cancel",
+        "DELETE": "Delete"
+      }
+    }
+  },
   "ORDERS": {
     "TITLE": "Orders",
     "FILTER_STATUS": "Filter by Status",

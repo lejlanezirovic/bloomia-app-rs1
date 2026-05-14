@@ -17,7 +17,6 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
             var therapist = await context.Therapists
                 .Include(x => x.User)
                 .Include(x => x.MyTherapyTypesList)
-                .Include(x => x.Document)
                 .Where(x => x.Id == request.Id)
                 .FirstOrDefaultAsync(ct);
 
@@ -66,7 +65,13 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
             //update user entity polja unutar therapista
             var user = therapist.User;
 
-            if(!string.IsNullOrEmpty(request.Email))
+            if(!string.IsNullOrWhiteSpace(request.Firstname))
+                user.Firstname = request.Firstname;
+
+            if (!string.IsNullOrWhiteSpace(request.Lastname))
+                user.Lastname = request.Lastname;
+
+            if (!string.IsNullOrEmpty(request.Email))
             {
                 var emailExists = await context.Users
                     .AnyAsync(x => x.Email == request.Email && x.Id != user.Id, ct);
@@ -91,12 +96,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
                 user.LocationId = request.LocationId.Value;
             }
 
-            if (!string.IsNullOrEmpty(request.ProfileImage))
-                user.ProfileImage = request.ProfileImage;
-
-
-            if (request.ProfileImage != null)
-                user.ProfileImage = request.ProfileImage;
+            user.Fullname = $"{user.Firstname} {user.Lastname}".Trim();
 
             await context.SaveChangesAsync(ct);
 
