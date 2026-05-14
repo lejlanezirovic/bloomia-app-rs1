@@ -290,4 +290,27 @@ export class DialogHelperService {
       );
     }
   };
+
+  file = {
+    confirmDelete: (fileName: string) => {
+      return this.confirmDelete(
+        fileName,
+        'FILES.DIALOGS.DELETE_MESSAGE'
+      );
+    },
+
+    showDeleteSuccess: () => {
+      return this.showSuccess(
+        'DIALOGS.TITLES.SUCCESS',
+        'FILES.DIALOGS.SUCCESS_DELETE'
+      );
+    },
+
+    showDeleteError: () => {
+      return this.showError(
+        'DIALOGS.TITLES.ERROR',
+        'FILES.DIALOGS.ERROR_DELETE'
+      );
+    }
+  };
 }

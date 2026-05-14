@@ -66,10 +66,25 @@ $light-color: #DEDBD2;
   margin: 0 auto 24px auto;
   border-radius: 50%;
   overflow: hidden;
+  transition: transform 0.15s ease;
 
   &.editable {
     cursor: pointer;
   }
+}
+
+.image-wrapper.drag-active {
+  transform: scale(1.01);
+}
+
+.image-wrapper.drag-active .profile-image {
+  border-color: $text-color;
+  box-shadow: 0 10px 24px rgba(74, 87, 89, 0.18);
+}
+
+.image-wrapper.drag-active .image-overlay {
+  opacity: 1;
+  background: rgba(74, 87, 89, 0.22);
 }
 
 .profile-image {
@@ -155,6 +170,8 @@ $light-color: #DEDBD2;
   color: $text-color !important;
   border-radius: 12px !important;
   font-weight: 600 !important;
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 .secondary-btn {
@@ -206,7 +223,7 @@ $light-color: #DEDBD2;
 
 .section-title {
   display: inline-block;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   padding: 7px 16px;
   border: 1.5px solid $text-color;
   border-radius: 999px;
@@ -220,10 +237,6 @@ $light-color: #DEDBD2;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-
-  .section-title {
-    margin-bottom: 0;
-  }
 }
 
 .section-text {
@@ -301,6 +314,26 @@ mat-chip {
     transform: translateY(-1px);
     text-decoration: underline;
   }
+}
+
+.file-drop-zone {
+  margin-bottom: 14px;
+  margin-top: 14px;
+  padding: 18px;
+  border: 2px dashed rgba(74, 87, 89, 0.25);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  color: $text-color;
+  text-align: center;
+  font-size: 14px;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.file-drop-zone.drag-active {
+  border-color: $text-color;
+  background: rgba(176, 196, 177, 0.18);
+  transform: translateY(-1px);
 }
 
 .document-list {

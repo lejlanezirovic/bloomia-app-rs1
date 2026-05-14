@@ -59,6 +59,8 @@ export interface TherapyTypeDto {
 
 
 export interface UpdateTherapistCommand {
+    firstname?: string | null;
+    lastname?: string | null;
     specialization?: string | null;
     description?: string | null;
     therapyTypeIds?: number[] | null;

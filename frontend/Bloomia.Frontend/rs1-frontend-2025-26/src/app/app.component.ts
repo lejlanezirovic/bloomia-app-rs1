@@ -18,19 +18,17 @@ export class AppComponent implements OnInit {
     this.translate.addLangs(['en', 'bs']);
     this.translate.setDefaultLang('en');
 
-    // Učitaj jezik iz localStorage ili koristi default
-    const savedLang = localStorage.getItem('language') || 'en';
-    this.currentLang = savedLang;
+    this.currentLang = 'en';
+    localStorage.setItem('language', 'en');
 
-    this.translate.use(savedLang).subscribe({
+    this.translate.use('en').subscribe({
       next: (translations) => {
-        console.log('Translations loaded successfully for language:', savedLang);
+        console.log('Translations loaded successfully for language:', 'en');
         console.log('Available keys:', Object.keys(translations));
       },
       error: (error) => {
         console.error('Error loading translations:', error);
-        console.error('Check if files exist at: /i18n/' + savedLang + '.json');
-      }
+       }
     });
   }
 
@@ -39,7 +37,7 @@ export class AppComponent implements OnInit {
     this.translate.get('PRODUCTS.TITLE').subscribe((res: string) => {
       console.log('Translation for PRODUCTS.TITLE:', res);
       if (res === 'PRODUCTS.TITLE') {
-        console.error('⚠️ Translation not working! Key returned instead of value.');
+        console.error('Translation not working! Key returned instead of value.');
         console.error('Possible causes:');
         console.error('1. Translation files not in /i18n/ folder');
         console.error('2. JSON files have syntax errors');

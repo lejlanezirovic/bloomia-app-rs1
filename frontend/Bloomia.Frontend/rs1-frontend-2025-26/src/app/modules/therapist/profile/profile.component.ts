@@ -3,7 +3,7 @@ import { TherapistsApiService } from '../../../api-services/therapists/therapist
 import { CurrentUserService } from '../../../core/services/auth/current-user.service';
 import { GetTherapistByIdQueryDto, TherapistAvailabilityDto } from '../../../api-services/therapists/therapists-api.models';
 import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, last, Observable } from 'rxjs';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
 import { BaseComponent } from '../../../core/components/base-classes/base-component';
 import { TherapyTypesApiService } from '../../../api-services/therapy-types/therapy-types-api.service';
@@ -47,6 +47,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   editSpecialization = '';
   editDescription = '';
+  editFirstname = '';
+  editLastname = '';
+  editEmail = '';
+  editPhoneNumber = '';
 
   allTherapyTypes: TherapyTypeOptionDto[] = [];
   selectedTherapyTypeIds: number[] = [];
@@ -61,6 +65,9 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   selectedDocumentUrl: SafeResourceUrl | null = null;
   selectedDocumentName: string | null = null;
   private pendingDocumentObjectUrl: string | null = null;
+
+  isDraggingFile = false;
+  isDraggingProfileImage = false;
   
   ngOnInit(): void {
     this.loadProfile();
@@ -100,6 +107,91 @@ export class ProfileComponent extends BaseComponent implements OnInit {
         this.stopLoading('Failed to load profile. Please try again later.');
       }
     });
+  }
+
+  private setSelectedProfileImage(file: File): void {
+    if(!file.type.startsWith('image/')) {
+      return;
+    }
+
+    this.selectedProfileImageFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.profileImagePreviewUrl = reader.result as string;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  onProfileImageDragOver(event: DragEvent): void {
+    if(!this.isEditMode)
+      return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingProfileImage = true;
+  }
+
+  onProfileImageDragLeave(event: DragEvent): void {
+    if(!this.isEditMode)
+      return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingProfileImage = false;
+  }
+
+  onProfileImageDrop(event: DragEvent): void {
+    if(!this.isEditMode)
+      return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingProfileImage = false;
+
+    const file = event.dataTransfer?.files?.[0];
+    if(!file)
+      return;
+
+    this.setSelectedProfileImage(file);
+  }
+
+  onFileDragOver(event: DragEvent): void {
+    if(!this.isEditMode)
+      return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingFile = true;
+  }
+
+  onFileDragLeave(event: DragEvent): void {
+    if(!this.isEditMode)
+      return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingFile = false;
+  }
+
+  onFileDrop(event: DragEvent): void {
+    if(!this.isEditMode)
+      return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingFile = false;
+
+    const file = event.dataTransfer?.files?.[0];
+    if(!file)
+      return;
+
+    if(file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      return;
+    }
+
+    this.selectedDocumentFile = file;
   }
 
   get profileImageSrc(): string {
@@ -315,6 +407,10 @@ selectDay(day: CalendarDayVm): void {
     this.editSpecialization = this.therapist.specialization || '';
     this.editDescription = this.therapist.description || '';
     this.selectedTherapyTypeIds = this.therapist.therapyTypes?.map(x => x.id) || [];
+    this.editFirstname = this.therapist.firstname || '';
+    this.editLastname = this.therapist.lastname || '';
+    this.editEmail = this.therapist.email || '';
+    this.editPhoneNumber = this.therapist.phoneNumber || '';
 
     this.selectedProfileImageFile = null;
     this.selectedDocumentFile = null;
@@ -325,10 +421,15 @@ selectDay(day: CalendarDayVm): void {
     this.isEditMode = false;
     this.editSpecialization = '';
     this.editDescription = '';
+    this.editFirstname = '';
+    this.editLastname = '';
+    this.editEmail = '';
+    this.editPhoneNumber = '';
     this.selectedTherapyTypeIds = [];
     this.selectedProfileImageFile = null;
     this.selectedDocumentFile = null;
     this.profileImagePreviewUrl = null;
+    this.isDraggingProfileImage = false;
 
     if(this.pendingDocumentObjectUrl) {
       URL.revokeObjectURL(this.pendingDocumentObjectUrl);
@@ -366,16 +467,8 @@ selectDay(day: CalendarDayVm): void {
     if(!input.files || !input.files.length)
       return;
 
-    const file = input.files[0];
-    this.selectedProfileImageFile = file;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.profileImagePreviewUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+    this.setSelectedProfileImage(input.files[0]);
   }
-
 
   onUploadDocument(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -393,6 +486,10 @@ selectDay(day: CalendarDayVm): void {
     this.startLoading();
 
     const payload = {
+      firstname: this.editFirstname,
+      lastname: this.editLastname,
+      email: this.editEmail,
+      phoneNumber: this.editPhoneNumber,
       specialization: this.editSpecialization,
       description: this.editDescription,
       therapyTypeIds: this.selectedTherapyTypeIds
@@ -476,7 +573,7 @@ selectDay(day: CalendarDayVm): void {
   removePendingDocument(): void {
     const pendingName = this.selectedDocumentFile?.name ?? 'selected file';
 
-    this.dialogHelper.confirmDelete(pendingName).subscribe((result) => {
+    this.dialogHelper.file.confirmDelete(pendingName).subscribe((result) => {
       if(!result || result.button !== DialogButton.DELETE) {
         return;
       }
@@ -496,7 +593,7 @@ selectDay(day: CalendarDayVm): void {
   }
 
   deleteExistingDocument(documentId: number, fileName: string): void {
-    this.dialogHelper.confirmDelete(fileName).subscribe((result) => {
+    this.dialogHelper.file.confirmDelete(fileName).subscribe((result) => {
       if(!result || result.button !== DialogButton.DELETE) {
         return;
       }

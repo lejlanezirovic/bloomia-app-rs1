@@ -16,7 +16,8 @@
     <div *ngIf="therapist && !isLoading" class="profile-content">
         <div class="profile-grid">
             <mat-card class="left-card">
-                <div class="image-wrapper" [class.editable]="isEditMode" (click)="triggerProfileImageInput(profileImageInput)">
+                <div class="image-wrapper" [class.editable]="isEditMode" [class.drag-active]="isEditMode && isDraggingProfileImage"
+                     (click)="triggerProfileImageInput(profileImageInput)" (dragover)="onProfileImageDragOver($event)" (dragleave)="onProfileImageDragLeave($event)" (drop)="onProfileImageDrop($event)">
                     <img [src]="profileImageSrc" alt="Therapist profile" class="profile-image">
                     <div *ngIf="isEditMode" class="image-overlay">
                         <span class="image-plus">+</span>
@@ -27,23 +28,44 @@
 
                 <div class="basic-info">
                     <div class="info-item">
-                        <span class="info-label">Ime i prezime</span>
-                        <span class="info-value">{{fullName}}</span>
+                        <span class="info-label">First and last name</span>
+                        <ng-container *ngIf="!isEditMode; else editNameBlock">
+                            <span class="info-value">{{ fullName }}</span>
+                        </ng-container>
+
+                        <ng-template #editNameBlock>
+                            <div class="name-edit-grid">
+                                <input type="text" class="edit-input compact-input" [(ngModel)]="editFirstname" placeholder="Ime">
+                                <input type="text" class="edit-input compact-input" [(ngModel)]="editLastname" placeholder="Prezime"> 
+                            </div>
+                        </ng-template>
                     </div>
                     
                     <div class="info-item" *ngIf="therapist.username">
-                        <span class="info-label">Korisničko ime</span>
+                        <span class="info-label">Username</span>
                         <span class="info-value">{{therapist.username}}</span>
                     </div>
 
-                    <div class="info-item" *ngIf="therapist.email">
+                    <div class="info-item">
                         <span class="info-label">Email</span>
-                        <span class="info-value">{{therapist.email}}</span>
+                        <ng-container *ngIf="!isEditMode; else editEmailBlock">
+                            <span class="info-value"> {{ therapist.email || '-' }} </span>
+                        </ng-container>
+
+                        <ng-template #editEmailBlock>
+                            <input type="email" class="edit-input compact-input" [(ngModel)]="editEmail" placeholder="Email">
+                        </ng-template>
                     </div>
 
-                    <div class="info-item" *ngIf="therapist.phoneNumber">
-                        <span class="info-label">Telefon</span>
-                        <span class="info-value">{{therapist.phoneNumber}}</span>
+                    <div class="info-item">
+                        <span class="info-label">Phone number</span>
+                        <ng-container *ngIf="!isEditMode; else editPhoneBlock">
+                            <span class="info-value">{{ therapist.phoneNumber || '-' }}</span>
+                        </ng-container>
+
+                        <ng-template #editPhoneBlock>
+                            <input type="text" class="edit-input compact-input" [(ngModel)]="editPhoneNumber" placeholder="Phone number">
+                        </ng-template>
                     </div>
 
                     <div class="info-item">
@@ -101,7 +123,7 @@
                 <mat-divider></mat-divider>
 
                 <section class="section">
-                    <div class="section-title">Opis</div>
+                    <div class="section-title">Description</div>
 
                     <ng-container *ngIf="!isEditMode; else editDescriptionBlock">
                         <p class="section-text">
@@ -117,7 +139,7 @@
                 <mat-divider></mat-divider>
 
                 <section class="section">
-                    <div class="section-title">Tipovi terapije</div>
+                    <div class="section-title">Therapy types</div>
 
                     <ng-container *ngIf="!isEditMode; else editTherapyTypesBlock">
                         <mat-chip-set *ngIf="therapyTypes.length > 0" class="chips-wrapper">
@@ -146,14 +168,19 @@
 
             <section class="section">
                 <div class="section-header-row">
-                    <div class="section-title">Documents</div>
+                    <div class="section-title">Files</div>
 
                     <button *ngIf="isEditMode" type="button" class="add-document-btn" (click)="triggerDocumentInput(documentInput)">
-                        + Dodaj dokument
+                        + Add file
                     </button>
                 </div>
 
                 <input #documentInput type="file" accept=".pdf" hidden (change)="onUploadDocument($event)">
+
+                <div *ngIf="isEditMode" class="file-drop-zone" [class.drag-active]="isDraggingFile"
+                    (click)="triggerDocumentInput(documentInput)" (dragover)="onFileDragOver($event)" (dragleave)="onFileDragLeave($event)" (drop)="onFileDrop($event)">
+                    Drag and Drop PDF here
+                </div>
 
                 <div *ngIf="therapistDocuments.length > 0; else noDocumentsBlock" class="document-list">
                     <div class="document-item clickable-document" *ngFor="let document of therapistDocuments" (click)="openExistingDocument(document)">
@@ -183,7 +210,7 @@
             <mat-divider></mat-divider>
 
             <section class="section">
-                <div class="section-title">Moji termini</div>
+                <div class="section-title">My appointments</div>
 
                 <div *ngIf="workingTimes?.workingDates?.length" class="calendar-layout">
                     <div class="calendar-panel">
@@ -237,23 +264,23 @@
 
                         <span class="slot-time">{{ formatTime(slot.startTime) }}</span>
                         <span class="slot-status">
-                            {{ slot.isBooked ? 'Zauzeto' : 'Slobodno' }}
+                            {{ slot.isBooked ? 'Booked' : 'Available' }}
                         </span>
                         </button>
                     </div>
 
                     <p *ngIf="selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
-                        Nema termina za odabrani datum.
+                        No available slots for selected date.
                     </p>
 
                     <p *ngIf="!selectedDateKey" class="section-text empty-text">
-                        Odaberi datum sa kalendara.
+                        Choose a date from the calendar.
                     </p>
                     </div>
                 </div>
 
                 <p *ngIf="!workingTimes?.workingDates?.length" class="section-text empty-text">
-                    Nema dostupnih termina.
+                    No available appointments.
                 </p>
             </section>
             </mat-card>
