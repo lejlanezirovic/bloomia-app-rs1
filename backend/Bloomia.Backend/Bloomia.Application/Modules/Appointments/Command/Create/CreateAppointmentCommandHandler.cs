@@ -1,5 +1,6 @@
 ﻿using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.Sessions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.Appointments.Command.Create
 {
-    public class CreateAppointmentCommandHandler(IAppDbContext context) : IRequestHandler<CreateAppoinmentCommand, CreateAppointmentCommandDto>
+    public class CreateAppointmentCommandHandler(IAppDbContext context, IEmailService emailService, ILogger<CreateAppointmentCommandHandler> logger) : IRequestHandler<CreateAppoinmentCommand, CreateAppointmentCommandDto>
     {
         public async Task<CreateAppointmentCommandDto> Handle(CreateAppoinmentCommand request, CancellationToken cancellationToken)
         {
@@ -71,6 +72,33 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 }
                 throw;
             }
+
+            try
+            {
+                var clientEmail = client.User.Email;
+                var clientName = client.User.Fullname ?? $"{client.User.Firstname} {client.User.Lastname}";
+                var therapistName = availableTime.Therapist.User.Fullname ??
+                                    $"{availableTime.Therapist.User.Firstname} {availableTime.Therapist.User.Lastname}";
+
+                if(!string.IsNullOrWhiteSpace(clientEmail))
+                {
+                    await emailService.SendAppointmentBookingConfirmationAsync(
+                        toEmail: clientEmail,
+                        clientName: clientName,
+                        therapistName: therapistName,
+                        appointmentDate: availableTime.Date,
+                        appointmentTime: availableTime.StartTime,
+                        sessionType: appointment.SessionType.ToString(),
+                        ct: cancellationToken);
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex,
+                                "Failed to send booking confirmation email for appointment {AppointmentId} and client {ClientId}",
+                                appointment.Id, client.Id);
+            }
+
             var dto = new CreateAppointmentCommandDto
             {
                 Note = "You have successfully booked an appointment.",

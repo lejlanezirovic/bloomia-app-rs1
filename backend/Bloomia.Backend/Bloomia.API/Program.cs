@@ -8,6 +8,7 @@ using Bloomia.Domain.Entities.Sessions;
 using Bloomia.Infrastructure;
 using Bloomia.Infrastructure.Common;
 using Bloomia.Infrastructure.Services;
+using Bloomia.Infrastructure.Settings;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -70,6 +71,9 @@ public partial class Program
                 .AddAPI(builder.Configuration, builder.Environment)
                 .AddInfrastructure(builder.Configuration, builder.Environment)
                 .AddApplication();
+
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
             builder.Services.AddExceptionHandler<MarketExceptionHandler>();
