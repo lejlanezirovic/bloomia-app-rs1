@@ -48,5 +48,6 @@ public interface IAppDbContext
     public DbSet<DirectChatEntity> DirectChats { get; }
     public DbSet<NotificationTokenEntity> NotificationTokens { get; }
     DatabaseFacade Database { get; }
+    DbSet<AppointmentNotificationLogEntity> AppointmentNotificationLogs { get; }
     Task<int> SaveChangesAsync(CancellationToken ct);
 }

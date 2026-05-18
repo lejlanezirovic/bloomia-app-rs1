@@ -23,5 +23,6 @@ namespace Bloomia.Domain.Entities.Sessions
 
         //list
         public List<ChatSessionEntity>? ChatSessions { get; set; } = new List<ChatSessionEntity>();
+        public List<AppointmentNotificationLogEntity> NotificationLogs { get; set; } = new();
     }
 }

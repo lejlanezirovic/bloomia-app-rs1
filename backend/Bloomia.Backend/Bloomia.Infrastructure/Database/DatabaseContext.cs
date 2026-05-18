@@ -49,6 +49,8 @@ public partial class DatabaseContext : DbContext, IAppDbContext
     public DbSet<NotificationTokenEntity> NotificationTokens => Set<NotificationTokenEntity>();
     public DbSet<DirectChatEntity> DirectChats => Set<DirectChatEntity>();
 
+    public DbSet<AppointmentNotificationLogEntity> AppointmentNotificationLogs => Set<AppointmentNotificationLogEntity>();
+
     private readonly TimeProvider _clock;
     public DatabaseFacade Database => base.Database;
     public DatabaseContext(DbContextOptions<DatabaseContext> options, TimeProvider clock) : base(options)
