@@ -9,6 +9,8 @@ namespace Bloomia.Application.Abstractions
     public interface IEmailService
     {
         Task SendAppointmentBookingConfirmationAsync(string toEmail, string clientName, string therapistName,
-            DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct); 
+            DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct);
+        Task SendAppointmentReminderAsync(string toEmail, string clientName, string therapistName,
+           DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct);
     }
 }

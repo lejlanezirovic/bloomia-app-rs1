@@ -74,7 +74,8 @@ public partial class Program
 
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
             builder.Services.AddScoped<IEmailService, EmailService>();
-
+            builder.Services.AddScoped<IAppointmentReminderService, AppointmentReminderService>();
+            builder.Services.AddHostedService<AppointmentReminderBackgroundService>();
             builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
             builder.Services.AddExceptionHandler<MarketExceptionHandler>();
             builder.Services.AddProblemDetails();

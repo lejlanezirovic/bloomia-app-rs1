@@ -64,5 +64,45 @@ namespace Bloomia.Infrastructure.Services
             _logger.LogInformation("Booking confirmation email succesfully sent to {Recipient}", toEmail);
         
         }
+        public async Task SendAppointmentReminderAsync(string toEmail, string clientName, string therapistName,
+           DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct)
+        {
+            var subject = "Appointment reminder";
+
+            var body =
+                $"Hello {clientName},\n\n" +
+                $"This is a reminder that you have an appointment tomorrow.\n\n" +
+                $"Therapist: {therapistName}\n" +
+                $"Date: {appointmentDate:dd.MM.yyyy}\n" +
+                $"Time: {appointmentTime:HH\\:mm}\n" +
+                $"Session type: {sessionType}\n\n" +
+                $"Thank you,\n" +
+                $"Bloomia";
+
+            using var message = new MailMessage
+            {
+                From = new MailAddress(_settings.SenderEmail, _settings.SenderName),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = false
+            };
+
+            message.To.Add(toEmail);
+
+            using var smtpClient = new SmtpClient(_settings.Host, _settings.Port)
+            {
+                Credentials = new NetworkCredential(_settings.Username, _settings.Password),
+                EnableSsl = _settings.UseSsl
+            };
+
+            _logger.LogInformation("Sending appointment reminder email to {Recipient}", toEmail);
+             
+            ct.ThrowIfCancellationRequested();
+            await smtpClient.SendMailAsync(message);
+
+            _logger.LogInformation("Appointment reminder email succesfully sent to {Recipient}", toEmail);
+
+        }
+
     }
 }

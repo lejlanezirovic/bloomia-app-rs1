@@ -4,6 +4,7 @@ using Bloomia.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloomia.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260517172557_AddAppointmentNotificationLogEntity")]
+    partial class AddAppointmentNotificationLogEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -808,6 +811,9 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AppointmentEntityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AppointmentId")
                         .HasColumnType("int");
 
@@ -839,6 +845,8 @@ namespace Bloomia.Infrastructure.Database.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppointmentEntityId");
 
                     b.HasIndex("AppointmentId");
 
@@ -1306,8 +1314,12 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Bloomia.Domain.Entities.Sessions.AppointmentNotificationLogEntity", b =>
                 {
-                    b.HasOne("Bloomia.Domain.Entities.Sessions.AppointmentEntity", "Appointment")
+                    b.HasOne("Bloomia.Domain.Entities.Sessions.AppointmentEntity", null)
                         .WithMany("NotificationLogs")
+                        .HasForeignKey("AppointmentEntityId");
+
+                    b.HasOne("Bloomia.Domain.Entities.Sessions.AppointmentEntity", "Appointment")
+                        .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
