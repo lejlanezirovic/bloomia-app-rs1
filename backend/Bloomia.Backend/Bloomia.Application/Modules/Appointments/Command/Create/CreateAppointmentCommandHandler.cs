@@ -73,6 +73,18 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 throw;
             }
 
+            var notificationLog = new AppointmentNotificationLogEntity
+            {
+                AppointmentId = appointment.Id,
+                RecipientEmail = client.User.Email ?? string.Empty,
+                NotificationType = AppointmentNotificationsType.BookingConfirmation,
+                Status = AppointmentNotificationStatus.Pending,
+                CreatedAtUtc = DateTime.UtcNow
+            };
+
+            context.AppointmentNotificationLogs.Add(notificationLog);
+            await context.SaveChangesAsync(cancellationToken);
+
             try
             {
                 var clientEmail = client.User.Email;
@@ -90,15 +102,42 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                         appointmentTime: availableTime.StartTime,
                         sessionType: appointment.SessionType.ToString(),
                         ct: cancellationToken);
+
+                    notificationLog.Status = AppointmentNotificationStatus.Sent;
+                    notificationLog.SentAtUtc = DateTime.UtcNow;
+                    notificationLog.ErrorMessage = null;
+
+                    await context.SaveChangesAsync(cancellationToken);
+                }
+                else
+                {
+                    context.AppointmentNotificationLogs.Add(new AppointmentNotificationLogEntity
+                    {
+                        AppointmentId = appointment.Id,
+                        RecipientEmail = string.Empty,
+                        NotificationType = AppointmentNotificationsType.BookingConfirmation,
+                        Status = AppointmentNotificationStatus.Failed,
+                        CreatedAtUtc = DateTime.UtcNow,
+                        ErrorMessage = "Client email is missing."
+                    });
+
+                    await context.SaveChangesAsync(cancellationToken);
+
+                    logger.LogWarning(
+                        "Booking confirmation email skipped for appointment {AppointmentId} because client email is missing.",
+                        appointment.Id);
                 }
             }
             catch(Exception ex)
             {
+                notificationLog.Status = AppointmentNotificationStatus.Failed;
+                notificationLog.ErrorMessage = ex.Message;
+
                 logger.LogError(ex,
                                 "Failed to send booking confirmation email for appointment {AppointmentId} and client {ClientId}",
                                 appointment.Id, client.Id);
             }
-
+             
             var dto = new CreateAppointmentCommandDto
             {
                 Note = "You have successfully booked an appointment.",
