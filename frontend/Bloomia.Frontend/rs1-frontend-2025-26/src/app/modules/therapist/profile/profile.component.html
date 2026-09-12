@@ -212,7 +212,7 @@
             <section class="section">
                 <div class="section-title">My appointments</div>
 
-                <div *ngIf="workingTimes?.workingDates?.length" class="calendar-layout">
+                <div class="calendar-layout">
                     <div class="calendar-panel">
                     <div class="calendar-header">
                         <button mat-icon-button type="button" class="month-nav-btn" (click)="previousMonth()">
@@ -243,7 +243,7 @@
                         [class.has-slots]="day.hasSlots"
                         [class.has-free]="day.hasFreeSlots"
                         [class.has-booked]="day.hasBookedSlots"
-                        [disabled]="!day.hasSlots"
+                        [disabled]="day.isPast"
                         (click)="selectDay(day)">
                         <span class="day-number">{{ day.dayNumber }}</span>
                         </button>
@@ -251,37 +251,68 @@
                     </div>
 
                     <div class="slots-panel">
-                    <div class="slots-title">{{ selectedDateLabel }}</div>
+                        <div class="slots-title">{{ selectedDateLabel }}</div>
 
-                    <div *ngIf="selectedDateSlots.length > 0" class="slots-list">
-                        <button
-                        type="button"
-                        class="slot-button"
-                        *ngFor="let slot of selectedDateSlots"
-                        [class.booked]="slot.isBooked"
-                        [class.free]="!slot.isBooked"
-                        (click)="slot.isBooked ? onBookedSlotClick(slot) : onSlotClick(slot)">
+                        <div *ngIf="selectedDateSlots.length > 0" class="slots-list">
+                            <button
+                            type="button"
+                            class="slot-button"
+                            *ngFor="let slot of selectedDateSlots"
+                            [class.booked]="slot.isBooked"
+                            [class.free]="!slot.isBooked"
+                            (click)="slot.isBooked ? onBookedSlotClick(slot) : onSlotClick(slot)">
 
-                        <span class="slot-time">{{ formatTime(slot.startTime) }}</span>
-                        <span class="slot-status">
-                            {{ slot.isBooked ? 'Booked' : 'Available' }}
-                        </span>
-                        </button>
-                    </div>
+                            <span class="slot-time">{{ formatTime(slot.startTime) }}</span>
+                            <span class="slot-status">
+                                {{ slot.isBooked ? 'Booked' : 'Available' }}
+                            </span>
+                            </button>
+                        </div>
 
-                    <p *ngIf="selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
-                        No available slots for selected date.
-                    </p>
+                        <p *ngIf="selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
+                            No time slots added for this date.
+                        </p>
 
-                    <p *ngIf="!selectedDateKey" class="section-text empty-text">
-                        Choose a date from the calendar.
-                    </p>
+                        <p *ngIf="!selectedDateKey" class="section-text empty-text">
+                            Choose a date from the calendar.
+                        </p>
+
+                        <form *ngIf="selectedDateKey"
+                               [formGroup]="slotForm"
+                               (ngSubmit)="addSlot()"
+                               class="add-slot-panel">
+
+                               <mat-form-field appearance="outline">
+                                <mat-label>Start time</mat-label>
+
+                                <mat-select formControlName="startTime">
+                                    <mat-option *ngFor="let time of timeOptions" [value]="time">
+                                        {{ time }}
+                                    </mat-option>
+
+                                </mat-select>
+
+                                 <mat-error *ngIf="slotForm.get('startTime')?.hasError('required')">
+                                    Start time is required.
+                                 </mat-error>
+
+                               </mat-form-field>
+
+                               <button
+                                 mat-raised-button 
+                                 type="submit"
+                                 class="primary-btn"
+                                 [disabled]="slotForm.invalid || isPastTime()">
+                                 <mat-icon>add</mat-icon>
+                                    Add slot
+                                </button>
+
+                                <mat-error *ngIf="isPastTime()">You cannot select a time that has already passed.</mat-error>
+
+                        </form>
                     </div>
                 </div>
 
-                <p *ngIf="!workingTimes?.workingDates?.length" class="section-text empty-text">
-                    No available appointments.
-                </p>
             </section>
             </mat-card>
         </div>

@@ -16,7 +16,21 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Command.Create
                 throw new BloomiaNotFoundException(message: "Therapist not found try to login!");
             }
 
-             var therapistAvailability=await context.TherapistAvailabilities.Include(x=>x.Therapist)
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+
+            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+
+            var today = DateOnly.FromDateTime(now);
+            var currentTime = TimeOnly.FromDateTime(now);
+
+            if (request.AvailableDate < today)
+                throw new BloomiaConflictException("You cannot add a working time in the past.");
+
+            if (request.AvailableDate == today && request.StartTime <= currentTime)
+                throw new BloomiaConflictException("You cannot add a time slot that has alreeady passed.");
+
+
+            var therapistAvailability =await context.TherapistAvailabilities.Include(x=>x.Therapist)
                             .Where(x=>x.TherapistId==therapist.Id).ToListAsync(cancellationToken);
 
             var session = therapistAvailability.FirstOrDefault(x => x.Date == request.AvailableDate && x.StartTime == request.StartTime);
@@ -25,6 +39,8 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Command.Create
             {
                 throw new BloomiaConflictException("The appointment has already been entered!");
             }
+
+            
             var newAppointment = new TherapistAvailabilityEntity
             {
                 TherapistId = therapist.Id,

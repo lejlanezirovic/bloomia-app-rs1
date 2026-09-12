@@ -12,6 +12,8 @@ import { environment } from '../../../../environments/environment';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DialogHelperService } from '../../shared/services/dialog-helper.service';
 import { DialogButton } from '../../shared/models/dialog-config.model';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ToasterService } from '../../../core/services/toaster.service';
 
 interface CalendarDayVm {
   date: Date;
@@ -23,6 +25,7 @@ interface CalendarDayVm {
   hasSlots: boolean;
   hasFreeSlots: boolean;
   hasBookedSlots: boolean;
+  isPast: boolean;
 }
 
 @Component({
@@ -39,7 +42,14 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   private therapyTypesApi = inject(TherapyTypesApiService);
   private sanitizier = inject(DomSanitizer);
   private dialogHelper = inject(DialogHelperService);
+  private fb = inject(FormBuilder);
+  private toaster = inject(ToasterService);
 
+  slotForm = this.fb.group({
+    startTime: ['', Validators.required]
+  });
+
+  timeOptions: string[] = [];
   therapist: GetTherapistByIdQueryDto | null = null;
   workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
 
@@ -71,6 +81,18 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   
   ngOnInit(): void {
     this.loadProfile();
+    this.generateTimeOptions();
+  }
+
+  private generateTimeOptions(): void {
+    for(let hour = 8; hour < 17; hour++) {
+      for(let minute = 0; minute < 60; minute += 60) {
+        const h = hour.toString().padStart(2, '0');
+        const m = minute.toString().padStart(2, '0');
+
+        this.timeOptions.push(`${h}:${m}`);
+      }
+    }
   }
 
   loadProfile(): void {
@@ -90,6 +112,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
       therapyTypes: this.therapyTypesApi.list()
     }).subscribe({
       next: (result) => {
+
+        console.log('WORKING TIMES:', result.workingTimes);
+        console.log('WORKING DATES:', result.workingTimes?.workingDates);
+
         this.therapist = result.profile;
         this.workingTimes = result.workingTimes;
         this.allTherapyTypes = result.therapyTypes;
@@ -123,6 +149,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
     reader.readAsDataURL(file);
   }
+  
 
   onProfileImageDragOver(event: DragEvent): void {
     if(!this.isEditMode)
@@ -215,6 +242,55 @@ export class ProfileComponent extends BaseComponent implements OnInit {
     return this.therapist?.documents || [];
   }
 
+  isPastTime(): boolean {
+    if(!this.selectedDateKey || !this.slotForm.value.startTime)
+      return false;
+
+    const today = this.toDateKey(new Date());
+
+    if(this.selectedDateKey !== today)
+      return false;
+
+    const now = new Date();
+
+    const currentTime =
+    `${String(now.getHours()).padStart(2, '0')}:` +
+    `${String(now.getMinutes()).padStart(2, '0')}`;
+
+    return this.slotForm.value.startTime <= currentTime;
+  }
+
+  addSlot(): void {
+    if(this.slotForm.invalid || !this.selectedDateKey) {
+      this.slotForm.markAllAsTouched();
+      return;
+    }
+
+    const command = {
+      availableDate: this.selectedDateKey,
+      startTime: this.slotForm.value.startTime ?? ''
+    }
+
+    this.therapistAvailabilityApi.create(command).subscribe({
+      next: (response) => {
+        this.toaster.success(response.note || 'Time slot added successfully.');
+
+        this.slotForm.reset();
+
+        this.loadProfile();
+      },
+      error: (err) => {
+        console.error(err);
+
+        this.toaster.error(err?.error?.message || 'Failed to add time slot.');
+      }
+      
+    })
+
+  }
+
+
+
   get currentMonthLabel(): string {
     return this.currentMonth.toLocaleDateString('en-US', 
       { month: 'long', year: 'numeric' });
@@ -254,7 +330,9 @@ get selectedDateSlots(): WorkingTimeSlotsDto[] {
 }
 
 selectDay(day: CalendarDayVm): void {
-  if (!day.hasSlots) return;
+
+  if(day.isPast)
+    return;
 
   this.selectedDateKey = day.dateKey;
 
@@ -295,6 +373,13 @@ selectDay(day: CalendarDayVm): void {
   private buildCalendarDay(date: Date, inCurrentMonth: boolean): CalendarDayVm {
     const dateKey = this.toDateKey(date);
     const slots = this.getSlotsForDate(dateKey);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const currentDate = new Date(date);
+    currentDate.setHours(0,0,0,0);
+
+    const isPast = currentDate < today;
 
     return {
       date,
@@ -306,6 +391,7 @@ selectDay(day: CalendarDayVm): void {
       hasSlots: slots.length > 0,
       hasFreeSlots: slots.some(slot => !slot.isBooked),
       hasBookedSlots: slots.some(slot => slot.isBooked),
+      isPast
     };
   }
 

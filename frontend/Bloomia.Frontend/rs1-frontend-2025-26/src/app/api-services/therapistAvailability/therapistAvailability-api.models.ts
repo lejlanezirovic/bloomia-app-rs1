@@ -17,3 +17,14 @@ export interface WorkingTimeSlotsDto {
     startTime: string;
     isBooked: boolean;
 }
+
+export interface CreateTherapistAvailabilityCommand {
+    availableDate: string;
+    startTime: string;
+}
+
+export interface CreateTherapistAvailabilityCommandDto {
+    note: string;
+    date: string;
+    time: string;
+}

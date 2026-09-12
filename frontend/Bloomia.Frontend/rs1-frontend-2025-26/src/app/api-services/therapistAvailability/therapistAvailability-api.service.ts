@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Observable } from "rxjs";
-import { ListMyWorkingDatesAndTimesResponse } from "./therapistAvailability-api.models";
+import { CreateTherapistAvailabilityCommand, CreateTherapistAvailabilityCommandDto, ListMyWorkingDatesAndTimesResponse } from "./therapistAvailability-api.models";
 import { buildHttpParams } from "../../core/models/build-http-params";
 
 @Injectable({
@@ -23,6 +23,12 @@ export class TherapistAvailabilityApiService {
     getWorkingDatesAndTimesForClient(therapistId: number): Observable<ListMyWorkingDatesAndTimesResponse> {
         return this.http.get<ListMyWorkingDatesAndTimesResponse>(
             `${this.baseUrl}/therapists/${therapistId}/working-dates-and-times`
+        );
+    }
+
+    create(request: CreateTherapistAvailabilityCommand): Observable<CreateTherapistAvailabilityCommandDto> {
+        return this.http.post<CreateTherapistAvailabilityCommandDto>(
+            `${this.baseUrl}/create-my-working-time`, request
         );
     }
 }
