@@ -20,7 +20,7 @@ namespace Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest
             RuleFor(x => x.TestAnswers).NotNull().WithMessage("Test answers cannot be null.")
                 .Must(x => x.Any()).WithMessage("At least one test answer must be provided.");
 
-            //validacija odgovora
+  
             RuleForEach(x => x.TestAnswers).ChildRules(x =>
             {
                 x.RuleFor(x => x.QuestionId).GreaterThan(0)

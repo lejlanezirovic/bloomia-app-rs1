@@ -14,7 +14,9 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
         public string? Lastname { get; set; }
         public string? Specialization { get; set; }
         public string? Description { get; set; }
-        public List<int>? TherapyTypeIds { get; set; }
+        public int? DocumentId { get; set; }
+        public List<int> TherapyTypeIds { get; set; }
+
 
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }

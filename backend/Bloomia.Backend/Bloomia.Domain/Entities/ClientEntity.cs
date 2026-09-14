@@ -18,12 +18,10 @@ namespace Bloomia.Domain.Entities
         public int UserId { get; set; }
         public UserEntity User { get; set; }
 
-        //liste
         public  List<SavedTherapistsEntity> SavedTherapists { get; set; } = new List<SavedTherapistsEntity>();
         public List<MoodEntity> Moods { get; set; } = new List<MoodEntity>();
         public List<JournalEntity> Journals { get; set; } = new List<JournalEntity>();
         public List<SelfTestResultEntity> SelfTestResults { get; set; } = new List<SelfTestResultEntity>();
-        //sastanci
         public List<AppointmentEntity> Appointments { get; set; } = new List<AppointmentEntity>();
 
     }

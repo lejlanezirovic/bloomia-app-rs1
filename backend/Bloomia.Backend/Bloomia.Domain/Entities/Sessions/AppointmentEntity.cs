@@ -20,8 +20,6 @@ namespace Bloomia.Domain.Entities.Sessions
         public ReviewEntity? Review { get; set; }
         public DateTime BookedAt { get; set; }
         public DateTime ScheduledAtUtc { get; set; }
-
-        //list
         public List<ChatSessionEntity>? ChatSessions { get; set; } = new List<ChatSessionEntity>();
         public List<AppointmentNotificationLogEntity> NotificationLogs { get; set; } = new();
     }

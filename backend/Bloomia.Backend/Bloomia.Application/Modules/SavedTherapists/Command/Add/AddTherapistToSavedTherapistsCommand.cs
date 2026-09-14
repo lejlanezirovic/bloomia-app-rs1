@@ -8,7 +8,6 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Add
 {
     public class AddTherapistToSavedTherapistsCommand: IRequest<AddTherapistToSavedTherapistsCommandDto>
     {
-        //get all therapists
         public int TherapistId { get; init; }
 
         [JsonIgnore]

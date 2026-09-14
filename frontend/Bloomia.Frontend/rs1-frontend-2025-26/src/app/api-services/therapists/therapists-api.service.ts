@@ -7,6 +7,7 @@ import { ListTherapistsRequest, ListTherapistsResponse, GetTherapistByIdQueryDto
  } from "./therapists-api.models";
  import { buildHttpParams } from "../../core/models/build-http-params";
 import { observableToBeFn } from "rxjs/internal/testing/TestScheduler";
+import { ListMyClientsRequest, ListMyClientsResponse } from "../therapist-my-clients/my-clients-api.model";
 
 @Injectable({
     providedIn: 'root'
@@ -47,6 +48,14 @@ export class TherapistsApiService {
         formData.append('documentType', documentType.toString());
 
         return this.http.post<any>(`${this.baseUrl}/upload-document`, formData);
+    }
+
+    listMyClients(request?: ListMyClientsRequest): Observable<ListMyClientsResponse> {
+        const params = request ? buildHttpParams(request as any) : undefined;
+
+        return this.http.get<ListMyClientsResponse>(
+            `${this.baseUrl}/my-clients`, { params }
+        );
     }
 
     deleteTherapistDocument(documentId: number): Observable<void> {

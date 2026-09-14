@@ -30,7 +30,6 @@ namespace Bloomia.Application.Modules.Articles.Commands.Update
             var title = request.Title.Trim();
             var content = request.Content.Trim();
 
-            //provjera da li već postoji article sa istim title-om
             var titleExists = await context.Articles
                 .AnyAsync(x => x.Id != request.Id && x.Title.ToLower() == request.Title.ToLower(), ct);
 

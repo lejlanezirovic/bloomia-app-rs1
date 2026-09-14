@@ -19,13 +19,10 @@ namespace Bloomia.Domain.Entities
         public string Specialization { get; set; }
         public string Description { get; set; }
         public float RatingAvg { get; set; }
-        public bool isVerified { get; set; }
-        public List<DocumentEntity> Documents { get; set; } = new();
+        public bool IsVerified { get; set; }
+        public List<DocumentEntity> Documents { get; set; } = new ();
 
-        //liste
-        //1. 
         public List<TherapistsTherapyTypesEntity> MyTherapyTypesList { get; set; } = new List<TherapistsTherapyTypesEntity>();
-        //2. 
         public List<TherapistAvailabilityEntity> Availability { get; set; } = new List<TherapistAvailabilityEntity>();
          public List<SavedTherapistsEntity> SavedByClients { get; set; } = new List<SavedTherapistsEntity>();
 

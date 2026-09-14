@@ -15,9 +15,13 @@ namespace Bloomia.Infrastructure.Database.Configurations
 
             builder.HasKey(t => t.Id);
 
-            builder.HasMany(x => x.Documents)
+            // Property preimenovan isVerified -> IsVerified (PascalCase konvencija);
+            // naziv kolone ostaje isti pa nije potrebna nova EF migracija.
+            builder.Property(x => x.IsVerified).HasColumnName("isVerified");
+
+            builder.HasMany(x=>x.Documents)
                 .WithOne(x => x.Therapist)
-                .HasForeignKey(x => x.TherapistId)
+                .HasForeignKey(x=>x.TherapistId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(x=>x.Availability)

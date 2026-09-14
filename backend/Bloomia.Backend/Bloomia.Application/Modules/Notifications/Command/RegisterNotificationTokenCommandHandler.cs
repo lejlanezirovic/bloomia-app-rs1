@@ -24,8 +24,7 @@ namespace Bloomia.Application.Modules.Notifications.Command
                 tokenForUser.IsActive = true;
                 return Unit.Value;
             }
-            //u slucaju da ne postoji sacuvati
-            //za ovog usera sacuvaj mi ovaj token novi entitet dodati u bazu
+          
             var newTokenForUser = new NotificationTokenEntity
             {
                 UserId = userId,

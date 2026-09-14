@@ -17,13 +17,12 @@ public static class DependencyInjection
         IConfiguration configuration,
         IHostEnvironment env)
     {
-        // Typed ConnectionStrings + validation
-        services.AddOptions<ConnectionStringsOptions>()
+         services.AddOptions<ConnectionStringsOptions>()
             .Bind(configuration.GetSection(ConnectionStringsOptions.SectionName))
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        // DbContext: InMemory for test environments; SQL Server otherwise
+       
         services.AddDbContext<DatabaseContext>((sp, options) =>
         {
             if (env.IsTest())

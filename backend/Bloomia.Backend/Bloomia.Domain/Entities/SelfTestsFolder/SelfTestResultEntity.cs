@@ -9,7 +9,6 @@ namespace Bloomia.Domain.Entities.SelfTestsFolder
 {
     public class SelfTestResultEntity: BaseEntity
     {
-      //  public int Id { get; set; }
         public int ClientId { get; set; }
         public ClientEntity Client { get; set; }
         public DateTime CompletedAt { get; set; }=DateTime.UtcNow;

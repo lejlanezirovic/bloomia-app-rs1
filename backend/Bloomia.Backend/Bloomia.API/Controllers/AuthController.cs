@@ -4,6 +4,7 @@ using Bloomia.Application.Modules.Auth.Commands.Refresh;
 using Bloomia.Application.Modules.Auth.Commands.Register;
 using Bloomia.Application.Modules.Auth.Commands.Register.Admin;
 using Bloomia.Application.Modules.Auth.Commands.Register.Therapist;
+using Microsoft.AspNetCore.RateLimiting;
 
 [ApiController]
 [Route("api/auth")]
@@ -11,6 +12,7 @@ public sealed class AuthController(IMediator mediator) : ControllerBase
 {
     [HttpPost("login")]
     [AllowAnonymous]
+    [EnableRateLimiting("LoginPolicy")]
     public async Task<ActionResult<LoginCommandDto>> Login([FromBody] LoginCommand command, CancellationToken ct)
     {
         return Ok(await mediator.Send(command, ct));

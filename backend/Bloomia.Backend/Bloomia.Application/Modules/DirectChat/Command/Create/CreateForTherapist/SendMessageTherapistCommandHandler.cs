@@ -22,7 +22,6 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapi
             {
                 throw new Exception("Client or Therapist not found");
             }
-            //provjera postoji li DIREKTAN chat izmedju njih
             var directChat = await context.DirectChats
                       .Include(x => x.Client).ThenInclude(x=>x.User)
                       .Include(x => x.Therapist)

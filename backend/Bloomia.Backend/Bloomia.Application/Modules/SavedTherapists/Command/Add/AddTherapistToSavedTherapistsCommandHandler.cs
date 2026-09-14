@@ -24,7 +24,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Add
             {
                 throw new BloomiaNotFoundException("Terapeut nije pronadjen!");
             }
-            //provjeri postoji li u saved izvuci sve saved t za klijenta pa provjeri 
+           
             var saved =await context.SavedTherapists.Include(x => x.Client).Include(x => x.Therapist)
                         .Where(x => x.ClientId == client.Id && x.TherapistId==therapist.Id).FirstOrDefaultAsync(cancellationToken);
 
@@ -43,8 +43,6 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Add
             await context.SavedTherapists.AddAsync(newSavedTherapist, cancellationToken);
 
             await context.SaveChangesAsync(cancellationToken);
-            
-           //sad mi trebaju sve vrste terapija 
 
             var dto = new AddTherapistToSavedTherapistsCommandDto
             {

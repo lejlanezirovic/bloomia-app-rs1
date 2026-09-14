@@ -10,11 +10,6 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.List
     {
         public async Task<PageResult<ListSavedTherapistInfoDto>> Handle(ListSavedTherapistsQuery request, CancellationToken cancellationToken)
         {
-            // prvo naci klijenta na osnovu user id sto se posalje sa servera kojeg cemo naci preko claimova (name identifier)
-            //onda cemo u bazu saved therapist porediti id klijenta da izvucemo spasene terapeute
-            //onda  proci if casove 
-            //mapirati u dto i vratiti paged result
-
             var client=await context.Clients.Include(x=>x.User).FirstOrDefaultAsync(x=>x.UserId==request.UserId,cancellationToken);
             if (client ==null)
             {
@@ -36,6 +31,22 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.List
                                           TherapyTypeName = t.TherapyType.TherapyName
                                       }).ToList()
                           }).AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(request.FullName))
+                query = query.Where(x => x.Fullname.ToLower().Contains(request.FullName.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(request.Specialization))
+                query = query.Where(x => x.Specialization.ToLower().Contains(request.Specialization.ToLower()));
+
+            if (request.MinRating.HasValue)
+                query = query.Where(x => x.RatingAvg >= request.MinRating.Value);
+
+            if (!string.IsNullOrWhiteSpace(request.TherapyType))
+                query = query.Where(x => x.MYTherapyTypes.Any(t => t.TherapyTypeName.ToLower().Contains(request.TherapyType.ToLower())));
+
+            query = request.SortByRatingDesc
+                ? query.OrderByDescending(x => x.RatingAvg)
+                : query;
 
             return await PageResult<ListSavedTherapistInfoDto>.FromQueryableAsync(query, request.Paging, cancellationToken);
 

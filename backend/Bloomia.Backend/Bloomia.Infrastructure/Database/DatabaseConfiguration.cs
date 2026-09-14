@@ -1,5 +1,4 @@
 ﻿using Bloomia.Domain.Common;
-using Bloomia.Infrastructure.Database.Seeders;
 using System.Linq.Expressions;
 
 namespace Bloomia.Infrastructure.Database;
@@ -16,7 +15,7 @@ public partial class DatabaseContext
             {
                 case EntityState.Added:
                     entry.Entity.CreatedAtUtc = UtcNow;
-                    entry.Entity.ModifiedAtUtc = null; // ili = UtcNow
+                    entry.Entity.ModifiedAtUtc = null;
                     entry.Entity.IsDeleted = false;
                     break;
 
@@ -44,15 +43,12 @@ public partial class DatabaseContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
-        ApplyGlobalFielters(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
-
-        StaticDataSeeder.Seed(modelBuilder); // static data
+        ApplyGlobalFilters(modelBuilder);
     }
 
-    private void ApplyGlobalFielters(ModelBuilder modelBuilder)
+    private void ApplyGlobalFilters(ModelBuilder modelBuilder)
     {
-        // Apply a global filter to all entities inheriting from BaseEntity
+        
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
             if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))

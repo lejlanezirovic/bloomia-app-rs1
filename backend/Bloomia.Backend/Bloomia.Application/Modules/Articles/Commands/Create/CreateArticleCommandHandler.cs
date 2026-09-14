@@ -20,14 +20,6 @@ namespace Bloomia.Application.Modules.Articles.Commands.Create
 
             var title = request.Title.Trim();
             var content = request.Content.Trim();
-
-            //prebačeno u validator
-            //if (string.IsNullOrWhiteSpace(title) || title == "string")
-            //    throw new ValidationException("Title cannot be only whitespace or default value.");
-
-            //if (string.IsNullOrWhiteSpace(content) || content == "string")
-            //    throw new ValidationException("Content cannot be only whitespace or default value.");
-
             bool articleExists = await context.Articles
                 .AnyAsync(x => x.Title.ToLower() == title.ToLower(), ct);
 
@@ -40,7 +32,6 @@ namespace Bloomia.Application.Modules.Articles.Commands.Create
             if (admin == null)
                 throw new BloomiaBusinessRuleException("PERMISSION", "Logged-in user is not an admin.");
             
-            //id admina uzimamo od prijavljenog korisnika
             var article = new ArticleEntity
             {
                 AdminId = admin.Id,

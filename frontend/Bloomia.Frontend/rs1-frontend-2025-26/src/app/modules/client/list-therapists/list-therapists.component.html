@@ -6,9 +6,19 @@
 <p class="page-subtitle">
   Search by name, filter by gender or rating and choose the therapist that fits you best.
 </p> 
+<p class="shortcuts-hint">
+  Prečice: <kbd>Ctrl+K</kbd> ili <kbd>/</kbd> pretraga, <kbd>M</kbd>/<kbd>F</kbd> filter po polu, <kbd>R</kbd> sortiranje, <kbd>Esc</kbd> brisanje pretrage.
+</p>
 <div class="filter-sort-search-container">
 
-    <input type="text" placeholder="  search by firstname" (input)="onSearchInput($event)" class="search-by-name"/><br>
+    <mat-form-field appearance="outline" class="search-by-name">
+      <input matInput #searchInput type="text" placeholder="search by firstname"
+             (input)="onSearchInput($event)" [matAutocomplete]="autoName"/>
+    </mat-form-field>
+    <mat-autocomplete #autoName="matAutocomplete" (optionSelected)="onNameSelected($event)">
+      <mat-option *ngFor="let name of filteredNames" [value]="name">{{name}}</mat-option>
+    </mat-autocomplete>
+    <br>
   
     <div class="filter-sort-containter">
     

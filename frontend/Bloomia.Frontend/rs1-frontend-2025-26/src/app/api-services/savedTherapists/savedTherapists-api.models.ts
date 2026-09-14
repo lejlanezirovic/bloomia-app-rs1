@@ -21,7 +21,11 @@ export interface ListTherapistTherapyTypesQueryDto{
     therapyTypeName:string;
 }
 export class ListSavedTherapistsQuery extends BasePagedQuery{
-
+    fullName?: string | null;
+    specialization?: string | null;
+    minRating?: number | null;
+    therapyType?: string | null;
+    sortByRatingDesc?: boolean;
 }
 export type ListSavedTherapistsResponse=PageResult<ListSavedTherapistInfoDto>;
 

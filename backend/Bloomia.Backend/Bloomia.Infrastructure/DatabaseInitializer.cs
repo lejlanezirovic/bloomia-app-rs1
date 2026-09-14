@@ -8,9 +8,6 @@ namespace Bloomia.Infrastructure;
 
 public static class DatabaseInitializer
 {
-    /// <summary>
-    /// Centralized migration and seeding.
-    /// </summary>
     public static async Task InitializeDatabaseAsync(this IServiceProvider services, IHostEnvironment env)
     {
         await using var scope = services.CreateAsyncScope();
@@ -19,16 +16,15 @@ public static class DatabaseInitializer
         if (env.IsTest())
         {
             await ctx.Database.EnsureCreatedAsync();
-            await DynamicDataSeedersForBloomia.SeedAsync(ctx);//promjene
+            await DynamicDataSeedersForBloomia.SeedAsync(ctx);
             return;
         }
 
-        // SQL Server or similar
         await ctx.Database.MigrateAsync();
 
         if (env.IsDevelopment())
         {
-            await DynamicDataSeedersForBloomia.SeedAsync(ctx);//promjene
+            await DynamicDataSeedersForBloomia.SeedAsync(ctx);
         }
     }
 }

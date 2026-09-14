@@ -1,14 +1,15 @@
-﻿using System.Security.Claims;
-using Bloomia.Application.Modules.Articles.Commands.Update;
+﻿using Bloomia.Application.Modules.Articles.Commands.Update;
 using Bloomia.Application.Modules.TherapistAvailability.Command.Delete.DeleteTimeByDate;
 using Bloomia.Application.Modules.Therapists.Commands.DeleteDocument;
 using Bloomia.Application.Modules.Therapists.Commands.Update;
 using Bloomia.Application.Modules.Therapists.Commands.Update.ChangeTherapistPassword;
 using Bloomia.Application.Modules.Therapists.Commands.UploadDocument;
+using Bloomia.Application.Modules.Therapists.MyClients.Queries;
 using Bloomia.Application.Modules.Therapists.Queries.GetById;
 using Bloomia.Application.Modules.Therapists.Queries.List;
 using Bloomia.Application.Modules.Users.Queries.GetById;
 using Bloomia.Application.Modules.Users.Queries.List;
+using System.Security.Claims;
 
 namespace Bloomia.API.Controllers
 {
@@ -16,6 +17,22 @@ namespace Bloomia.API.Controllers
     [Route("api/therapists")]
     public sealed class TherapistsController(ISender sender) : ControllerBase
     {
+        [Authorize(Roles = "THERAPIST")]
+        [HttpGet("my-clients")]
+        public async Task<PageResult<ListMyClientsQueryDto>> GetMyClients([FromQuery] ListMyClientsQuery query,
+            CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id")
+                ?? User.FindFirst(ClaimTypes.NameIdentifier);
+
+            query.UserId = int.Parse(userClaim!.Value);
+
+            var result = await sender.Send(query, ct);
+
+
+            return result;
+        }
+
         [Authorize(Roles = "THERAPIST")]
         [HttpPost("upload-document")]
         public async Task<ActionResult<UploadTherapistDocumentCommandDto>> UploadDocument([FromForm] UploadTherapistDocumentCommand request, CancellationToken ct)

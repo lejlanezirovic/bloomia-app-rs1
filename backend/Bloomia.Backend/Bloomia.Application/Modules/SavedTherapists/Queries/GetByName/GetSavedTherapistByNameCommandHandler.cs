@@ -11,7 +11,6 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetByName
     {
         public async Task<List<GetSavedTherapistByNameCommandDto>> Handle(GetSavedTherapistByNameCommand request, CancellationToken cancellationToken)
         {
-            //trazimo za klijenta u listi spasenih terapeuta po imenu
             var filter=(request.SerachName?? string.Empty).Trim().ToLower();
 
             var client = await context.Clients.Include(x => x.User).AsNoTracking()

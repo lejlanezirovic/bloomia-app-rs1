@@ -962,6 +962,10 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit")
+                        .HasColumnName("isVerified");
+
                     b.Property<DateTime?>("ModifiedAtUtc")
                         .HasColumnType("datetime2");
 
@@ -974,9 +978,6 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isVerified")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

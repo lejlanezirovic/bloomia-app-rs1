@@ -10,7 +10,6 @@ namespace Bloomia.Application.Modules.Appointments.Command.Delete
     {
         public async Task<string> Handle(DeleteAppointmentCommand request, CancellationToken cancellationToken)
         {
-            //ovo moze obrisati klijent ili terapeut
             var client = await context.Clients.Include(x => x.User).FirstOrDefaultAsync(x => x.User.Id == request.UserId, cancellationToken);
             var therapist = await context.Therapists.Include(x => x.User).FirstOrDefaultAsync(x => x.User.Id == request.UserId, cancellationToken);
 

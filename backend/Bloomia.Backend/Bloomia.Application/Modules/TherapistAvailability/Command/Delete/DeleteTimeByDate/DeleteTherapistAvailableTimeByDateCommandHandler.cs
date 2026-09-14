@@ -27,7 +27,6 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Command.Delete.Delet
                 throw new BloomiaConflictException(message: "You can not delete a booked appointment!");
             }
 
-            //ako nije zauzet obrisi, soft delete
             therapistTimes.IsDeleted = true;
             context.TherapistAvailabilities.Update(therapistTimes);
             await context.SaveChangesAsync(cancellationToken);

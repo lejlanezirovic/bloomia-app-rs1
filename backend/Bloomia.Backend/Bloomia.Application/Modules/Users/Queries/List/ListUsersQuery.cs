@@ -9,7 +9,7 @@ namespace Bloomia.Application.Modules.Users.Queries.List
     public class ListUsersQuery : BasePagedQuery<ListUsersQueryDto>
     {
         public string? Search { get; init; }
-        public string? Role { get; init; } // ako admin želi filtrirati korisnike po ulozi
+        public string? Role { get; init; } 
         public bool? OnlyEnabled { get; init; }
 
     }

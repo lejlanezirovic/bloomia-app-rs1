@@ -13,6 +13,7 @@ namespace Bloomia.Application.Modules.Therapists.Queries.List
         public string? Lastname { get; set; }
         public string? Specialization { get; set; }
         public int? GenderId { get; set; }
-        public bool SortByRatingDesc { get; set; } = true; 
+        public bool SortByRatingDesc { get; set; } = true;
+        public string? Search { get; set; }
     }
 }

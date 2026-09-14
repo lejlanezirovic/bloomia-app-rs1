@@ -12,7 +12,7 @@ namespace Bloomia.Domain.Entities.SelfTestsFolder
         public int SelfTestQuestionId { get; set; }
         public SelfTestQuestionEntity SelfTestQuestion { get; set; }
 
-        public int Rating { get; set; } // e.g., 1 to 5 scale
+        public int Rating { get; set; } 
 
         public int SelfTestResultId { get; set; }
         public SelfTestResultEntity SelfTestResult { get; set; }

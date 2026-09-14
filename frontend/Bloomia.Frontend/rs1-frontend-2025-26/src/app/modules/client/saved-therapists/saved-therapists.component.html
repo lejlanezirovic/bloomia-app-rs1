@@ -9,7 +9,17 @@
 <div class="input-search">
     <p>Search by fullname</p>
     <input type="text" placeholder="enter the name of therapist" class="search-by-name" (input)="searchByName($event)">
-    
+
+</div>
+
+<div class="extra-filters">
+    <input type="text" maxlength="100" placeholder="filter by specialization" (input)="onSpecializationFilterInput($event)">
+    <div class="filter-field">
+        <input type="number" min="1" max="5" step="0.1" placeholder="min rating" (input)="onMinRatingFilterInput($event)">
+        <span class="field-error" *ngIf="minRatingError">{{minRatingError}}</span>
+    </div>
+    <input type="text" maxlength="100" placeholder="filter by therapy type" (input)="onTherapyTypeFilterInput($event)">
+    <button class="button" (click)="toggleSortByRating()">Sort by rating</button>
 </div>
     <button class="button" (click)="openConfirmDialogToRemoveAllSavedTherapists()">Remove all</button>
 

@@ -15,7 +15,7 @@ namespace Bloomia.Application.Modules.Therapists.Queries.List
             var query = context.Therapists
                 .Include(x => x.User)
                     .ThenInclude(u => u.Gender)
-                .Where(x => x.isVerified)
+                .Where(x => x.IsVerified)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Firstname))
@@ -30,9 +30,30 @@ namespace Bloomia.Application.Modules.Therapists.Queries.List
             if (request.GenderId.HasValue)
                 query = query.Where(x => x.User.GenderId == request.GenderId.Value);
 
-            if(request.SortByRatingDesc)
-                query = query.OrderByDescending(x => x.RatingAvg);
-           
+            
+            if (!string.IsNullOrWhiteSpace(request.Search))
+            {
+                var search = request.Search.ToLower();
+                query = query.Where(x =>
+                    x.Specialization.ToLower().Contains(search) ||
+                    x.Description.ToLower().Contains(search));
+            }
+
+            var sortBy = request.Paging.SortBy?.Trim().ToLowerInvariant();
+            query = sortBy switch
+            {
+                "rating" => request.Paging.SortDescending
+                    ? query.OrderByDescending(x => x.RatingAvg)
+                    : query.OrderBy(x => x.RatingAvg),
+                "specialization" => request.Paging.SortDescending
+                    ? query.OrderByDescending(x => x.Specialization)
+                    : query.OrderBy(x => x.Specialization),
+                "name" => request.Paging.SortDescending
+                    ? query.OrderByDescending(x => x.User.Firstname).ThenByDescending(x => x.User.Lastname)
+                    : query.OrderBy(x => x.User.Firstname).ThenBy(x => x.User.Lastname),
+                _ => request.SortByRatingDesc ? query.OrderByDescending(x => x.RatingAvg) : query
+            };
+
 
             var projectedQuery = query
                 .Select(x => new ListTherapistsQueryDto

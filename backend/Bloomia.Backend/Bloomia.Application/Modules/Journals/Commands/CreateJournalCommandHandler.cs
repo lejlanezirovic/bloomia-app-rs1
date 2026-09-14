@@ -25,7 +25,6 @@ namespace Bloomia.Application.Modules.Journals.Commands
             context.Journals.Add(journal);
             await context.SaveChangesAsync(cancellationToken);
 
-            //uzmemo id pitanja
             var questionIds = request.ClientsAnswers.Select(x => x.QuestionId).Distinct().ToList();
             var existingQuestions = await context.JournalQuestions.Where(x => questionIds.Contains(x.Id)).ToListAsync(cancellationToken);
 

@@ -12,7 +12,7 @@ namespace Bloomia.Application.Modules.Reviews.Query.GetByTherapistId
         public async Task<PageResult<GetReviewsByTherapistIdQueryDto>> Handle(GetReviewsByTherapistIdQuery request, CancellationToken ct)
         {
             var therapistExists = await context.Therapists
-                .AnyAsync(x => x.Id == request.TherapistId && x.isVerified, ct);
+                .AnyAsync(x => x.Id == request.TherapistId && x.IsVerified, ct);
 
             if (!therapistExists)
                 throw new BloomiaNotFoundException("Therapist not found.");

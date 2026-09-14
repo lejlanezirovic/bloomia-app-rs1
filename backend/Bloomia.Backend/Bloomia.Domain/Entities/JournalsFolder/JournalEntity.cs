@@ -14,8 +14,6 @@ namespace Bloomia.Domain.Entities.JournalsFolder
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
-        //
         public List<JournalAnswerEntity> JournalAnswers { get; set; }= new List<JournalAnswerEntity>();
     }
 }

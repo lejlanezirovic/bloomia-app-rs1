@@ -14,7 +14,6 @@ namespace Bloomia.Application.Modules.Users.Commands.Delete
             if (currentUser.UserId is null)
                 throw new BloomiaBusinessRuleException("NOT_LOGGED_IN", "You have to be logged in.");
 
-            //samo admin može obrisati korisnički račun 
             if (!currentUser.IsAdmin)
                 throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Only admins can delete users.");
 

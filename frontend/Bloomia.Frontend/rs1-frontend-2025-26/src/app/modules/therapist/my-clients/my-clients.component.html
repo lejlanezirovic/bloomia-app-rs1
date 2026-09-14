@@ -1,1 +1,144 @@
-<p>my-clients works!</p>
+<div class="my-clients-page">
+
+  <div class="page-header">
+    <div class="title-section">
+      <mat-icon>groups</mat-icon>
+      <h1>My Clients</h1>
+    </div>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSearch()"
+      class="search-form"
+    >
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search clients</mat-label>
+
+        <input
+          matInput
+          formControlName="search"
+          placeholder="Search by name or email"
+        />
+
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <button
+        class="search-button"
+        type="submit"
+      >
+        Search
+      </button>
+
+      <button
+        type="button"
+        class="clear-button"
+        (click)="clearSearch()"
+      >
+        Clear
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="45"></mat-spinner>
+    <p>Loading clients...</p>
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage" class="error-container">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading && !errorMessage"
+    class="clients-list"
+  >
+
+    <div
+      class="client-card"
+      *ngFor="let client of items"
+    >
+
+      <div class="client-main">
+
+        <div class="avatar-wrapper">
+
+          <img
+            *ngIf="client.profileImage"
+            [src]="client.profileImage"
+            [alt]="client.fullName"
+            class="avatar"
+          />
+
+          <div
+            *ngIf="!client.profileImage"
+            class="avatar-placeholder"
+          >
+            {{ client.fullName.charAt(0) }}
+          </div>
+
+        </div>
+
+        <div class="client-info">
+
+          <h2>{{ client.fullName }}</h2>
+
+          <div class="info-row">
+            <mat-icon>event</mat-icon>
+
+            <span *ngIf="client.nextAppointmentAtUtc; else noAppointment">
+              Next appointment:
+              {{ client.nextAppointmentAtUtc | date:'dd.MM.yyyy, HH:mm' }}
+            </span>
+
+            <ng-template #noAppointment>
+              <span>No upcoming appointment</span>
+            </ng-template>
+          </div>
+
+          <div class="info-row">
+            <mat-icon>mail_outline</mat-icon>
+            <span>{{ client.email || 'No email available' }}</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="client-actions">
+        <button
+          mat-icon-button
+          matTooltip="Message client"
+          class="message-button"
+        >
+          <mat-icon>chat_bubble_outline</mat-icon>
+        </button>
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="items.length === 0"
+      class="empty-state"
+    >
+      <mat-icon>person_off</mat-icon>
+
+      <h3>No clients found</h3>
+
+      <p>
+        {{ request.search
+          ? 'No clients match your search.'
+          : 'You do not have any clients yet.'
+        }}
+      </p>
+    </div>
+
+    <div
+      *ngIf="items.length > 0"
+      class="paginator-wrapper"
+    >
+      <app-fit-paginator-bar [vm]="this"></app-fit-paginator-bar>
+    </div>
+
+  </div>
+</div>

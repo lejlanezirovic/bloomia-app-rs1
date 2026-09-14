@@ -11,11 +11,7 @@ namespace Bloomia.Application.Modules.SelfTests.Queries.List
         public async Task<ListAllSelfTestQuerySearchDto> Handle(ListSelfTestsQuerySearch request, CancellationToken cancellationToken)
         {
             var search=request.Search?.Trim()?? string.Empty;
-            //if (string.IsNullOrWhiteSpace(search))
-            //{
-            //    throw new ValidationException(message: "String is empty!");
-            //}
-
+          
             var selfTests =await  context.SelfTests.Where(x => x.TestName.ToLower()
                             .Contains(search.ToLower())).ToListAsync(cancellationToken);
             var selfTestsDto = new ListAllSelfTestQuerySearchDto();

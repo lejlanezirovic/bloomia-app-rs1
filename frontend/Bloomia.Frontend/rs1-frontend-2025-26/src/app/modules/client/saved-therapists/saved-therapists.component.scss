@@ -166,3 +166,71 @@ $accent-soft: #b8cfc1;
     background: beige;
     border-top: 1px solid black;
  }
+
+.extra-filters{
+    margin-top: 16px;
+    border: 1px solid $accent;
+    border-radius: 12px;
+    padding: 24px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: min(100%, 1400px);
+    margin: 16px auto 0;
+    background: linear-gradient( 150deg, #e8e8e5, #e0e3e1 );
+    box-shadow: 3px 3px 3px #aebaae;
+
+    input{
+        padding: 10px 16px;
+        min-height: 48px;
+        border-radius: 12px;
+        border: 1px solid #d1d9d5;
+        font-size: 1rem;
+        outline: none;
+        background-color: $self-bg;
+
+        &:focus {
+            border-color: #8fb5a5;
+            box-shadow: 0 0 0 3px rgba(143,181,165,0.25);
+        }
+    }
+
+    .button{
+        margin: 0;
+        width: auto;
+        height: auto;
+        min-height: 48px;
+        padding: 10px 24px;
+        font-size: 15px;
+    }
+
+    .filter-field{
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        input{
+            margin: 0;
+        }
+    }
+
+    .field-error{
+        color: #b3453f;
+        font-size: 0.8rem;
+        padding-left: 4px;
+    }
+}
+
+@media (max-width: 768px) {
+    .extra-filters{
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px 16px;
+
+        input, .button, .filter-field{
+            width: 100%;
+        }
+    }
+}

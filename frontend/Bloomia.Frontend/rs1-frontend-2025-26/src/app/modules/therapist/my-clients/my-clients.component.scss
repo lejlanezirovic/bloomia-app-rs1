@@ -1,0 +1,281 @@
+$text-color: #4A5759;
+$background-color: #B0C4B1;
+$light-color: #DEDBD2;
+
+$card-color: #D5E0D5;
+$accent-light: #EEF2EC;
+
+.my-clients-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  color: $text-color;
+
+  mat-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    color: $text-color;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: $text-color;
+  }
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-field {
+  width: 420px;
+
+  --mdc-outlined-text-field-outline-color: #4A5759;
+  --mdc-outlined-text-field-hover-outline-color: #4A5759;
+  --mdc-outlined-text-field-focus-outline-color: #4A5759;
+
+  --mdc-outlined-text-field-label-text-color: #4A5759;
+  --mdc-outlined-text-field-focus-label-text-color: #4A5759;
+
+  --mdc-outlined-text-field-input-text-color: #4A5759;
+
+  mat-icon {
+    color: #4A5759;
+  }
+}
+
+.search-button {
+  background-color: #4A5759;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #3f4a4c;
+}
+
+.clear-button {
+  background: transparent;
+  color: #4A5759;
+  border: none;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  background-color: rgba(74, 87, 89, 0.08);
+  border-radius: 20px;
+}
+
+.clients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.client-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 24px 28px;
+  border-radius: 14px;
+
+  background: $card-color;
+
+  min-height: 130px;
+
+  color: $text-color;
+}
+
+.client-main {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.avatar,
+.avatar-placeholder {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+}
+
+.avatar {
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: $light-color;
+
+  color: $text-color;
+
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.client-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  color: $text-color;
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-color;
+  }
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 15px;
+  color: $text-color;
+
+  mat-icon {
+    font-size: 19px;
+    width: 19px;
+    height: 19px;
+    color: $text-color;
+  }
+}
+
+.client-actions {
+  display: flex;
+  align-items: center;
+}
+
+.message-button {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: $accent-light !important;
+  color: $text-color !important;
+
+  mat-icon {
+    font-size: 26px;
+    width: 26px;
+    height: 26px;
+    color: $text-color;
+  }
+
+  &:hover {
+    background: $light-color !important;
+  }
+}
+
+.paginator-wrapper {
+  margin-top: 28px;
+
+  color: $text-color;
+}
+
+.loading-container,
+.error-container,
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  padding: 48px 20px;
+
+  text-align: center;
+  color: $text-color;
+}
+
+.empty-state mat-icon {
+  font-size: 46px;
+  width: 46px;
+  height: 46px;
+
+  color: $text-color;
+}
+
+@media (max-width: 768px) {
+  .my-clients-page {
+    padding: 20px;
+  }
+
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-field {
+  width: 420px;
+
+  --mdc-outlined-text-field-outline-color: #4A5759;
+  --mdc-outlined-text-field-hover-outline-color: #4A5759;
+  --mdc-outlined-text-field-focus-outline-color: #4A5759;
+
+  --mdc-outlined-text-field-label-text-color: #4A5759;
+  --mdc-outlined-text-field-focus-label-text-color: #4A5759;
+
+  --mdc-outlined-text-field-input-text-color: #4A5759;
+
+  mat-icon {
+    color: #4A5759;
+  }
+}
+
+  .client-card {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .client-main {
+    gap: 16px;
+  }
+
+  .avatar,
+  .avatar-placeholder {
+    width: 70px;
+    height: 70px;
+  }
+}

@@ -70,9 +70,7 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForClient
                  }, cancellationToken
             );
             
-            return dto;
-
-            ////Klijent salje poruku terapeutu i ovim NotifiyUserAsync() zelimo poslati obavjestenje terapeutu da je dobio poruku
+            return dto;  
         }
     }
 }

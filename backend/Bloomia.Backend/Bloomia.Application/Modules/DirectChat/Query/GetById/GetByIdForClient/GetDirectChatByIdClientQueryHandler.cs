@@ -28,7 +28,7 @@ namespace Bloomia.Application.Modules.DirectChat.Query.NewFolder.GetById
 
             foreach(var i in chat.Messages)
             {
-                if (!i.isRead && i.SenderId != client.Id) ////da ne bi oznacavala svoje poruke kao procitane
+                if (!i.isRead && i.SenderId != client.Id) 
                 {
                     i.isRead = true;
                     readMessageIds.Add(i.Id);

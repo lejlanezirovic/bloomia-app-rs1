@@ -13,7 +13,7 @@ namespace Bloomia.Domain.Entities.MoodsFolder
         public int ClientId { get; set; }
         public ClientEntity Client { get; set; }
 
-        public DateTime RecordedTime { get; set; }//kad je zadnji put snimljeno
+        public DateTime RecordedTime { get; set; }
 
         public int happiness { get; set; }
         public int sadness { get; set; }

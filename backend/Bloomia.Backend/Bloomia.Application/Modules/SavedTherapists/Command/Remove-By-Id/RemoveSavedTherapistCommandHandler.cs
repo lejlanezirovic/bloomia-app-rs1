@@ -10,8 +10,6 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Remove
     {
         public async Task<string> Handle(RemoveSavedTherapistCommand request, CancellationToken cancellationToken)
         {
-            //radimo soft delete za soft delete potreban je apply global filter sto mi imamo u 
-            //bez naglog brisanja podataka iz baze samo kao prekidac iskljucimo vezu /postojanje izmedju korisnika i terapeuta
             var client = await context.Clients.Include(x => x.User).Where(x => x.User.Id == request.UserId).FirstOrDefaultAsync(cancellationToken);
             if (client == null)
             {

@@ -1,0 +1,13 @@
+-- =====================================================================
+-- DEPRECATED — Full Text Search is NOT used in this project.
+-- =====================================================================
+-- SELECT SERVERPROPERTY('IsFullTextInstalled') returned 0 on our SQL
+-- Server instance, so the Full-Text Search component isn't available
+-- here. The article/therapist search (GET /api/articles?search=...,
+-- GET /api/therapists?search=...) was reverted to a plain LINQ
+-- .Contains() filter (see ListArticlesQueryHandler.cs and
+-- ListTherapistsQueryHandler.cs) — no SQL Server feature required.
+--
+-- This script is kept only for reference and is NOT part of the setup
+-- steps anymore. It is safe to delete this file entirely.
+-- =====================================================================

@@ -27,7 +27,6 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Command.Update
             {
                 throw new BloomiaConflictException("This slot cannot be updated because it is already booked");
             }
-//provjeravamo samo datum i vrijeme jer niti u bilo kojem slucaju necemo dopustiti preklapanje dostupnih termina (ni kad je zauzet)
             var existingAvailability =await context.TherapistAvailabilities
                     .AnyAsync(x => x.TherapistId == therapist.Id && x.Date == request.NewDate
                             && x.StartTime == request.NewTime && x.Id!=therapistAvailability.Id && !x.IsDeleted

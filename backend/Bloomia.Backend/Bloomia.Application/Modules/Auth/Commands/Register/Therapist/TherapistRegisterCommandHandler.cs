@@ -28,7 +28,6 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
             if (therapistRole == null)
                 throw new BloomiaNotFoundException("Rola 'THERAPIST' ne postoji u bazi.");
 
-            //kreiranje UserEntity-ja
             var newUser = new UserEntity
             {
                 Firstname = request.Firstname,
@@ -46,14 +45,13 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
             context.Users.Add(newUser);
             await context.SaveChangesAsync(ct);
 
-            //kreiranje TherapistEntity-ja
             var newTherapist = new TherapistEntity
             {
                 UserId = newUser.Id,
                 Specialization = request.Specialization,
                 Description = request.Description,
                 RatingAvg = 0,
-                isVerified = false,
+                IsVerified = false,
                 CreatedAtUtc = DateTime.UtcNow
             };
 

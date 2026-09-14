@@ -51,8 +51,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetById
                 };
                 savedTherapistDto.MyTherapyTypes.Add(therapyTypeDto);
             }
-            /*•	Consider projecting to a DTO (Select(...)) instead of loading entities at all — 
-             * best performance and avoids tracking entirely.*/
+           
             return savedTherapistDto;
         }
     }

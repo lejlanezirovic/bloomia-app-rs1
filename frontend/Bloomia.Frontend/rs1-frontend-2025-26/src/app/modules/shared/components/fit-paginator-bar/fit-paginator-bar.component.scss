@@ -1,13 +1,14 @@
 // Teget paleta
-$primary-color: #4976b5;
-$primary-light: #6b96d1;
-$primary-lighter: #e8f0f9;
-$primary-dark: #3a5e91;
+$primary-color: #4A5759;
+$primary-light: #B0C4B1;
+$primary-lighter: #EEF2EC;
+$primary-dark: #3E494B;
 
-$text-primary: #2c3e50;
-$text-secondary: #546e7a;
-$border-color: rgba(73, 118, 181, 0.15);
-$hover-bg: rgba(73, 118, 181, 0.08);
+$text-primary: #4A5759;
+$text-secondary: #6B7779;
+
+$border-color: rgba(74, 87, 89, 0.18);
+$hover-bg: rgba(74, 87, 89, 0.08);
 
 .paginator-bar {
   padding: 0;
@@ -184,7 +185,7 @@ $hover-bg: rgba(73, 118, 181, 0.08);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+        background: $primary-color;
         color: white;
         font-weight: 700;
         font-size: 16px;
