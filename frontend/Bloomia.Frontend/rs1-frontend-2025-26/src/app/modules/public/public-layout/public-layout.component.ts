@@ -9,4 +9,14 @@ import { Component } from '@angular/core';
 export class PublicLayoutComponent {
   currentYear: string = "2025";
 
+  menuOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
 }
