@@ -7,7 +7,7 @@
         </div>
 
         <div class="chat-user-info">
-          <h2>{{ directChatDetails?.clientFullname || 'Client' }}</h2>
+          <h2>{{ directChatDetails?.clientFullname || clientFullName }}</h2>
           <p>{{ directChatDetails?.messages?.length ? 'Online conversation' : 'Start chatting with your clients!' }}</p>
         </div>
       </div>

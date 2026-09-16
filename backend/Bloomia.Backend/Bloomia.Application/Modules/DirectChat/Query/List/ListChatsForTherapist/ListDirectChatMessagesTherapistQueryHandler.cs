@@ -16,7 +16,7 @@ namespace Bloomia.Application.Modules.DirectChat.Query.List.ListChatsForTherapis
             {
                 throw new BloomiaNotFoundException("Therapist not found");
             }
-            var directChats = context.DirectChats.Include(x => x.Client).ThenInclude(x=>x.User)
+            var directChats = context.DirectChats.Include(x => x.Client).ThenInclude(x => x.User)
                     .Include(x => x.Therapist).Include(x => x.Messages)
                     .Where(x => x.TherapistId == therapist.Id)
                     .Select(x => new ListDirectChatMessagesTherapistQueryDto
@@ -25,7 +25,9 @@ namespace Bloomia.Application.Modules.DirectChat.Query.List.ListChatsForTherapis
                         ClientId = x.ClientId,
                         ClientFullname = x.Client.User.Fullname,
                         ProfileImage = x.Client.User.ProfileImage,
-                        IsLastMessageRead = x.Messages.OrderByDescending(x => x.SentAt).FirstOrDefault() != null ? x.Messages.OrderByDescending(x => x.SentAt).FirstOrDefault().isRead : true
+                        IsLastMessageRead = x.Messages.OrderByDescending(x => x.SentAt).FirstOrDefault() != null ? x.Messages.OrderByDescending(x => x.SentAt).FirstOrDefault()!.isRead : true,
+                        LastMessageSenderType = x.Messages.OrderByDescending(m => m.SentAt)
+                                                   .Select(m => m.SenderType.ToString()).FirstOrDefault()
                     }).AsNoTracking();
 
             return await directChats.ToListAsync(cancellationToken);

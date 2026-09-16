@@ -24,7 +24,14 @@ namespace Bloomia.Application.Modules.DirectChat.Query.List.ListChatsForClient
                         TherapistId = x.TherapistId,
                         TherapistFullname = x.Therapist.User.Fullname,
                         ProfileImage = x.Therapist.User.ProfileImage,
-                        IsReadLAstMessage = x.Messages.OrderByDescending(x => x.SentAt).FirstOrDefault() != null ? x.Messages.OrderByDescending(x => x.SentAt).FirstOrDefault().isRead : true
+                        IsLastMessageRead = x.Messages
+                                .OrderByDescending(x => x.SentAt)
+                                .FirstOrDefault() != null ? x.Messages
+                                .OrderByDescending(x => x.SentAt)
+                                .FirstOrDefault()!.isRead : true,
+                        LastMessageSenderType = x.Messages
+                                 .OrderByDescending(x => x.SentAt)
+                                 .Select(x => x.SenderType.ToString()).FirstOrDefault()
                     }).AsNoTracking();  
 
             return await directChats.ToListAsync(cancellationToken);

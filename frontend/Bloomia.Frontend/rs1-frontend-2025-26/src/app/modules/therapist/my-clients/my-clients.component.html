@@ -107,7 +107,8 @@
 
       <div class="client-actions">
         <button
-          mat-icon-button
+          type="button"
+          (click)="openChat(client.clientId, client.fullName)"
           matTooltip="Message client"
           class="message-button"
         >

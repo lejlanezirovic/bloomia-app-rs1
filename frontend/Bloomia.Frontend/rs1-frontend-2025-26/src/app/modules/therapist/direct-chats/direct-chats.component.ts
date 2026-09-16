@@ -63,15 +63,20 @@ export class DirectChatsComponent implements OnInit {
       .join('');
   }
 
-  getPreviewText(isReadLastMessage: boolean): string {
-    return isReadLastMessage
+  getPreviewText(isLastMessageRead: boolean): string {
+    return isLastMessageRead
       ? 'Open the conversation and continue where you left off.'
       : 'You have a new message waiting.';
   }
   redirectToChatDetails(chat: ListDirectChatMessagesTherapistQueryDto){
-      const clientId=chat.clientId;
-      this.router.navigate([`therapist/direct-chats/${clientId}/direct-chats-details`], {
-        queryParams:{directChatId:chat.directChatId}
-      });
-    }
+    const clientId=chat.clientId;
+    this.router.navigate([`therapist/direct-chats/${clientId}/direct-chats-details`], {
+      queryParams:{directChatId:chat.directChatId}
+    });
+  }
+
+  isUnread(chat: ListDirectChatMessagesTherapistQueryDto): boolean {
+    return !chat.isLastMessageRead && chat.lastMessageSenderType === 'CLIENT';
+  }
+
 }

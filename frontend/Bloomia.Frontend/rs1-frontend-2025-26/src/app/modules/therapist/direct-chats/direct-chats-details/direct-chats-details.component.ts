@@ -21,6 +21,7 @@ export class DirectChatsDetailsComponent implements OnInit{
   private dialog=inject(MatDialog);
   private chatRealtimeService=inject(ChatRealtimeService);
 
+    clientFullName: string = '';
     clientId:number|null=null;
     directChat:ListDirectChatMessagesTherapistQueryDto|undefined;
   
@@ -50,6 +51,8 @@ export class DirectChatsDetailsComponent implements OnInit{
      }
     this.route.queryParams.subscribe(params=>{
         this.directChatID=params['directChatId']?+params['directChatId']:null;
+
+        this.clientFullName = params['clientFullname'] || '';
 
         if(this.directChatID){
             this.getDirectChatDetails(this.directChatID);

@@ -94,11 +94,12 @@ export interface GetDirectChatByIdTherapistQueryDto{
     messages:MessageDto[];
 }
 export interface ListDirectChatMessagesQueryDto{
-   directChatId:number;
+    directChatId:number;
     therapistId:number;
     profileImage:string;
     therapistFullname:string;
-    isReadLAstMessage:boolean;
+    isLastMessageRead:boolean;
+    lastMessageSenderType?: string | null;
 }
 export interface ListDirectChatMessagesQuery{
 
@@ -111,5 +112,6 @@ export interface ListDirectChatMessagesTherapistQueryDto{
     clientId:number;
     profileImage:string;
     clientFullname:string;
-    isReadLAstMessage:boolean;
+    isLastMessageRead:boolean;
+    lastMessageSenderType?: string | null;
 }

@@ -13,5 +13,6 @@ namespace Bloomia.Application.Modules.DirectChat.Query.List.ListChatsForTherapis
         public string ProfileImage { get; set; }
         public string ClientFullname { get; set; }
         public bool IsLastMessageRead { get; set; }
+        public string? LastMessageSenderType { get; set; }
     }
 }

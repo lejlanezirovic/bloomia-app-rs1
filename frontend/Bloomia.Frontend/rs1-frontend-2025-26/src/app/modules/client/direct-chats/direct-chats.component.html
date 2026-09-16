@@ -31,10 +31,10 @@
         *ngFor="let chat of listChats"
         type="button"
         class="chat-line"
-        [class.unread-chat]="!chat.isReadLAstMessage"
+        [class.unread-chat]="isUnread(chat)"
         (click)="redirectToChatDetails(chat)"
       >
-        <div class="therapist-avatar" [class.avatar-unread]="!chat.isReadLAstMessage">
+        <div class="therapist-avatar" [class.avatar-unread]="isUnread(chat)">
           <img
             *ngIf="chat.profileImage; else initialsAvatar"
             [src]="chat.profileImage"
@@ -48,12 +48,12 @@
         <div class="chat-main">
           <div class="chat-top-row">
             <h2>{{ chat.therapistFullname }}</h2>
-            <span class="chat-time">{{ chat.isReadLAstMessage ? 'Seen' : 'New' }}</span>
+            <span class="chat-time">{{ isUnread(chat) ? 'Seen' : 'New' }}</span>
           </div>
 
           <div class="chat-bottom-row">
-            <p class="chat-preview">{{ getPreviewText(chat.isReadLAstMessage) }}</p>
-            <span *ngIf="!chat.isReadLAstMessage" class="unread-badge">1</span>
+            <p class="chat-preview">{{ getPreviewText(chat.isLastMessageRead) }}</p>
+            <span *ngIf="isUnread(chat)" class="unread-badge">1</span>
           </div>
         </div>
       </button>
