@@ -26,11 +26,12 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 throw new BloomiaNotFoundException("That start time is not found!");
             }
 
-            var localDateTime = availableTime.Date.ToDateTime(availableTime.StartTime);
+            var localDateTime = availableTime.Date.ToDateTime(availableTime.StartTime, DateTimeKind.Unspecified);
             var BiHTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
             var scheduledUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime, BiHTimeZone);
 
-            if(scheduledUtc <= DateTime.UtcNow)
+
+            if (scheduledUtc <= DateTime.UtcNow)
             {
                 throw new BloomiaConflictException("You can not book an appointment in the past!");
             }

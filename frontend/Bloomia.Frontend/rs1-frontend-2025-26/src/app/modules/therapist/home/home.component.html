@@ -1,1 +1,115 @@
-<p>home works!</p>
+<section class="dashboard-page">
+
+  <div class="dashboard-header">
+    <div>
+      <h1>Overview</h1>
+      <p>
+        An overview of your appointments and activity.
+      </p>
+    </div>
+
+    <div class="month">
+      <mat-icon>calendar_month</mat-icon>
+      {{ currentDate | date:'MMMM yyyy' }}
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <ng-container *ngIf="!isLoading && overview">
+
+    <div class="stats-grid">
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <span>Appointments this month</span>
+
+          <strong>
+            {{ overview.appointmentsThisMonth }}
+          </strong>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <span>Completed sessions</span>
+
+          <strong>
+            {{ overview.pastAppointmentsThisMonth }}
+          </strong>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <span>Active clients</span>
+
+          <strong>
+            {{ overview.activeClients }}
+          </strong>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <span>Average rating</span>
+
+          <strong>
+            {{ overview.averageRating | number:'1.1-1' }}
+          </strong>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+    <mat-card class="appointments-card">
+
+      <mat-card-header>
+        <mat-card-title>
+          Upcoming appointments
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <div
+          *ngIf="overview.upcomingAppointments.length === 0"
+          class="empty-state">
+          No upcoming appointments.
+        </div>
+
+        <div
+          *ngFor="let appointment of overview.upcomingAppointments"
+          class="appointment-row">
+
+          <div class="appointment-date">
+            <strong>
+              {{ appointment.scheduledAtUtc | date:'HH:mm' }}
+            </strong>
+
+            <span>
+              {{ appointment.scheduledAtUtc | date:'dd.MM.yyyy' }}
+            </span>
+          </div>
+
+          <div class="appointment-client">
+            <strong>
+              {{ appointment.clientName }}
+            </strong>
+
+            <span>
+                {{ getSessionTypeName(appointment.sessionType) }}
+            </span>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </ng-container>
+
+</section>

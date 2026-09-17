@@ -1,0 +1,161 @@
+$text-color: #4A5759;
+$background-color: #B0C4B1;
+$light-color: #DEDBD2;
+$card-color: #D5E0D5;
+$accent-light: #EEF2EC;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.dashboard-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+  color: $text-color;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 28px;
+
+  h1 {
+    margin: 0 0 8px;
+
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+.month {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 12px 18px;
+
+  background: $accent-light;
+
+  border-radius: 24px;
+
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: $card-color;
+
+  border-radius: 18px;
+
+  box-shadow: none;
+
+  mat-card-content {
+    min-height: 145px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 24px;
+  }
+
+  span {
+    font-size: 15px;
+  }
+
+  strong {
+    font-size: 38px;
+    font-weight: 700;
+  }
+}
+
+.appointments-card {
+  background: $accent-light;
+
+  border-radius: 18px;
+
+  box-shadow: none;
+}
+
+.appointment-row {
+  display: grid;
+
+  grid-template-columns: 130px 1fr;
+
+  gap: 20px;
+
+  padding: 18px 0;
+
+  border-bottom:
+    1px solid rgba(74, 87, 89, 0.12);
+}
+
+.appointment-date {
+  strong,
+  span {
+    display: block;
+  }
+
+  span {
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    opacity: 0.75;
+  }
+}
+
+.appointment-client {
+  strong,
+  span {
+    display: block;
+  }
+
+  span {
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    opacity: 0.75;
+  }
+}
+
+.empty-state {
+  padding: 24px 0;
+
+  opacity: 0.7;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+
+  padding: 60px 0;
+}
