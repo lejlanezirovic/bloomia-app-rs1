@@ -15,3 +15,20 @@ export interface TherapistDashboardOverviewDto {
   averageRating: number;
   upcomingAppointments: TherapistUpcomingAppointmentDto[];
 }
+
+export interface TherapistDashboardReviewItemDto {
+  rating: number;
+  clientName: string;
+  comment?: string | null;
+  createdAtUtc: string;
+}
+
+export interface TherapistDashboardReviewsDto {
+  totalReviews: number;
+  fiveStarReviews: number;
+  fourStarReviews: number;
+  threeStarReviews: number;
+  twoStarReviews: number;
+  oneStarReviews: number;
+  latestReviews: TherapistDashboardReviewItemDto[];
+}

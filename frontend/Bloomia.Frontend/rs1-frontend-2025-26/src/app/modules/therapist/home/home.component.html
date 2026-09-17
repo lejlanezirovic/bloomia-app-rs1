@@ -110,6 +110,103 @@
 
     </mat-card>
 
+    <section class="reviews-section" *ngIf="reviews">
+
+    <div class="section-heading">
+      <div>
+        <h2>Ratings & Reviews</h2>
+        <p>A quick overview of your client feedback</p>
+      </div>
+
+      <span class="total-reviews">
+        {{ reviews.totalReviews }} reviews
+      </span>
+    </div>
+
+    <div class="reviews-grid">
+      <mat-card class="rating-distribution-card">
+        <mat-card-header>
+          <mat-card-title>
+            Rating distribution
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="rating-row">
+            <span>5 stars</span>
+            <strong>{{ reviews.fiveStarReviews }}</strong>
+          </div>
+
+          <div class="rating-row">
+            <span>4 stars</span>
+            <strong>{{ reviews.fourStarReviews }}</strong>
+          </div>
+
+          <div class="rating-row">
+            <span>3 stars</span>
+            <strong>{{ reviews.threeStarReviews }}</strong>
+          </div>
+
+          <div class="rating-row">
+            <span>2 stars</span>
+            <strong>{{ reviews.twoStarReviews }}</strong>
+          </div>
+
+          <div class="rating-row">
+            <span>1 stars</span>
+            <strong>{{ reviews.oneStarReviews }}</strong>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="latest-reviews-card">
+      <mat-card-header>
+        <mat-card-title>
+          Latest reviews
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div *ngIf="reviews.latestReviews.length === 0" class="empty-state"> 
+          No reviews yet.
+        </div>
+
+        <div *ngFor="let review of reviews.latestReviews" class="review-item">
+          <div class="review-header">
+
+            <div>
+              <strong>
+                {{ review.clientName }}
+              </strong>
+
+              <span>
+                {{ review.createdAtUtc | date: 'dd.MM.yyyy' }}
+              </span>
+            </div>
+
+            <div class="review-rating">
+              {{ review.rating }}
+            </div>
+          </div>
+
+          <p *ngIf="review.comment">
+            {{ review.comment }}
+          </p>
+
+          <p *ngIf="!review.comment" class="no-comment">
+            No comment review.
+          </p>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+    
+    </div>
+
+  </section>
+
   </ng-container>
 
 </section>

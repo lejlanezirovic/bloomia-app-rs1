@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { TherapistDashboardOverviewDto } from './therapist-dashboard-api.model'; 
+import { TherapistDashboardOverviewDto, TherapistDashboardReviewsDto } from './therapist-dashboard-api.model'; 
 
 @Injectable({
   providedIn: 'root',
@@ -20,4 +20,10 @@ export class TherapistDashboardApiService {
       `${this.baseUrl}/overview`
     );
   }
+
+  getReviews(): Observable<TherapistDashboardReviewsDto> {
+  return this.http.get<TherapistDashboardReviewsDto>(
+    `${this.baseUrl}/reviews`
+  );
+}
 }

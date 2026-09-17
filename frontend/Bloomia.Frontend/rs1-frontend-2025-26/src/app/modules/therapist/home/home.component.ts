@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TherapistDashboardApiService } from '../../../api-services/therapist-dashboard/therapist-dashboard-api.service';
-import { TherapistDashboardOverviewDto } from '../../../api-services/therapist-dashboard/therapist-dashboard-api.model';
+import { TherapistDashboardOverviewDto, TherapistDashboardReviewsDto } from '../../../api-services/therapist-dashboard/therapist-dashboard-api.model';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +13,27 @@ export class HomeComponent implements OnInit {
   private dashboardApi = inject(TherapistDashboardApiService);
 
   overview?: TherapistDashboardOverviewDto;
+  reviews?: TherapistDashboardReviewsDto;
   isLoading = false;
   currentDate = new Date();
 
   ngOnInit(): void {
     this.loadOverview();
+    this.loadReviews();
+  }
+
+  loadReviews(): void {
+    this.isLoading = true;
+
+    this.dashboardApi.getReviews().subscribe({
+      next: (response) => {
+        this.reviews = response;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    })
   }
 
   loadOverview(): void {
