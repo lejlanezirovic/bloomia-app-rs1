@@ -12,7 +12,6 @@
               type="button"
               class="menu-toggle"
               (click)="toggleMenu()"
-              aria-label="Toggle navigation"
             >
               <mat-icon>
                 {{ menuOpen ? 'close' : 'menu' }}
@@ -22,28 +21,28 @@
           </div>
 
       <div class="hero-image" [class.menu-open]="menuOpen"> 
-        <div class="floating-card card-4" (click)="closeMenu()">      
+        <div class="floating-card" (click)="closeMenu()">      
             <mat-icon>home</mat-icon>
            <span>Home</span> 
         </div>
          
-        <div class="floating-card card-3" (click)="closeMenu()">
+        <div class="floating-card" (click)="closeMenu()">
           <mat-icon>article</mat-icon>
           <span>Blog</span>
         </div>
-        <div class="floating-card card-1" (click)="closeMenu()">
+        <div class="floating-card" (click)="closeMenu()">
           <mat-icon>person</mat-icon>
           <span>O nama</span>
         </div>
-        <div class="floating-card card-2" (click)="closeMenu()">
+        <div class="floating-card" (click)="closeMenu()">
           <mat-icon>call</mat-icon>
           <span>Kontakt</span>
         </div>
-        <div class="floating-card card-5" routerLink="auth/register" (click)="closeMenu()">
+        <div class="floating-card" routerLink="auth/register" (click)="closeMenu()">
             <mat-icon>rocket_launch</mat-icon>
            <span>Sign Up</span> 
         </div>
-        <div class="floating-card card-6" routerLink="/auth/login" (click)="closeMenu()">
+        <div class="floating-card" routerLink="/auth/login" (click)="closeMenu()">
             <mat-icon>login</mat-icon>
            <span>Sign In</span> 
         </div>
