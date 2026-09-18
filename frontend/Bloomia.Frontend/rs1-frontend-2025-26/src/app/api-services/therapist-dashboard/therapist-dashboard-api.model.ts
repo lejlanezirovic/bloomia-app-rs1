@@ -32,3 +32,16 @@ export interface TherapistDashboardReviewsDto {
   oneStarReviews: number;
   latestReviews: TherapistDashboardReviewItemDto[];
 }
+
+export interface TherapistReportListItemDto {
+  id: number;
+  month: number;
+  year: number;
+  fileName: string;
+  generatedAtUtc: string;
+  appointmentsCount: number;
+  completedSessionsCount: number;
+  activeClientsCount: number;
+  averageRating: number;
+  totalReviews: number;
+}

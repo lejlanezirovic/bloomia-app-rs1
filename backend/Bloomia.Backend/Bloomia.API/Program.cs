@@ -21,6 +21,8 @@ public partial class Program
 {
     private static async Task Main(string[] args)
     {
+        QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
         //
         // 0) Bootstrap logger (very early, no full config yet)
         //
@@ -79,6 +81,7 @@ public partial class Program
             builder.Services.AddScoped<IAppointmentReminderService, AppointmentReminderService>();
             builder.Services.AddHostedService<AppointmentReminderBackgroundService>();
             builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+            builder.Services.AddScoped<ITherapistReportPdfService, TherapistReportPdfService>();
             builder.Services.AddExceptionHandler<MarketExceptionHandler>();
             builder.Services.AddProblemDetails();
             builder.Services.AddSignalR();

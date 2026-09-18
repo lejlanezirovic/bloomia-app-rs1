@@ -154,7 +154,7 @@
           </div>
 
           <div class="rating-row">
-            <span>1 stars</span>
+            <span>1 star</span>
             <strong>{{ reviews.oneStarReviews }}</strong>
           </div>
 
@@ -203,6 +203,97 @@
       </mat-card-content>
     </mat-card>
     
+    </div>
+
+  </section>
+
+  <section class="reports-section">
+    <div class="secton-heading">
+      <div>
+        <h2>Monthly Reports</h2>
+        <p>Generate and review monthly summaries of your activity.</p>
+      </div>
+
+      <button mat-flat-button type="button" class="generate-report-button" [disabled]="isGeneratingReport" (click)="generateReport()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        {{ isGeneratingReport ? 'Generating...' : 'Generate report' }}
+      </button>
+    </div>
+
+    <mat-card class="reports-card">
+      <mat-card-header>
+        <mat-card-title>
+          Previously generated reports
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div *ngIf="reports.length === 0" class="empty-state">
+          No reports have been generated yet.
+        </div>
+
+        <div *ngFor="let report of reports" class="report-row">
+          <div class="report-info">
+            <mat-icon>description</mat-icon>
+            <div>
+              <button type="button" class="report-title-button" (click)="openReport(report)">
+                {{ getReportMonthName(report.month) }} {{ report.year }}
+              </button>
+              <span>Generated {{ report.generatedAtUtc | date:'dd.MM.yyyy' }}</span>
+            </div>
+          </div>
+
+          <div class="report-statistics">
+            <span>
+              {{ report.completedSessionsCount }} sessions
+            </span>
+
+            <span>
+              {{ report.activeClientsCount }} clients
+            </span>
+
+            <span>
+              {{ report.averageRating | number:'1.1-1' }} ★
+            </span>
+          </div>
+
+          <div class="report-actions">
+            <button mat-flat-button class="download-report-button" type="button" (click)="downloadReport(report)">
+              <mat-icon>download</mat-icon>
+              Download
+            </button>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="report-viewer-overlay" *ngIf="reportPreviewUrl && selectedReport">
+
+      <div class="report-viewer">
+
+        <div class="report-viewer-header">
+          <h2>
+            {{ getReportMonthName(selectedReport.month) }}
+            {{ selectedReport.year }}
+          </h2>
+
+          <button
+            mat-icon-button
+            type="button"
+            (click)="closeReportPreview()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <iframe
+          [src]="reportPreviewUrl"
+          class="report-preview"
+          title="Monthly report preview">
+        </iframe>
+
+      </div>
+
     </div>
 
   </section>

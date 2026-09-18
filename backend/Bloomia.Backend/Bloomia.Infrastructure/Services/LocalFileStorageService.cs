@@ -115,5 +115,62 @@ namespace Bloomia.Infrastructure.Services
 
             return (relativePath, storedFileName, originalFileName, extension);
         }
+
+        public async Task<(string RelativePath, string StoredFileName)> SaveReportAsync(byte[] content, string fileName, CancellationToken ct)
+        {
+            if (content == null || content.Length == 0)
+                throw new Exception("Report content is empty.");
+
+            var folderPath = Path.Combine(_environment.ContentRootPath, "App_Data", "reports");
+
+            Directory.CreateDirectory(folderPath);
+
+            var storedFileName = $"{Guid.NewGuid()}.pdf";
+            var fullPath = Path.Combine(folderPath, storedFileName);
+
+            await File.WriteAllBytesAsync(fullPath, content, ct);
+
+            var relativePath = $"reports/{storedFileName}";
+
+            return (relativePath, storedFileName);
+        }
+
+        public async Task<byte[]> ReadReportAsync(string relativePath, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath))
+                throw new Exception("Report path is empty.");
+
+            if (!relativePath.StartsWith("reports/", StringComparison.OrdinalIgnoreCase))
+                throw new Exception("Invalid report path.");
+
+            var fileName = Path.GetFileName(relativePath);
+
+            var fullPath = Path.Combine(_environment.ContentRootPath, "App_Data", "reports", fileName);
+
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException("Report file was not found.");
+
+            return await File.ReadAllBytesAsync(fullPath, ct);
+        }
+
+        public void DeleteReportIfExists(string? relativePath)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath))
+                return;
+
+            if (!relativePath.StartsWith("reports/", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            var fileName = Path.GetFileName(relativePath);
+
+            var fullPath = Path.Combine(
+                _environment.ContentRootPath,
+                "App_Data",
+                "reports",
+                fileName);
+
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
+        }
     }
 }

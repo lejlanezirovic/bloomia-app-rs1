@@ -46,6 +46,7 @@ public partial class DatabaseContext : DbContext, IAppDbContext
     public DbSet<AdminEntity> Admins => Set<AdminEntity>();
     public DbSet<RoleEntity> Roles => Set<RoleEntity>();
     public DbSet<ArticleEntity> Articles => Set<ArticleEntity>();
+    public DbSet<TherapistReportEntity> TherapistReports => Set<TherapistReportEntity>();
     public DbSet<NotificationTokenEntity> NotificationTokens => Set<NotificationTokenEntity>();
     public DbSet<DirectChatEntity> DirectChats => Set<DirectChatEntity>();
 
