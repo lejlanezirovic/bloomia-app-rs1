@@ -5,19 +5,23 @@
                 <div class="logo-container">
                     <h1 class="brand-name">Bloomia</h1>
                 </div>
+
+                <button type="button" class="menu-toggle" (click)="toggleMenu()">
+                    <mat-icon>{{ menuOpen ? 'close' : 'menu' }}</mat-icon>
+                </button>
             </div>
 
-        <div class="hero-image"> 
-            <div class="floating-card home-card" routerLink="/therapist/home" routerLinkActive="active">      
+        <div class="hero-image" [class.menu-open]="menuOpen"> 
+            <div class="floating-card home-card" routerLink="/therapist/home" routerLinkActive="active" (click)="closeMenu()">      
                 <mat-icon>home</mat-icon>
                 <span>Home</span> 
             </div>
-             <div class="floating-card home-card" routerLink="/therapist/direct-chats" routerLinkActive="active">      
+             <div class="floating-card home-card" routerLink="/therapist/direct-chats" routerLinkActive="active" (click)="closeMenu()">      
                 <mat-icon>message</mat-icon>
                 <span>Chats</span> 
             </div>
 
-            <div class="floating-card clients-card" routerLink="/therapist/my-clients" routerLinkActive="active">      
+            <div class="floating-card clients-card" routerLink="/therapist/my-clients" routerLinkActive="active" (click)="closeMenu()">      
                 <mat-icon>supervisor_account</mat-icon>
                 <span>My Clients</span> 
             </div>
@@ -29,7 +33,7 @@
             </div>
 
             <mat-menu #userMenu="matMenu" class="profile-menu">
-                <button mat-menu-item routerLink="/therapist/profile">
+                <button mat-menu-item routerLink="/therapist/profile" (click)="closeMenu()">
                     <mat-icon>person</mat-icon>
                     <span>View Profile</span>
                 </button>
