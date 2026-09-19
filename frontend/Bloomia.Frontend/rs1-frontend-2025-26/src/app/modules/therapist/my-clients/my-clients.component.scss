@@ -248,21 +248,29 @@ $accent-light: #EEF2EC;
   }
 
   .search-field {
-  width: 420px;
-
-  --mdc-outlined-text-field-outline-color: #4A5759;
-  --mdc-outlined-text-field-hover-outline-color: #4A5759;
-  --mdc-outlined-text-field-focus-outline-color: #4A5759;
-
-  --mdc-outlined-text-field-label-text-color: #4A5759;
-  --mdc-outlined-text-field-focus-label-text-color: #4A5759;
-
-  --mdc-outlined-text-field-input-text-color: #4A5759;
-
-  mat-icon {
-    color: #4A5759;
+    width: 100%;
   }
-}
+
+  .search-button,
+  .clear-button {
+    width: 100%;
+  }
+
+  .client-card {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .client-main {
+    gap: 16px;
+  }
+
+  .avatar,
+  .avatar-placeholder {
+    width: 70px;
+    height: 70px;
+  }
+
 
   .client-card {
     align-items: flex-start;

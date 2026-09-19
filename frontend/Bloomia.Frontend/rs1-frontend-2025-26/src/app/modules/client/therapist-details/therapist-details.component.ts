@@ -75,6 +75,11 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     comment: ['']
   });
 
+  bookingForm = this.fb.group({
+    therapistAvailabilityId: [null as number | null, Validators.required],
+    sessionType: [null as SessionType | null, Validators.required]
+  });
+
   ngOnInit(): void {
 
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -146,9 +151,6 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     return new Date(year, month - 1, day);
   }
 
-  get canBookAppointment(): boolean {
-    return !!this.selectedSlot && this.selectedSessionType !== null && !this.isBooking;
-  }
 
   get fullName(): string {
     if(!this.therapist) return '';
@@ -409,11 +411,18 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
       return;
 
     this.selectedSlot = slot;
-    this.selectedSessionType = null;
+
+    this.bookingForm.patchValue({
+      therapistAvailabilityId: slot.therapistAvailabilityId,
+      sessionType: null
+    });
+
   }
 
   selectSessionType(type: SessionType): void {
-    this.selectedSessionType = type;
+    this.bookingForm.patchValue({
+      sessionType: type
+    });
   }
 
   getSessionTypeLabel(type: SessionType): string {
@@ -434,28 +443,22 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   }
 
   bookAppointment(): void {
-    if(!this.selectedSlot) {
-      this.toasterService.error('Please select a time slot.');
-      return;
-    }
-
-    if(this.selectedSessionType === null) {
+    if (this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched();
       this.toasterService.error('Please select a session type.');
       return;
     }
 
-    const sessionType = this.selectedSessionType;
-    const therapistAvailabilityId = this.selectedSlot.therapistAvailabilityId;
+    const formValue = this.bookingForm.getRawValue();
 
     this.isBooking = true;
 
-    this.appointmentsApiService.createAppointment(therapistAvailabilityId, sessionType)
+    this.appointmentsApiService.createAppointment(formValue.therapistAvailabilityId!, formValue.sessionType!)
     .subscribe({
       next: (response) => {
         this.toasterService.success(response.note || 'Appointment booked successfully.');
 
-        this.selectedSlot = null;
-        this.selectedSessionType = null;
+        this.clearBookingSelection();
 
         this.loadData();
         this.isBooking = false;
@@ -470,7 +473,7 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
 
   clearBookingSelection(): void {
     this.selectedSlot = null;
-    this.selectedSessionType = null;
+    this.bookingForm.reset();
   }
 
   get therapistDocuments() {

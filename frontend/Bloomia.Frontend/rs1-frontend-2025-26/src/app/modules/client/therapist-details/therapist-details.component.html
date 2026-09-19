@@ -165,13 +165,10 @@
         <section class="section">
           <div class="section-title">Leave a review</div>
 
-          <div *ngIf="canReview; else noEligibleAppointment">
-            <mat-form-field
-              *ngIf="shouldShowAppointmentSelect"
-              appearance="outline"
-              class="full-width">
+          <form *ngIf="canReview" [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+            <mat-form-field *ngIf="shouldShowAppointmentSelect" appearance="outline" class="full-width">
               <mat-label>Choose completed session</mat-label>
-              <mat-select [formControl]="reviewForm.controls.appointmentId">
+              <mat-select formControlName="appointmentId">
                 <mat-option
                   *ngFor="let item of appointmentsForReview"
                   [value]="item.appointmentId">
@@ -181,11 +178,7 @@
             </mat-form-field>
 
             <div class="rating-picker">
-              <button
-                type="button"
-                mat-icon-button
-                *ngFor="let star of [1,2,3,4,5]"
-                (click)="selectRating(star)">
+              <button type="button" mat-icon-button *ngFor="let star of [1,2,3,4,5]" (click)="selectRating(star)">
                 <mat-icon>
                   {{ (reviewForm.value.rating || 0) >= star ? 'star' : 'star_border' }}
                 </mat-icon>
@@ -197,18 +190,14 @@
               <textarea
                 matInput
                 rows="4"
-                [formControl]="reviewForm.controls.comment">
+                formControlName="comment">
               </textarea>
             </mat-form-field>
 
-            <button
-              mat-raised-button
-              class="primary-btn submit-btn"
-              (click)="submitReview()"
-              [disabled]="isSubmitting">
+            <button mat-raised-button class="primary-btn submit-btn" [disabled]="reviewForm.invalid || isSubmitting">
               Submit review
             </button>
-          </div>
+          </form>
 
           <section class="section">
             <div class="section-title">Available appointments</div>
@@ -265,7 +254,7 @@
                 </button>
                 </div>
 
-                <div *ngIf="selectedSlot && !selectedSlot.isBooked" class="booking-panel">
+                <form [formGroup]="bookingForm" (ngSubmit)="bookAppointment()" *ngIf="selectedSlot && !selectedSlot.isBooked" class="booking-panel">
                   <div class="booking-title">Book selected slot</div>
 
                   <div class="booking-summary">
@@ -283,22 +272,23 @@
                   <div class="booking-subtitle">Choose session type</div>
                   
                   <div class="session-type-options">
-                    <button type="button" class="session-type-btn" [class.active]="selectedSessionType === SessionType.VIDEO_CALL"
+                    <button type="button" class="session-type-btn" [class.active]="bookingForm.value.sessionType === SessionType.VIDEO_CALL"
                     (click)="selectSessionType(SessionType.VIDEO_CALL)">Video call</button>
-                    <button type="button" class="session-type-btn" [class.active]="selectedSessionType === SessionType.CALL"
+                    <button type="button" class="session-type-btn" [class.active]="bookingForm.value.sessionType === SessionType.CALL"
                     (click)="selectSessionType(SessionType.CALL)">Call</button>
-                    <button type="button" class="session-type-btn" [class.active]="selectedSessionType === SessionType.MESSAGE"
+                    <button type="button" class="session-type-btn" [class.active]="bookingForm.value.sessionType === SessionType.MESSAGE"
                     (click)="selectSessionType(SessionType.MESSAGE)">Message</button>
                   </div>
 
                   <div class="booking-actions">
                     <button type="button" class="secondary-action-btn" 
                       (click)="clearBookingSelection()" [disabled]="isBooking">Cancel</button>
-                    <button type="button" class="primary-action-btn" (click)="bookAppointment()" [disabled]="!canBookAppointment">
-                      {{ isBooking ? 'Booking...' : 'Confirm booking' }}</button>
-                    </div>
-
-                </div>
+                    <button type="submit" class="primary-action-btn" [disabled]="bookingForm.invalid || isBooking">
+                      {{ isBooking ? 'Booking...' : 'Confirm booking' }}
+                     </button>
+                    
+                  </div>
+                  </form>
 
                 <p *ngIf="selectedDateKey && selectedDateSlots.length === 0" class="section-text empty-text">
                   No available slots for selected date.

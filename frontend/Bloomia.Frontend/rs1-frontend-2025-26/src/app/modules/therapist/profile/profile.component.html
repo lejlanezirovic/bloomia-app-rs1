@@ -14,6 +14,7 @@
     </mat-card>
 
     <div *ngIf="therapist && !isLoading" class="profile-content">
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfileChanges()">
         <div class="profile-grid">
             <mat-card class="left-card">
                 <div class="image-wrapper" [class.editable]="isEditMode" [class.drag-active]="isEditMode && isDraggingProfileImage"
@@ -35,8 +36,11 @@
 
                         <ng-template #editNameBlock>
                             <div class="name-edit-grid">
-                                <input type="text" class="edit-input compact-input" [(ngModel)]="editFirstname" placeholder="Ime">
-                                <input type="text" class="edit-input compact-input" [(ngModel)]="editLastname" placeholder="Prezime"> 
+                                <input type="text" class="edit-input compact-input" formControlName="firstname" placeholder="Ime">
+                                <mat-error class="validation-error" *ngIf="profileForm.get('firstname')?.touched && profileForm.get('firstname')?.hasError('required')">First name is required</mat-error>
+                                <input type="text" class="edit-input compact-input" formControlName="lastname" placeholder="Prezime"> 
+                                <mat-error class="validation-error" *ngIf="profileForm.get('lastname')?.touched && profileForm.get('lastname')?.hasError('required')">Last name is required</mat-error>
+
                             </div>
                         </ng-template>
                     </div>
@@ -53,8 +57,17 @@
                         </ng-container>
 
                         <ng-template #editEmailBlock>
-                            <input type="email" class="edit-input compact-input" [(ngModel)]="editEmail" placeholder="Email">
+                            <input type="email" class="edit-input compact-input" formControlName="email" placeholder="Email">
                         </ng-template>
+                        <small class="validation-error" *ngIf="profileForm.get('email')?.touched &&
+                                profileForm.get('email')?.hasError('required')">
+                            Email is required.
+                        </small>
+
+                        <small class="validation-error" *ngIf=" profileForm.get('email')?.touched &&
+                            profileForm.get('email')?.hasError('email')">
+                            Enter a valid email address.
+                        </small>
                     </div>
 
                     <div class="info-item">
@@ -64,7 +77,7 @@
                         </ng-container>
 
                         <ng-template #editPhoneBlock>
-                            <input type="text" class="edit-input compact-input" [(ngModel)]="editPhoneNumber" placeholder="Phone number">
+                            <input type="text" class="edit-input compact-input" formControlName="phoneNumber" placeholder="Phone number">
                         </ng-template>
                     </div>
 
@@ -77,16 +90,16 @@
                 </div>
 
                 <div class="left-actions" *ngIf="!isEditMode">
-                    <button mat-raised-button class="primary-btn full-width" (click)="onEditProfile()">
+                    <button mat-raised-button type="button" class="primary-btn full-width" (click)="onEditProfile()">
                         Edit profile
                     </button>
                 </div>
 
                 <div class="upload-actions" *ngIf="isEditMode">
-                    <button mat-raised-button class="primary-btn full-width" (click)="saveProfileChanges()">
+                    <button mat-raised-button class="primary-btn full-width" [disabled]="profileForm.invalid">
                         Save changes
                     </button>
-                    <button mat-stroked-button class="secondary-btn full-width" (click)="cancelEdit()">
+                    <button mat-stroked-button type="button" class="secondary-btn full-width" (click)="cancelEdit()">
                         Cancel
                     </button>
                 </div>
@@ -116,7 +129,7 @@
                     </ng-container>
 
                     <ng-template #editSpecializationBlock>
-                        <input class="edit-input" type="text" [(ngModel)]="editSpecialization" placeholder="Enter specialization">
+                        <input class="edit-input" type="text" formControlName="specialization" placeholder="Enter specialization">
                     </ng-template>
                 </section>
 
@@ -132,7 +145,7 @@
                     </ng-container>
 
                     <ng-template #editDescriptionBlock>
-                        <textarea class="edit-textarea" rows="5" [(ngModel)]="editDescription" placeholder="Enter description"></textarea>
+                        <textarea class="edit-textarea" rows="5" formControlName="description" placeholder="Enter description"></textarea>
                     </ng-template>
                 </section>
 
@@ -209,7 +222,7 @@
 
             <mat-divider></mat-divider>
 
-            <section class="section">
+            <section class="section" *ngIf="!isEditMode">
                 <div class="section-title">My appointments</div>
 
                 <div class="calendar-layout">
@@ -316,6 +329,8 @@
             </section>
             </mat-card>
         </div>
+
+        </form>
     </div>
 
     <div class="document-viewer-backdrop" *ngIf="selectedDocumentUrl" (click)="closeDocumentViewer()">

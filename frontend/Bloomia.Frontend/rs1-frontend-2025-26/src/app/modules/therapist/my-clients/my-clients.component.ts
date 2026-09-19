@@ -3,7 +3,7 @@ import { BaseListPagedComponent } from '../../../core/components/base-classes/ba
 import { ListMyClientsQueryDto, ListMyClientsRequest } from '../../../api-services/therapist-my-clients/my-clients-api.model';
 import { TherapistsApiService } from '../../../api-services/therapists/therapists-api.service';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-clients',
@@ -17,7 +17,6 @@ export class MyClientsComponent extends BaseListPagedComponent<ListMyClientsQuer
   private fb = inject(FormBuilder);
   private router = inject(Router);
 
-  clientId!: number;
 
   form = this.fb.group({
     search: ['']
@@ -50,7 +49,7 @@ export class MyClientsComponent extends BaseListPagedComponent<ListMyClientsQuer
   }
 
   onSearch(): void {
-    this.request.search = this.form.value.search;
+    this.request.search = this.form.value.search ?? null;
     this.request.paging.page = 1;
     this.loadPagedData();
   }

@@ -49,6 +49,17 @@ export class ProfileComponent extends BaseComponent implements OnInit {
     startTime: ['', Validators.required]
   });
 
+  profileForm = this.fb.group({
+    firstname: ['', Validators.required],
+    lastname: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    phoneNumber: [''],
+    specialization: ['', Validators.required],
+    description: [''],
+    therapyTypeIds: this.fb.control<number[]>([])
+  });
+
+
   timeOptions: string[] = [];
   therapist: GetTherapistByIdQueryDto | null = null;
   workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
@@ -490,13 +501,16 @@ selectDay(day: CalendarDayVm): void {
       return;
 
     this.isEditMode = true;
-    this.editSpecialization = this.therapist.specialization || '';
-    this.editDescription = this.therapist.description || '';
-    this.selectedTherapyTypeIds = this.therapist.therapyTypes?.map(x => x.id) || [];
-    this.editFirstname = this.therapist.firstname || '';
-    this.editLastname = this.therapist.lastname || '';
-    this.editEmail = this.therapist.email || '';
-    this.editPhoneNumber = this.therapist.phoneNumber || '';
+    
+    this.profileForm.patchValue({
+      firstname: this.therapist.firstname || '',
+      lastname: this.therapist.lastname || '',
+      email: this.therapist.email || '',
+      phoneNumber: this.therapist.phoneNumber || '',
+      specialization: this.therapist.specialization || '',
+      description: this.therapist.description || '',
+      therapyTypeIds: this.therapist.therapyTypes?.map(x => x.id) || []
+    })
 
     this.selectedProfileImageFile = null;
     this.selectedDocumentFile = null;
@@ -505,13 +519,9 @@ selectDay(day: CalendarDayVm): void {
 
   cancelEdit(): void {
     this.isEditMode = false;
-    this.editSpecialization = '';
-    this.editDescription = '';
-    this.editFirstname = '';
-    this.editLastname = '';
-    this.editEmail = '';
-    this.editPhoneNumber = '';
-    this.selectedTherapyTypeIds = [];
+
+    this.profileForm.reset();
+
     this.selectedProfileImageFile = null;
     this.selectedDocumentFile = null;
     this.profileImagePreviewUrl = null;
@@ -524,15 +534,23 @@ selectDay(day: CalendarDayVm): void {
   }
 
   toggleTherapyType(therapyTypeId: number): void {
-    if(this.selectedTherapyTypeIds.includes(therapyTypeId)) {
-      this.selectedTherapyTypeIds = this.selectedTherapyTypeIds.filter(x => x !== therapyTypeId);
+
+    const selectedIds = this.profileForm.controls.therapyTypeIds.value ?? [];
+
+    if(selectedIds.includes(therapyTypeId)) {
+      this.profileForm.controls.therapyTypeIds.setValue(selectedIds.filter(id => id !== therapyTypeId));
     } else {
-      this.selectedTherapyTypeIds = [...this.selectedTherapyTypeIds, therapyTypeId];
+      this.profileForm.controls.therapyTypeIds.setValue([
+        ...selectedIds,
+        therapyTypeId
+      ]);
     }
   }
 
   isTherapyTypeSelected(therapyTypeId: number): boolean {
-    return this.selectedTherapyTypeIds.includes(therapyTypeId);
+    return this.profileForm.controls.therapyTypeIds.value?.includes(
+      therapyTypeId
+    ) ?? false;
   }
 
   triggerProfileImageInput(fileInput: HTMLInputElement): void {
@@ -569,16 +587,23 @@ selectDay(day: CalendarDayVm): void {
     if(!this.therapist)
       return;
 
+    if(this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+
     this.startLoading();
 
+    const formValue = this.profileForm.getRawValue();
+
     const payload = {
-      firstname: this.editFirstname,
-      lastname: this.editLastname,
-      email: this.editEmail,
-      phoneNumber: this.editPhoneNumber,
-      specialization: this.editSpecialization,
-      description: this.editDescription,
-      therapyTypeIds: this.selectedTherapyTypeIds
+      firstname: formValue.firstname,
+      lastname: formValue.lastname,
+      email: formValue.email,
+      phoneNumber: formValue.phoneNumber,
+      specialization: formValue.specialization,
+      description: formValue.description,
+      therapyTypeIds: formValue.therapyTypeIds ?? []
     };
 
     this.therapistsApi.update(this.therapist.id, payload).subscribe({
