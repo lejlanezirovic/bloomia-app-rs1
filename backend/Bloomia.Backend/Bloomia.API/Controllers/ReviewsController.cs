@@ -1,4 +1,5 @@
-﻿using Bloomia.Application.Modules.Reviews.Commands.Create;
+﻿using Bloomia.Application.Modules.Appointments.Query.CanReviewTherapist;
+using Bloomia.Application.Modules.Reviews.Commands.Create;
 using Bloomia.Application.Modules.Reviews.Query.GetByTherapistId;
 
 namespace Bloomia.API.Controllers
@@ -25,6 +26,15 @@ namespace Bloomia.API.Controllers
         {
             int id = await sender.Send(command, ct);
             return Ok(new { id });
+        }
+
+        [HttpGet("can-review/{therapistId:int}")]
+        public async Task<bool> CanReview(int therapistId, CancellationToken ct)
+        {
+            return await sender.Send(new CanReviewTherapistQuery
+                {
+                    TherapistId = therapistId
+                }, ct);
         }
     }
 }

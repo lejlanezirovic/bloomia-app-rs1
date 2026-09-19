@@ -18,7 +18,7 @@ namespace Bloomia.Application.Modules.Reviews.Query.GetByTherapistId
                 throw new BloomiaNotFoundException("Therapist not found.");
 
             var query = context.Reviews
-                .Where(x => x.Appointment.TherapistAvailability.TherapistId == request.TherapistId)
+                .Where(x => x.TherapistId == request.TherapistId)
                 .OrderByDescending(x => x.CreatedAtUtc);
 
             var projectedQuery = query
@@ -28,8 +28,8 @@ namespace Bloomia.Application.Modules.Reviews.Query.GetByTherapistId
                     Rating = x.Rating,
                     Comment = x.Comment,
                     CreatedAt = x.CreatedAtUtc,
-                    ClientInitials = x.Appointment.Client.User.Firstname.Substring(0, 1) + ". " +
-                                    x.Appointment.Client.User.Lastname.Substring(0, 1) + "."
+                    ClientInitials = x.Client.User.Firstname.Substring(0, 1) + ". " +
+                                    x.Client.User.Lastname.Substring(0, 1) + "."
                 });
 
             return await PageResult<GetReviewsByTherapistIdQueryDto>.FromQueryableAsync(projectedQuery, request.Paging, ct);

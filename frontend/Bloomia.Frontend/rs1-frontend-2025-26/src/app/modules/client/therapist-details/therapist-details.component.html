@@ -98,7 +98,7 @@
 
           <mat-chip-set *ngIf="therapyTypes.length > 0" class="chips-wrapper">
             <mat-chip *ngFor="let therapyType of therapyTypes">
-              {{ therapyType }}
+              <span>{{ getTherapyTypeLabel(therapyType) }}</span>
             </mat-chip>
           </mat-chip-set>
 
@@ -165,18 +165,8 @@
         <section class="section">
           <div class="section-title">Leave a review</div>
 
-          <form *ngIf="canReview" [formGroup]="reviewForm" (ngSubmit)="submitReview()">
-            <mat-form-field *ngIf="shouldShowAppointmentSelect" appearance="outline" class="full-width">
-              <mat-label>Choose completed session</mat-label>
-              <mat-select formControlName="appointmentId">
-                <mat-option
-                  *ngFor="let item of appointmentsForReview"
-                  [value]="item.appointmentId">
-                  {{ formatAppointment(item.scheduledAtUtc) }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
+          <form *ngIf="canReview; else cannotReview" [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+            
             <div class="rating-picker">
               <button type="button" mat-icon-button *ngFor="let star of [1,2,3,4,5]" (click)="selectRating(star)">
                 <mat-icon>
@@ -198,6 +188,12 @@
               Submit review
             </button>
           </form>
+
+          <ng-template #cannotReview>
+            <p>
+              You can leave a review only after completing an appointment with this therapist.
+            </p>
+          </ng-template>
 
           <section class="section">
             <div class="section-title">Available appointments</div>
@@ -305,11 +301,6 @@
             </p>
           </section>
 
-          <ng-template #noEligibleAppointment>
-            <p class="section-text empty-text">
-              You can leave a review only if you have at least one unreviewed appointment with your therapist.
-            </p>
-          </ng-template>
         </section>
       </mat-card>
     </div>

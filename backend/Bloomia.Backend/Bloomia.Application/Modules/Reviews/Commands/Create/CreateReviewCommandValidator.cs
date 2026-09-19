@@ -10,8 +10,8 @@ namespace Bloomia.Application.Modules.Reviews.Commands.Create
     {
         public CreateReviewCommandValidator()
         {
-            RuleFor(x => x.AppointmentId)
-                .GreaterThan(0).WithMessage("AppointmentId must be greater than 0.");
+            RuleFor(x => x.TherapistId)
+                .GreaterThan(0).WithMessage("TherapistId must be greater than 0.");
 
             RuleFor(x => x.Rating)
                 .InclusiveBetween(1, 5)

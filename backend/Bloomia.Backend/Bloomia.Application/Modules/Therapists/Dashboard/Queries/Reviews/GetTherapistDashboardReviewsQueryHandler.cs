@@ -25,7 +25,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Queries.Reviews
                     "Therapist was not found.");
 
             var reviewsQuery = ctx.Reviews
-                .AsNoTracking().Where(x => x.Appointment.TherapistAvailability.TherapistId == therapistId.Value);
+                .AsNoTracking().Where(x => x.TherapistId == therapistId.Value);
 
             var totalReviews = await reviewsQuery.CountAsync(ct);
             var fiveStarReviews = await reviewsQuery.CountAsync(x => x.Rating == 5, ct);
@@ -40,7 +40,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Queries.Reviews
                 {
                     Id = x.Id,
                     Rating = x.Rating,
-                    ClientName = x.Appointment.Client.User.Firstname + " " + x.Appointment.Client.User.Lastname,
+                    ClientName = x.Client.User.Firstname + " " + x.Client.User.Lastname,
                     Comment = x.Comment,
                     CreatedAtUtc = x.CreatedAtUtc,
                 })

@@ -44,7 +44,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
                 .Distinct().CountAsync(ct);
 
             var reviewsQuery = ctx.Reviews.AsNoTracking()
-                .Where(x => x.Appointment.TherapistAvailability.TherapistId == therapist.Id &&
+                .Where(x => x.TherapistId == therapist.Id &&
                             x.CreatedAtUtc >= monthStart && x.CreatedAtUtc < nextMonth);
 
             var totalReviews = await reviewsQuery.CountAsync(ct);

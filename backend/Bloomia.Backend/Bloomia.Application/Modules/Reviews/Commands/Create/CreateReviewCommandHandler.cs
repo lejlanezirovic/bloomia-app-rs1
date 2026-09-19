@@ -19,30 +19,35 @@ namespace Bloomia.Application.Modules.Reviews.Commands.Create
             if(!currentUser.IsClient)
                 throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Only clients can leave reviews.");
 
-            var appointment = await context.Appointments
-                .Include(x => x.Client)
-                .Include(x => x.TherapistAvailability)
-                    .ThenInclude(ta => ta.Therapist)
-                .FirstOrDefaultAsync(x => x.Id == request.AppointmentId
-                    && x.Client.UserId == currentUser.UserId, ct);
+            var client = await context.Clients
+                .FirstOrDefaultAsync(x => x.UserId == currentUser.UserId, ct);
 
-            if (appointment == null)
-                throw new BloomiaBusinessRuleException("", "You don't have an appointment with this AppointmentId");
+            if (client == null)
+                throw new BloomiaNotFoundException("Client not found");
 
-            var reviewExists = await context.Reviews
-                .AnyAsync(x => x.AppointmentId == appointment.Id, ct);
+            var therapist = await context.Therapists
+                                    .FirstOrDefaultAsync(
+                                        x => x.Id == request.TherapistId,
+                                        ct);
 
-            if(reviewExists)
-                throw new BloomiaBusinessRuleException("", "You have already reviewed this appointment.");
+            if (therapist == null)
+                throw new BloomiaNotFoundException("Therapist not found.");
 
-            var appointmentEndTimeUtc = appointment.ScheduledAtUtc.AddHours(1);
-           
-            if (appointmentEndTimeUtc >= DateTime.UtcNow)
-                throw new BloomiaBusinessRuleException("", "You can't review appointments which have not finished yet.");
+            var hasCompletedAppointment = await context.Appointments
+                .AnyAsync(x => x.ClientId == client.Id &&
+                                x.TherapistAvailability.TherapistId == request.TherapistId &&
+                                x.ScheduledAtUtc.AddHours(1) <= DateTime.UtcNow, ct);
+
+            if (!hasCompletedAppointment)
+            {
+                throw new BloomiaBusinessRuleException("NO_COMPLETED_APPOINTMENT",
+                    "You can leave a review only after completing an appointment with this therapist.");
+            }
 
             var review = new ReviewEntity
             {
-                AppointmentId = request.AppointmentId,
+                ClientId = client.Id,
+                TherapistId = request.TherapistId,
                 Rating = request.Rating,
                 Comment = request.Comment,
                 CreatedAtUtc = DateTime.UtcNow,
@@ -51,16 +56,8 @@ namespace Bloomia.Application.Modules.Reviews.Commands.Create
             await context.Reviews.AddAsync(review);
             await context.SaveChangesAsync(ct);
 
-            var therapistId = appointment.TherapistAvailability.TherapistId;
-
-            var therapist = await context.Therapists
-                .FirstOrDefaultAsync(x => x.Id == therapistId, ct);
-
-            if (therapist == null)
-                throw new BloomiaNotFoundException("Therapist not found");
-
             var averageRating = await context.Reviews
-                .Where(x => x.Appointment.TherapistAvailability.TherapistId == therapistId)
+                .Where(x => x.TherapistId == therapist.Id)
                 .AverageAsync(x => (float)x.Rating, ct);
 
             therapist.RatingAvg = (float)Math.Round(averageRating, 1);

@@ -2,7 +2,7 @@ import { BasePagedQuery } from "../../core/models/paging/base-paged-query";
 import { PageResult } from "../../core/models/paging/page-result";
 
 export interface CreateReviewCommand {
-  appointmentId: number;
+  therapistId: number;
   rating: number;
   comment?: string | null;
 }

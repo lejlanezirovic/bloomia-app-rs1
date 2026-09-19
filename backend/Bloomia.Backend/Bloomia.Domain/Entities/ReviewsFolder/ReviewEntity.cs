@@ -10,8 +10,10 @@ namespace Bloomia.Domain.Entities.ReviewsFolder
 {
     public class ReviewEntity : BaseEntity
     {
-        public int AppointmentId { get; set; }
-        public AppointmentEntity Appointment { get; set; }
+        public int ClientId { get; set; }
+        public ClientEntity? Client { get; set; }
+        public int TherapistId { get; set; }
+        public TherapistEntity? Therapist { get; set; }
         public int Rating { get; set; } // 1 to 5
         public string? Comment { get; set; }
     }

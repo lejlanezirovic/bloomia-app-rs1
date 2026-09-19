@@ -10,7 +10,7 @@ import {
   CreateReviewCommand,
   GetReviewsByTherapistIdQueryDto
 } from '../../../api-services/reviews/reviews-api.models';
-import { AppointmentsForReviewDto, SessionType } from '../../../api-services/appointments/appointments-api.models';
+import { SessionType } from '../../../api-services/appointments/appointments-api.models';
 import { ToasterService } from '../../../core/services/toaster.service';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
 import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
@@ -49,12 +49,13 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
 
   therapist: GetTherapistByIdQueryDto | null = null;
   reviews: GetReviewsByTherapistIdQueryDto[] = [];
-  appointmentsForReview: AppointmentsForReviewDto[] = [];
+  canReview = false;
 
   workingTimes: ListMyWorkingDatesAndTimesResponse | null = null;
   currentMonth = new Date();
   selectedDateKey: string | null = null;
   selectedSlot: WorkingTimeSlotsDto | null = null;
+
 
   therapistId = 0;
   isSubmitting = false;
@@ -65,12 +66,10 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   selectedDocumentName: string | null = null;
 
 
-  selectedSessionType: SessionType | null = null;
   isBooking = false;
   readonly SessionType = SessionType;
 
   reviewForm = this.fb.group({
-    appointmentId: [null as number | null],
     rating: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
     comment: ['']
   });
@@ -106,21 +105,16 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     forkJoin({
       therapist: this.therapistsApiService.getById(this.therapistId),
       reviewsResponse: this.reviewsApiService.getByTherapistId(this.therapistId, { page: 1, pageSize: 5 }),
-      appointmentsForReview: this.appointmentsApiService.getAppointmentsForReview(this.therapistId),
+      canReview: this.reviewsApiService.canReview(this.therapistId),
       workingTimes: this.therapistAvailabilityApiService.getWorkingDatesAndTimesForClient(this.therapistId)
     }).subscribe({
-      next: ({ therapist, reviewsResponse, appointmentsForReview, workingTimes }) => {
+      next: ({ therapist, canReview, reviewsResponse, workingTimes }) => {
         this.therapist = therapist;
         this.reviews = reviewsResponse.items;
         this.reviewsTotalCount = reviewsResponse.totalItems;
-        this.appointmentsForReview = appointmentsForReview;
         this.workingTimes = workingTimes;
+        this.canReview = canReview;
         
-        if(this.appointmentsForReview.length === 1) {
-          this.reviewForm.patchValue({
-            appointmentId: this.appointmentsForReview[0].appointmentId
-          });
-        }
 
         const stillExists = this.selectedDateKey ? this.workingTimes.workingDates?.some(x => x.date === this.selectedDateKey)
         : false;
@@ -173,38 +167,20 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     return Array(5 - Math.floor(rating)).fill(0);
   }
 
-  get shouldShowAppointmentSelect(): boolean {
-    return this.appointmentsForReview.length > 1;
-  }
-
   selectRating(value: number): void {
     this.reviewForm.patchValue({ rating: value });
   }
 
-  get canReview(): boolean {
-    return this.appointmentsForReview.length > 0;
-  }
 
   submitReview(): void {
-    if(!this.canReview) {
-      this.toasterService.error('You cannot review a therapist you had no appointment with.');
-      return;
-    }
-
-    if(this.appointmentsForReview.length === 1 && !this.reviewForm.value.appointmentId) {
-      this.reviewForm.patchValue({
-        appointmentId: this.appointmentsForReview[0].appointmentId
-      });
-    }
-
-    if(this.reviewForm.invalid || !this.reviewForm.value.appointmentId) {
+    if(this.reviewForm.invalid) {
       this.reviewForm.markAllAsTouched();
       this.toasterService.error('Please choose a rating.');
       return;
     }
 
     const payload: CreateReviewCommand = {
-      appointmentId: this.reviewForm.value.appointmentId!,
+      therapistId: this.therapistId,
       rating: this.reviewForm.value.rating!,
       comment: this.reviewForm.value.comment || null
     };
@@ -214,10 +190,9 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     this.reviewsApiService.create(payload).subscribe({
       next: () => {
         this.toasterService.success('Review submitted successfully.');
-        this.reviewForm.patchValue({
+        this.reviewForm.reset({
           rating: 0,
-          comment: '',
-          appointmentId: null
+          comment: ''
         });
         this.loadData();
         this.isSubmitting = false;
@@ -251,15 +226,6 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  formatAppointment(date: string): string {
-    return new Date(date).toLocaleString('bs-BA', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  }
 
   goBack(): void {
     if(this.returnTo === 'saved') {
@@ -425,18 +391,6 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  getSessionTypeLabel(type: SessionType): string {
-    switch(type) {
-      case SessionType.VIDEO_CALL:
-        return 'Video call';
-      case SessionType.CALL:
-        return 'Call';
-      case SessionType.MESSAGE:
-        return 'Message';
-      default:
-        return '';
-    }
-  }
 
   onBookedSlotClick(slot: WorkingTimeSlotsDto): void {
     console.log('Booked slot clicked:', slot);
@@ -514,5 +468,45 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   closeDocumentViewer(): void {
     this.selectedDocumentUrl = null;
     this.selectedDocumentName = null;
+  }
+
+  getTherapyTypeLabel(name: string): string {
+    switch (name) {
+      case 'COGNITIVE_BEHAVIORAL_THERAPY':
+        return 'Cognitive behavioral therapy';
+
+      case 'PSYCHODYNAMIC_THERAPY':
+        return 'Psychodynamic therapy';
+
+      case 'INTERPERSONAL_PSYCHOTHERAPY':
+        return 'Interpersonal psychotherapy';
+
+      case 'COGNITIVE_PROCESSING_THERAPY':
+        return 'Cognitive processing therapy';
+
+      case 'ANIMAL_ASSISTED_THERAPY':
+        return 'Animal-assisted therapy';
+
+      case 'ART_THERAPY':
+        return 'Art therapy';
+
+      case 'MUSIC_THERAPY':
+        return 'Music therapy';
+
+      case 'GROUP_THERAPY':
+        return 'Group therapy';
+
+      case 'FAMILY_THERAPY':
+        return 'Family therapy';
+
+      case 'BRAIN_STIMULATION_THERAPY':
+        return 'Brain stimulation therapy';
+
+      case 'DIALECTICAL_BEHAVIORAL_THERAPY':
+        return 'Dialectical behavioral therapy';
+
+      default:
+        return name;
+    }
   }
 }

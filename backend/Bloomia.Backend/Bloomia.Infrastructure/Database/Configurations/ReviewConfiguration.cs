@@ -13,12 +13,16 @@ namespace Bloomia.Infrastructure.Database.Configurations
         {
             builder.ToTable("Reviews");
 
-            builder.Property(r => r.Rating)
-                .IsRequired();
+            builder.HasKey(x => x.Id);
 
-            builder.HasOne(r => r.Appointment)
-                .WithOne(a => a.Review)
-                .HasForeignKey<ReviewEntity>(r => r.AppointmentId)
+            builder.HasOne(x => x.Client)
+                    .WithMany()
+                    .HasForeignKey(x => x.ClientId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.Therapist)
+                .WithMany()
+                .HasForeignKey(x => x.TherapistId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

@@ -32,4 +32,8 @@ export class ReviewsApiService {
   create(payload: CreateReviewCommand): Observable<CreateReviewResponse> {
     return this.http.post<CreateReviewResponse>(this.baseUrl, payload);
   }
+
+  canReview(therapistId: number) {
+    return this.http.get<boolean>(`${this.baseUrl}/can-review/${therapistId}`);
+  }
 }
