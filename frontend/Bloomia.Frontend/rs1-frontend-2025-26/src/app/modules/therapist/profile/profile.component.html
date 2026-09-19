@@ -157,7 +157,7 @@
                     <ng-container *ngIf="!isEditMode; else editTherapyTypesBlock">
                         <mat-chip-set *ngIf="therapyTypes.length > 0" class="chips-wrapper">
                             <mat-chip *ngFor="let therapyType of therapyTypes">
-                                {{ therapyType }}
+                                <span>{{ getTherapyTypeLabel(therapyType) }}</span>
                             </mat-chip>
                         </mat-chip-set>
 
@@ -171,7 +171,7 @@
                             <label class="therapy-type-option" *ngFor="let type of allTherapyTypes">
                                 <input type="checkbox" [checked]="isTherapyTypeSelected(type.id)"
                                 (change)="toggleTherapyType(type.id)">
-                                <span>{{ type.name }}</span>
+                                <span>{{ getTherapyTypeLabel(type.name) }}</span>
                             </label>
                         </div>
                     </ng-template>
