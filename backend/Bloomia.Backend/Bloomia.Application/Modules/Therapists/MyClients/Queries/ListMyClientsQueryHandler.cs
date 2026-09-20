@@ -55,7 +55,17 @@ namespace Bloomia.Application.Modules.Therapists.MyClients.Queries
                 })
                 .OrderBy(x => x.FullName);
 
-            return await PageResult<ListMyClientsQueryDto>.FromQueryableAsync(projectedQuery, request.Paging, cancellationToken);
+            var result =  await PageResult<ListMyClientsQueryDto>.FromQueryableAsync(projectedQuery, request.Paging, cancellationToken);
+        
+            foreach(var client in result.Items)
+            {
+                if(client.NextAppointmentAtUtc.HasValue)
+                {
+                    client.NextAppointmentAtUtc = DateTime.SpecifyKind(client.NextAppointmentAtUtc.Value, DateTimeKind.Utc);
+                }
+            }
+
+            return result;
         }
     }
 }
