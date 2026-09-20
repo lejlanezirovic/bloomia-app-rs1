@@ -3,6 +3,7 @@ using Bloomia.Application.Modules.TherapistAvailability.Command.Delete.DeleteTim
 using Bloomia.Application.Modules.Therapists.Commands.DeleteDocument;
 using Bloomia.Application.Modules.Therapists.Commands.Update;
 using Bloomia.Application.Modules.Therapists.Commands.Update.ChangeTherapistPassword;
+using Bloomia.Application.Modules.Therapists.Commands.Update.UpdateTherapistVerification;
 using Bloomia.Application.Modules.Therapists.Commands.UploadDocument;
 using Bloomia.Application.Modules.Therapists.MyClients.Queries;
 using Bloomia.Application.Modules.Therapists.Queries.GetById;
@@ -22,10 +23,6 @@ namespace Bloomia.API.Controllers
         public async Task<PageResult<ListMyClientsQueryDto>> GetMyClients([FromQuery] ListMyClientsQuery query,
             CancellationToken ct)
         {
-            var userClaim = User.FindFirst("id")
-                ?? User.FindFirst(ClaimTypes.NameIdentifier);
-
-            query.UserId = int.Parse(userClaim!.Value);
 
             var result = await sender.Send(query, ct);
 
@@ -94,6 +91,20 @@ namespace Bloomia.API.Controllers
         {
             var user = await sender.Send(new GetTherapistByIdQuery { Id = id }, ct);
             return user; // if NotFoundException -> 404 via middleware
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("{therapistId:int}/verification")]
+        public async Task<IActionResult> UpdateVerification(int therapistId, [FromBody] bool isVerified, CancellationToken ct)
+        {
+
+            await sender.Send(new UpdateTherapisVerificationCommand
+            {
+                TherapistId = therapistId,
+                IsVerified = isVerified
+            }, ct);
+
+            return NoContent();
         }
     }
 }

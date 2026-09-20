@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.Therapists.MyClients.Queries
 {
-    public class ListMyClientsQueryHandler(IAppDbContext context) : IRequestHandler<ListMyClientsQuery, PageResult<ListMyClientsQueryDto>>
+    public class ListMyClientsQueryHandler(IAppDbContext context, IAppCurrentUser currentUser) : IRequestHandler<ListMyClientsQuery, PageResult<ListMyClientsQueryDto>>
     {
         public async Task<PageResult<ListMyClientsQueryDto>> Handle(ListMyClientsQuery request, CancellationToken cancellationToken)
         {
+            var userId = currentUser.UserId;
+
+            if (userId == null)
+                throw new BloomiaBusinessRuleException("AUTH", "User is not authenticated.");
+
             var therapist = await context.Therapists
-                .FirstOrDefaultAsync(x => x.UserId == request.UserId, cancellationToken);
+                .FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);
 
             if (therapist == null)
                 throw new BloomiaNotFoundException("Therapist not found.");
