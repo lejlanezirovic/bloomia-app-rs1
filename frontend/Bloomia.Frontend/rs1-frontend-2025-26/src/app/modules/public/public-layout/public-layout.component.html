@@ -1,155 +1,81 @@
-<!-- src/app/pages/landing/landing.component.html -->
-<div class="landing-page">
-  <!-- Hero Section -->
-   <nav class="navbar">
-       <div class="hero-content">
-          <div class="hero-text">
-            <div class="logo-container">
-              <h1 class="brand-name">Bloomia</h1>
-            </div>
+<nav class="navbar">
 
-            <button
-              type="button"
-              class="menu-toggle"
-              (click)="toggleMenu()"
-            >
-              <mat-icon>
-                {{ menuOpen ? 'close' : 'menu' }}
-              </mat-icon>
-            </button>
+  <div class="hero-content">
 
-          </div>
+    <div class="hero-text">
 
-      <div class="hero-image" [class.menu-open]="menuOpen"> 
-        <div class="floating-card" (click)="closeMenu()">      
-            <mat-icon>home</mat-icon>
-           <span>Home</span> 
-        </div>
-         
-        <div class="floating-card" (click)="closeMenu()">
-          <mat-icon>article</mat-icon>
-          <span>Blog</span>
-        </div>
-        <div class="floating-card" (click)="closeMenu()">
-          <mat-icon>person</mat-icon>
-          <span>O nama</span>
-        </div>
-        <div class="floating-card" (click)="closeMenu()">
-          <mat-icon>call</mat-icon>
-          <span>Kontakt</span>
-        </div>
-        <div class="floating-card" routerLink="auth/register" (click)="closeMenu()">
-            <mat-icon>rocket_launch</mat-icon>
-           <span>Sign Up</span> 
-        </div>
-        <div class="floating-card" routerLink="/auth/login" (click)="closeMenu()">
-            <mat-icon>login</mat-icon>
-           <span>Sign In</span> 
-        </div>
-       
-      </div>
-    </div>
-   </nav>
-  <!--<section class="hero-section">
-    <div class="hero-content">
-      <div class="hero-text">
-        <div class="logo-container">
-          <mat-icon class="logo-icon">hand</mat-icon>
-          <h1 class="brand-name">Bloomia</h1>
-        </div>
-
-      </div>
-      <div class="hero-image"> 
-        <div class="floating-card card-4">      
-            <mat-icon>home</mat-icon>
-           <span>Home</span> 
-        </div>
-         
-        <div class="floating-card card-3">
-          <mat-icon>article</mat-icon>
-          <span>Blog</span>
-        </div>
-
-        <div class="floating-card card-5" routerLink="/auth/login">
-            <mat-icon>rocket_launch</mat-icon>
-           <span> Registruj se </span> 
-        </div>
-        <div class="floating-card card-1">
-          <mat-icon>person</mat-icon>
-          <span>O nama</span>
-        </div>
-        <div class="floating-card card-2">
-          <mat-icon>call</mat-icon>
-          <span>Kontakt</span>
-        </div>
-       
-      </div>
-    </div>
-  </section>--> 
-
-  <!-- Features Section -->
-  <section class="features-section">
-    <div class="section-header">
-      <h1 class="title">Bloomia</h1>
-      <h2 class="hero-title">A modern platform for mental health support</h2>
-      <p class="section-subtitle">
-        Confidential. Accessible. On your terms.
-      </p>
-      <p class="section-subtitle">  Take a moment for yourself.</p>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="stats-section">
-
-     <div class="stats-title">
-       <h2 class="s-title">Choose between 100 psychologists</h2>
-        <h2 class="s-subtitle">Schedule your appointment online in one of three ways</h2>
-     </div>
- 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <mat-icon class="stat-icon">laptop</mat-icon>
-        <div class="stat-number">Videocall</div>
-       
+      <div class="logo-container">
+        <h1 class="brand-name">Bloomia</h1>
       </div>
 
-      <div class="stat-card">
-        <mat-icon class="stat-icon">call</mat-icon>
-        <div class="stat-number">Call</div>
-       
-      </div>
+      <button
+        type="button"
+        class="menu-toggle"
+        (click)="toggleMenu()">
 
-      <div class="stat-card">
-        <mat-icon class="stat-icon">message</mat-icon>
-        <div class="stat-number">Message</div>
-      </div>
-    </div>
-  </section>
+        <mat-icon>
+          {{ menuOpen ? 'close' : 'menu' }}
+        </mat-icon>
 
-  <!-- CTA Section -->
-  <section class="cta-section">
-   <div class="selftest-part">
-      <h2 class="cta-title">Access to self-tests and journals in order to have a better insight into your own preferences</h2>
-
-      <div class="cta-stats-grid">
-         <div class="cta-stat-card">
-           <mat-icon class="STJ-icon">article</mat-icon>
-           <div class="stat-desc">Self tests</div>
-          </div>
-          <div class="cta-stat-card">
-            <mat-icon class="STJ-icon">book</mat-icon>
-            <div class="stat-desc">Journals</div>
-          </div>
-      </div>
-     
-    </div>
-    <div class="cta-content">
-      <p>Join hundreds of satisfied users!</p>
-      <button mat-raised-button color="primary" class="cta-large-button" routerLink="/auth/register">
-        <mat-icon>rocket_launch</mat-icon>
-        Sign Up
       </button>
+
     </div>
-  </section>
-</div>
+
+    <div
+      class="hero-image"
+      [class.menu-open]="menuOpen">
+
+      <div
+        class="floating-card"
+        routerLink="/"
+        (click)="closeMenu()">
+
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+
+      </div>
+
+      <div
+        class="floating-card"
+        routerLink="/articles"
+        (click)="closeMenu()">
+
+        <mat-icon>article</mat-icon>
+        <span>Blog</span>
+
+      </div>
+
+      <div class="floating-card" (click)="closeMenu()">
+
+        <mat-icon>person</mat-icon>
+        <span>O nama</span>
+
+      </div>
+
+      <div class="floating-card" (click)="closeMenu()">
+
+        <mat-icon>call</mat-icon>
+        <span>Kontakt</span>
+
+      </div>
+
+      <div class="floating-card" routerLink="/auth/register" (click)="closeMenu()">
+
+        <mat-icon>rocket_launch</mat-icon>
+        <span>Sign Up</span>
+
+      </div>
+
+      <div  class="floating-card"  routerLink="/auth/login" (click)="closeMenu()">
+
+        <mat-icon>login</mat-icon>
+        <span>Sign In</span>
+
+      </div>
+
+    </div>
+  </div>
+
+</nav>
+
+<router-outlet></router-outlet>

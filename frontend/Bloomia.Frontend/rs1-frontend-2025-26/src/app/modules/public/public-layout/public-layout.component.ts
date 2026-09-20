@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-public-layout',
@@ -8,6 +9,7 @@ import { Component } from '@angular/core';
 })
 export class PublicLayoutComponent {
   currentYear: string = "2025";
+  private router = inject(Router);
 
   menuOpen = false;
 
@@ -19,4 +21,8 @@ export class PublicLayoutComponent {
     this.menuOpen = false;
   }
 
+  goToArticles(): void {
+    this.closeMenu();
+    this.router.navigate(['/articles']);
+  }
 }

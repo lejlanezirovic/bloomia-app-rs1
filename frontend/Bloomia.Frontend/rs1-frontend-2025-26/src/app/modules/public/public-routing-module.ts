@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SearchProductsComponent } from './search-products/search-products.component';
+import { ArticlePageComponent } from './articles/articles-page/article-page/article-page.component';
+import { ArticleDetailsComponent } from './articles/article-details/article-details/article-details.component';
+import { LandingComponent } from './landing/landing/landing.component';
 
 const routes: Routes = [
   {
@@ -11,13 +14,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: SearchProductsComponent
+        component: LandingComponent
       },
-      // kasnije može i ovako:
-      // { path: 'about', component: AboutComponent },
-      // { path: 'contact', component: ContactComponent },
-
-      { path: '**', redirectTo: '' }
+      {
+        path: 'articles',
+        component: ArticlePageComponent
+      },
+      {
+        path: 'articles/:id',
+        component: ArticleDetailsComponent
+      }
     ]
   }
 ];

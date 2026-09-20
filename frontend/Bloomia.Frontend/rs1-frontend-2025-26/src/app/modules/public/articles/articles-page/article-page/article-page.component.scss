@@ -1,0 +1,107 @@
+$text-color: #4A5759;
+$background-color: #B0C4B1;
+$light-color: #DEDBD2;
+$card-color: #D5E0D5;
+$accent-light: #EEF2EC;
+
+.blog-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 32px;
+  color: $text-color;
+}
+
+.blog-header {
+  margin-bottom: 32px;
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    font-size: 17px;
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.article-card {
+  background: $accent-light;
+  border: 1px solid $text-color;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  mat-card-content {
+    padding: 26px;
+  }
+
+  h2 {
+    margin: 12px 0;
+    font-size: 23px;
+    color: $text-color;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.6;
+    color: $text-color;
+  }
+}
+
+.article-date {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.article-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    color: $text-color;
+    font-weight: 600;
+  }
+}
+
+.empty-state {
+  padding: 48px 20px;
+  text-align: center;
+  font-size: 17px;
+}
+
+.paginator-wrapper {
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .blog-page {
+    padding: 24px 18px;
+  }
+
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-header h1 {
+    font-size: 30px;
+  }
+}

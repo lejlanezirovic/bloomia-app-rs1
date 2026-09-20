@@ -1,0 +1,42 @@
+<section class="blog-page">
+
+    <div class="blog-header">
+        <h1>Articles</h1>
+        <p>
+            Explore articles about mental health, wellbeing and personal growth.
+        </p>
+
+        <div *ngIf="isLoading" class="loading">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <div *ngIf="!isLoading && items.length > 0" class="articles-grid">
+            <mat-card *ngFor="let article of items" class="article-card" (click)="openArticle(article.id)">
+                <mat-card-content>
+                    <div class="article-date">
+                        {{ article.publishedAt | date:'dd.MM.yyyy' }}
+                    </div>
+
+                    <h2>
+                        {{ article.title }}
+                    </h2>
+
+                    <p>
+                        {{ article.excerpt }}
+                    </p>
+
+                    <div class="article-footer">
+                        <button mat-button type="button" (click)="openArticle(article.id); $event.stopPropagation()">
+                            Read more
+                        </button>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <div *ngIf="!isLoading && items.length === 0" class="empty-state">
+            No articles available yet.
+        </div>
+    </div>
+</section>

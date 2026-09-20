@@ -17,7 +17,7 @@ namespace Bloomia.Application.Modules.Articles.Queries.GetById
                 .AsNoTracking()
                 .Include(x => x.Admin)
                 .ThenInclude(x => x.User)
-                .FirstOrDefaultAsync(x => x.Id == request.Id, ct);
+                .FirstOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted, ct);
 
             if (article == null)
                 throw new BloomiaNotFoundException($"Article with Id {request.Id} not found.");

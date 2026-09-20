@@ -10,10 +10,57 @@
         <h2 class="jrnl-text">Would you try journaling to make your day better?</h2>
         <button class="button" (click)="showJournalDetails()">Journal time!</button>
     </div>
-    
 
-    <div class="blog-container">
-        <h1>Blog timee!</h1>
-        <h2>See what our therapists say about various topics.</h2>
+    <section class="blog-preview">
+
+    <div class="blog-preview-header">
+        <div>
+        <h2>Blog time!</h2>
+        <p>
+            Discover helpful articles about mental health and wellbeing.
+        </p>
+        </div>
+
+        <button type="button" class="view-all-button" [routerLink]="['/articles']"
+                [queryParams]="{ from: 'client' }">
+            View all
+        </button>
     </div>
+
+    <div *ngIf="latestArticles.length > 0" class="blog-cards">
+
+        <mat-card *ngFor="let article of latestArticles" class="blog-card" (click)="openArticle(article.id)">
+
+        <mat-card-content>
+
+            <div class="article-date">
+                {{ article.publishedAt | date:'dd.MM.yyyy' }}
+            </div>
+
+            <h3>
+                {{ article.title }}
+            </h3>
+
+            <p>
+                {{ article.excerpt }}
+            </p>
+
+            <div class="article-actions">
+            <button  type="button" class="read-article-button" (click)="openArticle(article.id); $event.stopPropagation()">
+                Read article
+            </button>
+            </div>
+
+        </mat-card-content>
+
+        </mat-card>
+
+    </div>
+
+    <p *ngIf="latestArticles.length === 0" class="empty-state">
+        No articles available yet.
+    </p>
+
+    </section>
+    
 </div>

@@ -734,38 +734,17 @@ selectDay(day: CalendarDayVm): void {
 
   getTherapyTypeLabel(name: string): string {
     switch (name) {
+      case 'BRAIN_STIMULATION_THERAPY':
+        return 'Brain stimulation therapy';
+
       case 'COGNITIVE_BEHAVIORAL_THERAPY':
         return 'Cognitive behavioral therapy';
-
-      case 'PSYCHODYNAMIC_THERAPY':
-        return 'Psychodynamic therapy';
-
-      case 'INTERPERSONAL_PSYCHOTHERAPY':
-        return 'Interpersonal psychotherapy';
-
-      case 'COGNITIVE_PROCESSING_THERAPY':
-        return 'Cognitive processing therapy';
-
-      case 'ANIMAL_ASSISTED_THERAPY':
-        return 'Animal-assisted therapy';
-
-      case 'ART_THERAPY':
-        return 'Art therapy';
-
-      case 'MUSIC_THERAPY':
-        return 'Music therapy';
 
       case 'GROUP_THERAPY':
         return 'Group therapy';
 
-      case 'FAMILY_THERAPY':
-        return 'Family therapy';
-
-      case 'BRAIN_STIMULATION_THERAPY':
-        return 'Brain stimulation therapy';
-
-      case 'DIALECTICAL_BEHAVIORAL_THERAPY':
-        return 'Dialectical behavioral therapy';
+      case 'PSYCHODYNAMIC_THERAPY':
+        return 'Psychodynamic therapy';
 
       default:
         return name;

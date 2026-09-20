@@ -1,0 +1,32 @@
+<section class="article-details-page">
+
+  <div *ngIf="isLoading" class="loading-state">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="error-state">
+    {{ errorMessage }}
+  </div>
+
+  <article *ngIf="article && !isLoading">
+
+    <button mat-button type="button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to blog
+    </button>
+
+    <div class="article-meta">
+      {{ article.publishedAt | date:'dd.MM.yyyy' }}
+    </div>
+
+    <h1>
+      {{ article.title }}
+    </h1>
+
+    <p class="article-content">
+      {{ article.content }}
+    </p>
+
+  </article>
+
+</section>
