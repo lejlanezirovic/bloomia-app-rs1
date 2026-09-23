@@ -14,6 +14,11 @@ const routes: Routes = [
     component: LogoutComponent
   },
   {
+    path: 'admin',
+    canActivate: [myAuthGuard],
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+  },
+  {
     path: 'client',
     canActivate: [myAuthGuard],
     data: myAuthData({ requireAuth: true }),// bilo ko logiran

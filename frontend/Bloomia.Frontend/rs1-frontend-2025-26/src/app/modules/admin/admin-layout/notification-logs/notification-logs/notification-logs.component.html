@@ -1,0 +1,332 @@
+<div class="container">
+
+  <div class="header-card"> 
+    <div class="header-card-content"> 
+      <div class="title-section"> 
+        <div class="title-icon">
+          <mat-icon>notifications</mat-icon>
+        </div> 
+        <div>
+          <h1>Notification logs</h1> 
+          <p>
+            Monitor appointment notifications and background reminder processes.
+          </p>
+        </div> 
+      </div> 
+    </div> 
+  </div>
+
+
+  <div class="filters-card">
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Search</mat-label>
+
+      <input matInput [(ngModel)]="request.search" (keyup.enter)="onSearchChange(request.search || '')"
+        placeholder="Client, therapist or email">
+
+      <mat-icon matSuffix>
+        search
+      </mat-icon>
+
+    </mat-form-field>
+ 
+    <mat-form-field appearance="outline">
+
+      <mat-label>Status</mat-label>
+
+      <mat-select [(ngModel)]="request.status" (selectionChange)="onStatusChange($event.value)">
+        <mat-option [value]="null">
+          All statuses
+        </mat-option>
+
+        <mat-option *ngFor="let status of statuses" [value]="status.value">
+            {{ status.label }}
+        </mat-option>
+     </mat-select>
+
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Type</mat-label>
+
+      <mat-select [(ngModel)]="request.notificationType" (selectionChange)="onNotificationTypeChange($event.value)">
+
+        <mat-option [value]="null">
+          All types
+        </mat-option>
+
+        <mat-option *ngFor="let type of notificationTypes" [value]="type.value">
+            {{ type.label }}
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+  </div>
+
+
+  <div *ngIf="isLoading" class="loading-container">
+
+    <mat-spinner
+      diameter="48"
+      color="primary">
+    </mat-spinner>
+
+    <p>
+      Loading notification logs...
+    </p>
+
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage" class="error-container">
+
+    <mat-icon>
+      error_outline
+    </mat-icon>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+  </div>
+
+ 
+  <div class="table-card" *ngIf="!isLoading && !errorMessage">
+
+    <table mat-table [dataSource]="items">
+ 
+      <ng-container matColumnDef="client">
+
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              person
+            </mat-icon>
+            Client
+          </div>
+        </th>
+
+        <td mat-cell *matCellDef="let log"> 
+          {{ log.clientName }} 
+        </td>
+
+      </ng-container>
+
+
+      <!-- Therapist -->
+      <ng-container matColumnDef="therapist">
+
+        <th mat-header-cell *matHeaderCellDef> 
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              psychology
+            </mat-icon> 
+            Therapist
+          </div> 
+        </th>
+
+        <td mat-cell *matCellDef="let log"> 
+          {{ log.therapistName }} 
+        </td>
+
+      </ng-container>
+
+
+      <ng-container matColumnDef="recipientEmail">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              email
+            </mat-icon>
+
+            Recipient
+          </div>
+
+        </th>
+
+        <td mat-cell *matCellDef="let log"> 
+          {{ log.recipientEmail || '—' }} 
+        </td>
+
+      </ng-container>
+ 
+      <ng-container matColumnDef="notificationType">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              notifications
+            </mat-icon>
+
+            Type
+          </div>
+
+        </th>
+
+        <td mat-cell *matCellDef="let log"> 
+          {{ getNotificationTypeLabel(log.notificationType) }} 
+        </td>
+
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              info
+            </mat-icon>
+
+            Status
+          </div>
+
+        </th>
+
+        <td mat-cell *matCellDef="let log">
+
+          <span
+            class="status"
+            [class.status-sent]="log.status === 'Sent'"
+            [class.status-pending]="log.status === 'Pending'"
+            [class.status-failed]="log.status === 'Failed'">
+
+            {{ log.status }}
+
+          </span>
+
+        </td>
+
+      </ng-container>
+
+      <ng-container matColumnDef="scheduledAtUtc">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              event
+            </mat-icon> 
+            Appointment
+          </div>
+
+        </th>
+
+        <td mat-cell *matCellDef="let log"> 
+          {{ log.scheduledAtUtc | date:'dd.MM.yyyy HH:mm' }} 
+        </td>
+
+      </ng-container>
+
+
+      <ng-container matColumnDef="sentAtUtc">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              schedule
+            </mat-icon>
+            Sent at
+          </div>
+
+        </th>
+
+        <td mat-cell *matCellDef="let log">
+
+          <ng-container *ngIf="log.sentAtUtc; else notSent">
+
+            {{ log.sentAtUtc | date:'dd.MM.yyyy HH:mm' }}
+
+          </ng-container>
+
+          <ng-template #notSent>
+            —
+          </ng-template>
+
+        </td>
+
+      </ng-container>
+
+      <ng-container matColumnDef="errorMessage">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          <div class="header-cell">
+            <mat-icon class="header-icon">
+              error_outline
+            </mat-icon>
+
+            Error
+          </div>
+
+        </th>
+
+        <td mat-cell *matCellDef="let log">
+
+          <span
+            *ngIf="log.errorMessage; else noError"
+            class="error-message"> 
+            {{ log.errorMessage }} 
+          </span>
+
+          <ng-template #noError>
+            —
+          </ng-template>
+
+        </td>
+
+      </ng-container>
+
+      <tr 
+        mat-header-row *matHeaderRowDef="displayedColumns">
+      </tr>
+
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="data-row">
+      </tr>
+
+      <tr
+        class="mat-row no-data-row"
+        *matNoDataRow>
+
+        <td
+          class="mat-cell" [attr.colspan]="displayedColumns.length">
+
+          <div class="no-data-content">
+
+            <mat-icon>
+              inbox
+            </mat-icon>
+
+            <p>
+              No notification logs found.
+            </p>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+
+    <div class="paginator-wrapper">
+      <app-fit-paginator-bar [vm]="this"> </app-fit-paginator-bar>
+    </div>
+
+  </div>
+
+</div>

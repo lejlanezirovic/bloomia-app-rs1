@@ -6,12 +6,12 @@ namespace Bloomia.API.Controllers
     [ApiController]
     public class AppointmentNotificationLogsController(ISender sender) : ControllerBase
     {
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
-        public async Task<ActionResult<List<ListAppointmentNotificationLogsQueryDto>>> List(CancellationToken ct)
+        public async Task<PageResult<ListAppointmentNotificationLogsQueryDto>> List([FromQuery] ListAppointmentNotificationLogsQuery query, CancellationToken ct)
         {
-            var result = await sender.Send(new ListAppointmentNotificationLogsQuery(), ct);
-            return Ok(result);
+            var result = await sender.Send(query, ct);
+            return result;
         }
     }
 }
