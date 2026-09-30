@@ -14,6 +14,7 @@ namespace Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest
         public List<SelfTestAnswersCommandDto> SelfTestAnswers { get; set; }=new List<SelfTestAnswersCommandDto>();
         public double TestAverage {  get; set; }
         public string ResultDescription { get; set; }
+        public string? ClientNote { get; set; }
     }
     public class ClientInformationDto
     {

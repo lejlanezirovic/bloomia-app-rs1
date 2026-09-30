@@ -16,13 +16,13 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Add
             var client=await context.Clients.Include(x=>x.User).Where(x=>x.UserId==request.UserId).FirstOrDefaultAsync(cancellationToken);
             if(client==null)
             {
-                throw new BloomiaNotFoundException("Klijent nije pronadjen!");
+                throw new BloomiaNotFoundException("Client not found!");
             }
             var therapist=await context.Therapists.Include(x=>x.User).Include(x=>x.MyTherapyTypesList).ThenInclude(x=>x.TherapyType)
                             .Where(x=>x.Id==request.TherapistId).FirstOrDefaultAsync(cancellationToken);
             if(therapist==null)
             {
-                throw new BloomiaNotFoundException("Terapeut nije pronadjen!");
+                throw new BloomiaNotFoundException("Therapist not found!");
             }
            
             var saved =await context.SavedTherapists.Include(x => x.Client).Include(x => x.Therapist)
@@ -30,7 +30,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Add
 
             if(saved != null)
             {
-                throw new BloomiaConflictException("Terapeut je vec sacuvan!");
+                throw new BloomiaConflictException("Therapist is already saved!");
             }
             var newSavedTherapist = new SavedTherapistsEntity
             {

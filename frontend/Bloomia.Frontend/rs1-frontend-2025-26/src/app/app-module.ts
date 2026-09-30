@@ -1,7 +1,9 @@
-import { NgModule, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { LOCALE_ID, NgModule, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimations} from '@angular/platform-browser/animations';
 import {HttpClient, provideHttpClient, withInterceptors} from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeBs from '@angular/common/locales/bs';
 
 import { AppRoutingModule } from './app-routing-module';
 import { AppComponent } from './app.component';
@@ -12,6 +14,11 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {CustomTranslateLoader} from './core/services/custom-translate-loader';
 import {materialModules} from './modules/shared/material-modules';
 import {SharedModule} from './modules/shared/shared-module';
+
+// Central regional policy for the whole app: all Angular date/number/currency
+// pipes (date:'shortTime', date:'short', number:'1.1-1', ...) format consistently
+// as bs-BA instead of silently falling back to Angular's built-in en-US default.
+registerLocaleData(localeBs, 'bs-BA');
 
 @NgModule({
   declarations: [
@@ -31,6 +38,7 @@ import {SharedModule} from './modules/shared/shared-module';
     materialModules,
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'bs-BA' },
     provideAnimations(),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection(),

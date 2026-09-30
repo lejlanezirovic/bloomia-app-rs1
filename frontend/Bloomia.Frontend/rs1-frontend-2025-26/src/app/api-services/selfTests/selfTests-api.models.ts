@@ -1,3 +1,5 @@
+import { BasePagedQuery } from "../../core/models/paging/base-paged-query";
+import { PageResult } from "../../core/models/paging/page-result";
 
 export interface SubmitSelfTestCommandDto{
     selfTestId:number;
@@ -5,6 +7,7 @@ export interface SubmitSelfTestCommandDto{
     selfTestAnswers:SelfTestAnswersCommandDto[];
     testAverage:number;
     resultDescription:string;
+    clientNote?:string;
 }
 export interface SelfTestAnswersCommandDto{
     questionId:number;
@@ -16,6 +19,7 @@ export interface SubmitSelfTestCommand{
     testId:number;
     testName?:string;
     testAnswers:SelfTestAnswersCommandDto[];
+    clientNote?:string|null;
 }
 
 export interface  ListAllSelfTestsQueryDto{
@@ -39,4 +43,45 @@ export interface GetSelfTestByIdQueryDto{
 export interface GetSelfTestByIdQueryQuestionsDto{
     questionId:number;
     question:string;
+}
+
+export class ListMySelfTestResultsQuery extends BasePagedQuery {
+  testName?: string | null = null;
+  completedFrom?: string | null = null;
+  completedTo?: string | null = null;
+  minAverage?: number | null = null;
+  maxAverage?: number | null = null;
+  sortByDateDesc?: boolean = true;
+}
+
+export interface ListMySelfTestResultDto {
+  resultId: number;
+  selfTestId: number;
+  selfTestName: string;
+  completedAt: string;
+  averageScore: number;
+  description?: string;
+  clientNote?: string;
+}
+
+export type ListMySelfTestResultsResponse = PageResult<ListMySelfTestResultDto>;
+
+export interface GetMySelfTestResultByIdDto {
+  resultId: number;
+  selfTestId: number;
+  selfTestName: string;
+  completedAt: string;
+  averageScore: number;
+  description?: string;
+  clientNote?: string;
+  answers: SelfTestAnswersCommandDto[];
+}
+
+export interface UpdateSelfTestResultNoteCommand {
+  clientNote: string;
+}
+
+export interface UpdateSelfTestResultNoteCommandDto {
+  resultId: number;
+  clientNote: string;
 }

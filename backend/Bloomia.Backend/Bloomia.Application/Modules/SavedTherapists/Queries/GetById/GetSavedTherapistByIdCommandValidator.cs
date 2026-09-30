@@ -10,8 +10,8 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetById
     {
         public GetSavedTherapistByIdCommandValidator()
         {
-            RuleFor(x=>x.TherapistId).GreaterThan(0).WithMessage("ID terapeuta mora biti veci od 0");
-            RuleFor(x=>x.TherapistId).NotEmpty().WithMessage("ID terapeuta je obavezan");
+            RuleFor(x=>x.TherapistId).GreaterThan(0).WithMessage("Therapist ID must be greater than 0");
+            RuleFor(x=>x.TherapistId).NotEmpty().WithMessage("Therapist ID is required");
         }
     }
 }

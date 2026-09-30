@@ -52,7 +52,7 @@
             <p class="message-text">{{ message.content }}</p>
 
             <div class="message-meta">
-              <span class="message-time">{{ message.sentAt | date:'shortTime' }}</span>
+              <span class="message-time">{{ message.sentAt | timeAgo }}</span>
               <span class="message-read" *ngIf="message.senderType === 'CLIENT'">
                 {{ message.isRead ? 'Seen' : 'Sent' }}
               </span>

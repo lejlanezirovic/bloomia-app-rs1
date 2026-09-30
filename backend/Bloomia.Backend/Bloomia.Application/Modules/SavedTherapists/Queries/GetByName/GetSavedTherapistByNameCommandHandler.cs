@@ -18,7 +18,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetByName
 
             if (client == null)
             {
-                throw new BloomiaNotFoundException("Klijent nije pronadjen.");
+                throw new BloomiaNotFoundException("Client not found.");
             }
 
             if (!string.IsNullOrWhiteSpace(filter)) {
@@ -45,7 +45,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetByName
 
                 if (!savedTherapist.Any())
                 {
-                    throw new BloomiaNotFoundException("Nije pronadjen terapeut sa tim imenom u vasoj listi sacuvanih");
+                    throw new BloomiaNotFoundException("No therapist with that name was found in your list of saved therapists");
                 }
                 return savedTherapist;
             }

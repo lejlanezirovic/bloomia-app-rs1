@@ -4,88 +4,257 @@ $light-color: #DEDBD2;
 
 $self-bg: #f7f7f5;
 $card-bg: #ffffff;
-$text-color: #4A5759;
 $accent: #B0C4B1;
-.self-tests-page {
-  max-width: 900px;
-  margin: 60px auto;
-  padding: 0 20px;
-  height: auto;
-}
-.self-tests-space{
-    display:grid;
-   grid-template-columns: repeat(3, 1fr);
-   position: static;
-   gap:60px;
+$accent-soft: #b8cfc1;
+$card-border: #e2e8e2;
+
+:host {
+  display: block;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
 }
 
-.selftest-card{
-    
-    max-width:600px;
-    background-color:#DEDBD2;
-    border-radius: 12px;
-    padding: 56px 60px;
-    margin-top: 20px;
-    
-    margin-left: 30px;
-    color: #4A5759;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-.selftest-title{
-  font-size: 25px;
-  margin-bottom: 28px;
-  padding-bottom: 12px;
-  color: $text-color;
+.error-message {
+  color: #c0392b;
+  margin-top: 12px;
+  font-weight: 500;
   text-align: center;
 }
 
-.selftest-questions {
+.header-saved-therapists {
+  text-align: center;
+  padding-top: 40px;
+
+  .page-title {
+    color: $text-color;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .page-subtitle {
+    color: #6b7c77;
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+.extra-filters {
+  margin-top: 30px;
+  border: 1px solid $accent;
+  border-radius: 12px;
+  padding: 24px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  background: linear-gradient(150deg, #e8e8e5, #e0e3e1);
+  box-shadow: 3px 3px 3px #aebaae;
+
+  input {
+    padding: 10px 16px;
+    min-height: 48px;
+    border-radius: 12px;
+    border: 1px solid #d1d9d5;
+    font-size: 1rem;
+    outline: none;
+    background-color: $self-bg;
+
+    &:focus {
+      border-color: #8fb5a5;
+      box-shadow: 0 0 0 3px rgba(143, 181, 165, 0.25);
+    }
+  }
+
+  .filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    input {
+      margin: 0;
+    }
+  }
+
+  .field-error {
+    color: #b3453f;
+    font-size: 0.8rem;
+    padding-left: 4px;
+  }
+
+  .button {
+    margin: 0;
+    width: auto;
+    height: auto;
+    min-height: 48px;
+    padding: 10px 24px;
+    font-size: 15px;
+  }
+}
+
+.self-tests-space {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.selftest-card {
+  background-color: $light-color;
+  border-radius: 16px;
+  padding: 32px 28px;
+  color: $text-color;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
-.selfTest-answers-card{
-    display: flex;
-    justify-content: space-between;
-    background: $self-bg;
-    padding: 14px 18px;
-    border-radius: 10px;
-    font-size: 14px;
+
+.selftest-title {
+  font-size: 22px;
+  margin: 0;
+  color: $text-color;
+  text-align: center;
 }
-.question-text {
-  max-width: 75%;
+
+.completed-at {
+  text-align: center;
+  color: #6b7c77;
+  font-size: 13px;
+  margin: 0;
 }
-.rating {
-  font-weight: 700;
-  color: #B0C4B1;
-}
+
 .result-box {
-  margin-top: 28px;
-  padding: 20px;
+  padding: 14px;
   border-radius: 12px;
   background: $background-color;
-  color: $text-color;
+  color: #efebdf;
+  text-align: center;
 
-  h3 {
-    margin-bottom: 8px;
+  h2 {
+    margin: 0;
+    font-size: 18px;
   }
 }
-@media (max-width: 768px) {
-    .self-tests-space{
-   // display: list-item;
-   grid-template-columns: 1fr;
+
+.system-insight-box {
+  background: rgba(176, 196, 177, 0.18);
+  border-left: 3px solid $accent-soft;
+  border-radius: 8px;
+  padding: 12px 16px;
+
+  p {
+    margin: 0;
+    font-style: italic;
+    font-size: 14px;
+    color: #5c6b64;
+  }
+}
+
+.description-box {
+  background: $self-bg;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+
+  p {
+    margin: 0 0 10px;
+    color: $text-color;
+  }
+
+  .button {
+    margin: 6px 6px 0 0;
+    min-height: 40px;
+    padding: 8px 18px;
+    font-size: 14px;
+  }
+}
+
+.description-edit-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  textarea {
+    min-height: 90px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #d1d9d5;
+    background-color: $self-bg;
+    font-family: inherit;
+    font-size: 14px;
+    color: $text-color;
+    resize: vertical;
+    outline: none;
+
+    &:focus {
+      border-color: #8fb5a5;
+      box-shadow: 0 0 0 3px rgba(143, 181, 165, 0.25);
     }
-  .self-test-card {
-    padding: 10px;
-     margin-left: 3px;
   }
 
-  .question {
+  .field-error {
+    color: #b3453f;
+    font-size: 0.8rem;
+  }
+
+  .button {
+    margin: 0 6px 0 0;
+    min-height: 40px;
+    padding: 8px 18px;
+    font-size: 14px;
+  }
+}
+
+.button {
+  background-color: $background-color;
+  text-align: center;
+  display: inline-block;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 12px;
+  color: #efebdf;
+  box-shadow: 2px 2px #899389;
+  border: none;
+
+  &:hover {
+    background-color: #9fb7a9;
+  }
+}
+
+.paginator-wrapper {
+  margin-top: 30px;
+  padding: 16px;
+  background: $self-bg;
+  border-radius: 12px;
+  border: 1px solid $card-border;
+}
+
+@media (max-width: 1100px) {
+  .self-tests-space {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 0 16px 40px;
+  }
+
+  .self-tests-space {
+    grid-template-columns: 1fr;
+  }
+
+  .extra-filters {
     flex-direction: column;
-    gap: 6px;
-  }
+    align-items: stretch;
+    padding: 20px 16px;
 
-  .rating {
-    align-self: flex-end;
+    input, .button, .filter-field {
+      width: 100%;
+    }
   }
 }

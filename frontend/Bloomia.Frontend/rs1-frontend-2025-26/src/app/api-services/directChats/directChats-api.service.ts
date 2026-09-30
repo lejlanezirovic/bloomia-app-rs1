@@ -45,4 +45,11 @@ export class DirectChatsApiService{
     getTherapistChatById(directChatId:number):Observable<GetDirectChatByIdTherapistQueryDto>{
         return this.http.get<GetDirectChatByIdTherapistQueryDto>(`${this.baseUrl}/therapist/direct-chat/${directChatId}`);
     }
+
+    markChatAsRead(directChatId: number) {
+    return this.http.put<void>(
+        `${this.baseUrl}/${directChatId}/mark-as-read`,
+        {}
+    );
+    }
 }

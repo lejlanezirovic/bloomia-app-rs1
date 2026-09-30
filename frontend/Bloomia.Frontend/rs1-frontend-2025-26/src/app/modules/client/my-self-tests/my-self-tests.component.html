@@ -1,27 +1,65 @@
-<div class="selfTest-page">
 <div *ngIf="isLoading">Loading your self tests..</div>
-<div *ngIf="errorMessage">{{errorMessage}}</div>
-  <div *ngIf="!isLoading && selfTests.length===0">
-        No self tests found!
-  </div>
+<div *ngIf="errorMessage" class="error-message">{{errorMessage}}</div>
 
-  <div class="self-tests-space">
-  
-  <div *ngFor="let test of selfTests" class="selftest-card">           
-        <h1 class="selftest-title">{{test.selfTestName}}</h1>
-        
-        <div class="selftest-questions">
-            <div class="selfTest-answers-card" *ngFor="let ans of test.selfTestAnswers">
-                 <span class="question-text">{{ans.questionName}}</span>    
-                 <span class="rating">Your rating: {{ans.rating}}/5</span>
-            </div>
-        </div>
-        
-        <div class="result-box">
-             <h2>Test average: {{test.testAverage}}</h2>
-             <p>Result description: {{test.resultDescription}}</p>  
-        </div>
-          
-  </div>
+<div class="header-saved-therapists">
+    <h1 class="page-title">My self test results</h1>
+    <p class="page-subtitle">Here you can review, edit your notes on, or remove your past self test results.</p>
 </div>
- </div>
+
+<form [formGroup]="filterForm" class="extra-filters" (ngSubmit)="applyFilters()">
+    <input type="text" formControlName="testName" maxlength="100" placeholder="Filter by test name">
+    <span class="field-error" *ngIf="filterForm.get('testName')?.invalid && filterForm.get('testName')?.touched">
+        Test name must not be longer than 100 characters
+    </span>
+
+    <input type="date" formControlName="completedFrom">
+    <input type="date" formControlName="completedTo">
+
+    <div class="filter-field">
+        <input type="number" formControlName="minAverage" min="1" max="5" step="0.1" placeholder="Min average">
+        <span class="field-error" *ngIf="filterForm.get('minAverage')?.invalid && filterForm.get('minAverage')?.touched">Must be 1-5</span>
+    </div>
+    <div class="filter-field">
+        <input type="number" formControlName="maxAverage" min="1" max="5" step="0.1" placeholder="Max average">
+        <span class="field-error" *ngIf="filterForm.get('maxAverage')?.invalid && filterForm.get('maxAverage')?.touched">Must be 1-5</span>
+    </div>
+
+    <button type="submit" class="button">Apply filters</button>
+    <button type="button" class="button" (click)="toggleSortByDate()">Sort by date</button>
+</form>
+
+<div *ngIf="!isLoading && selfTestResults.length===0">No self test results found!</div>
+
+<div class="self-tests-space">
+    <div *ngFor="let result of selfTestResults" class="selftest-card">
+        <h1 class="selftest-title">{{result.selfTestName}}</h1>
+        <p class="completed-at">Completed at: {{result.completedAt | date:'short'}}</p>
+
+        <div class="result-box">
+            <h2>Test average: {{result.averageScore}}</h2>
+        </div>
+
+        <div class="description-box" *ngIf="result.description">
+            <p>System insight: {{result.description}}</p>
+        </div>
+
+        <div class="description-box" *ngIf="editingResultId !== result.resultId">
+            <p>Note: {{result.clientNote || 'No note added yet.'}}</p>
+            <button class="button" (click)="startEditingNote(result)">Edit note</button>
+            <button class="button" (click)="openConfirmDialogToDelete(result)">Remove</button>
+        </div>
+
+        <div class="description-edit-box" *ngIf="editingResultId === result.resultId">
+            <textarea [formControl]="editNoteControl" maxlength="500" placeholder="Your note about this result"></textarea>
+            <span class="field-error" *ngIf="editNoteControl.invalid && editNoteControl.touched">
+                Note is required and must not be longer than 500 characters
+            </span>
+            <button class="button" (click)="saveNote(result)">Save</button>
+            <button class="button" (click)="cancelEditingNote()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="paginator-wrapper">
+    <app-fit-paginator-bar [vm]="this"></app-fit-paginator-bar>
+</div>

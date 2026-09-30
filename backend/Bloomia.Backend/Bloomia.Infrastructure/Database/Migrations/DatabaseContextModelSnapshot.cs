@@ -739,6 +739,9 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ClientNote")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CompletedAt")
                         .HasColumnType("datetime2");
 

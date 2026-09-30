@@ -2,6 +2,7 @@
 using Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapist;
 using Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForClient;
 using Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForTherapist;
+using Bloomia.Application.Modules.DirectChat.Command.MarkAsRead;
 using Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForClient;
 using Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForTherapist;
 using Bloomia.Application.Modules.DirectChat.Query.List.ListChatsForClient;
@@ -135,6 +136,25 @@ namespace Bloomia.API.Controllers
             request.UserId = userId;
             var result = await sender.Send(request, ct);
             return result;
+        }
+
+        [HttpPut("{directChatId:int}/mark-as-read")]
+        [Authorize(Roles = "CLIENT,THERAPIST")]
+        public async Task<IActionResult> MarkAsRead(int directChatId, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+
+            var userId = int.Parse(userClaim!.Value);
+
+            var command = new MarkDirectChatAsReadCommand
+            {
+                DirectChatId = directChatId,
+                UserId = userId
+            };
+
+            await sender.Send(command, ct);
+
+            return NoContent();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Bloomia.Application.Modules.DirectChat.Query.NewFolder.GetById
 
             foreach(var i in chat.Messages)
             {
-                if (!i.isRead && i.SenderId != client.Id) 
+                if (!i.isRead && i.SenderId != client.Id && i.SenderType != SenderType.CLIENT) 
                 {
                     i.isRead = true;
                     readMessageIds.Add(i.Id);

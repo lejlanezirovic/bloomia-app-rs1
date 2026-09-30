@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
 })
 export class MyProfileComponent implements OnInit {
 
-  //1. treba mi api servis i current user servis da vidimo koji je klijent
+  //1. need the api service and current user service to see which client this is
   private apiService=inject(ClientsApiService);
-  private currentUserService=inject(CurrentUserService);//sve dostupne metode iz ovog servisa
+  private currentUserService=inject(CurrentUserService);//all the methods available from this service
   private router=inject(Router);
 
-  //2. deklarisati klijenta
-  //error poruku
-  //i isloading
+  //2. declare the client
+  //error message
+  //and isLoading
   client:GetClientProfileByIdQueryDTO | null=null;
   isLoading=true;
   errorMessage:string|null=null;

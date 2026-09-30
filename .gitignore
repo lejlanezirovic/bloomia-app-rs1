@@ -543,3 +543,7 @@ http-client.private.env.json
 
 *-firebase-adminsdk-*.json
 firebase-service-account.json
+
+# Claude outputs
+/Claude outputs/
+

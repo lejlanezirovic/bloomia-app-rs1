@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { SelfTestsApiService } from '../../../../api-services/selfTests/selfTests-api.service';
 import { ActivatedRoute, Router} from '@angular/router';
 import { SubmitSelfTestCommand,SubmitSelfTestCommandDto,SelfTestAnswersCommandDto, GetSelfTestByIdQueryDto } from '../../../../api-services/selfTests/selfTests-api.models';
@@ -14,11 +15,14 @@ export class SubmitSelfTestComponent implements OnInit {
   private apiService=inject(SelfTestsApiService);
   private router=inject(Router);
   private activeRoute=inject(ActivatedRoute);
+  private fb=inject(FormBuilder);
 
   selfTest:GetSelfTestByIdQueryDto|null=null;
-  answersMap:{[questionId:number]:number}={};// mapiranje pitanje- ocjena (q_id) 1: 5 (rating)
+  answersMap:{[questionId:number]:number}={};// mapping question -> rating (q_id) 1: 5 (rating)
 
   selfTestAnswers:SelfTestAnswersCommandDto[]=[];
+
+  clientNoteControl = this.fb.control('', [Validators.maxLength(500)]);
 
   errorMessage:string|null=null;
   isLoading=false;
@@ -48,7 +52,7 @@ export class SubmitSelfTestComponent implements OnInit {
   }
 
   onRatingChange(questionId:number, event:Event){
-      const rating=Number((event.target as HTMLInputElement).value);//ocjena iz inputa
+      const rating=Number((event.target as HTMLInputElement).value);//rating from the input
       if(rating>=1 && rating<=5){
         this.answersMap[questionId]=rating;
       }
@@ -64,6 +68,11 @@ export class SubmitSelfTestComponent implements OnInit {
       return;
      }
 
+     if(this.clientNoteControl.invalid){
+      this.clientNoteControl.markAsTouched();
+      return;
+     }
+
 
     const answers:SelfTestAnswersCommandDto[]=this.selfTest?.selfTestQuestions.map(q=> ({
        questionId: q.questionId,
@@ -71,10 +80,13 @@ export class SubmitSelfTestComponent implements OnInit {
        rating:this.answersMap[q.questionId]??1
     }) );
 
+    const noteValue=(this.clientNoteControl.value ?? '').trim();
+
     const command:SubmitSelfTestCommand={
       testId:this.selfTest.id,
       testName:this.selfTest.selfTestName,
-      testAnswers:answers
+      testAnswers:answers,
+      clientNote:noteValue || null
     };
 
     this.apiService.submitSelfTest(command).subscribe({
@@ -91,9 +103,11 @@ export class SubmitSelfTestComponent implements OnInit {
   isFormValid(): boolean {
     if (!this.selfTest) return false;
 
-    return this.selfTest.selfTestQuestions.every(
+    const allAnswered = this.selfTest.selfTestQuestions.every(
       q => this.answersMap[q.questionId] != null
     );
+
+    return allAnswered && this.clientNoteControl.valid;
   }
 //e sada trebamo uzeti (on change maybe na inputu?) sve ratinge iz inputa 
 //moram kreirari answerDto preuzeti jedan po jedan rating i q_id

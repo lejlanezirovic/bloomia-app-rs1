@@ -136,6 +136,14 @@ export class DirectChatsDetailsComponent implements OnInit {
     });
   }
 
+  markChatAsRead(directChatId: number): void {
+    this.apiService.markChatAsRead(directChatId).subscribe({
+      error: (err) => {
+        console.error('Failed to mark chat as read', err);
+      }
+    });
+  }
+
   getDirectChatDetails(id:number){
     this.isLoading=true;
 
@@ -149,6 +157,8 @@ export class DirectChatsDetailsComponent implements OnInit {
           console.info(res);
 
           await this.chatRealtimeService.joinDirectChatGroup(res.directChatId);
+
+          this.markChatAsRead(id);
       },
       error:(err)=>{
         this.errorMessage="SOMETHING WENT WRONG WITH CHAT";
@@ -185,9 +195,9 @@ export class DirectChatsDetailsComponent implements OnInit {
         }
       });
   }
-  //kad kliknem na poruku zelim da mi se ponude dvije opcije: edit i delete 
-  //ukoliko je edit izabran poruka se vraca u input i moze se editovati klikom na button send ili enter na tipkovnici ona se update-uje i salje ponovo 
-  //ukoliko je odabran delete iskace mi dialog helper da potvrdim da je zelim obrisati i ukoliko je potvrdjeno poruka se brise.
+  //when I click on a message I want to be offered two options: edit and delete
+  //if edit is chosen the message goes back into the input and can be edited; clicking send or pressing enter on the keyboard updates it and sends it again
+  //if delete is chosen the dialog helper pops up so I confirm I want to delete it, and once confirmed the message is deleted.
 
   selectMessage(message: MessageDto) {
     this.selectedMessage = message;

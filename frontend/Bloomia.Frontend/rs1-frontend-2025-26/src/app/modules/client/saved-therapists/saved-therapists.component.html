@@ -27,7 +27,7 @@
 
 <div class="saved-therapists-container" *ngIf="isSearching===false">
     <div class="saved-therapist-card" *ngFor="let st of savedTherapists" (click)="openTherapistProfile(st.therapistId)">
-         <div class="remove-therapist" (click)="removeTherapistFromSavedTherapists(st.therapistId); $event.stopPropagation()">-</div>
+         <div class="remove-therapist" (click)="openConfirmDialogToRemoveSavedTherapist(st.therapistId, st.fullname); $event.stopPropagation()">-</div>
          <div class="therapist-avatar">
             <mat-icon class="therapist-avatar-icon">person</mat-icon>
          </div>
@@ -51,7 +51,7 @@
 
 <div class="saved-therapists-container" *ngIf="isSearching==true">
     <div class="saved-therapist-card" *ngFor="let st of searchedSavedTherapists" (click)="openTherapistProfile(st.therapistId)">
-         <div class="remove-therapist" (click)="removeTherapistFromSavedTherapists(st.therapistId); $event.stopPropagation()">-</div>
+         <div class="remove-therapist" (click)="openConfirmDialogToRemoveSavedTherapist(st.therapistId, st.fullName); $event.stopPropagation()">-</div>
          <div class="therapist-avatar">
             <mat-icon class="therapist-avatar-icon">person</mat-icon>
          </div>

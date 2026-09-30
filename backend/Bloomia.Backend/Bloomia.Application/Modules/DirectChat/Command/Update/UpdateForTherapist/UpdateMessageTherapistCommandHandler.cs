@@ -1,4 +1,5 @@
 ﻿using Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForClient;
+using Bloomia.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForTherapi
             {
                 throw new BloomiaNotFoundException("Message not found");
             }
-            if (message.SenderId != therapist.Id)
+            if (message.SenderId != therapist.Id || message.SenderType != SenderType.THERAPIST)
             {
                 throw new BloomiaConflictException("You can not update this message");
             }

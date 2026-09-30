@@ -73,6 +73,32 @@ export class SavedTherapistsComponent extends BaseListPagedComponent<ListSavedTh
   getEmptyStars(rating:number):number[]{
     return Array(5-Math.floor(rating)).fill(0);
   }
+  openConfirmDialogToRemoveSavedTherapist(therapistId:number, therapistName?:string|null){
+    const dialogRef=this.dialog.open(FitConfirmDialogComponent,{
+      width:'400px',
+      data:{
+        type:DialogType.WARNING,
+        title:'Confirm removing therapist',
+        message:`Are you sure you want to remove ${therapistName ?? 'this therapist'} from your saved therapists list?`,
+        buttons:[{
+          type:DialogButton.CANCEL,
+           color: 'primary'
+        },
+        {
+          type:DialogButton.DELETE,
+           color: 'warn',
+          label: 'Yes, remove'
+        }]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: DialogResult | undefined)=>{
+        if(result?.button === DialogButton.DELETE){
+          this.removeTherapistFromSavedTherapists(therapistId);
+        }
+    })
+  }
+
   removeTherapistFromSavedTherapists(therapistId:number){
 
     this.savedTherapists.forEach(element => {
@@ -160,7 +186,7 @@ export class SavedTherapistsComponent extends BaseListPagedComponent<ListSavedTh
 
     const num=Number(value);
     if(isNaN(num) || num<1 || num>5){
-      this.minRatingError='Ocjena mora biti izmedju 1 i 5';
+      this.minRatingError='Rating must be between 1 and 5';
       this.request.minRating=null;
       return;
     }

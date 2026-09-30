@@ -1,9 +1,13 @@
-﻿using Bloomia.Application.Modules.SelfTests.Command.CreateSelfTest;
+using Bloomia.Application.Modules.SelfTests.Command.CreateSelfTest;
 using Bloomia.Application.Modules.SelfTests.Command.DeleteSelfTest;
 using Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest;
 using Bloomia.Application.Modules.SelfTests.Command.UpdateSelfTest;
 using Bloomia.Application.Modules.SelfTests.Queries.GetById;
 using Bloomia.Application.Modules.SelfTests.Queries.List;
+using Bloomia.Application.Modules.SelfTests.Command.DeleteSelfTestResult;
+using Bloomia.Application.Modules.SelfTests.Command.UpdateSelfTestResult;
+using Bloomia.Application.Modules.SelfTests.Queries.MyResults.GetById;
+using Bloomia.Application.Modules.SelfTests.Queries.MyResults.List;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -77,6 +81,51 @@ namespace Bloomia.API.Controllers
             request.SelfTestId = id;
             var result = await sender.Send(request, ct);
             return result;
+        }
+
+        [Authorize(Roles = "CLIENT")]
+        [HttpGet("my-results")]
+        public async Task<ActionResult<PageResult<ListMySelfTestResultDto>>> GetMySelfTestResults([FromQuery] ListMySelfTestResultsQuery request, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim!.Value);
+            request.UserId = userId;
+            var result = await sender.Send(request, ct);
+            return result;
+        }
+
+        [Authorize(Roles = "CLIENT")]
+        [HttpGet("my-results/{id:int}")]
+        public async Task<ActionResult<GetMySelfTestResultByIdDto>> GetMySelfTestResultById(int id, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim!.Value);
+            var request = new GetMySelfTestResultByIdQuery { ResultId = id, UserId = userId };
+            var result = await sender.Send(request, ct);
+            return result;
+        }
+
+        [Authorize(Roles = "CLIENT")]
+        [HttpPut("my-results/{id:int}/note")]
+        public async Task<ActionResult<UpdateSelfTestResultNoteCommandDto>> UpdateMySelfTestResultNote(int id, [FromBody] UpdateSelfTestResultNoteCommand request, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim!.Value);
+            request.ResultId = id;
+            request.UserId = userId;
+            var result = await sender.Send(request, ct);
+            return result;
+        }
+
+        [Authorize(Roles = "CLIENT")]
+        [HttpDelete("my-results/{id:int}")]
+        public async Task<ActionResult<string>> DeleteMySelfTestResult(int id, CancellationToken ct)
+        {
+            var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim!.Value);
+            var request = new DeleteSelfTestResultCommand { ResultId = id, UserId = userId };
+            var result = await sender.Send(request, ct);
+            return Ok(result);
         }
     }
 }

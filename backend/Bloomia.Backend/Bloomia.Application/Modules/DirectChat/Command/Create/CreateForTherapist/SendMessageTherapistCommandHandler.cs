@@ -65,7 +65,8 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Create.CreateForTherapi
             {
                 DirectChatId = directChat.Id,
                  MessageId = message.Id,
-                Sender = "Therapist",
+                SenderId = therapist.Id,
+                SenderType = "THERAPIST",
                 Content = message.Content,
                 SentAt = message.SentAt,
                 IsRead = message.isRead

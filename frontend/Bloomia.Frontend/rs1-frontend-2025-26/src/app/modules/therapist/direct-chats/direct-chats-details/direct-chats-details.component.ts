@@ -94,8 +94,12 @@ export class DirectChatsDetailsComponent implements OnInit{
     if (!this.directChatDetails) return;
     if (payload.directChatId !== this.directChatDetails.directChatId) return;
 
+    // The client just read this therapist's messages, so mark the THERAPIST's own
+    // sent messages as read (this was previously checking 'CLIENT', copy-pasted from
+    // the client-side component, which meant the therapist's own messages never
+    // showed as read).
     this.directChatDetails.messages = this.directChatDetails.messages.map(m =>
-      m.senderType === 'CLIENT'
+      m.senderType === 'THERAPIST'
         ? { ...m, isRead: true }
         : m
     );
@@ -138,6 +142,15 @@ export class DirectChatsDetailsComponent implements OnInit{
       }
     })
   }
+
+  markChatAsRead(directChatId: number): void {
+    this.apiService.markChatAsRead(directChatId).subscribe({
+      error: (err) => {
+        console.error('Failed to mark chat as read', err);
+      }
+    });
+  }
+
   getDirectChatDetails(id:number){
     this.isLoading=true;
     this.apiService.getTherapistChatById(id).subscribe({
@@ -150,6 +163,8 @@ export class DirectChatsDetailsComponent implements OnInit{
           console.info(res);
            
           await this.chatRealtimeService.joinDirectChatGroup(res.directChatId);
+        
+          this.markChatAsRead(id);
       },
       error:(err)=>{
         this.errorMessage="SOMETHING WENT WRONG WITH CHAT";

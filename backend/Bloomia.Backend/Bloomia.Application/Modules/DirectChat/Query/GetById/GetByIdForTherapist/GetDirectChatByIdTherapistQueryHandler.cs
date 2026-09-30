@@ -1,6 +1,6 @@
 ﻿using Bloomia.Application.Abstractions;
 using Bloomia.Application.Modules.DirectChat.Query.NewFolder.GetById;
-
+using Bloomia.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +32,7 @@ namespace Bloomia.Application.Modules.DirectChat.Query.NewFolder.GetByIdForThera
             var readMessageIds = new List<int>();
             foreach (var i in chat.Messages)
             {
-                if (!i.isRead && i.SenderId != therapist.Id)
+                if (!i.isRead && i.SenderId != therapist.Id && i.SenderType != SenderType.THERAPIST)
                 {
                     i.isRead = true;
                     readMessageIds.Add(i.Id);

@@ -15,13 +15,13 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetById
                     .Where(x => x.User.Id == request.UserId).FirstOrDefaultAsync(cancellationToken);
             if (client == null)
             {
-                throw new BloomiaNotFoundException("Klijent nije pronadjen.");
+                throw new BloomiaNotFoundException("Client not found.");
             }
             var therapist = await context.Therapists.Include(x => x.User).AsNoTracking()
                     .Where(x => x.Id == request.TherapistId).FirstOrDefaultAsync(cancellationToken);
             if (therapist == null)
             {
-                throw new BloomiaNotFoundException("Terapeut nije pronadjen.");
+                throw new BloomiaNotFoundException("Therapist not found.");
             }
 
             var clientSavedTherapist = await context.SavedTherapists.Include(x => x.Therapist).ThenInclude(x => x.User)
@@ -30,7 +30,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetById
            
             if(clientSavedTherapist==null || clientSavedTherapist.IsDeleted)
             {
-                throw new BloomiaNotFoundException("Therapeut se ne nalazi u vasoj listi sacuvanih terapeuta.");
+                throw new BloomiaNotFoundException("Therapist is not in your list of saved therapists.");
             }
 
             var savedTherapistDto = new GetSavedTherapistByIdCommandDto

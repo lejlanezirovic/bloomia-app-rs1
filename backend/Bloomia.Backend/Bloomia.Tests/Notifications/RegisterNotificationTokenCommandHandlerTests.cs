@@ -50,6 +50,11 @@ namespace Bloomia.Tests.Notifications
             var handler = new RegisterNotificationTokenCommandHandler(context);
             await handler.Handle(new RegisterNotificationTokenCommand { Token = "abc123", UserId = 1 }, CancellationToken.None);
 
+            // Clear the change tracker so this query re-reads from the (in-memory) database
+            // instead of returning the already-tracked entity from memory. Without this, the
+            // assertion below would pass even if the handler never called SaveChangesAsync.
+            context.ChangeTracker.Clear();
+
             var all = await context.NotificationTokens.Where(x => x.UserId == 1).ToListAsync();
             Assert.Single(all);
             Assert.True(all[0].IsActive);

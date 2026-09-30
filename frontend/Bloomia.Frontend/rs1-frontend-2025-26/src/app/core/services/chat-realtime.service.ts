@@ -1,7 +1,8 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import * as signalR from '@microsoft/signalr';
 import { Subject, BehaviorSubject } from "rxjs";
 import { environment } from "../../../environments/environment";
+import { AuthStorageService } from "./auth/auth-storage.service";
 
 export interface ReceiveMessageEvent {
   directChatId: number;
@@ -32,6 +33,7 @@ export interface MessagesReadEvent{
   providedIn: 'root'
 })
 export class ChatRealtimeService{
+    private authStorage=inject(AuthStorageService);
     private hubConnection:signalR.HubConnection |null=null;
     private baseUrl=`${environment.apiUrl}/chat`;
 
@@ -56,7 +58,11 @@ export class ChatRealtimeService{
 
         this.connectionStateSubject.next('connecting');
         this.hubConnection=new signalR.HubConnectionBuilder().withUrl(this.baseUrl,{
-            accessTokenFactory:()=>token}).withAutomaticReconnect().build();
+            // Read the currently valid access token from storage on every call, not just
+            // the token captured when startConnection() was first invoked. withAutomaticReconnect()
+            // calls accessTokenFactory again on every reconnect attempt, so this keeps reconnects
+            // in sync with tokens refreshed later by the auth interceptor.
+            accessTokenFactory:()=>this.authStorage.getAccessToken() ?? token}).withAutomaticReconnect().build();
 
        this.registerListeners();
        await this.hubConnection.start();

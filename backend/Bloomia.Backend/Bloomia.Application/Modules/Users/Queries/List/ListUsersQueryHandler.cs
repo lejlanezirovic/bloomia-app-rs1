@@ -12,7 +12,7 @@ namespace Bloomia.Application.Modules.Users.Queries.List
         public async Task<PageResult<ListUsersQueryDto>> Handle(ListUsersQuery request, CancellationToken ct)
         {
             if (currentUser.UserId == null || !currentUser.IsAdmin)
-                throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Samo admin može dobiti listu svih korisnika.");
+                throw new BloomiaBusinessRuleException("USER_NOT_AUTH", "Only an admin can retrieve the list of all users.");
 
             var query = context.Users
                 .AsNoTracking()

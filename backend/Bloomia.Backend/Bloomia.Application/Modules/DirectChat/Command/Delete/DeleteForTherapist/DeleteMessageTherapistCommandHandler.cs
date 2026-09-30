@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Delete.DeleteForTherapi
             {
                 throw new BloomiaNotFoundException("Message not found");
             }
-            if (message.SenderId != therapist.Id)
+            if (message.SenderId != therapist.Id || message.SenderType != SenderType.THERAPIST)
             {
                 throw new BloomiaConflictException("You can not delete this message!");
             }

@@ -14,6 +14,7 @@ namespace Bloomia.Domain.Entities.SelfTestsFolder
         public DateTime CompletedAt { get; set; }=DateTime.UtcNow;
         public double AverageScore { get; set; }
         public string? Description { get; set; }
+        public string? ClientNote { get; set; }
         public List<SelfTestAnswerEntity> TestAnswers { get; set; }= new List<SelfTestAnswerEntity>();
     }
 }

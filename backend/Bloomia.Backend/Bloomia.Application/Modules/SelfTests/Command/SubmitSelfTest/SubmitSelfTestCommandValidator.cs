@@ -29,6 +29,10 @@ namespace Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest
                 x.RuleFor(x => x.Rating).InclusiveBetween(1, 5)
                     .WithMessage("Each rating must be between 1 and 5.");
             });
+
+            RuleFor(x => x.ClientNote)
+                .MaximumLength(500).WithMessage("Note must not be longer than 500 characters")
+                .When(x => x.ClientNote != null);
         }
     }
 }

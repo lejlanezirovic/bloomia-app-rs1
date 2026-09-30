@@ -75,7 +75,7 @@ const routes: Routes = [
           component:DirectChatsComponent
         },
         {
-          path:'direct-chats/:therapistId/details', //id terapeuta se salje
+          path:'direct-chats/:therapistId/details', //therapist id is sent
           component:DirectChatsDetailsComponent
         },
         {

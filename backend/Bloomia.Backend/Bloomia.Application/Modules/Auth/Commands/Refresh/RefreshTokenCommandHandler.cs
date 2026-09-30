@@ -23,19 +23,19 @@ public sealed class RefreshTokenCommandHandler(
         var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
         if (rt is null || rt.ExpiresAtUtc <= nowUtc)
-            throw new BloomiaConflictException("Refresh token je nevažeći ili je istekao.");
+            throw new BloomiaConflictException("Refresh token is invalid or has expired.");
 
         // (optional) Fingerprint check
         if (rt.Fingerprint is not null &&
             request.Fingerprint is not null &&
             rt.Fingerprint != request.Fingerprint)
         {
-            throw new BloomiaConflictException("Neispravan klijentski otisak.");
+            throw new BloomiaConflictException("Invalid client fingerprint.");
         }
 
         var user = rt.User;
         if (user is null || !user.IsEnabled || user.IsDeleted)
-            throw new BloomiaConflictException("Korisnički nalog je nevažeći.");
+            throw new BloomiaConflictException("User account is invalid.");
 
         // 3) Rotation: revoke the old one
         rt.IsRevoked = true;

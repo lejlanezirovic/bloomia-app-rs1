@@ -23,6 +23,13 @@ public partial class Program
     {
         QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
+        // Central regional policy for the whole app (matches the Angular LOCALE_ID on the frontend):
+        // without this, server-side date/number formatting (PDF reports, etc.) silently depends on
+        // whatever culture happens to be the default on the host machine.
+        var appCulture = new System.Globalization.CultureInfo("bs-BA");
+        System.Globalization.CultureInfo.DefaultThreadCurrentCulture = appCulture;
+        System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = appCulture;
+
         //
         // 0) Bootstrap logger (very early, no full config yet)
         //

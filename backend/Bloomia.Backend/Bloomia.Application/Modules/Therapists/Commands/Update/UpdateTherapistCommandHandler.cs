@@ -22,7 +22,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
 
             if (therapist is null)
             {
-                throw new BloomiaNotFoundException($"Terapeut s ID-jem {request.Id} nije pronađen.");
+                throw new BloomiaNotFoundException($"Therapist with ID {request.Id} not found.");
             }
 
             if (!currentUser.IsAdmin && therapist.UserId != currentUser.UserId)
@@ -49,7 +49,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
                 foreach(var item in therapyTypesToRemove)
                     context.TherapistsTherapyTypes.Remove(item);
 
-                //dodavanje nove terapije
+                // adding new therapy type
                 var therapyTypesToAdd = newIds.Except(existingIds).ToList();
 
                 foreach(var id in therapyTypesToAdd)
@@ -62,7 +62,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update
                 }
             }
 
-            //update user entity polja unutar therapista
+            // update user entity fields within the therapist
             var user = therapist.User;
 
             if(!string.IsNullOrWhiteSpace(request.Firstname))

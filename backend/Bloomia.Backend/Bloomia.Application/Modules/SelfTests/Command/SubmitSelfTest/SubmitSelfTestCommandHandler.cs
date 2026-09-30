@@ -26,7 +26,8 @@ namespace Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest
             {
                 Client = client,
                 ClientId = client.Id,
-                CompletedAt = DateTime.UtcNow
+                CompletedAt = DateTime.UtcNow,
+                ClientNote = string.IsNullOrWhiteSpace(request.ClientNote) ? null : request.ClientNote.Trim()
             };
             context.SelfTestResults.Add(selfTestResult);
 
@@ -58,7 +59,8 @@ namespace Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest
                 ClientInformation = clientInformations,
                 SelfTestId=SelfTest.Id,
                 SelfTestName = SelfTest.TestName,
-                TestAverage = selfTestResult.AverageScore
+                TestAverage = selfTestResult.AverageScore,
+                ClientNote = selfTestResult.ClientNote
             };
             foreach(var item in savedResult.TestAnswers)
             {

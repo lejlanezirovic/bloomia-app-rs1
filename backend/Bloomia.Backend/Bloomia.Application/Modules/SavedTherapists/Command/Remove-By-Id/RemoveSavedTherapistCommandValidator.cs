@@ -11,7 +11,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Remove_By_Id
     {
         public RemoveSavedTherapistCommandValidator()
         {
-            RuleFor(x => x.TherapistId).NotEmpty().WithMessage("Id terapeuta je obavezan!");
+            RuleFor(x => x.TherapistId).NotEmpty().WithMessage("Therapist Id is required!");
         }
     }
 }

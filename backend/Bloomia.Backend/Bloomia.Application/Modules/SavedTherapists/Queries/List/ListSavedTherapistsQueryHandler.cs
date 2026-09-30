@@ -13,7 +13,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.List
             var client=await context.Clients.Include(x=>x.User).FirstOrDefaultAsync(x=>x.UserId==request.UserId,cancellationToken);
             if (client ==null)
             {
-                throw new BloomiaNotFoundException("Klijent nije pronadjen morate se logirati ili registrovati!");
+                throw new BloomiaNotFoundException("Client not found, you need to log in or register!");
             }
             var query = context.SavedTherapists.Where(x => x.ClientId == client.Id)
                           .Select(x => new ListSavedTherapistInfoDto

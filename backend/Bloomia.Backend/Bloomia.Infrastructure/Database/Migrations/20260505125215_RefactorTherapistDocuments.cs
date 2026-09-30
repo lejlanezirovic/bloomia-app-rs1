@@ -10,6 +10,37 @@ namespace Bloomia.Infrastructure.Database.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+           
+            migrationBuilder.AddColumn<int>(
+                name: "TherapistId",
+                table: "Documents",
+                type: "int",
+                nullable: true);
+
+           
+            migrationBuilder.Sql(@"
+                UPDATE d
+                SET d.[TherapistId] = t.[Id]
+                FROM [Documents] d
+                INNER JOIN [Therapists] t ON t.[DocumentId] = d.[Id];
+            ");
+
+          
+            migrationBuilder.Sql(@"
+                DELETE FROM [Documents] WHERE [TherapistId] IS NULL;
+            ");
+
+           
+            migrationBuilder.AlterColumn<int>(
+                name: "TherapistId",
+                table: "Documents",
+                type: "int",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
+
+          
             migrationBuilder.DropForeignKey(
                 name: "FK_Therapists_Documents_DocumentId",
                 table: "Therapists");
@@ -49,6 +80,18 @@ namespace Bloomia.Infrastructure.Database.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
+            migrationBuilder.Sql(@"
+                UPDATE [Documents]
+                SET [DocumentType] = CASE [DocumentType]
+                    WHEN 'CV' THEN '1'
+                    WHEN 'Diploma' THEN '2'
+                    WHEN 'Certificate' THEN '3'
+                    WHEN 'License' THEN '4'
+                    ELSE '1'
+                END
+                WHERE [DocumentType] NOT LIKE '[0-9]%';
+            ");
+
             migrationBuilder.AlterColumn<int>(
                 name: "DocumentType",
                 table: "Documents",
@@ -56,13 +99,6 @@ namespace Bloomia.Infrastructure.Database.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
-
-            migrationBuilder.AddColumn<int>(
-                name: "TherapistId",
-                table: "Documents",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_TherapistId",

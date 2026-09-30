@@ -16,6 +16,16 @@
            
         </div>
     </div>
+
+    <div class="note-container">
+        <label for="clientNote">Add a personal note about this test (optional)</label>
+        <textarea id="clientNote" [formControl]="clientNoteControl" maxlength="500"
+            placeholder="Write down anything you'd like to remember about this test..."></textarea>
+        <span class="field-error" *ngIf="clientNoteControl.invalid && clientNoteControl.touched">
+            Note must not be longer than 500 characters
+        </span>
+    </div>
+
     <button (click)="submitSelfTest()"   [disabled]="!isFormValid()" class="button">Zavrsi</button>
 </div>
 
@@ -25,6 +35,7 @@
 
         <p class="avg">Test average:<strong>{{submitResponse?.testAverage}}</strong> </p>
         <p class="desc">Description: {{submitResponse?.resultDescription}}</p>
+        <p class="note" *ngIf="submitResponse?.clientNote">Your note: {{submitResponse?.clientNote}}</p>
         <button class="popupButton" (click)="submitSuccess=false">OK</button>
     </div>
 

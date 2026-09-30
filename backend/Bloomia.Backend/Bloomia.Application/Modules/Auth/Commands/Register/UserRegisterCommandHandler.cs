@@ -18,12 +18,12 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register
 
             if(user != null)
             { 
-                throw new BloomiaConflictException("Korisnik sa unesenim emailom već postoji.");
+                throw new BloomiaConflictException("A user with the entered email already exists.");
             }
 
             var clientRole =await db.Roles.FirstOrDefaultAsync(x => x.RoleName == "CLIENT", cancellationToken);
             if (clientRole == null)
-                throw new BloomiaConflictException("Rola ne postoji u bazi");
+                throw new BloomiaConflictException("Role does not exist in the database.");
            
             var newUser = new UserEntity
             {

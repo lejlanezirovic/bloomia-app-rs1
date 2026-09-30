@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Bloomia.Application.Modules.DirectChat.Command.Update.UpdateForClient
             {
                throw new BloomiaNotFoundException("Message not found");
             }
-            if(message.SenderId!=client.Id)
+            if(message.SenderId!=client.Id || message.SenderType != SenderType.CLIENT)
             {
                 throw new BloomiaConflictException("You can not update this message");
             }

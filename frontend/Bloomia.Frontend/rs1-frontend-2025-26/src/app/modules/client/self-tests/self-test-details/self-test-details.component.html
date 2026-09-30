@@ -2,7 +2,7 @@
     <p class="introduction">Bloomia believes in personal growth through self-awareness.</p>
     <p class="introduction"> These self-tests are a tool that helps you get to know yourself better and take small but significant steps forward.</p>
 </div>
-<div class="main-details-container" *ngIf="test as t"><!-- ovo smo dodali jer nam se javlja greska zato sto je test bio tipa selfTest ili null pa id kad saljemo nije bio siguran-->
+<div class="main-details-container" *ngIf="test as t"><!-- added this because we got an error since test was of type selfTest or null, so the id we send wasn't guaranteed to be set -->
 
     <h1 class="selftest-title">{{t.selfTestName}}</h1>
 

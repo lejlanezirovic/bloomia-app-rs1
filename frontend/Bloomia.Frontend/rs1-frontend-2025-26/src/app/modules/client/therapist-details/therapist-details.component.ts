@@ -242,12 +242,12 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   }
 
   get weekDayLabels(): string[] {
-    return ['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'];
+    return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   }
 
   get selectedDateLabel(): string {
-    if(!this.selectedDateKey) 
-      return 'Odaberite datum';
+    if(!this.selectedDateKey)
+      return 'Select a date';
 
     const date = this.parseLocalDate(this.selectedDateKey);
 

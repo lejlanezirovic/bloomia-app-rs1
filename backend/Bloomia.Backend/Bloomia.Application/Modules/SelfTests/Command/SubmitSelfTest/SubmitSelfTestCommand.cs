@@ -13,6 +13,7 @@ namespace Bloomia.Application.Modules.SelfTests.Command.SubmitSelfTest
         [JsonIgnore]
         public int UserId { get; set; }
         public List<SelfTestAnswersCommandDto> TestAnswers { get; init; }=new List<SelfTestAnswersCommandDto>();
+        public string? ClientNote { get; init; }
     }
     public class SelfTestAnswersCommandDto
     {

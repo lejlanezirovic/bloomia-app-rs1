@@ -15,13 +15,14 @@ namespace Bloomia.Application.Modules.Notifications.Command
             var token= request.Token.Trim();
             if (string.IsNullOrEmpty(token))
             {
-                throw new BloomiaBusinessRuleException("token","Obavezan token");
+                throw new BloomiaBusinessRuleException("token","Token is required");
             }
             var tokenForUser = await context.NotificationTokens.FirstOrDefaultAsync(x => x.UserId == userId && x.Token == token, cancellationToken);
 
             if(tokenForUser != null)
             {
                 tokenForUser.IsActive = true;
+                await context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }
           

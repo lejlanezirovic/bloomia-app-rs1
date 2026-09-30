@@ -13,7 +13,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.RemoveAll
             var client=await context.Clients.Include(x=> x.User).Where(x=>x.User.Id==request.UserId).FirstOrDefaultAsync(cancellationToken);
             if (client == null)
             {
-                throw new BloomiaNotFoundException("Klijent nije pronadjen");
+                throw new BloomiaNotFoundException("Client not found");
             }
 
             var clientSavedTherapists=await context.SavedTherapists.Include(x=>x.Client).Include(x=>x.Therapist)
@@ -21,7 +21,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.RemoveAll
 
             if (clientSavedTherapists.Count == 0)
             {
-                throw new BloomiaNotFoundException("Nema sacuvanih terapeuta za ovog klijenta");
+                throw new BloomiaNotFoundException("No saved therapists for this client");
             }
                         
             foreach(var svd in clientSavedTherapists)
@@ -30,7 +30,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.RemoveAll
                 svd.ModifiedAtUtc = DateTime.UtcNow;
             }
             await context.SaveChangesAsync(cancellationToken);
-            return "Uspesno obrisani svi sacuvani terapeuti za klijenta";
+            return "All saved therapists for the client were successfully removed";
         }
     }
 }

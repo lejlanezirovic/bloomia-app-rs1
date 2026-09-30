@@ -4,120 +4,251 @@ $light-color: #DEDBD2;
 
 $self-bg: #f7f7f5;
 $card-bg: #ffffff;
-$text-color: #4A5759;
 $accent: #B0C4B1;
+$accent-soft: #b8cfc1;
 
-.selftest-title{
-    text-align: center;
-    color: $text-color;
-   margin-top: 100px;
-    padding-top: 80px;
-    font-size: 50px;
-    font-weight: 700;
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 24px 60px;
+  box-sizing: border-box;
 }
-.main-details-container{
-    background-color: $light-color;
-    width: 1400px;
-    height: auto;
-    border-radius: 12px;
-    margin-left: 250px;
-    align-items: center;
-}
-.questions-container{
-    margin-top: 60px;
-    padding-top: 20px;
-    align-items: center;
-}
-.question-card{
-    font-size: 25px;
-    font-weight: 500;
-    margin-bottom: 50px;
-    background-color: $self-bg;
-    border-radius: 12px;
-    height: 100px;
-    width: 1300px;
-    text-align: center;
-    margin-left: 50px;
-    padding-top: 20px;
-    color: $text-color;
-    display: flex;
-    gap:550px;
-    justify-content: space-around;
-    .rating{  
-        margin-left: 70px;//margin-right?
-        width: 100px;
-        height: 40px;
 
+.intro {
+  max-width: 720px;
+  width: 100%;
+  margin-top: 40px;
+  text-align: center;
+  height: auto;
+}
+
+.introduction {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #8c8c7d;
+  text-align: center;
+}
+
+.main-details-container {
+  background-color: $light-color;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 40px;
+  padding: 50px 48px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.selftest-title {
+  text-align: center;
+  color: $text-color;
+  margin: 0 0 32px;
+  padding-top: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.question-card {
+  font-size: 17px;
+  font-weight: 500;
+  background-color: $self-bg;
+  border-radius: 12px;
+  width: 100%;
+  height: auto;
+  padding: 18px 28px;
+  color: $text-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  text-align: left;
+  margin-left: 0;
+
+  .rating {
+    width: 90px;
+    height: 44px;
+    margin-left: 0;
+    border-radius: 8px;
+    border: 1px solid #d1d9d5;
+    text-align: center;
+    font-size: 16px;
+    outline: none;
+    background-color: $card-bg;
+
+    &:focus {
+      border-color: #8fb5a5;
+      box-shadow: 0 0 0 3px rgba(143, 181, 165, 0.25);
     }
-
+  }
 }
 
-.introduction{
-    margin-top: 50px;
-    font-size: 36px;
+.note-container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    font-size: 15px;
     font-weight: 600;
-    color:  #8c8c7d;
-    text-align: center;
-   
-}
-.intro{
-     height: 110px;
-     
-}
-.button{
-     background-color: #B0C4B1;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    font-size: 18px;
-    font-weight: 600;
-  
-    cursor: pointer;
-    margin-left: 25px;
+    color: $text-color;
+  }
+
+  textarea {
+    min-height: 110px;
+    padding: 14px 16px;
     border-radius: 12px;
-    width: 200px;
-    height: 70px;
-    color: #efebdf;
-   margin-left: 550px;
-    box-shadow: 2px 2px #899389;
+    border: 1px solid #d1d9d5;
+    background-color: $self-bg;
+    font-family: inherit;
+    font-size: 15px;
+    color: $text-color;
+    resize: vertical;
+    outline: none;
+
+    &:focus {
+      border-color: #8fb5a5;
+      box-shadow: 0 0 0 3px rgba(143, 181, 165, 0.25);
+    }
+  }
+
+  .field-error {
+    color: #b3453f;
+    font-size: 0.8rem;
+  }
 }
+
+.button {
+  background-color: $background-color;
+  padding: 15px 32px;
+  text-align: center;
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 12px;
+  color: #efebdf;
+  box-shadow: 2px 2px #899389;
+  margin: 36px auto 0;
+  border: none;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    background-color: #9fb7a9;
+  }
+}
+
 .error-message {
   color: #c0392b;
   margin-top: 12px;
   font-weight: 500;
+  text-align: center;
 }
 
-.overlay{
-    position: fixed;
-    top:0;
-    left:0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
-.success-message{
-    background: $self-bg;padding: 40px 50px;
+
+.success-message {
+  background: $self-bg;
+  padding: 40px 50px;
   border-radius: 16px;
-  width: 500px;
+  width: min(90vw, 500px);
   text-align: center;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   animation: scaleIn 0.25s ease;
 
   h2 {
-    color: #4A5759;
+    color: $text-color;
     margin-bottom: 20px;
   }
-   .avg {
+
+  .avg {
     font-size: 18px;
     margin-bottom: 12px;
   }
 
   .desc {
     color: #6f7f73;
+    margin-bottom: 12px;
+  }
+
+  .note {
+    color: $text-color;
+    font-style: italic;
     margin-bottom: 30px;
+  }
+
+  .popupButton {
+    background-color: $background-color;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 12px;
+    color: #efebdf;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 2px 2px #899389;
+
+    &:hover {
+      background-color: #9fb7a9;
+    }
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 0 16px 40px;
+  }
+
+  .main-details-container {
+    padding: 30px 20px;
+  }
+
+  .question-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .button {
+    width: 100%;
   }
 }

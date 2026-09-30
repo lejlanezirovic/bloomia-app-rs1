@@ -25,7 +25,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Remove
 
             if (savedTherapist == null || savedTherapist.IsDeleted==true)
             {
-                throw new BloomiaNotFoundException("Terapeut nije pronadjen u listi");
+                throw new BloomiaNotFoundException("Therapist not found in the list");
             }
             if (savedTherapist.IsDeleted == false)
             {

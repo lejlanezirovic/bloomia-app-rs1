@@ -12,11 +12,11 @@ public sealed class LoginCommandHandler(
 
         var user = await ctx.Users.Include(x=>x.Role)
             .FirstOrDefaultAsync(x => x.Email.ToLower() == email && x.IsEnabled && !x.IsDeleted, ct)
-            ?? throw new BloomiaNotFoundException("Korisnik nije pronađen ili je onemogućen.");
+            ?? throw new BloomiaNotFoundException("User not found or disabled.");
 
         var verify = hasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
         if (verify == PasswordVerificationResult.Failed)
-            throw new BloomiaConflictException("Pogrešni kredencijali.");
+            throw new BloomiaConflictException("Invalid credentials.");
 
         var tokens = jwt.IssueTokens(user);
 
