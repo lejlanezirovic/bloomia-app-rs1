@@ -146,6 +146,11 @@ $light-color: #DEDBD2;
   overflow: hidden;
 }
 
+.validation-error {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
 .image-wrapper {
   display: flex;
   justify-content: center;

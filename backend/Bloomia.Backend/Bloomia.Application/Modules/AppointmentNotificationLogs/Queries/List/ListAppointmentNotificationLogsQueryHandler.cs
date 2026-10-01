@@ -54,8 +54,8 @@ namespace Bloomia.Application.Modules.AppointmentNotificationLogs.Queries.List
                     RecipientEmail = x.RecipientEmail,
                     Status = x.Status.ToString(),
                     NotificationType = x.NotificationType.ToString(),
-                    CreatedAtUtc = x.CreatedAtUtc,
-                    SentAtUtc = x.SentAtUtc,
+                    CreatedAtUtc = DateTime.SpecifyKind(x.CreatedAtUtc, DateTimeKind.Utc),
+                    SentAtUtc = x.SentAtUtc.HasValue ? DateTime.SpecifyKind(x.SentAtUtc.Value, DateTimeKind.Utc) : null,
                     ErrorMessage = x.ErrorMessage,
                     ClientName = x.Appointment.Client.User.Fullname ?? (
                             x.Appointment.Client.User.Firstname +
@@ -77,7 +77,7 @@ namespace Bloomia.Application.Modules.AppointmentNotificationLogs.Queries.List
                                 .Therapist
                                 .User
                                 .Lastname).Trim(),
-                    ScheduledAtUtc = x.Appointment.ScheduledAtUtc,
+                    ScheduledAtUtc = DateTime.SpecifyKind(x.Appointment.ScheduledAtUtc, DateTimeKind.Utc),
                     SessionType = x.Appointment.SessionType.ToString()
                 });
 

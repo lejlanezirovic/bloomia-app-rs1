@@ -275,11 +275,18 @@
                     <button type="button" class="session-type-btn" [class.active]="bookingForm.value.sessionType === SessionType.MESSAGE"
                     (click)="selectSessionType(SessionType.MESSAGE)">Message</button>
                   </div>
+                  <div class="validation-error"
+                    *ngIf="
+                      bookingForm.get('sessionType')?.hasError('required') &&
+                      bookingForm.get('sessionType')?.touched
+                    ">
+                    Please select a session type.
+                  </div>
 
                   <div class="booking-actions">
                     <button type="button" class="secondary-action-btn" 
                       (click)="clearBookingSelection()" [disabled]="isBooking">Cancel</button>
-                    <button type="submit" class="primary-action-btn" [disabled]="bookingForm.invalid || isBooking">
+                    <button type="submit" class="primary-action-btn" [disabled]="isBooking">
                       {{ isBooking ? 'Booking...' : 'Confirm booking' }}
                      </button>
                     
