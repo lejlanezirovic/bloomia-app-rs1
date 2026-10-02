@@ -445,9 +445,19 @@ selectDay(day: CalendarDayVm): void {
     return this.therapist?.availability || [];
   }
 
-  getStarsArray(): number[] {
-    const rating = Math.round(this.therapist?.ratingAvg || 0);
-    return Array(rating).fill(0);
+  getFullStars(rating: number): number[] {
+    return Array(Math.floor(rating)).fill(0);
+  }
+
+  hasHalfStar(rating: number): boolean {
+    return rating % 1 >= 0.5;
+  }
+
+  getEmptyStars(rating: number): number[] {
+    const fullStars = Math.floor(rating);
+    const halfStar = this.hasHalfStar(rating) ? 1 : 0;
+
+    return Array(5 - fullStars - halfStar).fill(0);
   }
 
   formatDate(date: string): string {

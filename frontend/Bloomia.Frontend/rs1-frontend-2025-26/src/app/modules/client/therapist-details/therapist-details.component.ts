@@ -159,12 +159,19 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     return this.therapist?.therapyTypes.map(x => x.name || '').filter(Boolean) || [];
   }
 
-  getStarsArray(rating: number): number[] {
+  getFullStars(rating: number): number[] {
     return Array(Math.floor(rating)).fill(0);
   }
 
-  getEmptyStarsArray(rating: number): number[] {
-    return Array(5 - Math.floor(rating)).fill(0);
+  hasHalfStar(rating: number): boolean {
+    return rating % 1 >= 0.5;
+  }
+
+  getEmptyStars(rating: number): number[] {
+    const fullStars = Math.floor(rating);
+    const halfStar = this.hasHalfStar(rating) ? 1 : 0;
+
+    return Array(5 - fullStars - halfStar).fill(0);
   }
 
   selectRating(value: number): void {
@@ -399,7 +406,6 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
   bookAppointment(): void {
     if (this.bookingForm.invalid) {
       this.bookingForm.markAllAsTouched();
-      this.toasterService.error('Please select a session type.');
       return;
     }
 

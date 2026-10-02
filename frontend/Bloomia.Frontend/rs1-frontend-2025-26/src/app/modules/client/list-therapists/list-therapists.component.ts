@@ -77,7 +77,7 @@ export class ListTherapistsComponent extends
   }
 
 
-  //rating - stars
+
   getStars(rating:number): number[]{
       return Array(Math.floor(rating)).fill(0);
   }

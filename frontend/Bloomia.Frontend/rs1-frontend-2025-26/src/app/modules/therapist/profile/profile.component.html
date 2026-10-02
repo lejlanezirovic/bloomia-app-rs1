@@ -110,10 +110,26 @@
                     <h1 class="therapist-name">{{ fullName }}</h1>
                     <div class="rating-row">
                         <div class="stars">
-                            <mat-icon *ngFor="let star of getStarsArray()">star</mat-icon>
-                            <mat-icon *ngIf="getStarsArray().length === 0">star_border</mat-icon>
+
+                            <mat-icon
+                            *ngFor="let star of getFullStars(therapist.ratingAvg)">
+                            star
+                            </mat-icon>
+
+                            <mat-icon *ngIf="hasHalfStar(therapist.ratingAvg)">
+                            star_half
+                            </mat-icon>
+
+                            <mat-icon
+                            *ngFor="let empty of getEmptyStars(therapist.ratingAvg)">
+                            star_border
+                            </mat-icon>
+
                         </div>
-                        <span class="rating-value">{{therapist.ratingAvg | number:'1.1-1'}}</span>
+
+                        <span class="rating-value">
+                            {{ therapist.ratingAvg | number:'1.1-1' }}
+                        </span>
                     </div>
                 </div>
 
