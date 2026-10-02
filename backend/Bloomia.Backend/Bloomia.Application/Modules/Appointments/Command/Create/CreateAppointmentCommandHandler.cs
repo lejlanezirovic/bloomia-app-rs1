@@ -42,6 +42,13 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 throw new BloomiaConflictException("That time is already booked!");
             }
 
+            var clientHasAppointmentAtSameTime = await context.Appointments
+                .AnyAsync(x => x.ClientId == client.Id &&
+                                x.ScheduledAtUtc == scheduledUtc, cancellationToken);
+
+            if (clientHasAppointmentAtSameTime)
+                throw new BloomiaBusinessRuleException("APPOINTMENT", "You already have an appointment at this time.");
+
             var appointment = new AppointmentEntity
             {
                 ClientId = client.Id,

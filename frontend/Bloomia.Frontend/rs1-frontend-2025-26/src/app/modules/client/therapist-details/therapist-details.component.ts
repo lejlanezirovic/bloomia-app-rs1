@@ -424,8 +424,8 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
         this.isBooking = false;
       },
       error: (err) => {
-        console.error(err);
-        this.toasterService.error('Failed to book appointment.');
+        const message = err?.error?.message || 'Failed to book appointment.';
+        this.toasterService.error(message);
         this.isBooking = false;
       }
     });
