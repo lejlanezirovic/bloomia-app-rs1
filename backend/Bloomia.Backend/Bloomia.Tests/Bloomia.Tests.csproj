@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bloomia.API\Bloomia.API.csproj" />
     <ProjectReference Include="..\Bloomia.Application\Bloomia.Application.csproj" />
+    <ProjectReference Include="..\Bloomia.Infrastructure\Bloomia.Infrastructure.csproj" />
     <ProjectReference Include="..\Bloomia.Shared\Bloomia.Shared.csproj" />
   </ItemGroup>
 
