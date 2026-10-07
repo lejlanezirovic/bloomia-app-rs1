@@ -18,21 +18,18 @@ namespace Bloomia.Infrastructure.Database.Configurations
                 .HasForeignKey(x => x.TherapistId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(x => x.Client)
+                .WithMany()
+                .HasForeignKey(x => x.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(x => x.FilePath)
-            .HasMaxLength(500)
-            .IsRequired();
+                .HasMaxLength(500)
+                .IsRequired();
 
             builder.Property(x => x.FileName)
                 .HasMaxLength(255)
                 .IsRequired();
-
-            builder.HasIndex(x => new
-            {
-                x.TherapistId,
-                x.Year,
-                x.Month
-            })
-            .IsUnique();
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
 {
     public class GenerateTherapistReportCommand : IRequest<TherapistReportListItemDto>
     {
-
+        public int ClientId { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
     }
 }

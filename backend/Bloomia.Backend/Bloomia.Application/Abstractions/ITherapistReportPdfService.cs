@@ -9,7 +9,7 @@ namespace Bloomia.Application.Abstractions
 {
     public interface ITherapistReportPdfService
     {
-        byte[] GenerateMonthlyReport(TherapistMonthlyReportData data);
+        byte[] GenerateSessionReport(TherapistSessionReportData data);
 
 
     }

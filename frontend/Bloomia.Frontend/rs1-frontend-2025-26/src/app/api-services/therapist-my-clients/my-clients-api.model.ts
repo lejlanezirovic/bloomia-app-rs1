@@ -11,6 +11,7 @@ export interface ListMyClientsQueryDto {
     email?: string | null;
     profileImage?: string | null;
     nextAppointmentAtUtc?: string | null;
+    directChatId?: number | null;
 }
 
 export type ListMyClientsResponse = PageResult<ListMyClientsQueryDto>

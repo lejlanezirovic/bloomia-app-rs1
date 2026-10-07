@@ -14,11 +14,11 @@
     </div>
   </div>
 
-  <div *ngIf="isLoading" class="loading">
+  <div *ngIf="isOverviewLoading" class="loading">
     <mat-spinner diameter="40"></mat-spinner>
   </div>
 
-  <ng-container *ngIf="!isLoading && overview">
+  <ng-container *ngIf="!isOverviewLoading && overview">
 
     <div class="stats-grid">
 
@@ -210,15 +210,43 @@
   <section class="reports-section">
     <div class="secton-heading">
       <div>
-        <h2>Monthly Reports</h2>
-        <p>Generate and review monthly summaries of your activity.</p>
+        <h2>Session Reports</h2>
+        <p>Generate a PDF report for a selected client and date range.</p>
       </div>
-
-      <button mat-flat-button type="button" class="generate-report-button" [disabled]="isGeneratingReport" (click)="generateReport()">
-        <mat-icon>picture_as_pdf</mat-icon>
-        {{ isGeneratingReport ? 'Generating...' : 'Generate report' }}
-      </button>
     </div>
+
+    <form class="report-form" [formGroup]="reportForm" (ngSubmit)="generateReport()">
+      <mat-form-field appearance="outline">
+        <mat-label>Client</mat-label>
+
+        <mat-select formControlName="clientId">
+          <mat-option *ngFor="let client of clients" [value]="client.clientId">
+             {{ client.fullName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date from</mat-label>
+
+        <input matInput type="date" formControlName="dateFrom">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date to</mat-label>
+
+        <input  matInput type="date" formControlName="dateTo">
+      </mat-form-field>
+
+      <button mat-flat-button type="submit" class="generate-report-button" [disabled]="reportForm.invalid || isGeneratingReport">
+
+        <mat-icon>picture_as_pdf</mat-icon>
+
+        {{ isGeneratingReport ? 'Generating...' : 'Generate PDF' }}
+
+      </button>
+
+    </form>
 
     <mat-card class="reports-card">
       <mat-card-header>
@@ -237,19 +265,29 @@
             <mat-icon>description</mat-icon>
             <div>
               <button type="button" class="report-title-button" (click)="openReport(report)">
-                {{ getReportMonthName(report.month) }} {{ report.year }}
+                {{ report.clientName }}
               </button>
-              <span>Generated {{ report.generatedAtUtc | date:'dd.MM.yyyy' }}</span>
+              <span>
+                {{ report.dateFrom | date:'dd.MM.yyyy' }}
+                -
+                {{ report.dateTo | date:'dd.MM.yyyy' }}
+              </span>
+              <span>
+                Generated
+                {{ report.generatedAtUtc | date:'dd.MM.yyyy' }}
+              </span>
             </div>
           </div>
 
           <div class="report-statistics">
             <span>
-              {{ report.completedSessionsCount }} sessions
+              {{ report.appointmentsCount }}
+              appointments
             </span>
 
             <span>
-              {{ report.activeClientsCount }} clients
+              {{ report.completedSessionsCount }}
+              completed
             </span>
 
             <span>
@@ -274,14 +312,14 @@
 
         <div class="report-viewer-header">
           <h2>
-            {{ getReportMonthName(selectedReport.month) }}
-            {{ selectedReport.year }}
+            {{ selectedReport.clientName }}
+            ·
+            {{ selectedReport.dateFrom | date:'dd.MM.yyyy' }}
+            -
+            {{ selectedReport.dateTo | date:'dd.MM.yyyy' }}
           </h2>
 
-          <button
-            mat-icon-button
-            type="button"
-            (click)="closeReportPreview()">
+          <button mat-icon-button type="button" (click)="closeReportPreview()">
             <mat-icon>close</mat-icon>
           </button>
         </div>
@@ -289,7 +327,7 @@
         <iframe
           [src]="reportPreviewUrl"
           class="report-preview"
-          title="Monthly report preview">
+          title="Session report preview">
         </iframe>
 
       </div>

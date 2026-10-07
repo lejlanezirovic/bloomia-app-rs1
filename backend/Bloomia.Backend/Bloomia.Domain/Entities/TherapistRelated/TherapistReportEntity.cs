@@ -12,8 +12,10 @@ namespace Bloomia.Domain.Entities.TherapistRelated
     {
         public int TherapistId { get; set; }
         public TherapistEntity? Therapist { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
+        public int ClientId { get; set; }
+        public ClientEntity? Client { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
         public string FilePath { get; set; } = string.Empty;
         public string FileName { get; set; } = string.Empty;
         public DateTime GeneratedAtUtc { get; set; }
@@ -21,10 +23,6 @@ namespace Bloomia.Domain.Entities.TherapistRelated
 
         public int CompletedSessionsCount { get; set; }
 
-        public int ActiveClientsCount { get; set; }
-
         public float AverageRating { get; set; }
-
-        public int TotalReviews { get; set; }
     }
 }

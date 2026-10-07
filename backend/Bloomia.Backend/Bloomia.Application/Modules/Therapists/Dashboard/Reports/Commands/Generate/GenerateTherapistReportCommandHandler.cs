@@ -1,4 +1,5 @@
 ﻿using Bloomia.Application.Modules.Therapists.Dashboard.Reports.Queries.List;
+using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.TherapistRelated;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
             if (currentUser.UserId is null)
                 throw new BloomiaBusinessRuleException("AUTH", "User is not authenticated.");
 
+            if (request.DateFrom.Date > request.DateTo.Date)
+                throw new BloomiaBusinessRuleException("REPORT_DATE_RANGE",
+                    "Start date must be before end date.");
+
             var therapist = await ctx.Therapists.AsNoTracking()
                 .Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.UserId == currentUser.UserId, ct);
@@ -22,175 +27,120 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
             if (therapist == null)
                 throw new BloomiaBusinessRuleException("THERAPIST", "Therapist was not found.");
 
+            var client = await ctx.Clients.AsNoTracking()
+                            .Include(x => x.User)
+                            .FirstOrDefaultAsync(
+                                x => x.Id == request.ClientId,
+                                ct);
+
+            if (client == null)
+                throw new BloomiaBusinessRuleException("CLIENT", "Client was not found.");
+
+            var dateFrom = request.DateFrom.Date;
+
+            var dateToExclusive = request.DateTo.Date.AddDays(1);
+
             var now = DateTime.UtcNow;
 
-            var monthStart = new DateTime(now.Year, now.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+            var appointments = await ctx.Appointments.AsNoTracking()
+                .Where(x => x.TherapistAvailability.TherapistId == therapist.Id &&
+                            x.ClientId == request.ClientId &&
+                            x.ScheduledAtUtc >= dateFrom &&
+                            x.ScheduledAtUtc < dateToExclusive)
+                        .OrderBy(x => x.ScheduledAtUtc)
+                        .ToListAsync(ct);
 
-            var nextMonth = monthStart.AddMonths(1);
+            var appointmentsCount = appointments.Count;
 
-            var appointmentsQuery = ctx.Appointments.AsNoTracking()
-                .Where(x =>
-                    x.TherapistAvailability.TherapistId == therapist.Id &&
-                    x.ScheduledAtUtc >= monthStart &&
-                    x.ScheduledAtUtc < nextMonth);
+            var completedSessionsCount = appointments.Count(x => x.ScheduledAtUtc.AddHours(1) <= now);
 
-            var appointmentsCount = await appointmentsQuery.CountAsync(ct);
-
-            var completedSessionsCount = await appointmentsQuery
-                .CountAsync(x => x.ScheduledAtUtc.AddHours(1) <= now, ct);
-
-            var activeClientsCount = await appointmentsQuery
-                .Select(x => x.ClientId)
-                .Distinct().CountAsync(ct);
 
             var reviewsQuery = ctx.Reviews.AsNoTracking()
                 .Where(x => x.TherapistId == therapist.Id &&
-                            x.CreatedAtUtc >= monthStart && x.CreatedAtUtc < nextMonth);
-
-            var totalReviews = await reviewsQuery.CountAsync(ct);
+                            x.ClientId == request.ClientId &&
+                            x.CreatedAtUtc >= dateFrom && x.CreatedAtUtc < dateToExclusive);
 
             var averageRating = await reviewsQuery.AverageAsync(x => (float?)x.Rating, ct) ?? 0;
 
-            var fiveStarReviews =
-                await reviewsQuery
-                    .CountAsync(x => x.Rating == 5, ct);
-
-            var fourStarReviews =
-                await reviewsQuery
-                    .CountAsync(x => x.Rating == 4, ct);
-
-            var threeStarReviews =
-                await reviewsQuery
-                    .CountAsync(x => x.Rating == 3, ct);
-
-            var twoStarReviews =
-                await reviewsQuery
-                    .CountAsync(x => x.Rating == 2, ct);
-
-            var oneStarReviews =
-                await reviewsQuery
-                    .CountAsync(x => x.Rating == 1, ct);
 
             var generatedAtUtc = DateTime.UtcNow;
 
-            var reportData = new TherapistMonthlyReportData
+            var reportData = new TherapistSessionReportData
             {
+                TherapistId = therapist.Id,
                 TherapistName =
                     therapist.User.Fullname ??
                     $"{therapist.User.Firstname} {therapist.User.Lastname}",
-                Specialization =
-                    therapist.Specialization,
-
-                Month = now.Month,
-                Year = now.Year,
-
-                AppointmentsCount =
-                    appointmentsCount,
-
-                CompletedSessionsCount =
-                    completedSessionsCount,
-
-                ActiveClientsCount =
-                    activeClientsCount,
-
-                AverageRating =
-                    (float)Math.Round(averageRating, 1),
-                TotalReviews =
-                    totalReviews,
-
-                FiveStarReviews =
-                    fiveStarReviews,
-
-                FourStarReviews =
-                    fourStarReviews,
-
-                ThreeStarReviews =
-                    threeStarReviews,
-
-                TwoStarReviews =
-                    twoStarReviews,
-
-                OneStarReviews =
-                    oneStarReviews,
-
-                GeneratedAtUtc =
-                    generatedAtUtc
+                Specialization = therapist.Specialization,
+                ClientId = client.Id,
+                ClientName = client.User.Fullname ?? $"{client.User.Firstname} {client.User.Lastname}",
+                DateFrom = request.DateFrom.Date,
+                DateTo = request.DateTo.Date,
+                AppointmentsCount = appointmentsCount,
+                CompletedSessionsCount = completedSessionsCount,
+                AverageRating = (float)Math.Round(averageRating, 1),
+                GeneratedAtUtc =  generatedAtUtc,
+                Sessions = appointments
+                            .Select(x => new TherapistSessionReportItemDto
+                            {
+                                ScheduledAtUtc = x.ScheduledAtUtc,
+                                SessionType = GetSessionTypeName(x.SessionType),
+                                Status = x.ScheduledAtUtc.AddHours(1) <= now ? "Completed" : "Upcoming"
+                            }).ToList()
             };
 
-            var pdfBytes = pdfService.GenerateMonthlyReport(reportData);
+            var pdfBytes = pdfService.GenerateSessionReport(reportData);
 
-            var fileName = $"Bloomia-Monthly-Report-{now:yyy-MM}.pdf";
+            var fileName = $"Bloomia-Report-" +
+                            $"{request.ClientId}-" +
+                            $"{request.DateFrom:yyyy-MM-dd}-" +
+                            $"{request.DateTo:yyyy-MM-dd}.pdf";
 
             var savedFile = await fileStorageService.SaveReportAsync(pdfBytes, fileName, ct);
 
-            var existingReport = await ctx.TherapistReports.FirstOrDefaultAsync(
-                x => x.TherapistId == therapist.Id &&
-                     x.Month == now.Month &&
-                     x.Year == now.Year, ct);
-
-            string? oldFilePath = null;
-
-            if(existingReport == null)
+            var report = new TherapistReportEntity
             {
-                existingReport = new TherapistReportEntity
-                {
-                    TherapistId = therapist.Id,
-                    Month = now.Month,
-                    Year = now.Year,
-                    CreatedAtUtc = generatedAtUtc
-                };
-
-                ctx.TherapistReports.Add(existingReport);
-            }
-            else
-            {
-                oldFilePath = existingReport.FilePath;
-                existingReport.ModifiedAtUtc = generatedAtUtc;
-            }
-
-            existingReport.FilePath = savedFile.RelativePath;
-
-            existingReport.FileName = fileName;
-
-            existingReport.GeneratedAtUtc = generatedAtUtc;
-
-            existingReport.AppointmentsCount = appointmentsCount;
-
-            existingReport.CompletedSessionsCount = completedSessionsCount;
-
-            existingReport.ActiveClientsCount = activeClientsCount;
-
-            existingReport.AverageRating = (float)Math.Round(averageRating, 1);
-
-            existingReport.TotalReviews = totalReviews;
-
-            await ctx.SaveChangesAsync(ct);
-
-            if (!string.IsNullOrWhiteSpace(oldFilePath) && oldFilePath != savedFile.RelativePath)
-                fileStorageService.DeleteReportIfExists(oldFilePath);
-
-            return new TherapistReportListItemDto
-            {
-                Id = existingReport.Id,
-
-                Month = existingReport.Month,
-                Year = existingReport.Year,
-
-                FileName = existingReport.FileName,
-
-                GeneratedAtUtc = existingReport.GeneratedAtUtc,
-
-                AppointmentsCount = existingReport.AppointmentsCount,
-
-                CompletedSessionsCount = existingReport.CompletedSessionsCount,
-
-                ActiveClientsCount = existingReport.ActiveClientsCount,
-
-                AverageRating = existingReport.AverageRating,
-
-                TotalReviews = existingReport.TotalReviews
+                TherapistId = therapist.Id,
+                ClientId = request.ClientId,
+                DateFrom = request.DateFrom.Date,
+                DateTo = request.DateTo.Date,
+                FilePath = savedFile.RelativePath,
+                FileName = fileName,
+                GeneratedAtUtc = generatedAtUtc,
+                AppointmentsCount = appointmentsCount,
+                CompletedSessionsCount = completedSessionsCount,
+                AverageRating = (float)Math.Round(averageRating, 1),
+                CreatedAtUtc = generatedAtUtc
             };
 
+            ctx.TherapistReports.Add(report);
+
+            await ctx.SaveChangesAsync(ct);
+            
+            return new TherapistReportListItemDto
+            {
+                Id = report.Id, 
+                ClientId = report.ClientId,
+                ClientName = reportData.ClientName,
+                DateFrom = report.DateFrom,
+                DateTo = report.DateTo,
+                FileName = report.FileName,
+                GeneratedAtUtc = report.GeneratedAtUtc,
+                AppointmentsCount = report.AppointmentsCount,
+                CompletedSessionsCount = report.CompletedSessionsCount,
+                AverageRating = report.AverageRating
+            };
+        }
+        private static string GetSessionTypeName(
+        SessionType sessionType)
+        {
+            return sessionType switch
+            {
+                SessionType.VIDEO_CALL => "Video call",
+                SessionType.CALL => "Call",
+                SessionType.MESSAGE => "Chat",
+                _ => "Unknown"
+            };
         }
     }
 }

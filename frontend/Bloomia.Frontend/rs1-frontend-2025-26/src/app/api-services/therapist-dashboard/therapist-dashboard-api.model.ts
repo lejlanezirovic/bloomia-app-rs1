@@ -35,13 +35,19 @@ export interface TherapistDashboardReviewsDto {
 
 export interface TherapistReportListItemDto {
   id: number;
-  month: number;
-  year: number;
+  clientId: number;
+  clientName: string; 
+  dateFrom: string;
+  dateTo: string; 
   fileName: string;
-  generatedAtUtc: string;
+  generatedAtUtc: string; 
   appointmentsCount: number;
   completedSessionsCount: number;
-  activeClientsCount: number;
   averageRating: number;
-  totalReviews: number;
+}
+
+export interface GenerateTherapistReportCommand {
+  clientId: number;
+  dateFrom: string;
+  dateTo: string;
 }

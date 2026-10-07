@@ -19,13 +19,13 @@ namespace Bloomia.API.Controllers
         [HttpGet("reviews")]
         public async Task<TherapistDashboardReviewsDto> GetReviews(CancellationToken ct)
         {
-            return await sender.Send( new GetTherapistDashboardReviewsQuery(), ct);
+            return await sender.Send(new GetTherapistDashboardReviewsQuery(), ct);
         }
 
         [HttpPost("reports/generate")]
-        public async Task<TherapistReportListItemDto> GenerateReport(CancellationToken ct)
+        public async Task<TherapistReportListItemDto> GenerateReport([FromBody] GenerateTherapistReportCommand command, CancellationToken ct)
         {
-            return await sender.Send(new GenerateTherapistReportCommand(), ct);
+            return await sender.Send(command, ct);
         }
 
         [HttpGet("reports")]

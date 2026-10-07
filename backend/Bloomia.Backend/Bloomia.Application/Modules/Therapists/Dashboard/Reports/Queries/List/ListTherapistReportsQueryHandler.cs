@@ -26,36 +26,20 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Queries.List
                 .AsNoTracking()
                 .Where(x =>
                     x.TherapistId == therapistId.Value)
-                .OrderByDescending(x => x.Year)
-                .ThenByDescending(x => x.Month)
-                .Select(x =>
-                    new TherapistReportListItemDto
-                    {
-                        Id = x.Id,
-
-                        Month = x.Month,
-                        Year = x.Year,
-
-                        FileName = x.FileName,
-
-                        GeneratedAtUtc =
-                            x.GeneratedAtUtc,
-
-                        AppointmentsCount =
-                            x.AppointmentsCount,
-
-                        CompletedSessionsCount =
-                            x.CompletedSessionsCount,
-
-                        ActiveClientsCount =
-                            x.ActiveClientsCount,
-
-                        AverageRating =
-                            x.AverageRating,
-
-                        TotalReviews =
-                            x.TotalReviews
-                    })
+                .OrderByDescending(x => x.GeneratedAtUtc)
+                .Select(x => new TherapistReportListItemDto
+                {
+                    Id = x.Id, 
+                    ClientId = x.ClientId,
+                    ClientName = x.Client!.User.Fullname ?? $"{x.Client.User.Firstname} {x.Client.User.Lastname}",
+                    DateFrom = x.DateFrom, 
+                    DateTo = x.DateTo, 
+                    FileName = x.FileName, 
+                    GeneratedAtUtc = x.GeneratedAtUtc, 
+                    AppointmentsCount = x.AppointmentsCount, 
+                    CompletedSessionsCount = x.CompletedSessionsCount, 
+                    AverageRating = x.AverageRating
+                })
                 .ToListAsync(ct);
         }
     }

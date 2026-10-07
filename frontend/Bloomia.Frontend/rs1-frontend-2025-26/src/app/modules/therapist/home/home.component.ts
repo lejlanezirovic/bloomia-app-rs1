@@ -1,7 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TherapistDashboardApiService } from '../../../api-services/therapist-dashboard/therapist-dashboard-api.service';
-import { TherapistDashboardOverviewDto, TherapistDashboardReviewsDto, TherapistReportListItemDto } from '../../../api-services/therapist-dashboard/therapist-dashboard-api.model';
+import { GenerateTherapistReportCommand, TherapistDashboardOverviewDto, TherapistDashboardReviewsDto, TherapistReportListItemDto } from '../../../api-services/therapist-dashboard/therapist-dashboard-api.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MyClientsApiService } from '../../../api-services/therapist-my-clients/my-clients.api.service';
+import { ListMyClientsQueryDto } from '../../../api-services/therapist-my-clients/my-clients-api.model';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -13,10 +16,12 @@ export class HomeComponent implements OnInit {
 
   private dashboardApi = inject(TherapistDashboardApiService);
   private sanitizer = inject(DomSanitizer);
-
+  private myClientsApi =inject(MyClientsApiService);
+  private fb = inject(FormBuilder);
+  
+  clients: ListMyClientsQueryDto[] = [];
   overview?: TherapistDashboardOverviewDto;
   reviews?: TherapistDashboardReviewsDto;
-  isLoading = false;
   currentDate = new Date();
   reports: TherapistReportListItemDto[] = [];
   selectedReport: TherapistReportListItemDto | null = null;
@@ -26,10 +31,33 @@ export class HomeComponent implements OnInit {
   isOverviewLoading = false;
   isReviewsLoading = false;
 
+  reportForm = this.fb.group({
+    clientId: [null, Validators.required],
+    dateFrom: ['', Validators.required],
+    dateTo: ['', Validators.required]
+  });
+
   ngOnInit(): void {
     this.loadOverview();
     this.loadReviews();
     this.loadReports();
+    this.loadClients();
+  }
+
+  loadClients(): void {
+
+    this.myClientsApi.list().subscribe({
+      next: (response) => {
+        this.clients = response.items;
+      },
+      error: (err) => {
+
+        console.error(
+          'Failed to load clients:',
+          err
+        );
+      }
+    });
   }
 
   loadReports(): void {
@@ -44,18 +72,25 @@ export class HomeComponent implements OnInit {
   }
 
   generateReport(): void {
-    if (this.isGeneratingReport) {
+    if (this.reportForm.invalid) {
+      this.reportForm.markAllAsTouched();
       return;
     }
 
+    const formValue = this.reportForm.getRawValue();
+
+    const request: GenerateTherapistReportCommand = {
+      clientId: formValue.clientId!,
+      dateFrom: formValue.dateFrom!,
+      dateTo: formValue.dateTo!
+    };
+
     this.isGeneratingReport = true;
 
-    this.dashboardApi.generateReport().subscribe({
+    this.dashboardApi.generateReport(request).subscribe({
         next: (report) => {
           this.isGeneratingReport = false;
-
           this.loadReports();
-
           this.openReport(report);
         },
         error: (err) => {
@@ -121,12 +156,6 @@ export class HomeComponent implements OnInit {
 
     this.reportPreviewUrl = null;
     this.selectedReport = null;
-  }
-
-  getReportMonthName(month: number): string {
-    return new Date(2000, month - 1, 1).toLocaleString('en-US', {
-      month: 'long'
-    });
   }
 
   loadReviews(): void {

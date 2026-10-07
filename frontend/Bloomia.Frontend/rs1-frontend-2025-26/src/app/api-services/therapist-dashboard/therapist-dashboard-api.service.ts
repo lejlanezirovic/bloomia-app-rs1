@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { TherapistDashboardOverviewDto, TherapistDashboardReviewsDto, TherapistReportListItemDto } from './therapist-dashboard-api.model'; 
+import { GenerateTherapistReportCommand, TherapistDashboardOverviewDto, TherapistDashboardReviewsDto, TherapistReportListItemDto } from './therapist-dashboard-api.model'; 
 
 @Injectable({
   providedIn: 'root',
@@ -27,26 +27,26 @@ export class TherapistDashboardApiService {
     );
   }
 
-  generateReport(): Observable<TherapistReportListItemDto> {
-  return this.http.post<TherapistReportListItemDto>(
-    `${this.baseUrl}/reports/generate`,
-    {}
-  );
-}
+  generateReport(request: GenerateTherapistReportCommand): Observable<TherapistReportListItemDto> {
+    return this.http.post<TherapistReportListItemDto>(
+      `${this.baseUrl}/reports/generate`,
+      request
+    );
+  }
 
-listReports(): Observable<TherapistReportListItemDto[]> {
-  return this.http.get<TherapistReportListItemDto[]>(
-    `${this.baseUrl}/reports`
-  );
-}
+  listReports(): Observable<TherapistReportListItemDto[]> {
+    return this.http.get<TherapistReportListItemDto[]>(
+      `${this.baseUrl}/reports`
+    );
+  }
 
-getReportFile(id: number): Observable<Blob> {
-  return this.http.get(
-    `${this.baseUrl}/reports/${id}/file`,
-    {
-      responseType: 'blob'
-    }
-  );
-}
+  getReportFile(id: number): Observable<Blob> {
+    return this.http.get(
+      `${this.baseUrl}/reports/${id}/file`,
+      {
+        responseType: 'blob'
+      }
+    );
+  }
 
 }
