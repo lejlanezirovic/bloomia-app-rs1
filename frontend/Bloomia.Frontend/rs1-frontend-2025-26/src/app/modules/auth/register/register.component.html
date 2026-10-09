@@ -1,1 +1,431 @@
-<p>register works!</p>
+<div class="register-page">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>Create your account</h1>
+      <p>
+        Complete the steps below to join Bloomia.
+      </p>
+    </div>
+    <div *ngIf="errorMessage"  class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>
+        {{ errorMessage }}
+      </span>
+    </div>
+
+
+    <mat-stepper
+      linear
+      #stepper>
+
+      <!-- STEP 1 -->
+      <mat-step [stepControl]="accountTypeForm">
+
+        <form [formGroup]="accountTypeForm">
+
+          <ng-template matStepLabel>
+            Account type
+          </ng-template>
+
+          <div class="step-content">
+            <h2>
+              How would you like to use Bloomia?
+            </h2>
+
+            <p class="step-description">
+              Choose the type of account you want to create.
+            </p>
+
+
+            <mat-radio-group formControlName="accountType" class="account-type-options">
+
+              <mat-radio-button value="CLIENT" class="account-type-card">
+
+                <div class="account-type-content">
+
+                  <mat-icon>
+                    person
+                  </mat-icon>
+
+                  <div>
+                    <strong>
+                      Client
+                    </strong>
+
+                    <span>
+                      Find therapists and book appointments.
+                    </span>
+                  </div>
+
+                </div>
+
+              </mat-radio-button>
+
+
+              <mat-radio-button value="THERAPIST" class="account-type-card">
+
+                <div class="account-type-content">
+
+                  <mat-icon>
+                    psychology
+                  </mat-icon>
+
+                  <div>
+                    <strong>
+                      Therapist
+                    </strong>
+
+                    <span>
+                      Provide therapy services through Bloomia.
+                    </span>
+                  </div>
+
+                </div>
+
+              </mat-radio-button>
+
+            </mat-radio-group>
+
+
+            <div class="step-actions">
+
+              <button mat-raised-button class="next-button" type="button" matStepperNext [disabled]="accountTypeForm.invalid">
+                Next
+                <mat-icon>
+                  arrow_forward
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- STEP 2 -->
+      <mat-step [stepControl]="accountForm">
+
+        <form [formGroup]="accountForm">
+
+          <ng-template matStepLabel>
+            Account
+          </ng-template>
+
+          <div class="step-content">
+
+            <h2>
+              Account information
+            </h2>
+
+            <p class="step-description">
+              Enter the information you will use to access Bloomia.
+            </p>
+
+            <mat-form-field appearance="outline" class="full-width">
+
+              <mat-label>
+                Email
+              </mat-label>
+
+              <input matInput type="email" formControlName="email">
+
+              <mat-icon matSuffix>
+                email
+              </mat-icon>
+
+              <mat-error *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
+                {{ getAccountError('email') }}
+              </mat-error>
+
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline" class="full-width">
+
+              <mat-label>
+                Username
+              </mat-label>
+
+              <input matInput formControlName="username">
+
+              <mat-icon matSuffix>
+                alternate_email
+              </mat-icon>
+
+              <mat-error *ngIf="accountForm.get('username')?.invalid &&
+                accountForm.get('username')?.touched">
+                {{ getAccountError('username') }}
+              </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+
+              <mat-label>
+                Password
+              </mat-label>
+
+              <input matInput type="password" formControlName="password">
+
+              <mat-icon matSuffix>
+                lock
+              </mat-icon>
+
+              <mat-error *ngIf="accountForm.get('password')?.invalid &&
+                accountForm.get('password')?.touched">
+                {{ getAccountError('password') }}
+              </mat-error>
+
+            </mat-form-field>
+
+
+            <div class="step-actions">
+
+              <button mat-stroked-button type="button" matStepperPrevious>
+
+                <mat-icon>
+                  arrow_back
+                </mat-icon> 
+                Previous 
+              </button>
+
+
+              <button mat-raised-button class="next-button" type="button" matStepperNext [disabled]="accountForm.invalid"> 
+                Next
+                <mat-icon>
+                  arrow_forward
+                </mat-icon> 
+              </button> 
+            </div> 
+          </div> 
+        </form>
+
+      </mat-step>
+
+      <!-- STEP 3 -->
+      <mat-step [stepControl]="personalForm">
+
+        <form [formGroup]="personalForm">
+
+          <ng-template matStepLabel>
+            Personal information
+          </ng-template>
+
+
+          <div class="step-content"> 
+            <h2>
+              Personal information
+            </h2>
+
+            <p class="step-description">
+              Tell us a little about yourself.
+            </p>
+
+
+            <div class="form-row">
+
+              <mat-form-field appearance="outline">
+
+                <mat-label>
+                  First name
+                </mat-label>
+
+                <input  matInput formControlName="firstname">
+
+                <mat-error *ngIf="personalForm.get('firstname')?.invalid">
+                  {{ getPersonalError('firstname') }}
+                </mat-error>
+
+              </mat-form-field>
+
+              <mat-form-field  appearance="outline">
+
+                <mat-label>
+                  Last name
+                </mat-label>
+
+                <input matInput formControlName="lastname">
+
+                <mat-error *ngIf="personalForm.get('lastname')?.invalid">
+                  {{ getPersonalError('lastname') }}
+                </mat-error> 
+              </mat-form-field>
+
+            </div>
+
+            <ng-container *ngIf="isTherapist">
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>
+                  Specialization
+                </mat-label>
+
+                <input matInput formControlName="specialization">
+
+                <mat-icon matSuffix>
+                  psychology
+                </mat-icon>
+
+                <mat-error *ngIf="personalForm.get('specialization')?.invalid">
+                  {{ getPersonalError('specialization') }}
+                </mat-error>
+
+              </mat-form-field>
+
+
+              <mat-form-field appearance="outline" class="full-width">
+
+                <mat-label>
+                  Description
+                </mat-label>
+
+                <textarea
+                  matInput
+                  rows="5"
+                  formControlName="description">
+                </textarea>
+
+                <mat-error *ngIf="personalForm.get('description')?.invalid">
+                  {{ getPersonalError('description') }} 
+                </mat-error>
+
+              </mat-form-field>
+
+            </ng-container>
+
+
+            <div class="step-actions">
+
+              <button mat-stroked-button type="button" matStepperPrevious>
+
+                <mat-icon>
+                  arrow_back
+                </mat-icon> 
+                Previous 
+              </button>
+
+
+              <button  mat-raised-button class="next-button" type="button" matStepperNext [disabled]="personalForm.invalid">
+                Review
+                <mat-icon>
+                  arrow_forward
+                </mat-icon>
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </form>
+
+      </mat-step>
+
+
+
+      <!-- STEP 4 -->
+      <mat-step>
+        <ng-template matStepLabel>
+          Review
+        </ng-template>
+
+
+        <div class="step-content">
+
+          <h2>
+            Review your information
+          </h2>
+
+          <p class="step-description">
+            Make sure everything is correct before creating your account.
+          </p>
+
+
+          <div class="review-card">
+
+            <div class="review-row">
+              <span>Account type</span>
+              <strong>{{ accountType }}</strong>
+            </div>
+
+            <div class="review-row">
+              <span>Email</span>
+              <strong>
+                {{ accountForm.get('email')?.value }}
+              </strong>
+            </div>
+
+            <div class="review-row">
+              <span>Username</span>
+              <strong>
+                {{ accountForm.get('username')?.value }}
+              </strong>
+            </div>
+
+            <div class="review-row">
+              <span>First name</span>
+              <strong>
+                {{ personalForm.get('firstname')?.value }}
+              </strong>
+            </div>
+
+            <div class="review-row">
+              <span>Last name</span>
+              <strong>
+                {{ personalForm.get('lastname')?.value }}
+              </strong>
+            </div>
+
+
+            <ng-container *ngIf="isTherapist">
+
+              <div class="review-row">
+                <span>Specialization</span>
+
+                <strong>
+                  {{ personalForm.get('specialization')?.value }}
+                </strong>
+              </div>
+
+              <div class="review-row">
+                <span>Description</span>
+
+                <strong>
+                  {{ personalForm.get('description')?.value || '—' }}
+                </strong>
+              </div>
+
+            </ng-container>
+
+          </div>
+
+
+          <div class="step-actions">
+
+            <button  mat-stroked-button type="button" matStepperPrevious [disabled]="isLoading">
+
+              <mat-icon>
+                arrow_back
+              </mat-icon> 
+              Previous 
+            </button>
+
+
+            <button mat-flat-button color="primary" type="button" (click)="register()" [disabled]="isLoading">
+
+              <mat-icon>
+                person_add
+              </mat-icon>
+
+              {{ isLoading ? 'Creating account...' : 'Create account' }}
+
+            </button>
+
+          </div> 
+        </div>
+
+      </mat-step> 
+
+    </mat-stepper>
+
+  </div>
+
+</div>

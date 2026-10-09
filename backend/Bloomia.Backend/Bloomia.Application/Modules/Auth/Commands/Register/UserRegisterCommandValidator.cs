@@ -12,7 +12,7 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register
 
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required")
                                  .EmailAddress().WithMessage("Email invalid format")
-                                 .Matches(@"@(gmail\.com|yahoo\.com|edu\.)$")
+                                 .Matches(@"@(gmail\.com|yahoo\.com|edu\.com)$")
                                  .WithMessage("Email domain must me @gmail, @yahoo or @edu ");
 
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required")

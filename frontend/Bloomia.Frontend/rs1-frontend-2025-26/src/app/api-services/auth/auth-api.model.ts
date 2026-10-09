@@ -57,3 +57,39 @@ export interface RefreshTokenCommandDto {
 export interface LogoutCommand {
   refreshToken: string;
 }
+
+export type RegistrationType = 'CLIENT' | 'THERAPIST';
+
+export interface UserRegisterCommand {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+
+  genderName: string;
+  locationCityName: string;
+  locationCountryName: string;
+  languageName: string;
+  dateOfBirth?: string | null;
+}
+
+export interface TherapistRegisterCommand {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+  specialization: string;
+  description: string;
+}
+
+export interface RegisterCommandDto {
+  id: number;
+  fullname: string;
+  email: string;
+  accessToken: string;
+  refreshToken: string;
+  expiresAt: string;
+  roleName: string;
+}

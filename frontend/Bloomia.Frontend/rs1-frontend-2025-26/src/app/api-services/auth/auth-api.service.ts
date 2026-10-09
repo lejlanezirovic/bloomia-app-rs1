@@ -7,7 +7,10 @@ import {
   LoginCommandDto,
   RefreshTokenCommand,
   RefreshTokenCommandDto,
-  LogoutCommand
+  LogoutCommand,
+  TherapistRegisterCommand,
+  RegisterCommandDto,
+  UserRegisterCommand
 } from './auth-api.model';
 
 @Injectable({
@@ -39,5 +42,19 @@ export class AuthApiService {
    */
   logout(payload: LogoutCommand): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/logout`, payload);
+  }
+
+  registerClient(payload: UserRegisterCommand): Observable<RegisterCommandDto> {
+    return this.http.post<RegisterCommandDto>(
+      `${this.baseUrl}/register-as-client`,
+      payload
+    );
+  }
+
+  registerTherapist(payload: TherapistRegisterCommand): Observable<RegisterCommandDto> {
+    return this.http.post<RegisterCommandDto>(
+      `${this.baseUrl}/register-as-therapist`,
+      payload
+    );
   }
 }
