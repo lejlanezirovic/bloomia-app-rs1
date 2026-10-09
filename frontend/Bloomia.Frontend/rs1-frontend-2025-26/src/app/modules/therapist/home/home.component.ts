@@ -33,8 +33,8 @@ export class HomeComponent implements OnInit {
 
   reportForm = this.fb.group({
     clientId: [null, Validators.required],
-    dateFrom: ['', Validators.required],
-    dateTo: ['', Validators.required]
+    dateFrom: [null as Date | null, Validators.required],
+    dateTo: [null as Date | null, Validators.required]
   });
 
   ngOnInit(): void {
@@ -81,8 +81,8 @@ export class HomeComponent implements OnInit {
 
     const request: GenerateTherapistReportCommand = {
       clientId: formValue.clientId!,
-      dateFrom: formValue.dateFrom!,
-      dateTo: formValue.dateTo!
+      dateFrom: this.formatDate(formValue.dateFrom!),
+    dateTo: this.formatDate(formValue.dateTo!)
     };
 
     this.isGeneratingReport = true;
@@ -199,6 +199,14 @@ export class HomeComponent implements OnInit {
       default:
         return 'Unknown';
     }
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
 }
