@@ -45,11 +45,11 @@ public sealed class AuthController(IMediator mediator) : ControllerBase
         return Ok(await mediator.Send(command, ct));
     }
 
-    [Authorize]
+    
     [HttpPost("logout")]
+    [AllowAnonymous]
     public async Task Logout([FromBody] LogoutCommand command, CancellationToken ct)
     {
         await mediator.Send(command, ct);
     }
-    //svi ostali endpointi koji su budu ticali striktno jednog usera nece biti allow anonymous bit ce onaj katanac na endpointu za JTW token Bearer
 }
