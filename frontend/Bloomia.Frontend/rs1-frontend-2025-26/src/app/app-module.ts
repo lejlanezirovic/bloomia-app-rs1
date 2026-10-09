@@ -14,6 +14,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {CustomTranslateLoader} from './core/services/custom-translate-loader';
 import {materialModules} from './modules/shared/material-modules';
 import {SharedModule} from './modules/shared/shared-module';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Central regional policy for the whole app: all Angular date/number/currency
 // pipes (date:'shortTime', date:'short', number:'1.1-1', ...) format consistently
@@ -39,6 +40,7 @@ registerLocaleData(localeBs, 'bs-BA');
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'bs-BA' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     provideAnimations(),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection(),

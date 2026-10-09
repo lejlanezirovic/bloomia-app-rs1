@@ -89,6 +89,7 @@ public partial class Program
             builder.Services.AddHostedService<AppointmentReminderBackgroundService>();
             builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
             builder.Services.AddScoped<ITherapistReportPdfService, TherapistReportPdfService>();
+            builder.Services.AddScoped<IAdminAnalyticsExcelService, AdminAnalyticsExcelService>();
             builder.Services.AddExceptionHandler<MarketExceptionHandler>();
             builder.Services.AddProblemDetails();
             builder.Services.AddSignalR();

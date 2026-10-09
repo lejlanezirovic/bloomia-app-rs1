@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './admin-layout/admin-layout/admin-layout.component';
 import { NotificationLogsComponent } from './admin-layout/notification-logs/notification-logs/notification-logs.component';
+import { AnalyticsComponent } from './admin-layout/analytics/analytics/analytics.component';
 
 const routes: Routes = [
   {
@@ -10,12 +11,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'notification-logs',
+        redirectTo: 'analytics',
         pathMatch: 'full'
       },
       {
         path: 'notification-logs',
         component: NotificationLogsComponent
+      },
+      {
+        path: 'analytics',
+        component: AnalyticsComponent
       }
     ]
   }

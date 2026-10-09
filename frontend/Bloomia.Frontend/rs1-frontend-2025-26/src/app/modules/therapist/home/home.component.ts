@@ -95,7 +95,6 @@ export class HomeComponent implements OnInit {
         },
         error: (err) => {
           this.isGeneratingReport = false;
-
           console.error('Failed to generate report:', err);
         }
       });

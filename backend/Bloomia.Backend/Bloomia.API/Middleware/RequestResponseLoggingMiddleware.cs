@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using Bloomia.Application.Abstractions;
+using Bloomia.Domain.Entities.Admin;
+using System.Diagnostics;
 using System.Text;
 
 namespace Bloomia.API.Middlewares;
@@ -13,7 +15,7 @@ public sealed class RequestResponseLoggingMiddleware(
 {
     private const int SlowRequestThresholdMs = 400; // 2 seconds
 
-    public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(HttpContext context, IAppDbContext dbContext)
     {
         var stopwatch = Stopwatch.StartNew();
         var request = context.Request;
@@ -66,6 +68,21 @@ public sealed class RequestResponseLoggingMiddleware(
                 logger.LogWarning("[SLOW REQUEST] {Path} took {Elapsed} ms", request.Path, elapsed);
                 await File.AppendAllTextAsync("Logs/slow-requests.log",
                     $"{DateTime.UtcNow:u} | {request.Path} | {elapsed} ms{Environment.NewLine}");
+            }
+
+            if (request.Path.StartsWithSegments("/api") && request.Method != HttpMethods.Options)
+            {
+                var requestLog = new RequestLogEntity
+                {
+                    Method = request.Method,
+                    Path = request.Path,
+                    StatusCode = context.Response.StatusCode,
+                    DurationMs = elapsed
+                };
+
+                dbContext.RequestLogs.Add(requestLog);
+
+                await dbContext.SaveChangesAsync(context.RequestAborted);
             }
 
             logger.LogInformation("{Log}", logMessage.ToString());

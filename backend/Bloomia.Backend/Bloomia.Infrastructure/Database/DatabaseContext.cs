@@ -49,6 +49,7 @@ public partial class DatabaseContext : DbContext, IAppDbContext
     public DbSet<TherapistReportEntity> TherapistReports => Set<TherapistReportEntity>();
     public DbSet<NotificationTokenEntity> NotificationTokens => Set<NotificationTokenEntity>();
     public DbSet<DirectChatEntity> DirectChats => Set<DirectChatEntity>();
+    public DbSet<RequestLogEntity> RequestLogs=> Set<RequestLogEntity>();
 
     public DbSet<AppointmentNotificationLogEntity> AppointmentNotificationLogs => Set<AppointmentNotificationLogEntity>();
 

@@ -1,0 +1,428 @@
+<div class="container">
+
+  <div class="header-card">
+    <div class="header-card-content">
+
+      <div class="title-section">
+
+        <div class="title-icon">
+          <mat-icon>analytics</mat-icon>
+        </div>
+
+        <div>
+          <h1>Analytics</h1>
+
+          <p>
+            View business, user and system performance analytics.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="filters-card">
+
+    <form class="filters-form" [formGroup]="filterForm">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date from</mat-label>
+
+            <input matInput [matDatepicker]="dateFromPicker" formControlName="dateFrom">
+
+            <mat-datepicker-toggle matSuffix [for]="dateFromPicker">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #dateFromPicker></mat-datepicker>
+
+            <mat-error *ngIf="filterForm.get('dateFrom')?.hasError('required')">
+                Start date is required.
+            </mat-error>
+        </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date to</mat-label>
+
+            <input matInput [matDatepicker]="dateToPicker" formControlName="dateTo">
+
+            <mat-datepicker-toggle matSuffix [for]="dateToPicker">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #dateToPicker></mat-datepicker>
+
+            <mat-error *ngIf="filterForm.get('dateTo')?.hasError('required')">
+                End date is required.
+            </mat-error>
+        </mat-form-field>
+
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="loadAnalytics()"
+        [disabled]="isLoading">
+
+        {{ isLoading ? 'Loading...' : 'Apply' }}
+
+      </button>
+
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="exportExcel()"
+        [disabled]="filterForm.invalid || isExporting">
+
+        <mat-icon>download</mat-icon>
+
+        {{ isExporting ? 'Exporting...' : 'Export Excel' }}
+
+      </button>
+
+    </form>
+
+    <div class="info-message" *ngIf="!analytics && !isLoading">
+        <mat-icon>info</mat-icon>
+        <span>
+            Select a start date and end date, then click Apply to view analytics.
+        </span>
+    </div>
+
+  </div>
+
+
+  <div
+    *ngIf="errorMessage"
+    class="error-container">
+
+    <mat-icon>
+      error_outline
+    </mat-icon>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+  </div>
+
+
+  <div
+    *ngIf="isLoading"
+    class="loading-container">
+
+    <mat-spinner
+      diameter="48"
+      color="primary">
+    </mat-spinner>
+
+    <p>
+      Loading analytics...
+    </p>
+
+  </div>
+
+
+  <ng-container
+    *ngIf="!isLoading && analytics">
+
+    <div class="analytics-section">
+
+      <div class="section-header">
+
+        <div>
+          <mat-icon>
+            business_center
+          </mat-icon>
+        </div>
+
+        <h2>
+          Business
+        </h2>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              event
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.business.appointmentsCount }}
+            </span>
+
+            <span class="stat-label">
+              Appointments
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              check_circle
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.business.completedSessionsCount }}
+            </span>
+
+            <span class="stat-label">
+              Completed sessions
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              star
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.business.averageRating | number:'1.1-1' }}
+            </span>
+
+            <span class="stat-label">
+              Average rating
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="analytics-section">
+
+      <div class="section-header">
+
+        <mat-icon>
+          group
+        </mat-icon>
+
+        <h2>
+          Users
+        </h2>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              person
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.users.clientsCount }}
+            </span>
+
+            <span class="stat-label">
+              Clients
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              psychology
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.users.therapistsCount }}
+            </span>
+
+            <span class="stat-label">
+              Therapists
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              how_to_reg
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.users.activeClientsCount }}
+            </span>
+
+            <span class="stat-label">
+              Active clients
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="analytics-section">
+
+      <div class="section-header">
+
+        <mat-icon>
+          speed
+        </mat-icon>
+
+        <h2>
+          System performance
+        </h2>
+
+      </div>
+
+
+      <div class="stats-grid performance-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              http
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.systemPerformance.totalRequests }}
+            </span>
+
+            <span class="stat-label">
+              API requests
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              timer
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.systemPerformance.averageResponseTimeMs | number:'1.1-1' }} ms
+            </span>
+
+            <span class="stat-label">
+              Average response time
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              error_outline
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.systemPerformance.serverErrorsCount }}
+            </span>
+
+            <span class="stat-label">
+              Server errors
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            <mat-icon>
+              percent
+            </mat-icon>
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-value">
+              {{ analytics.systemPerformance.errorRate | number:'1.2-2' }}%
+            </span>
+
+            <span class="stat-label">
+              Error rate
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

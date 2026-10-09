@@ -7,11 +7,13 @@ import { AdminLayoutComponent } from './admin-layout/admin-layout/admin-layout.c
 import { NotificationLogsComponent } from './admin-layout/notification-logs/notification-logs/notification-logs.component';
 import { SharedModule } from '../shared/shared-module';
 import { MatMenuModule } from '@angular/material/menu';
+import { AnalyticsComponent } from './admin-layout/analytics/analytics/analytics.component';
 
 @NgModule({
   declarations: [
     AdminLayoutComponent,
-    NotificationLogsComponent
+    NotificationLogsComponent,
+    AnalyticsComponent
   ],
   imports: [
     CommonModule,

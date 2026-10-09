@@ -47,6 +47,7 @@ public interface IAppDbContext
     public DbSet<ArticleEntity> Articles { get; }
     public DbSet<DirectChatEntity> DirectChats { get; }
     public DbSet<TherapistReportEntity> TherapistReports { get; }
+    public DbSet<RequestLogEntity> RequestLogs{ get; }
     public DbSet<NotificationTokenEntity> NotificationTokens { get; }
     DatabaseFacade Database { get; }
     DbSet<AppointmentNotificationLogEntity> AppointmentNotificationLogs { get; }
