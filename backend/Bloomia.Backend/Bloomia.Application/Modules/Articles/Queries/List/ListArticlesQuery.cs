@@ -8,6 +8,10 @@ namespace Bloomia.Application.Modules.Articles.Queries.List
 {
     public class ListArticlesQuery : BasePagedQuery<ListArticlesQueryDto>
     {
-        public string? Search { get; init; }
+        public string? Title { get; init; }
+        public string? Content { get; init; }
+        public string? AdminName { get; init; }
+        public DateTime? DateFrom { get; init; }
+        public DateTime? DateTo { get; init; }
     }
 }

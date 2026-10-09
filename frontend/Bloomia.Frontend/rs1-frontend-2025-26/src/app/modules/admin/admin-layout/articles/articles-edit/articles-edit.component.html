@@ -1,0 +1,96 @@
+<div class="container">
+
+  <div class="header-card mat-elevation-z2">
+    <h1>Edit article</h1>
+  </div>
+
+
+  <div class="form-card mat-elevation-z2">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!isLoading || form">
+
+      <div *ngIf="errorMessage" class="error-banner"> 
+        <mat-icon>error</mat-icon> 
+        <span>
+          {{ errorMessage }}
+        </span> 
+      </div>
+
+
+      <mat-form-field appearance="outline" class="full-width">
+
+        <mat-label>
+          Title
+        </mat-label>
+
+        <input matInput formControlName="title" placeholder="Article title">
+
+        <mat-icon matSuffix>
+          title
+        </mat-icon>
+
+        <mat-error *ngIf="hasError('title')">
+            {{ getErrorMessage('title') }} 
+        </mat-error>
+
+      </mat-form-field>
+
+
+      <mat-form-field
+        appearance="outline"
+        class="full-width">
+
+        <mat-label>
+          Content
+        </mat-label>
+
+        <textarea
+          matInput
+          formControlName="content"
+          placeholder="Article content"
+          rows="10">
+        </textarea>
+
+        <mat-icon matSuffix>
+          description
+        </mat-icon>
+
+        <mat-error *ngIf="hasError('content')"> 
+          {{ getErrorMessage('content') }}
+        </mat-error>
+
+      </mat-form-field>
+
+
+      <div class="form-actions"> 
+        <button type="button" mat-stroked-button (click)="onCancel()" [disabled]="isLoading"> 
+          <mat-icon>close</mat-icon> 
+          Cancel 
+        </button>
+
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid || isLoading"> 
+          <mat-icon>save</mat-icon> 
+          Update 
+        </button> 
+      </div>
+
+    </form>
+
+
+    <div
+      *ngIf="isLoading && !form"
+      class="loading-overlay">
+
+      <mat-spinner
+        diameter="50">
+      </mat-spinner>
+
+      <p>
+        Loading article...
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

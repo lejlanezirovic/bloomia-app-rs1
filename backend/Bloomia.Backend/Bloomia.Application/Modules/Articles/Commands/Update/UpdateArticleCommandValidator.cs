@@ -14,13 +14,13 @@ namespace Bloomia.Application.Modules.Articles.Commands.Update
 
             RuleFor(x => x.Title)
                 .NotEmpty()
-                .Must(x => x != "string")
-                .WithMessage("Title cannot be empty or default value 'string'.");
+                .MinimumLength(5)
+                .MaximumLength(150);
 
             RuleFor(x => x.Content)
                 .NotEmpty()
-                .Must(x => x != "string")
-                .WithMessage("Content cannot be empty or default value 'string'.");
+                .MinimumLength(20)
+                .MaximumLength(5000);
         }
     }
 }

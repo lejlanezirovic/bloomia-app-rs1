@@ -2,7 +2,11 @@ import { BasePagedQuery } from '../../core/models/paging/base-paged-query';
 import { PageResult } from '../../core/models/paging/page-result';
 
 export class ListArticlesRequest extends BasePagedQuery {
-  search?: string | null;
+  title?: string | null;
+  content?: string | null;
+  adminName?: string | null;
+  dateFrom?: string | null;
+  dateTo?: string | null;
 }
 
 export interface ListArticlesQueryDto {
@@ -23,3 +27,13 @@ export interface GetArticleByIdQueryDto {
 
 export type ListArticlesResponse =
   PageResult<ListArticlesQueryDto>;
+
+  export interface CreateArticleCommand {
+    title: string;
+    content: string;
+  }
+
+  export interface UpdateArticleCommand {
+    title: string;
+    content: string;
+  }

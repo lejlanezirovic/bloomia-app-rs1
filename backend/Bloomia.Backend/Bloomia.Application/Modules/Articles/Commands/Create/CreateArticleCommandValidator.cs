@@ -12,14 +12,20 @@ namespace Bloomia.Application.Modules.Articles.Commands.Create
         public CreateArticleCommandValidator()
         {
             RuleFor(x => x.Title)
-                .NotEmpty()
-                .Must(x => x != "string")
-                .WithMessage("Title cannot be empty or default value 'string'.");
-                    
+            .NotEmpty()
+            .WithMessage("Title is required.")
+            .MinimumLength(5)
+            .WithMessage("Title must contain at least 5 characters.")
+            .MaximumLength(150)
+            .WithMessage("Title cannot exceed 150 characters.");
+
             RuleFor(x => x.Content)
                 .NotEmpty()
-                .Must(x => x != "string")
-                .WithMessage("Content cannot be empty or default value 'string'.");
+                .WithMessage("Content is required.")
+                .MinimumLength(20)
+                .WithMessage("Content must contain at least 20 characters.")
+                .MaximumLength(5000)
+                .WithMessage("Content cannot exceed 5000 characters.");
         }
     }
 }

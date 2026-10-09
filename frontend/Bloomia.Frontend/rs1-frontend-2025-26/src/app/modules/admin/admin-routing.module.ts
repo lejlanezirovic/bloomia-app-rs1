@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './admin-layout/admin-layout/admin-layout.component';
 import { NotificationLogsComponent } from './admin-layout/notification-logs/notification-logs/notification-logs.component';
 import { AnalyticsComponent } from './admin-layout/analytics/analytics/analytics.component';
+import { ArticlesListComponent } from './admin-layout/articles/articles-list/articles-list.component';
+import { ArticlesAddComponent } from './admin-layout/articles/articles-add/articles-add.component';
+import { ArticlesEditComponent } from './admin-layout/articles/articles-edit/articles-edit.component';
 
 const routes: Routes = [
   {
@@ -21,6 +24,18 @@ const routes: Routes = [
       {
         path: 'analytics',
         component: AnalyticsComponent
+      },
+      {
+        path: 'articles',
+        component: ArticlesListComponent
+      },
+      {
+        path: 'articles/add',
+        component: ArticlesAddComponent
+      },
+      {
+        path: 'articles/:id/edit',
+        component: ArticlesEditComponent
       }
     ]
   }

@@ -291,6 +291,64 @@ export class DialogHelperService {
     }
   };
 
+  article = {
+    confirmDelete: (title: string) => {
+      return this.confirmDelete(
+        title,
+       `Are you sure you want to delete the article ${title} ?`
+      );
+    },
+
+    confirmCancel: () => {
+      return this.confirm(
+        'PRODUCTS.DIALOGS.UNSAVED_CHANGES',
+        'PRODUCTS.DIALOGS.CONFIRM_CANCEL'
+      );
+    },
+
+    showCreateSuccess: () => {
+      return this.showSuccess(
+        'DIALOGS.TITLES.SUCCESS',
+        'PRODUCTS.DIALOGS.SUCCESS_CREATE'
+      );
+    },
+
+    showUpdateSuccess: () => {
+      return this.showSuccess(
+        'DIALOGS.TITLES.SUCCESS',
+        'PRODUCTS.DIALOGS.SUCCESS_UPDATE'
+      );
+    },
+
+    showDeleteSuccess: () => {
+      return this.showSuccess(
+        'DIALOGS.TITLES.SUCCESS',
+        'Article deleted successfully'
+      );
+    },
+
+    showCreateError: () => {
+      return this.showError(
+        'DIALOGS.TITLES.ERROR',
+        'PRODUCTS.DIALOGS.ERROR_CREATE'
+      );
+    },
+
+    showUpdateError: () => {
+      return this.showError(
+        'DIALOGS.TITLES.ERROR',
+        'PRODUCTS.DIALOGS.ERROR_UPDATE'
+      );
+    },
+
+    showDeleteError: () => {
+      return this.showError(
+        'DIALOGS.TITLES.ERROR',
+        'PRODUCTS.DIALOGS.ERROR_DELETE'
+      );
+    }
+  };
+
   file = {
     confirmDelete: (fileName: string) => {
       return this.confirmDelete(

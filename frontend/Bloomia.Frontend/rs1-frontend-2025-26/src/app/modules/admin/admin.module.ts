@@ -8,12 +8,18 @@ import { NotificationLogsComponent } from './admin-layout/notification-logs/noti
 import { SharedModule } from '../shared/shared-module';
 import { MatMenuModule } from '@angular/material/menu';
 import { AnalyticsComponent } from './admin-layout/analytics/analytics/analytics.component';
+import { ArticlesListComponent } from './admin-layout/articles/articles-list/articles-list.component';
+import { ArticlesEditComponent } from './admin-layout/articles/articles-edit/articles-edit.component';
+import { ArticlesAddComponent } from './admin-layout/articles/articles-add/articles-add.component';
 
 @NgModule({
   declarations: [
     AdminLayoutComponent,
     NotificationLogsComponent,
-    AnalyticsComponent
+    AnalyticsComponent,
+    ArticlesListComponent,
+    ArticlesEditComponent,
+    ArticlesAddComponent
   ],
   imports: [
     CommonModule,
