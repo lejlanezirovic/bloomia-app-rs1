@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,10 +31,21 @@ namespace Bloomia.Application.Modules.Appointments.Command.Delete
                 throw new BloomiaNotFoundException("Appointment not found(Unauthorized)!");
             }
 
+            if (appointment.Status == AppointmentStatus.Cancelled)
+            {
+                throw new BloomiaConflictException("Appointment is already cancelled.");
+            }
+
+            if (appointment.ScheduledAtUtc <= DateTime.UtcNow)
+            {
+                throw new BloomiaBusinessRuleException("APPOINTMENT_STARTED", "An appointment that has already started cannot be cancelled.");
+            }
+
             await using var transaction=await context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
-                appointment.IsDeleted = true;
+                // Cancellation keeps the row (no soft delete) so it stays in the client's history.
+                appointment.Status = AppointmentStatus.Cancelled;
                 if(appointment.TherapistAvailability!=null)
                 {
                     appointment.TherapistAvailability.IsBooked = false;
@@ -47,7 +59,7 @@ namespace Bloomia.Application.Modules.Appointments.Command.Delete
                 throw;
             }
 
-            return "Appointment deleted successfully";
+            return "Appointment cancelled successfully";
         }
     }
 }

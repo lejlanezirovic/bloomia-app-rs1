@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Application.Modules.Appointments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -14,14 +15,14 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Queries.Overview
             var userId = currentUser.UserId;
 
             if (userId is null)
-                throw new BloomiaBusinessRuleException("AUTH", "Korisnik nije autentifikovan.");
+                throw new BloomiaBusinessRuleException("AUTH", "User is not authenticated.");
 
             var therapistId = await ctx.Therapists
                .Where(x => x.UserId == userId)
                .Select(x => (int?)x.Id).FirstOrDefaultAsync(ct);
 
             if (therapistId is null)
-                throw new BloomiaBusinessRuleException("THERAPIST", "Terapeut nije pronadjen.");
+                throw new BloomiaBusinessRuleException("THERAPIST", "Therapist was not found.");
 
             var now = DateTime.UtcNow;
 
@@ -31,13 +32,14 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Queries.Overview
 
             var monthlyAppointments = ctx.Appointments
                 .AsNoTracking()
+                .WhereNotCancelled()
                 .Where(x =>
                      x.TherapistAvailability.TherapistId == therapistId &&
                      x.ScheduledAtUtc >= monthStart &&
                      x.ScheduledAtUtc < nextMonth);
 
             var appointmentsThisMonth = await monthlyAppointments.CountAsync(ct);
-            var pastAppointmentsThisMonth = await monthlyAppointments.CountAsync(x => x.ScheduledAtUtc.AddHours(1) <= now, ct);
+            var pastAppointmentsThisMonth = await monthlyAppointments.WhereCompleted(now).CountAsync(ct);
 
             var activeClients = await monthlyAppointments
                     .Select(x => x.ClientId).Distinct().CountAsync(ct);
@@ -47,6 +49,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Queries.Overview
                 .Select(x => x.RatingAvg).FirstAsync(ct);
 
             var upcomingAppointments = await ctx.Appointments.AsNoTracking()
+                .WhereNotCancelled()
                 .Where(x => x.TherapistAvailability.TherapistId == therapistId &&
                             x.ScheduledAtUtc >= now)
                 .OrderBy(x => x.ScheduledAtUtc)

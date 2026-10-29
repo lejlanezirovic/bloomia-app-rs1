@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Application.Modules.Appointments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,7 @@ namespace Bloomia.Application.Modules.Admin.Analytics.Queries.Get
 
             var appointmentsQuery = ctx.Appointments
                 .AsNoTracking()
+                .WhereNotCancelled()
                 .Where(x =>
                     x.ScheduledAtUtc >= dateFrom &&
                     x.ScheduledAtUtc < dateToExclusive);
@@ -38,9 +40,7 @@ namespace Bloomia.Application.Modules.Admin.Analytics.Queries.Get
             var appointmentsCount = await appointmentsQuery.CountAsync(ct);
 
             var completedSessionsCount =
-                await appointmentsQuery.CountAsync(
-                    x => x.ScheduledAtUtc.AddHours(1) <= now,
-                    ct);
+                await appointmentsQuery.WhereCompleted(now).CountAsync(ct);
 
             var reviewsQuery = ctx.Reviews
                 .AsNoTracking()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.Appointments.Query.List
 {
-    public class ListAppointmentsQueryHandler(IAppDbContext context) : IRequestHandler<ListAppointmentsQuery, List< ListAppointmentsQueryDto>>
+    public class ListAppointmentsQueryHandler(IAppDbContext context) : IRequestHandler<ListAppointmentsQuery, PageResult<ListAppointmentsQueryDto>>
     {
-        public async Task<List<ListAppointmentsQueryDto>> Handle(ListAppointmentsQuery request, CancellationToken cancellationToken)
+        public async Task<PageResult<ListAppointmentsQueryDto>> Handle(ListAppointmentsQuery request, CancellationToken cancellationToken)
         {
 
             var client = await context.Clients.Include(x => x.User).FirstOrDefaultAsync(x => x.User.Id == request.UserId, cancellationToken);
@@ -16,19 +17,32 @@ namespace Bloomia.Application.Modules.Appointments.Query.List
             {
                 throw new BloomiaNotFoundException("Client not found");
             }
-            var appointments = context.Appointments.Include(x => x.Client).ThenInclude(x => x.User)
-                        .Include(x => x.TherapistAvailability).ThenInclude(x => x.Therapist).ThenInclude(x => x.User)
+            var now = DateTime.UtcNow;
+
+            // Intentionally includes cancelled appointments so the client can see their history.
+            var appointmentsQuery = context.Appointments
                         .Where(x => x.ClientId == client.Id)
-                        .Select(x => new ListAppointmentsQueryDto { 
+                        .OrderByDescending(x => x.ScheduledAtUtc)
+                        .Select(x => new ListAppointmentsQueryDto {
                             AppointmentId=x.Id,
                             ClientName=x.Client.User.Fullname,
                             TherapistName=x.TherapistAvailability.Therapist.User.Fullname,
                             Date=x.TherapistAvailability.Date,
                             Time=x.TherapistAvailability.StartTime,
-                            SessionType=x.SessionType.ToString()         
+                            SessionType=x.SessionType.ToString(),
+                            Status=x.Status.ToString(),
+                            ScheduledAtUtc=x.ScheduledAtUtc,
+                            CanCancel=x.Status == AppointmentStatus.Scheduled && x.ScheduledAtUtc > now
                         }).AsNoTracking();
 
-            return appointments.ToList();
+            var result = await PageResult<ListAppointmentsQueryDto>.FromQueryableAsync(appointmentsQuery, request.Paging, cancellationToken);
+
+            foreach (var appointment in result.Items)
+            {
+                appointment.ScheduledAtUtc = DateTime.SpecifyKind(appointment.ScheduledAtUtc, DateTimeKind.Utc);
+            }
+
+            return result;
         }
     }
 }

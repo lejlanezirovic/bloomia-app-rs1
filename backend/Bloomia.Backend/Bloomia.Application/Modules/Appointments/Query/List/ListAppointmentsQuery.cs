@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bloomia.Application.Modules.Appointments.Query.List
 {
-    public sealed class ListAppointmentsQuery:IRequest<List<ListAppointmentsQueryDto>>
+    public sealed class ListAppointmentsQuery:BasePagedQuery<ListAppointmentsQueryDto>
     {
         [JsonIgnore]
         public int UserId { get; set; }

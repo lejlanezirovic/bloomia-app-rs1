@@ -21,10 +21,10 @@ namespace Bloomia.Application.Modules.Appointments.Query.CanReviewTherapist
                 return false;
 
             return await context.Appointments
+                            .WhereCompleted(DateTime.UtcNow)
                             .AnyAsync(x =>
                                 x.ClientId == clientId.Value &&
-                                x.TherapistAvailability.TherapistId == request.TherapistId &&
-                                x.ScheduledAtUtc.AddHours(1) <= DateTime.UtcNow,
+                                x.TherapistAvailability.TherapistId == request.TherapistId,
                                 ct);
         }
     }

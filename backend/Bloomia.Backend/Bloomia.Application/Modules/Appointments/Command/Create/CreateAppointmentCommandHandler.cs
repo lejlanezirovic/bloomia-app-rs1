@@ -43,6 +43,7 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
             }
 
             var clientHasAppointmentAtSameTime = await context.Appointments
+                .WhereNotCancelled()
                 .AnyAsync(x => x.ClientId == client.Id &&
                                 x.ScheduledAtUtc == scheduledUtc, cancellationToken);
 
@@ -63,7 +64,6 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
             context.Appointments.Add(appointment);
 
             availableTime.IsBooked = true;
-            availableTime.Appointment = appointment;
 
             try
             {

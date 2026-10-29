@@ -836,6 +836,9 @@ namespace Bloomia.Infrastructure.Database.Migrations
                     b.Property<int>("SessionType")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("TherapistAvailabilityId")
                         .HasColumnType("int");
 
@@ -847,7 +850,7 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
                     b.HasIndex("TherapistAvailabilityId")
                         .IsUnique()
-                        .HasFilter("[IsDeleted]=0");
+                        .HasFilter("[IsDeleted]=0 AND [Status]<>1");
 
                     b.ToTable("Appointments", (string)null);
                 });
@@ -1420,8 +1423,8 @@ namespace Bloomia.Infrastructure.Database.Migrations
                         .HasForeignKey("ReviewId");
 
                     b.HasOne("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", "TherapistAvailability")
-                        .WithOne("Appointment")
-                        .HasForeignKey("Bloomia.Domain.Entities.Sessions.AppointmentEntity", "TherapistAvailabilityId")
+                        .WithMany("Appointments")
+                        .HasForeignKey("TherapistAvailabilityId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Client");
@@ -1617,7 +1620,7 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Bloomia.Domain.Entities.TherapistRelated.TherapistAvailabilityEntity", b =>
                 {
-                    b.Navigation("Appointment");
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("Bloomia.Domain.Entities.TherapistRelated.TherapyTypeEntity", b =>

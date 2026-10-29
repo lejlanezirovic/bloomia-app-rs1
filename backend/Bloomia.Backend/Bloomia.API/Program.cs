@@ -114,7 +114,7 @@ public partial class Program
                     policy =>
                     {
                         policy
-                            .WithOrigins("http://localhost:4200") // kao string array može i više URL-ova
+                            .WithOrigins("http://localhost:4200") // Multiple URLs can be provided as a string array.
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials();
@@ -155,8 +155,8 @@ public partial class Program
         }
         catch (HostAbortedException)
         {
-            // EF Core tools abortiraju host nakon što uzmu DbContext.
-            // Ovo nije runtime greška – samo tiho izađi.
+            // EF Core tools terminate the host after obtaining the DbContext.
+            // This is not a runtime error - exit silently.
             Log.Information("Host aborted by EF Core tooling (design-time) - its ok.");
         }
         catch (Exception ex)

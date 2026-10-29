@@ -29,9 +29,8 @@ namespace Bloomia.API.Controllers
         }
         [Authorize(Roles = "CLIENT")]
         [HttpGet("get-my-appointments")]
-        public async Task<ActionResult<List<ListAppointmentsQueryDto>>> GetClientAppointments (CancellationToken ct)
+        public async Task<ActionResult<PageResult<ListAppointmentsQueryDto>>> GetClientAppointments ([FromQuery] ListAppointmentsQuery request, CancellationToken ct)
         {
-            var request = new ListAppointmentsQuery();
             var userClaim = User.FindFirst("id") ?? User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = int.Parse(userClaim?.Value);
             request.UserId = userId;

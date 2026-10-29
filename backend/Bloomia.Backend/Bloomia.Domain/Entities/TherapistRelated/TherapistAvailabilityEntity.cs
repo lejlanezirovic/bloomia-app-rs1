@@ -16,7 +16,8 @@ namespace Bloomia.Domain.Entities.TherapistRelated
         public TimeOnly StartTime { get; set; }
         public bool IsBooked { get; set; }
 
-        public AppointmentEntity? Appointment { get; set; }
+        // A slot can have several appointments over time (cancelled ones stay), but only one active.
+        public List<AppointmentEntity> Appointments { get; set; } = new();
         public int? AppointmentId { get; set; }
     }
 }

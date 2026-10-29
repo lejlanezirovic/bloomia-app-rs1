@@ -17,6 +17,7 @@ namespace Bloomia.Domain.Entities.Sessions
         public int TherapistAvailabilityId { get; set; }
         public TherapistAvailabilityEntity TherapistAvailability { get; set; }
         public SessionType SessionType { get; set; }
+        public AppointmentStatus Status { get; set; } = AppointmentStatus.Scheduled;
         public ReviewEntity? Review { get; set; }
         public DateTime BookedAt { get; set; }
         public DateTime ScheduledAtUtc { get; set; }

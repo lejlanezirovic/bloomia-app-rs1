@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Application.Modules.Appointments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,7 @@ namespace Bloomia.Application.Modules.Moods.Queries.List
                 var hasAppointment = await context.Appointments
                     .Include(x => x.TherapistAvailability)
                         .ThenInclude(t => t.Therapist)
+                    .WhereNotCancelled()
                     .AnyAsync(x => x.ClientId == clientId && x.TherapistAvailability.Therapist.UserId == currentUser.UserId, ct);
 
                 if(!hasAppointment)

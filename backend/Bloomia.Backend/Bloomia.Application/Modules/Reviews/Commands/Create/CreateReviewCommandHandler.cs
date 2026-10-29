@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bloomia.Application.Modules.Appointments;
 using Bloomia.Domain.Entities.ReviewsFolder;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 
@@ -34,9 +35,9 @@ namespace Bloomia.Application.Modules.Reviews.Commands.Create
                 throw new BloomiaNotFoundException("Therapist not found.");
 
             var hasCompletedAppointment = await context.Appointments
+                .WhereCompleted(DateTime.UtcNow)
                 .AnyAsync(x => x.ClientId == client.Id &&
-                                x.TherapistAvailability.TherapistId == request.TherapistId &&
-                                x.ScheduledAtUtc.AddHours(1) <= DateTime.UtcNow, ct);
+                                x.TherapistAvailability.TherapistId == request.TherapistId, ct);
 
             if (!hasCompletedAppointment)
             {

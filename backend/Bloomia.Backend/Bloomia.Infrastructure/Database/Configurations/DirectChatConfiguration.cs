@@ -30,13 +30,4 @@ namespace Bloomia.Infrastructure.Database.Configurations
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
-    /*NEMA kolekcije poruka u ClientEntity i TherapistEntity jer:
-
-Message nije direktno vezan za klijenta/terapeuta
-
-Relationship ide preko DirectChat
-
-Ovo je najčišći i najstandardniji dizajn
-
-Izbjegava se nepotrebna kompleksnost i migracije*/
 }

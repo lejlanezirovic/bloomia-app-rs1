@@ -15,18 +15,18 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
         {
             var email = request.Email.Trim().ToLower();
 
-            //provjera da li već postoji korisnik sa tim emailom
+            // Check whether a user with the same email already exists.
             var existingUser = await context.Users
                 .FirstOrDefaultAsync(x => x.Email.ToLower() == email && x.IsEnabled && !x.IsDeleted, ct);
 
             if (existingUser != null)
-                throw new BloomiaConflictException("Korisnik sa unesenim emailom već postoji.");
+                throw new BloomiaConflictException("A user with the entered email already exists.");
 
-            //dohvatamo rolu THERAPIST
+            // get the THERAPIST role
             var therapistRole = await context.Roles
                 .FirstOrDefaultAsync(x => x.RoleName == "THERAPIST", ct);
             if (therapistRole == null)
-                throw new BloomiaNotFoundException("Rola 'THERAPIST' ne postoji u bazi.");
+                throw new BloomiaNotFoundException("Role 'THERAPIST' does not exist in the database.");
 
             var newUser = new UserEntity
             {
@@ -64,7 +64,7 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
                 .FirstOrDefaultAsync(x => x.Id == newUser.Id, ct);
 
             if (newUser == null)
-                throw new BloomiaNotFoundException("Korisnik nije pronađen.");
+                throw new BloomiaNotFoundException("User was not found.");
 
             var tokenPair = jwt.IssueTokens(newUser);
 

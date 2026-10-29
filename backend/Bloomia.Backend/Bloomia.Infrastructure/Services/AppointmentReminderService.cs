@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Abstractions;
+using Bloomia.Application.Modules.Appointments;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.Sessions;
 using FluentValidation.Validators;
@@ -39,6 +40,7 @@ namespace Bloomia.Infrastructure.Services
                 .Include(x => x.TherapistAvailability)
                     .ThenInclude(x => x.Therapist)
                         .ThenInclude(x => x.User)
+                .WhereNotCancelled()
                 .Where(x => !x.IsDeleted &&
                         x.ScheduledAtUtc >= tomorrowStartUtc &&
                         x.ScheduledAtUtc < dayAfterStartUtc)

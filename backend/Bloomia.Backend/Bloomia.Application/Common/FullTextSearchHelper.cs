@@ -20,7 +20,7 @@ public static class FullTextSearchHelper
             return null;
 
         // Full-text CONTAINS ima svoju sintaksu (", *, AND/OR...), zato uklanjamo
-        // sve sto nije slovo/broj kako korisnikov unos ne bi izazvao sintaksnu gresku.
+        // Remove all characters that are not letters or numbers from the user's input.
         var words = rawSearch
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
             .Select(w => Regex.Replace(w, "[^\\p{L}\\p{Nd}]", ""))

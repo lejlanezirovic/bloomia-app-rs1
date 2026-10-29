@@ -15,6 +15,8 @@ namespace Bloomia.Application.Modules.Appointments.Query.List
         public TimeOnly Time { get; set; }
         public string SessionType { get; set; }
         public string Status { get; set; }
+        public DateTime ScheduledAtUtc { get; set; }
+        public bool CanCancel { get; set; }
 
     }
 }

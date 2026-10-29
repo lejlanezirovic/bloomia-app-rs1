@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Application.Modules.Appointments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Bloomia.Application.Modules.Therapists.MyClients.Queries
 
             var appointments = context.Appointments
                 .AsNoTracking()
+                .WhereNotCancelled()
                 .Where(x => x.TherapistAvailability.TherapistId == therapist.Id);
 
             if(!string.IsNullOrWhiteSpace(request.Search))

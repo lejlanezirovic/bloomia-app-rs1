@@ -1,4 +1,5 @@
-﻿using Bloomia.Application.Modules.Therapists.Dashboard.Reports.Queries.List;
+﻿using Bloomia.Application.Modules.Appointments;
+using Bloomia.Application.Modules.Therapists.Dashboard.Reports.Queries.List;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.TherapistRelated;
 using System;
@@ -43,6 +44,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
             var now = DateTime.UtcNow;
 
             var appointments = await ctx.Appointments.AsNoTracking()
+                .WhereNotCancelled()
                 .Where(x => x.TherapistAvailability.TherapistId == therapist.Id &&
                             x.ClientId == request.ClientId &&
                             x.ScheduledAtUtc >= dateFrom &&
@@ -52,7 +54,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
 
             var appointmentsCount = appointments.Count;
 
-            var completedSessionsCount = appointments.Count(x => x.ScheduledAtUtc.AddHours(1) <= now);
+            var completedSessionsCount = appointments.Count(x => x.IsCompleted(now));
 
 
             var reviewsQuery = ctx.Reviews.AsNoTracking()
@@ -85,7 +87,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
                             {
                                 ScheduledAtUtc = x.ScheduledAtUtc,
                                 SessionType = GetSessionTypeName(x.SessionType),
-                                Status = x.ScheduledAtUtc.AddHours(1) <= now ? "Completed" : "Upcoming"
+                                Status = x.IsCompleted(now) ? "Completed" : "Upcoming"
                             }).ToList()
             };
 
