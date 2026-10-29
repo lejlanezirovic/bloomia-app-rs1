@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Modules.Appointments;
 using Bloomia.Domain.Entities.ReviewsFolder;
-using Microsoft.EntityFrameworkCore.Storage.Json;
 
 namespace Bloomia.Application.Modules.Reviews.Commands.Create
 {
@@ -45,6 +44,9 @@ namespace Bloomia.Application.Modules.Reviews.Commands.Create
                     "You can leave a review only after completing an appointment with this therapist.");
             }
 
+            if (await HasAlreadyReviewedAsync(client.Id, request.TherapistId, ct))
+                throw new BloomiaConflictException("You have already reviewed this therapist.");
+
             var review = new ReviewEntity
             {
                 ClientId = client.Id,
@@ -55,7 +57,18 @@ namespace Bloomia.Application.Modules.Reviews.Commands.Create
             };
 
             await context.Reviews.AddAsync(review);
-            await context.SaveChangesAsync(ct);
+
+            try
+            {
+                await context.SaveChangesAsync(ct);
+            }
+            catch (DbUpdateException)
+            {
+                if (await HasAlreadyReviewedAsync(client.Id, request.TherapistId, ct))
+                    throw new BloomiaConflictException("You have already reviewed this therapist.");
+
+                throw;
+            }
 
             var averageRating = await context.Reviews
                 .Where(x => x.TherapistId == therapist.Id)
@@ -67,5 +80,8 @@ namespace Bloomia.Application.Modules.Reviews.Commands.Create
             return review.Id;
 
         }
+
+        private Task<bool> HasAlreadyReviewedAsync(int clientId, int therapistId, CancellationToken ct)
+            => context.Reviews.AnyAsync(x => x.ClientId == clientId && x.TherapistId == therapistId, ct);
     }
 }

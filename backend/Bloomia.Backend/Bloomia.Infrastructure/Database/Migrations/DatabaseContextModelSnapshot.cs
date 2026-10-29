@@ -631,9 +631,11 @@ namespace Bloomia.Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
-
                     b.HasIndex("TherapistId");
+
+                    b.HasIndex("ClientId", "TherapistId")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted]=0");
 
                     b.ToTable("Reviews", (string)null);
                 });

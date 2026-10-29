@@ -20,6 +20,12 @@ namespace Bloomia.Application.Modules.Appointments.Query.CanReviewTherapist
             if (clientId == null)
                 return false;
 
+            var alreadyReviewed = await context.Reviews
+                .AnyAsync(x => x.ClientId == clientId.Value && x.TherapistId == request.TherapistId, ct);
+
+            if (alreadyReviewed)
+                return false;
+
             return await context.Appointments
                             .WhereCompleted(DateTime.UtcNow)
                             .AnyAsync(x =>

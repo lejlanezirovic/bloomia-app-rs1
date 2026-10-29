@@ -15,6 +15,10 @@ namespace Bloomia.Infrastructure.Database.Configurations
 
             builder.HasKey(x => x.Id);
 
+            builder.HasIndex(x => new { x.ClientId, x.TherapistId })
+                .IsUnique()
+                .HasFilter("[IsDeleted]=0");
+
             builder.HasOne(x => x.Client)
                     .WithMany()
                     .HasForeignKey(x => x.ClientId)
