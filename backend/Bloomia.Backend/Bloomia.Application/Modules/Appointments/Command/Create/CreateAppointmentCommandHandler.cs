@@ -1,4 +1,5 @@
-﻿using Bloomia.Domain.Entities.Enums;
+﻿using Bloomia.Domain.Common;
+using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.Sessions;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,10 +27,12 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 throw new BloomiaNotFoundException("That start time is not found!");
             }
 
-            var localDateTime = availableTime.Date.ToDateTime(availableTime.StartTime, DateTimeKind.Unspecified);
-            var BiHTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
-            var scheduledUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime, BiHTimeZone);
+            if (!availableTime.Therapist.IsVerified)
+            {
+                throw new BloomiaBusinessRuleException("THERAPIST_NOT_VERIFIED", "You can only book appointments with verified therapists.");
+            }
 
+            var scheduledUtc = BusinessTime.ToUtc(availableTime.Date, availableTime.StartTime);
 
             if (scheduledUtc <= DateTime.UtcNow)
             {
@@ -42,13 +45,21 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 throw new BloomiaConflictException("That time is already booked!");
             }
 
-            var clientHasAppointmentAtSameTime = await context.Appointments
+            var clientHasOverlappingAppointment = await context.Appointments
                 .WhereNotCancelled()
-                .AnyAsync(x => x.ClientId == client.Id &&
-                                x.ScheduledAtUtc == scheduledUtc, cancellationToken);
+                .WhereOverlapping(scheduledUtc)
+                .AnyAsync(x => x.ClientId == client.Id, cancellationToken);
 
-            if (clientHasAppointmentAtSameTime)
-                throw new BloomiaBusinessRuleException("APPOINTMENT", "You already have an appointment at this time.");
+            if (clientHasOverlappingAppointment)
+                throw new BloomiaBusinessRuleException("APPOINTMENT", "You already have an appointment that overlaps with this time.");
+
+            var therapistHasOverlappingAppointment = await context.Appointments
+                .WhereNotCancelled()
+                .WhereOverlapping(scheduledUtc)
+                .AnyAsync(x => x.TherapistAvailability.TherapistId == availableTime.TherapistId, cancellationToken);
+
+            if (therapistHasOverlappingAppointment)
+                throw new BloomiaConflictException("The therapist already has an appointment that overlaps with this time.");
 
             var appointment = new AppointmentEntity
             {

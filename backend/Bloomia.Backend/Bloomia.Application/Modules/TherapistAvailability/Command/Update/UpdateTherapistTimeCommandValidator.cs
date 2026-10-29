@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,19 +14,15 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Command.Update
             RuleFor(x => x.NewDate).NotEmpty().WithMessage("New date is requied field!");
             RuleFor(x => x.NewTime).NotEmpty().WithMessage("new time is requied field!");
             RuleFor(x => x.NewDate)
-                .Must(x => x > DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-1)))
+                .Must(d => d >= BusinessTime.Today)
                 .WithMessage("New date must be today or a future date!");
             RuleFor(x => x.NewTime)
-                .Must(t => t >= new TimeOnly(8, 0) && t <= new TimeOnly(20, 0))
-                .WithMessage("Start time must be within business hours (08:00 - 20:00). ");
+                .Must(SessionRules.IsWithinWorkingHours)
+                .WithMessage(_ => SessionRules.WorkingHoursMessage);
 
-            RuleFor(x=>x.NewTime)
-                .Must((command, time) =>
-                {
-                    var combined = command.NewDate.ToDateTime(time);
-                    var combinedUtc=combined.ToUniversalTime();
-                    return combinedUtc > DateTime.UtcNow;
-                }).WithMessage("The new scheduled time must be greater than the current time");
+            RuleFor(x => x.NewTime)
+                .Must((command, time) => BusinessTime.ToUtc(command.NewDate, time) > DateTime.UtcNow)
+                .WithMessage("The new scheduled time must be greater than the current time");
         }
     }
 }

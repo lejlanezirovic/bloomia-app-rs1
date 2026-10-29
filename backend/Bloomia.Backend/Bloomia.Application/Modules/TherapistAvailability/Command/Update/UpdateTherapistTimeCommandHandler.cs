@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloomia.Domain.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,14 +28,15 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Command.Update
             {
                 throw new BloomiaConflictException("This slot cannot be updated because it is already booked");
             }
-            var existingAvailability =await context.TherapistAvailabilities
-                    .AnyAsync(x => x.TherapistId == therapist.Id && x.Date == request.NewDate
-                            && x.StartTime == request.NewTime && x.Id!=therapistAvailability.Id && !x.IsDeleted
-                            , cancellationToken);
-           
-            if (existingAvailability==true)
+            var existingAvailability = await context.TherapistAvailabilities
+                    .Where(x => x.TherapistId == therapist.Id && x.Id != therapistAvailability.Id && !x.IsDeleted)
+                    .WhereOverlapping(request.NewDate, request.NewTime)
+                    .AnyAsync(cancellationToken);
+
+            if (existingAvailability)
             {
-                throw new BloomiaConflictException("The new date and time overlap with an existing availability or booked appointment.");
+                throw new BloomiaConflictException(
+                    $"This time overlaps with an existing slot. Sessions last {SessionRules.Duration.TotalMinutes} minutes.");
             }
             var dto = new UpdateTherapistTimeCommandDto
             {

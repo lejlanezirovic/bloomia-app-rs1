@@ -1,5 +1,6 @@
 ﻿using Bloomia.Application.Abstractions;
 using Bloomia.Application.Modules.Therapists.Dashboard.Reports;
+using Bloomia.Domain.Common;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 
@@ -9,8 +10,6 @@ namespace Bloomia.Infrastructure.Services
     {
         public byte[] GenerateSessionReport(TherapistSessionReportData data)
         {
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
-            
             var document = Document.Create(container =>
             {
                 container.Page(page =>
@@ -202,8 +201,7 @@ namespace Bloomia.Infrastructure.Services
 
                                         foreach (var session in data.Sessions)
                                         {
-                                            var utcDate = DateTime.SpecifyKind(session.ScheduledAtUtc, DateTimeKind.Utc);
-                                            var localDate = TimeZoneInfo.ConvertTimeFromUtc(utcDate, timeZone);
+                                            var localDate = BusinessTime.FromUtc(session.ScheduledAtUtc);
 
                                             table.Cell()
                                                 .Element(TableCell)

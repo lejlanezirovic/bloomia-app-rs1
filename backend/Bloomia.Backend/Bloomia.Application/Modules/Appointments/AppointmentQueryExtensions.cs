@@ -21,6 +21,16 @@ namespace Bloomia.Application.Modules.Appointments
             return query.Where(x => x.Status != AppointmentStatus.Cancelled && x.ScheduledAtUtc <= endedBefore);
         }
 
+        public static IQueryable<AppointmentEntity> WhereOverlapping(this IQueryable<AppointmentEntity> query, DateTime startUtc)
+        {
+            var earliestConflictingStart = startUtc - SessionRules.Duration;
+            var latestConflictingStart = startUtc + SessionRules.Duration;
+
+            return query.Where(x =>
+                x.ScheduledAtUtc > earliestConflictingStart &&
+                x.ScheduledAtUtc < latestConflictingStart);
+        }
+
         public static bool IsCompleted(this AppointmentEntity appointment, DateTime nowUtc)
             => appointment.Status != AppointmentStatus.Cancelled &&
                appointment.ScheduledAtUtc <= CompletedStartBoundary(nowUtc);

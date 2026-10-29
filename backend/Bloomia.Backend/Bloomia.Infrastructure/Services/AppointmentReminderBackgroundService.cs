@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Abstractions;
+using Bloomia.Domain.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,15 +15,13 @@ namespace Bloomia.Infrastructure.Services
     {
         protected override async Task ExecuteAsync(CancellationToken ct)
         {
-            var bihTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
-
             logger.LogInformation("Appointment reminder background service started.");
 
             while(!ct.IsCancellationRequested)
             {
                 try
                 {
-                    var nowLocal = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, bihTimeZone);
+                    var nowLocal = BusinessTime.Now;
 
                     var nextRunLocal = new DateTime(
                         nowLocal.Year,

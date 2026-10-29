@@ -1,4 +1,5 @@
-﻿using Bloomia.Domain.Entities.TherapistRelated;
+﻿using Bloomia.Domain.Common;
+using Bloomia.Domain.Entities.TherapistRelated;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,28 +17,18 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Command.Create
                 throw new BloomiaNotFoundException(message: "Therapist not found try to login!");
             }
 
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+            if (BusinessTime.ToUtc(request.AvailableDate, request.StartTime) <= DateTime.UtcNow)
+                throw new BloomiaConflictException("You cannot add a time slot that has already passed.");
 
-            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+            var overlapsExistingSlot = await context.TherapistAvailabilities
+                .Where(x => x.TherapistId == therapist.Id)
+                .WhereOverlapping(request.AvailableDate, request.StartTime)
+                .AnyAsync(cancellationToken);
 
-            var today = DateOnly.FromDateTime(now);
-            var currentTime = TimeOnly.FromDateTime(now);
-
-            if (request.AvailableDate < today)
-                throw new BloomiaConflictException("You cannot add a working time in the past.");
-
-            if (request.AvailableDate == today && request.StartTime <= currentTime)
-                throw new BloomiaConflictException("You cannot add a time slot that has alreeady passed.");
-
-
-            var therapistAvailability =await context.TherapistAvailabilities.Include(x=>x.Therapist)
-                            .Where(x=>x.TherapistId==therapist.Id).ToListAsync(cancellationToken);
-
-            var session = therapistAvailability.FirstOrDefault(x => x.Date == request.AvailableDate && x.StartTime == request.StartTime);
-
-            if (session != null)
+            if (overlapsExistingSlot)
             {
-                throw new BloomiaConflictException("The appointment has already been entered!");
+                throw new BloomiaConflictException(
+                    $"This time overlaps with an existing slot. Sessions last {SessionRules.Duration.TotalMinutes} minutes.");
             }
 
             

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Modules.TherapistAvailability.Query.ListTherapistTimesByDate;
+using Bloomia.Domain.Common;
 
 namespace Bloomia.Application.Modules.TherapistAvailability.Query.List
 {
@@ -12,12 +13,11 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.List
         public async Task<ListAllTherapistAvailabilitiesQueryDto> Handle(ListTherapistAvailabilitiesForClientQuery request, CancellationToken ct)
         {
             var therapistExists = await context.Therapists
-                .AnyAsync(x => x.Id == request.TherapistId && !x.IsDeleted, ct);
+                .AnyAsync(x => x.Id == request.TherapistId && !x.IsDeleted && x.IsVerified, ct);
 
             if (!therapistExists)
                 throw new BloomiaNotFoundException("Therapist not found.");
 
-            var bihTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
             var nowUtc = DateTime.UtcNow;
 
             var rawAvailabilities = await context.TherapistAvailabilities
@@ -33,12 +33,8 @@ namespace Bloomia.Application.Modules.TherapistAvailability.Query.List
                 }).ToListAsync(ct);
 
             var futureAvailabilities = rawAvailabilities
-                .Where(x =>
-                {
-                    var localDateTime = x.Date.ToDateTime(x.StartTime);
-                    var slotUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime, bihTimeZone);
-                    return slotUtc > nowUtc;
-                }).ToList();
+                .Where(x => BusinessTime.ToUtc(x.Date, x.StartTime) > nowUtc)
+                .ToList();
 
             var dto = new ListAllTherapistAvailabilitiesQueryDto
             {

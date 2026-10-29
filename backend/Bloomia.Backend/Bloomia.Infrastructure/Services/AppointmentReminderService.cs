@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Abstractions;
 using Bloomia.Application.Modules.Appointments;
+using Bloomia.Domain.Common;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.Sessions;
 using FluentValidation.Validators;
@@ -17,16 +18,15 @@ namespace Bloomia.Infrastructure.Services
     {
         public async Task ProcessTomorrowRemindersAsync(CancellationToken ct)
         {
-            var bihTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
-            var nowLocal = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, bihTimeZone);
+            var nowLocal = BusinessTime.Now;
 
             var tomorrowLocalDate = DateOnly.FromDateTime(nowLocal.Date.AddDays(1));
 
             var tomorrowStartLocal = tomorrowLocalDate.ToDateTime(TimeOnly.MinValue);
             var dayAfterStartLocal = tomorrowLocalDate.AddDays(1).ToDateTime(TimeOnly.MinValue);
 
-            var tomorrowStartUtc = TimeZoneInfo.ConvertTimeToUtc(tomorrowStartLocal, bihTimeZone);
-            var dayAfterStartUtc = TimeZoneInfo.ConvertTimeToUtc(dayAfterStartLocal, bihTimeZone);
+            var tomorrowStartUtc = BusinessTime.ToUtc(tomorrowStartLocal);
+            var dayAfterStartUtc = BusinessTime.ToUtc(dayAfterStartLocal);
 
             logger.LogInformation(
                 "Processing appointment reminders for local date {TomorrowDate}. UTC range: {StartUtc} - {EndUtc}",
