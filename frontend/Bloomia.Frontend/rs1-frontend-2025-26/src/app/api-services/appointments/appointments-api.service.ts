@@ -3,10 +3,12 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
-  AppointmentsForReviewDto,
   SessionType,
-  CreateAppointmentCommandDto
+  CreateAppointmentCommandDto,
+  ListAppointmentsRequest,
+  ListAppointmentsResponse
 } from './appointments-api.models';
+import { buildHttpParams } from '../../core/models/build-http-params';
 
 @Injectable({
     providedIn: 'root'
@@ -16,11 +18,16 @@ export class AppointmentsApiService{
     private baseUrl = `${environment.apiUrl}/api/Appointment`;
     private http = inject(HttpClient);
 
-    getAppointmentsForReview(therapistId: number) : Observable<AppointmentsForReviewDto[]> {
-        return this.http.get<AppointmentsForReviewDto[]>(
-            `${this.baseUrl}/get-appointments-for-review`,
-            { params: { therapistId } }
-        );
+    getMyAppointments(request: ListAppointmentsRequest): Observable<ListAppointmentsResponse> {
+        const params = buildHttpParams(request as any);
+        return this.http.get<ListAppointmentsResponse>(`${this.baseUrl}/get-my-appointments`, { params });
+    }
+
+    cancelAppointment(appointmentId: number): Observable<string> {
+        return this.http.delete<string>(`${this.baseUrl}/delete-appointment`, {
+            params: { id: appointmentId },
+            responseType: 'text' as 'json'
+        });
     }
 
     createAppointment(therapistAvailabilityId: number, sessionType: SessionType) {

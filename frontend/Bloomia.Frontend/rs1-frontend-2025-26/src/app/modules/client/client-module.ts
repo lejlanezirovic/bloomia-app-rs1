@@ -18,6 +18,7 @@ import { SavedTherapistsComponent } from './saved-therapists/saved-therapists.co
 import { DirectChatsComponent } from './direct-chats/direct-chats.component';
 import { DirectChatsDetailsComponent } from './direct-chats/direct-chats-details/direct-chats-details.component';
 import { TherapistDetailsComponent } from './therapist-details/therapist-details.component';
+import { MyAppointmentsComponent } from './my-appointments/my-appointments.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TherapistDetailsComponent } from './therapist-details/therapist-details
     SavedTherapistsComponent,
     DirectChatsComponent,
     DirectChatsDetailsComponent,
-    TherapistDetailsComponent
+    TherapistDetailsComponent,
+    MyAppointmentsComponent
   ],
   imports: [
     SharedModule,

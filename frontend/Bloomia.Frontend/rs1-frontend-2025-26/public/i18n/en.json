@@ -395,5 +395,29 @@
     "CONFLICT": "This action conflicts with existing data.",
     "VALIDATION": "Please check the form for errors.",
     "UNKNOWN": "Unknown error occurred."
+  },
+  "CLIENT_APPOINTMENTS": {
+    "NAV": "My appointments",
+    "TITLE": "My appointments",
+    "SUBTITLE": "Overview of your scheduled, completed and cancelled appointments. You can cancel an appointment until it starts.",
+    "LOADING": "Loading appointments...",
+    "LOAD_ERROR": "Appointments could not be loaded. Please try again.",
+    "EMPTY": "You have no appointments yet.",
+    "STATUS": {
+      "SCHEDULED": "Scheduled",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "SESSION_TYPES": {
+      "VIDEO_CALL": "Video call",
+      "CALL": "Call",
+      "MESSAGE": "Messages"
+    },
+    "CANCEL_BUTTON": "Cancel appointment",
+    "CANCEL_DIALOG_TITLE": "Cancel appointment",
+    "CANCEL_DIALOG_MESSAGE": "Are you sure you want to cancel your appointment with {{therapist}} ({{date}} at {{time}})?",
+    "CANCEL_CONFIRM": "Yes, cancel",
+    "CANCEL_SUCCESS": "The appointment was cancelled successfully.",
+    "CANCEL_ERROR": "The appointment could not be cancelled. It may have already started or been cancelled."
   }
 }

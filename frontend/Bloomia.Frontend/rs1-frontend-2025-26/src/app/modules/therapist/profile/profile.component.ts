@@ -14,6 +14,7 @@ import { DialogHelperService } from '../../shared/services/dialog-helper.service
 import { DialogButton } from '../../shared/models/dialog-config.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToasterService } from '../../../core/services/toaster.service';
+import { SESSION_DURATION_MINUTES } from '../../../core/constants/session.constants';
 
 interface CalendarDayVm {
   date: Date;
@@ -97,7 +98,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   private generateTimeOptions(): void {
     for(let hour = 8; hour < 17; hour++) {
-      for(let minute = 0; minute < 60; minute += 60) {
+      for(let minute = 0; minute < 60; minute += SESSION_DURATION_MINUTES) {
         const h = hour.toString().padStart(2, '0');
         const m = minute.toString().padStart(2, '0');
 

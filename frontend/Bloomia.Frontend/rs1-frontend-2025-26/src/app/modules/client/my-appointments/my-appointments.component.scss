@@ -1,0 +1,115 @@
+$text-color: #4A5759;
+$accent: #B0C4B1;
+$accent-soft: #b8cfc1;
+$card-border: #e2e8e2;
+
+.header-my-appointments {
+  margin-bottom: 24px;
+
+  .page-title {
+    color: $text-color;
+    margin-bottom: 4px;
+  }
+
+  .page-subtitle {
+    color: $text-color;
+    opacity: 0.8;
+  }
+}
+
+.state-message {
+  color: $text-color;
+  padding: 16px 0;
+
+  &.error {
+    color: #b3261e;
+  }
+}
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 900px;
+}
+
+.appointment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border: 1px solid $card-border;
+  border-radius: 16px;
+  background: linear-gradient(150deg, #e8e8e5, #e0e3e1);
+  box-shadow: 3px 3px 3px #aebaae;
+  color: $text-color;
+
+  &.cancelled {
+    opacity: 0.6;
+  }
+}
+
+.appointment-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .therapist {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.appointment-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.paginator-wrapper {
+  max-width: 900px;
+  margin-top: 24px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+
+  &.scheduled {
+    background: $accent;
+  }
+
+  &.completed {
+    background: $accent-soft;
+    opacity: 0.8;
+  }
+
+  &.cancelled {
+    background: #f2d6d3;
+    color: #8c2f26;
+  }
+}

@@ -1,0 +1,52 @@
+<div class="header-my-appointments">
+  <h1 class="page-title">{{ 'CLIENT_APPOINTMENTS.TITLE' | translate }}</h1>
+  <p class="page-subtitle">{{ 'CLIENT_APPOINTMENTS.SUBTITLE' | translate }}</p>
+</div>
+
+<div *ngIf="isLoading" class="state-message">{{ 'CLIENT_APPOINTMENTS.LOADING' | translate }}</div>
+<div *ngIf="errorMessage" class="state-message error">{{ errorMessage }}</div>
+
+<div *ngIf="!isLoading && !errorMessage && totalItems === 0" class="state-message">
+  {{ 'CLIENT_APPOINTMENTS.EMPTY' | translate }}
+</div>
+
+<div class="appointments-list" *ngIf="items.length > 0">
+  <div
+    class="appointment-card"
+    *ngFor="let a of items"
+    [class.cancelled]="a.status === 'Cancelled'"
+  >
+    <div class="appointment-main">
+      <div class="therapist">
+        <mat-icon>person</mat-icon>
+        <span>{{ a.therapistName }}</span>
+      </div>
+
+      <div class="details">
+        <span><mat-icon>event</mat-icon>{{ a.date | date: 'dd.MM.yyyy' }}</span>
+        <span><mat-icon>schedule</mat-icon>{{ a.time | slice: 0 : 5 }}</span>
+        <span>{{ 'CLIENT_APPOINTMENTS.SESSION_TYPES.' + a.sessionType | translate }}</span>
+      </div>
+    </div>
+
+    <div class="appointment-actions">
+      <span class="status-badge" [ngClass]="getDisplayStatus(a).toLowerCase()">
+        {{ 'CLIENT_APPOINTMENTS.STATUS.' + getDisplayStatus(a) | translate }}
+      </span>
+
+      <button
+        *ngIf="a.canCancel"
+        mat-stroked-button
+        color="warn"
+        [disabled]="cancellingId === a.appointmentId"
+        (click)="openCancelDialog(a)"
+      >
+        {{ 'CLIENT_APPOINTMENTS.CANCEL_BUTTON' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="paginator-wrapper" *ngIf="totalItems > 0">
+  <app-fit-paginator-bar [vm]="this"></app-fit-paginator-bar>
+</div>
