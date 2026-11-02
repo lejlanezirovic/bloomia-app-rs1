@@ -33,7 +33,8 @@ export class NotificationLogsComponent extends BaseListPagedComponent<ListAppoin
 
    notificationTypes = [
     { value: AppointmentNotificationType.BookingConfirmation, label: 'Confirmation' },
-    { value: AppointmentNotificationType.AppointmentReminder, label: 'Reminder' }
+    { value: AppointmentNotificationType.AppointmentReminder, label: 'Reminder' },
+    { value: AppointmentNotificationType.AppointmentCancellation, label: 'Cancellation' }
   ];
 
   constructor() {
@@ -94,6 +95,10 @@ export class NotificationLogsComponent extends BaseListPagedComponent<ListAppoin
 
     if (type === 'AppointmentReminder') {
       return 'Reminder';
+    }
+
+    if (type === 'AppointmentCancellation') {
+      return 'Cancellation';
     }
 
     return type;

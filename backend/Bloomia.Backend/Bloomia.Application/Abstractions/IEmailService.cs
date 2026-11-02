@@ -12,5 +12,7 @@ namespace Bloomia.Application.Abstractions
             DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct);
         Task SendAppointmentReminderAsync(string toEmail, string clientName, string therapistName,
            DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct);
+        Task SendAppointmentCancellationAsync(string toEmail, string clientName, string therapistName,
+           DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct);
     }
 }

@@ -9,6 +9,7 @@ namespace Bloomia.Domain.Entities.Enums
     public enum AppointmentNotificationsType
     {
         BookingConfirmation = 1,
-        AppointmentReminder = 2
+        AppointmentReminder = 2,
+        AppointmentCancellation = 3
     }
 }

@@ -9,7 +9,8 @@ export enum AppointmentNotificationStatus {
 
 export enum AppointmentNotificationType {
   BookingConfirmation = 1,
-  AppointmentReminder = 2
+  AppointmentReminder = 2,
+  AppointmentCancellation = 3
 }
 
 export class ListAppointmentNotificationLogsRequest

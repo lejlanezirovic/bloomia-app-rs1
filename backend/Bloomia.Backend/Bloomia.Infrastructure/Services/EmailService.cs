@@ -104,5 +104,44 @@ namespace Bloomia.Infrastructure.Services
 
         }
 
+        public async Task SendAppointmentCancellationAsync(string toEmail, string clientName, string therapistName,
+           DateOnly appointmentDate, TimeOnly appointmentTime, string sessionType, CancellationToken ct)
+        {
+            var subject = "Appointment cancellation confirmation";
+
+            var body =
+                $"Hello {clientName},\n\n" +
+                $"Your appointment has been successfully cancelled.\n\n" +
+                $"Therapist: {therapistName}\n" +
+                $"Date: {appointmentDate:dd.MM.yyyy}\n" +
+                $"Time: {appointmentTime:HH\\:mm}\n" +
+                $"Session type: {sessionType}\n\n" +
+                $"Thank you,\n" +
+                $"Bloomia";
+
+            using var message = new MailMessage
+            {
+                From = new MailAddress(_settings.SenderEmail, _settings.SenderName),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = false
+            };
+
+            message.To.Add(toEmail);
+
+            using var smtpClient = new SmtpClient(_settings.Host, _settings.Port)
+            {
+                Credentials = new NetworkCredential(_settings.Username, _settings.Password),
+                EnableSsl = _settings.UseSsl
+            };
+
+            _logger.LogInformation("Sending appointment cancellation email to {Recipient}", toEmail);
+
+            ct.ThrowIfCancellationRequested();
+            await smtpClient.SendMailAsync(message);
+
+            _logger.LogInformation("Appointment cancellation email succesfully sent to {Recipient}", toEmail);
+        }
+
     }
 }
