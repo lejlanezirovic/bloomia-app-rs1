@@ -1,6 +1,8 @@
 ﻿using Bloomia.Domain.Common;
+using Bloomia.Domain.Entities;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.Sessions;
+using Bloomia.Domain.Entities.TherapistRelated;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
         public async Task<CreateAppointmentCommandDto> Handle(CreateAppoinmentCommand request, CancellationToken cancellationToken)
         {
             var client = await context.Clients.Include(x => x.User).FirstOrDefaultAsync(x => x.User.Id == request.UserId, cancellationToken);
-            if (client == null) { 
+            if (client == null) {
                 throw new BloomiaNotFoundException("Client not found!");
             }
 
@@ -40,8 +42,8 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
             }
 
             using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
-            
-            if (availableTime.IsBooked) { 
+
+            if (availableTime.IsBooked) {
                 throw new BloomiaConflictException("That time is already booked!");
             }
 
@@ -76,6 +78,20 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
 
             availableTime.IsBooked = true;
 
+            var clientEmail = client.User.Email;
+            var hasClientEmail = !string.IsNullOrWhiteSpace(clientEmail);
+
+            var notificationLog = new AppointmentNotificationLogEntity
+            {
+                Appointment = appointment,
+                RecipientEmail = clientEmail ?? string.Empty,
+                NotificationType = AppointmentNotificationsType.BookingConfirmation,
+                Status = hasClientEmail ? AppointmentNotificationStatus.Pending : AppointmentNotificationStatus.Failed,
+                ErrorMessage = hasClientEmail ? null : "Client email is missing.",
+                CreatedAtUtc = DateTime.UtcNow
+            };
+            context.AppointmentNotificationLogs.Add(notificationLog);
+
             try
             {
                  await context.SaveChangesAsync(cancellationToken);
@@ -92,71 +108,17 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 throw;
             }
 
-            var notificationLog = new AppointmentNotificationLogEntity
+            if (hasClientEmail)
             {
-                AppointmentId = appointment.Id,
-                RecipientEmail = client.User.Email ?? string.Empty,
-                NotificationType = AppointmentNotificationsType.BookingConfirmation,
-                Status = AppointmentNotificationStatus.Pending,
-                CreatedAtUtc = DateTime.UtcNow
-            };
-
-            context.AppointmentNotificationLogs.Add(notificationLog);
-            await context.SaveChangesAsync(cancellationToken);
-
-            try
-            {
-                var clientEmail = client.User.Email;
-                var clientName = client.User.Fullname ?? $"{client.User.Firstname} {client.User.Lastname}";
-                var therapistName = availableTime.Therapist.User.Fullname ??
-                                    $"{availableTime.Therapist.User.Firstname} {availableTime.Therapist.User.Lastname}";
-
-                if(!string.IsNullOrWhiteSpace(clientEmail))
-                {
-                    await emailService.SendAppointmentBookingConfirmationAsync(
-                        toEmail: clientEmail,
-                        clientName: clientName,
-                        therapistName: therapistName,
-                        appointmentDate: availableTime.Date,
-                        appointmentTime: availableTime.StartTime,
-                        sessionType: appointment.SessionType.ToString(),
-                        ct: cancellationToken);
-
-                    notificationLog.Status = AppointmentNotificationStatus.Sent;
-                    notificationLog.SentAtUtc = DateTime.UtcNow;
-                    notificationLog.ErrorMessage = null;
-
-                    await context.SaveChangesAsync(cancellationToken);
-                }
-                else
-                {
-                    context.AppointmentNotificationLogs.Add(new AppointmentNotificationLogEntity
-                    {
-                        AppointmentId = appointment.Id,
-                        RecipientEmail = string.Empty,
-                        NotificationType = AppointmentNotificationsType.BookingConfirmation,
-                        Status = AppointmentNotificationStatus.Failed,
-                        CreatedAtUtc = DateTime.UtcNow,
-                        ErrorMessage = "Client email is missing."
-                    });
-
-                    await context.SaveChangesAsync(cancellationToken);
-
-                    logger.LogWarning(
-                        "Booking confirmation email skipped for appointment {AppointmentId} because client email is missing.",
-                        appointment.Id);
-                }
+                await SendBookingConfirmationAsync(client, availableTime, appointment, notificationLog, cancellationToken);
             }
-            catch(Exception ex)
+            else
             {
-                notificationLog.Status = AppointmentNotificationStatus.Failed;
-                notificationLog.ErrorMessage = ex.Message;
-
-                logger.LogError(ex,
-                                "Failed to send booking confirmation email for appointment {AppointmentId} and client {ClientId}",
-                                appointment.Id, client.Id);
+                logger.LogWarning(
+                    "Booking confirmation email skipped for appointment {AppointmentId} because client email is missing.",
+                    appointment.Id);
             }
-             
+
             var dto = new CreateAppointmentCommandDto
             {
                 Note = "You have successfully booked an appointment.",
@@ -167,6 +129,50 @@ namespace Bloomia.Application.Modules.Appointments.Command.Create
                 TherapistFullname = appointment.TherapistAvailability.Therapist.User.Fullname
             };
             return dto;
+        }
+
+        private async Task SendBookingConfirmationAsync(ClientEntity client, TherapistAvailabilityEntity availableTime,
+            AppointmentEntity appointment, AppointmentNotificationLogEntity notificationLog, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var clientName = client.User.Fullname ?? $"{client.User.Firstname} {client.User.Lastname}";
+                var therapistName = availableTime.Therapist.User.Fullname ??
+                                    $"{availableTime.Therapist.User.Firstname} {availableTime.Therapist.User.Lastname}";
+
+                await emailService.SendAppointmentBookingConfirmationAsync(
+                    toEmail: notificationLog.RecipientEmail,
+                    clientName: clientName,
+                    therapistName: therapistName,
+                    appointmentDate: availableTime.Date,
+                    appointmentTime: availableTime.StartTime,
+                    sessionType: appointment.SessionType.ToString(),
+                    ct: cancellationToken);
+
+                notificationLog.Status = AppointmentNotificationStatus.Sent;
+                notificationLog.SentAtUtc = DateTime.UtcNow;
+                notificationLog.ErrorMessage = null;
+            }
+            catch(Exception ex)
+            {
+                notificationLog.Status = AppointmentNotificationStatus.Failed;
+                notificationLog.ErrorMessage = ex.Message;
+
+                logger.LogError(ex,
+                                "Failed to send booking confirmation email for appointment {AppointmentId} and client {ClientId}",
+                                appointment.Id, client.Id);
+            }
+
+            try
+            {
+                await context.SaveChangesAsync(CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex,
+                                "Failed to save booking confirmation status for appointment {AppointmentId}",
+                                appointment.Id);
+            }
         }
     }
 }

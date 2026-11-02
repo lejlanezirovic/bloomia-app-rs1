@@ -44,6 +44,8 @@ namespace Bloomia.Application.Modules.Appointments.Command.Delete
                 throw new BloomiaBusinessRuleException("APPOINTMENT_STARTED", "An appointment that has already started cannot be cancelled.");
             }
 
+            AppointmentNotificationLogEntity? notificationLog = null;
+
             await using var transaction=await context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
@@ -54,58 +56,49 @@ namespace Bloomia.Application.Modules.Appointments.Command.Delete
                     appointment.TherapistAvailability.IsBooked = false;
                     appointment.TherapistAvailability.ModifiedAtUtc = DateTime.UtcNow;
                 }
+
+                if (isClientOwner && appointment.TherapistAvailability != null)
+                {
+                    var clientEmail = client!.User.Email;
+                    var hasClientEmail = !string.IsNullOrWhiteSpace(clientEmail);
+
+                    notificationLog = new AppointmentNotificationLogEntity
+                    {
+                        AppointmentId = appointment.Id,
+                        RecipientEmail = clientEmail ?? string.Empty,
+                        NotificationType = AppointmentNotificationsType.AppointmentCancellation,
+                        Status = hasClientEmail ? AppointmentNotificationStatus.Pending : AppointmentNotificationStatus.Failed,
+                        ErrorMessage = hasClientEmail ? null : "Client email is missing.",
+                        CreatedAtUtc = DateTime.UtcNow
+                    };
+                    context.AppointmentNotificationLogs.Add(notificationLog);
+                }
+
                 await context.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
-            }catch(Exception ex)
+            }catch
             {
                 await transaction.RollbackAsync(cancellationToken);
                 throw;
             }
 
-            if (isClientOwner && appointment.TherapistAvailability != null)
+            if (notificationLog?.Status == AppointmentNotificationStatus.Pending)
             {
-                await SendCancellationEmailAsync(client!, appointment, cancellationToken);
+                await SendCancellationEmailAsync(client!, appointment, notificationLog, cancellationToken);
+            }
+            else if (notificationLog != null)
+            {
+                logger.LogWarning(
+                    "Cancellation email skipped for appointment {AppointmentId} because client email is missing.",
+                    appointment.Id);
             }
 
             return "Appointment cancelled successfully";
         }
 
-        private async Task SendCancellationEmailAsync(ClientEntity client, AppointmentEntity appointment, CancellationToken cancellationToken)
+        private async Task SendCancellationEmailAsync(ClientEntity client, AppointmentEntity appointment,
+            AppointmentNotificationLogEntity notificationLog, CancellationToken cancellationToken)
         {
-            var clientEmail = client.User.Email;
-
-            if (string.IsNullOrWhiteSpace(clientEmail))
-            {
-                context.AppointmentNotificationLogs.Add(new AppointmentNotificationLogEntity
-                {
-                    AppointmentId = appointment.Id,
-                    RecipientEmail = string.Empty,
-                    NotificationType = AppointmentNotificationsType.AppointmentCancellation,
-                    Status = AppointmentNotificationStatus.Failed,
-                    CreatedAtUtc = DateTime.UtcNow,
-                    ErrorMessage = "Client email is missing."
-                });
-
-                await context.SaveChangesAsync(cancellationToken);
-
-                logger.LogWarning(
-                    "Cancellation email skipped for appointment {AppointmentId} because client email is missing.",
-                    appointment.Id);
-                return;
-            }
-
-            var notificationLog = new AppointmentNotificationLogEntity
-            {
-                AppointmentId = appointment.Id,
-                RecipientEmail = clientEmail,
-                NotificationType = AppointmentNotificationsType.AppointmentCancellation,
-                Status = AppointmentNotificationStatus.Pending,
-                CreatedAtUtc = DateTime.UtcNow
-            };
-
-            context.AppointmentNotificationLogs.Add(notificationLog);
-            await context.SaveChangesAsync(cancellationToken);
-
             try
             {
                 var availability = appointment.TherapistAvailability;
@@ -114,7 +107,7 @@ namespace Bloomia.Application.Modules.Appointments.Command.Delete
                                     $"{availability.Therapist.User.Firstname} {availability.Therapist.User.Lastname}".Trim();
 
                 await emailService.SendAppointmentCancellationAsync(
-                    toEmail: clientEmail,
+                    toEmail: notificationLog.RecipientEmail,
                     clientName: clientName,
                     therapistName: therapistName,
                     appointmentDate: availability.Date,
@@ -125,19 +118,26 @@ namespace Bloomia.Application.Modules.Appointments.Command.Delete
                 notificationLog.Status = AppointmentNotificationStatus.Sent;
                 notificationLog.SentAtUtc = DateTime.UtcNow;
                 notificationLog.ErrorMessage = null;
-
-                await context.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
             {
                 notificationLog.Status = AppointmentNotificationStatus.Failed;
                 notificationLog.ErrorMessage = ex.Message;
 
-                await context.SaveChangesAsync(cancellationToken);
-
                 logger.LogError(ex,
                                 "Failed to send cancellation email for appointment {AppointmentId} and client {ClientId}",
                                 appointment.Id, client.Id);
+            }
+
+            try
+            {
+                await context.SaveChangesAsync(CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex,
+                                "Failed to save cancellation email status for appointment {AppointmentId}",
+                                appointment.Id);
             }
         }
     }
