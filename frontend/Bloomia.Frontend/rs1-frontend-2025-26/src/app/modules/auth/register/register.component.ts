@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
       [
         Validators.required,
         Validators.email,
-        Validators.pattern(/@(gmail\.com|yahoo\.com|edu\.com)$/i)
+        Validators.pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
       ]
     ],
 
@@ -215,7 +215,7 @@ export class RegisterComponent implements OnInit {
     }
 
     if (controlName === 'email' && control.hasError('pattern')) {
-      return 'Email domain must be gmail, yahoo or edu.';
+      return 'Enter a valid email address.';
     }
 
     if (control.hasError('maxlength')) {

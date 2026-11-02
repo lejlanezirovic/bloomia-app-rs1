@@ -13,8 +13,8 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Admin
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email is required")
                 .EmailAddress().WithMessage("Email invalid format")
-                .Matches(@"@(gmail\.com|yahoo\.com|edu\.)$")
-                .WithMessage("Email domain must be @gmail, @yahoo or @edu");
+                .Matches(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+                .WithMessage("Email invalid format");
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required")
