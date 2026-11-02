@@ -37,6 +37,15 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
             if (client == null)
                 throw new BloomiaBusinessRuleException("CLIENT", "Client was not found.");
 
+            var isTherapistsClient = await ctx.Appointments.AsNoTracking()
+                .WhereNotCancelled()
+                .AnyAsync(x => x.TherapistAvailability.TherapistId == therapist.Id &&
+                               x.ClientId == client.Id, ct);
+
+            if (!isTherapistsClient)
+                throw new BloomiaBusinessRuleException("CLIENT_NOT_ASSIGNED",
+                    "You can only generate reports for your own clients.");
+
             var dateFrom = request.DateFrom.Date;
 
             var dateToExclusive = request.DateTo.Date.AddDays(1);

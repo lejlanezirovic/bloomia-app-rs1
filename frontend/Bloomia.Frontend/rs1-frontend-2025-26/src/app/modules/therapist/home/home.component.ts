@@ -3,7 +3,7 @@ import { TherapistDashboardApiService } from '../../../api-services/therapist-da
 import { GenerateTherapistReportCommand, TherapistDashboardOverviewDto, TherapistDashboardReviewsDto, TherapistReportListItemDto } from '../../../api-services/therapist-dashboard/therapist-dashboard-api.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MyClientsApiService } from '../../../api-services/therapist-my-clients/my-clients.api.service';
-import { ListMyClientsQueryDto } from '../../../api-services/therapist-my-clients/my-clients-api.model';
+import { ListMyClientsQueryDto, ListMyClientsRequest } from '../../../api-services/therapist-my-clients/my-clients-api.model';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -45,8 +45,10 @@ export class HomeComponent implements OnInit {
   }
 
   loadClients(): void {
+    const request = new ListMyClientsRequest();
+    request.paging.pageSize = 100;
 
-    this.myClientsApi.list().subscribe({
+    this.myClientsApi.list(request).subscribe({
       next: (response) => {
         this.clients = response.items;
       },
