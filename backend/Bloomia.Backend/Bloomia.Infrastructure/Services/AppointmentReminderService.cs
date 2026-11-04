@@ -5,36 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Abstractions;
 using Bloomia.Application.Modules.Appointments;
-using Bloomia.Domain.Common;
 using Bloomia.Domain.Entities.Enums;
 using Bloomia.Domain.Entities.Sessions;
-using FluentValidation.Validators;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Bloomia.Infrastructure.Services
 {
     public class AppointmentReminderService(IAppDbContext context, IEmailService emailService, ILogger<AppointmentReminderService> logger) : IAppointmentReminderService
     {
-        public async Task ProcessTomorrowRemindersAsync(CancellationToken ct)
+        private static readonly TimeSpan ReminderLeadTime = TimeSpan.FromHours(24);
+
+        public async Task ProcessDueRemindersAsync(CancellationToken ct)
         {
-            var nowLocal = BusinessTime.Now;
-
-            var tomorrowLocalDate = DateOnly.FromDateTime(nowLocal.Date.AddDays(1));
-
-            var tomorrowStartLocal = tomorrowLocalDate.ToDateTime(TimeOnly.MinValue);
-            var dayAfterStartLocal = tomorrowLocalDate.AddDays(1).ToDateTime(TimeOnly.MinValue);
-
-            var tomorrowStartUtc = BusinessTime.ToUtc(tomorrowStartLocal);
-            var dayAfterStartUtc = BusinessTime.ToUtc(dayAfterStartLocal);
+            var nowUtc = DateTime.UtcNow;
+            var windowEndUtc = nowUtc + ReminderLeadTime;
 
             logger.LogInformation(
-                "Processing appointment reminders for local date {TomorrowDate}. UTC range: {StartUtc} - {EndUtc}",
-                tomorrowLocalDate,
-                tomorrowStartUtc,
-                dayAfterStartUtc);
+                "Processing due appointment reminders. UTC range: {StartUtc} - {EndUtc}",
+                nowUtc,
+                windowEndUtc);
 
-            var appointments = await context.Appointments
+            var appointmentsToProcess = await context.Appointments
                 .Include(x => x.Client)
                     .ThenInclude(x => x.User)
                 .Include(x => x.TherapistAvailability)
@@ -42,35 +33,20 @@ namespace Bloomia.Infrastructure.Services
                         .ThenInclude(x => x.User)
                 .WhereNotCancelled()
                 .Where(x => !x.IsDeleted &&
-                        x.ScheduledAtUtc >= tomorrowStartUtc &&
-                        x.ScheduledAtUtc < dayAfterStartUtc)
+                        x.ScheduledAtUtc > nowUtc &&
+                        x.ScheduledAtUtc <= windowEndUtc &&
+                        !context.AppointmentNotificationLogs.Any(l =>
+                            l.AppointmentId == x.Id &&
+                            l.NotificationType == AppointmentNotificationsType.AppointmentReminder))
                 .ToListAsync(ct);
 
-            if (appointments.Count == 0)
+            if (appointmentsToProcess.Count == 0)
             {
-                logger.LogInformation("No appointments found for tomorrow reminders.");
+                logger.LogInformation("No due appointment reminders found.");
                 return;
             }
 
-            var appointmentIds = appointments.Select(x => x.Id).ToList();
-
-            var alreadySentAppointmentIds = await context.AppointmentNotificationLogs
-                .Where(x =>
-                        appointmentIds.Contains(x.AppointmentId) &&
-                        x.NotificationType == AppointmentNotificationsType.AppointmentReminder &&
-                        x.Status == AppointmentNotificationStatus.Sent)
-                .Select(x => x.AppointmentId)
-                .Distinct()
-                .ToListAsync(ct);
-
-            var appointmentsToProcess = appointments
-                .Where(x => !alreadySentAppointmentIds.Contains(x.Id)).ToList();
-
-            logger.LogInformation(
-                "Found {Total} appointments, {AlreadySent} already reminded, {ToProcess} to process.",
-                appointments.Count,
-                alreadySentAppointmentIds.Count,
-                appointmentsToProcess.Count);
+            logger.LogInformation("Found {ToProcess} due appointment reminders to process.", appointmentsToProcess.Count);
 
             foreach(var appointment in appointmentsToProcess)
             {
@@ -96,6 +72,8 @@ namespace Bloomia.Infrastructure.Services
                         CreatedAtUtc = DateTime.UtcNow,
                         ErrorMessage = "Client email is missing."
                     });
+
+                    await context.SaveChangesAsync(ct);
 
                     continue;
                 }

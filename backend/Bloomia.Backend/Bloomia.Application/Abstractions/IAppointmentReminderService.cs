@@ -9,6 +9,6 @@ namespace Bloomia.Application.Abstractions
 {
     public interface IAppointmentReminderService
     {
-        Task ProcessTomorrowRemindersAsync(CancellationToken ct);
+        Task ProcessDueRemindersAsync(CancellationToken ct);
     }
 }

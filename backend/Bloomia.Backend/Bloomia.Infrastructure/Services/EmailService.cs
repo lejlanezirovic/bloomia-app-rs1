@@ -71,7 +71,7 @@ namespace Bloomia.Infrastructure.Services
 
             var body =
                 $"Hello {clientName},\n\n" +
-                $"This is a reminder that you have an appointment tomorrow.\n\n" +
+                $"This is a reminder of your upcoming appointment.\n\n" +
                 $"Therapist: {therapistName}\n" +
                 $"Date: {appointmentDate:dd.MM.yyyy}\n" +
                 $"Time: {appointmentTime:HH\\:mm}\n" +

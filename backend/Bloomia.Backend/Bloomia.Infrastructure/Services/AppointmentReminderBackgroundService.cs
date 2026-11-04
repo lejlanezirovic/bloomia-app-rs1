@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Abstractions;
-using Bloomia.Domain.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -13,53 +12,47 @@ namespace Bloomia.Infrastructure.Services
 {
     public class AppointmentReminderBackgroundService(IServiceScopeFactory scopeFactory, ILogger<AppointmentReminderBackgroundService> logger) : BackgroundService
     {
+        private static readonly TimeSpan Interval = TimeSpan.FromMinutes(15);
+
         protected override async Task ExecuteAsync(CancellationToken ct)
         {
-            logger.LogInformation("Appointment reminder background service started.");
+            logger.LogInformation("Appointment reminder background service started. Interval: {Interval}", Interval);
 
-            while(!ct.IsCancellationRequested)
+            using var timer = new PeriodicTimer(Interval);
+
+            try
             {
-                try
+                do
                 {
-                    var nowLocal = BusinessTime.Now;
-
-                    var nextRunLocal = new DateTime(
-                        nowLocal.Year,
-                        nowLocal.Month,
-                        nowLocal.Day,
-                        9, 0, 0);
-
-                    if (nowLocal >= nextRunLocal)
-                        nextRunLocal = nextRunLocal.AddDays(1);
-
-                    var delay = nextRunLocal - nowLocal;
-
-                    logger.LogInformation(
-                        "Next appointment reminder run scheduled for {NextRunLocal}. Delay: {Delay}",
-                        nextRunLocal,
-                        delay);
-
-                    await Task.Delay(delay, ct);
-
-                    using var scope = scopeFactory.CreateScope();
-
-                    var reminderService = scope.ServiceProvider.GetRequiredService<IAppointmentReminderService>();
-
-                    logger.LogInformation("Starting scheduled appointment reminder execution.");
-                    await reminderService.ProcessTomorrowRemindersAsync(ct);
-                    logger.LogInformation("Finished scheduled appointment reminder execution.");
-
+                    await RunOnceAsync(ct);
                 }
-                catch(OperationCanceledException)
-                {
-                    logger.LogInformation("Appointment reminder background service is stopping.");
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "Error in appointment reminder background service.");
+                while (await timer.WaitForNextTickAsync(ct));
+            }
+            catch (OperationCanceledException)
+            {
+                logger.LogInformation("Appointment reminder background service is stopping.");
+            }
+        }
 
-                    await Task.Delay(TimeSpan.FromMinutes(5), ct);
-                }
+        private async Task RunOnceAsync(CancellationToken ct)
+        {
+            try
+            {
+                using var scope = scopeFactory.CreateScope();
+
+                var reminderService = scope.ServiceProvider.GetRequiredService<IAppointmentReminderService>();
+
+                logger.LogInformation("Starting scheduled appointment reminder execution.");
+                await reminderService.ProcessDueRemindersAsync(ct);
+                logger.LogInformation("Finished scheduled appointment reminder execution.");
+            }
+            catch (OperationCanceledException) when (ct.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error in appointment reminder background service.");
             }
         }
     }
