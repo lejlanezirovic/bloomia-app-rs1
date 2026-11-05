@@ -33,6 +33,20 @@ namespace Bloomia.Application.Modules.Therapists.Commands.Update.ChangeTherapist
 
             user.PasswordHash = hasher.HashPassword(user, request.NewPassword);
 
+            var nowUtc = DateTime.UtcNow;
+
+            var activeTokens = await context.RefreshTokens
+                .Where(x => x.UserId == user.Id && !x.IsRevoked)
+                .ToListAsync(ct);
+
+            foreach (var token in activeTokens)
+            {
+                token.IsRevoked = true;
+                token.RevokedAtUtc = nowUtc;
+            }
+
+            user.TokenVersion++;
+
             await context.SaveChangesAsync(ct);
 
             return Unit.Value;

@@ -1,4 +1,5 @@
-﻿using Bloomia.Infrastructure.Common;
+﻿using Bloomia.API.Auth;
+using Bloomia.Infrastructure.Common;
 using Bloomia.Shared.Dtos;
 using Bloomia.Shared.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -72,7 +73,8 @@ public static class DependencyInjection
                         context.Token = accessToken;
                     }
                     return Task.CompletedTask;
-                }
+                },
+                OnTokenValidated = TokenVersionValidator.ValidateAsync
             };
         });
 
