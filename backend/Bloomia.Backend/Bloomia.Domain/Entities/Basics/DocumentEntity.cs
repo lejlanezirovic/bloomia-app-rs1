@@ -17,5 +17,7 @@ namespace Bloomia.Domain.Entities.Basics
         public DateTime UploadedAt { get; set; }
         public int TherapistId { get; set; }
         public TherapistEntity Therapist { get; set; } = null!;
+
+        public bool IsVisibleToClients => DocumentType == DocumentType.Certificate;
     }
 }

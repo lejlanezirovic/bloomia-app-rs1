@@ -4,18 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloomia.Application.Abstractions;
+using Bloomia.Infrastructure.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace Bloomia.Infrastructure.Services
 {
     public class LocalFileStorageService : IFileStorageService
     {
-        private readonly IWebHostEnvironment _environment;
+        private const string DocumentsPrefix = "documents/";
 
-        public LocalFileStorageService(IWebHostEnvironment environment)
+        private readonly IWebHostEnvironment _environment;
+        private readonly FileStorageSettings _settings;
+
+        public LocalFileStorageService(IWebHostEnvironment environment, IOptions<FileStorageSettings> settings)
         {
             _environment = environment;
+            _settings = settings.Value;
         }
 
         public async Task<string> SaveProfileImageAsync(IFormFile file, CancellationToken ct)
@@ -97,11 +103,7 @@ namespace Bloomia.Infrastructure.Services
             if(file.Length > maxSize)
                 throw new Exception("Document must be smaller than 10 MB.");
 
-            var webRoot = _environment.WebRootPath;
-            if (string.IsNullOrWhiteSpace(webRoot))
-                webRoot = Path.Combine(_environment.ContentRootPath, "wwwroot");
-
-            var folderPath = Path.Combine(webRoot, "uploads", "documents");
+            var folderPath = GetDocumentsFolder();
             Directory.CreateDirectory(folderPath);
 
             var originalFileName = Path.GetFileName(file.FileName);
@@ -111,10 +113,45 @@ namespace Bloomia.Infrastructure.Services
             await using var stream = new FileStream(fullPath, FileMode.Create);
             await file.CopyToAsync(stream, ct);
 
-            var relativePath = $"/uploads/documents/{storedFileName}";
+            var relativePath = $"{DocumentsPrefix}{storedFileName}";
 
             return (relativePath, storedFileName, originalFileName, extension);
         }
+
+        public async Task<byte[]> ReadTherapistDocumentAsync(string relativePath, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath))
+                throw new Exception("Document path is empty.");
+
+            if (!relativePath.StartsWith(DocumentsPrefix, StringComparison.OrdinalIgnoreCase))
+                throw new Exception("Invalid document path.");
+
+            var fullPath = Path.Combine(GetDocumentsFolder(), Path.GetFileName(relativePath));
+
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException("Document file was not found.");
+
+            return await File.ReadAllBytesAsync(fullPath, ct);
+        }
+
+        public void DeleteTherapistDocumentIfExists(string? relativePath)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath))
+                return;
+
+            if (!relativePath.StartsWith(DocumentsPrefix, StringComparison.OrdinalIgnoreCase))
+                return;
+
+            var fullPath = Path.Combine(GetDocumentsFolder(), Path.GetFileName(relativePath));
+
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
+        }
+
+        private string GetDocumentsFolder()
+            => Path.IsPathRooted(_settings.DocumentsPath)
+                ? _settings.DocumentsPath
+                : Path.Combine(_environment.ContentRootPath, _settings.DocumentsPath);
 
         public async Task<(string RelativePath, string StoredFileName)> SaveReportAsync(byte[] content, string fileName, CancellationToken ct)
         {

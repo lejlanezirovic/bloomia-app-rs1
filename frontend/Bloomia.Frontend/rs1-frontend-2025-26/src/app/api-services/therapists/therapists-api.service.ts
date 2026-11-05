@@ -62,6 +62,10 @@ export class TherapistsApiService {
         return this.http.delete<void>(`${this.baseUrl}/documents/${documentId}`);
     }
 
+    getDocumentFile(documentId: number): Observable<Blob> {
+        return this.http.get(`${this.baseUrl}/documents/${documentId}/file`, { responseType: 'blob' });
+    }
+
     changePassword(id:number, payload: ChangeTherapistPasswordCommand): Observable<void> {
         return this.http.put<void>(`${this.baseUrl}/${id}/change-password`, payload);
     }

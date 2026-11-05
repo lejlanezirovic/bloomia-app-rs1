@@ -127,16 +127,16 @@
         <mat-divider></mat-divider>
 
         <section class="section">
-          <div class="section-title">Files</div>
+          <div class="section-title">Certificates</div>
           <div *ngIf="therapistDocuments.length > 0; else noDocumentsBlock" class="document-list">
-            <div class="document-item clickable-document" *ngFor="let document of therapist.documents" (click)="openDocument(document)">
+            <div class="document-item clickable-document" *ngFor="let document of therapistDocuments" (click)="openDocument(document)">
               <span class="document-name">{{ document.fileName }}</span>
             </div>
           </div>
 
           <ng-template #noDocumentsBlock>
             <p class="section-text">
-              No files added.
+              No certificates added.
             </p>
           </ng-template>
 

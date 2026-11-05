@@ -1,5 +1,7 @@
 ﻿using Bloomia.Infrastructure.Services;
+using Bloomia.Infrastructure.Settings;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace Bloomia.Tests.Files
                 Headers = new HeaderDictionary(),
                 ContentType = "application/msword"
             };
-            var service = new LocalFileStorageService(null!);
+            var service = new LocalFileStorageService(null!, Options.Create(new FileStorageSettings()));
 
             var ex = await Assert.ThrowsAsync<Exception>(
                 () => service.SaveTherapistDocumentAsync(file, CancellationToken.None));

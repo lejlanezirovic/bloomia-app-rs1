@@ -26,7 +26,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.DeleteDocument
             context.Documents.Remove(document);
             await context.SaveChangesAsync(ct);
 
-            fileStorageService.DeleteIfExists(filePath);
+            fileStorageService.DeleteTherapistDocumentIfExists(filePath);
 
             return Unit.Value;
         }

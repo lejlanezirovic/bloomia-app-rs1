@@ -11,6 +11,8 @@ namespace Bloomia.Application.Abstractions
     {
         Task<string> SaveProfileImageAsync(IFormFile file, CancellationToken ct);
         Task<(string RelativePath, string StoredFileName, string OriginalFileName, string FileExtension)> SaveTherapistDocumentAsync(IFormFile file, CancellationToken ct);
+        Task<byte[]> ReadTherapistDocumentAsync(string relativePath, CancellationToken ct);
+        void DeleteTherapistDocumentIfExists(string? relativePath);
         void DeleteIfExists(string? relativePath);
         Task<(string RelativePath, string StoredFileName)> SaveReportAsync(byte[] content, string fileName, CancellationToken ct);
         Task<byte[]> ReadReportAsync(string relativePath, CancellationToken ct);

@@ -38,7 +38,8 @@ namespace Bloomia.Infrastructure.Database.Configurations
                 .HasForeignKey(x => x.TherapistId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            
+            builder.Ignore(x => x.IsVisibleToClients);
+
         }
     }
 }

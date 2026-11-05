@@ -39,8 +39,7 @@ namespace Bloomia.Application.Modules.Therapists.Commands.UploadDocument
                 Note = "Document uploaded successfully.",
                 DocumentId = document.Id,
                 DocumentType = document.DocumentType.ToString(),
-                FileName = document.FileName,
-                FilePath = document.FilePath
+                FileName = document.FileName
             };
         }
     }

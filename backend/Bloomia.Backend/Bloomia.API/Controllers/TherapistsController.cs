@@ -7,6 +7,7 @@ using Bloomia.Application.Modules.Therapists.Commands.Update.UpdateTherapistVeri
 using Bloomia.Application.Modules.Therapists.Commands.UploadDocument;
 using Bloomia.Application.Modules.Therapists.MyClients.Queries;
 using Bloomia.Application.Modules.Therapists.Queries.GetById;
+using Bloomia.Application.Modules.Therapists.Queries.GetDocumentFile;
 using Bloomia.Application.Modules.Therapists.Queries.List;
 using Bloomia.Application.Modules.Users.Queries.GetById;
 using Bloomia.Application.Modules.Users.Queries.List;
@@ -57,6 +58,18 @@ namespace Bloomia.API.Controllers
             }, ct);
 
             return NoContent();
+        }
+
+        [Authorize(Roles = "CLIENT, THERAPIST, ADMIN")]
+        [HttpGet("documents/{documentId:int}/file")]
+        public async Task<IActionResult> GetDocumentFile(int documentId, CancellationToken ct)
+        {
+            var document = await sender.Send(new GetTherapistDocumentFileQuery
+            {
+                DocumentId = documentId
+            }, ct);
+
+            return File(document.Content, "application/pdf", document.FileName);
         }
 
         [HttpGet]

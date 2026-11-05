@@ -30,7 +30,6 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
         public int Id { get; set; }
         public string DocumentType { get; set; } = string.Empty;
         public string FileName { get; set; } = string.Empty;
-        public string FilePath { get; set; } = string.Empty;
     }
 
     public class TherapyTypeDto

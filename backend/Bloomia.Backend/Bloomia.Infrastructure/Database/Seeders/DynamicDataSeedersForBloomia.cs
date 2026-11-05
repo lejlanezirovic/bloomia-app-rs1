@@ -27,7 +27,6 @@ namespace Bloomia.Infrastructure.Database.Seeders
             await SeedLocation(context);
             await SeedTherapyTypes(context);
             await SeedUsersAsync(context);
-            await SeedDocuments(context);
             await SeedArticles(context);
         }
 
@@ -70,49 +69,6 @@ namespace Bloomia.Infrastructure.Database.Seeders
 
             context.Articles.AddRange(article1, article2, article3);
             await context.SaveChangesAsync();
-        }
-
-        
-        public static async Task SeedDocuments(DatabaseContext context)
-        {
-            if (await context.Documents.AnyAsync())
-                return;
-
-            var therapist1 = await context.Therapists
-                .Include(x => x.User)
-                .FirstOrDefaultAsync(x => x.User.Email == "mia@gmail.com");
-            if (therapist1 == null)
-                return;
-
-            var demoDocument1 = new DocumentEntity
-            {
-                DocumentType = DocumentType.CV,
-                FilePath = "/uploads/documents/CV.pdf",
-                FileName = "CV.pdf",
-                FileExtension = ".pdf",
-                UploadedAt = DateTime.UtcNow,
-                TherapistId = therapist1.Id
-            };
-
-            var therapist2 = await context.Therapists
-                .Include(x => x.User)
-                .FirstOrDefaultAsync(x => x.User.Email == "amina@gmail.com"); ;
-            if (therapist2 == null)
-                return;
-
-            var demoDocument2 = new DocumentEntity 
-            {
-                DocumentType = DocumentType.CV,
-                FilePath = "/uploads/documents/CV2.pdf",
-                FileName = "CV2.pdf",
-                FileExtension = ".pdf",
-                UploadedAt = DateTime.UtcNow,
-                TherapistId = therapist2.Id
-            };
-
-            context.Documents.AddRange(demoDocument1, demoDocument2);
-            await context.SaveChangesAsync();
-
         }
 
         public static async Task SeedGenders(DatabaseContext context)

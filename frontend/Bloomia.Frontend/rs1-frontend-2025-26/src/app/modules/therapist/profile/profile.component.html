@@ -213,7 +213,7 @@
 
                 <div *ngIf="therapistDocuments.length > 0; else noDocumentsBlock" class="document-list">
                     <div class="document-item clickable-document" *ngFor="let document of therapistDocuments" (click)="openExistingDocument(document)">
-                        <span class="document-name">{{ document.fileName }}</span>
+                        <span class="document-name">{{ document.fileName }} ({{ document.documentType }})</span>
 
                         <button *ngIf="isEditMode" type="button" class="document-delete-btn" (click)="$event.stopPropagation(); deleteExistingDocument(document.id, document.fileName)">x</button>
                     </div>
@@ -234,6 +234,18 @@
                         ×
                     </button>
                 </div>
+
+                <mat-form-field *ngIf="isEditMode && selectedDocumentFile" appearance="outline">
+                    <mat-label>Document type</mat-label>
+
+                    <mat-select [(ngModel)]="selectedDocumentType" [ngModelOptions]="{ standalone: true }">
+                        <mat-option *ngFor="let option of documentTypeOptions" [value]="option.value">
+                            {{ option.label }}
+                        </mat-option>
+                    </mat-select>
+
+                    <mat-hint>Only certificates are visible to clients.</mat-hint>
+                </mat-form-field>
             </section>
 
             <mat-divider></mat-divider>

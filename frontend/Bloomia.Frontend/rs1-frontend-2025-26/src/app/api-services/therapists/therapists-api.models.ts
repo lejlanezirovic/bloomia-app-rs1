@@ -42,7 +42,6 @@ export interface TherapistDocumentDto {
     id: number;
     documentType: string;
     fileName: string;
-    filePath: string;
 }
 
 export interface TherapistAvailabilityDto {

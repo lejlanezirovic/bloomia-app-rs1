@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TherapistsApiService } from '../../../api-services/therapists/therapists-api.service';
 import { CurrentUserService } from '../../../core/services/auth/current-user.service';
-import { GetTherapistByIdQueryDto, TherapistAvailabilityDto } from '../../../api-services/therapists/therapists-api.models';
+import { GetTherapistByIdQueryDto, TherapistAvailabilityDto, TherapistDocumentDto } from '../../../api-services/therapists/therapists-api.models';
 import { ListMyWorkingDatesAndTimesResponse, WorkingTimeSlotsDto } from '../../../api-services/therapistAvailability/therapistAvailability-api.models';
 import { forkJoin, last, Observable } from 'rxjs';
 import { TherapistAvailabilityApiService } from '../../../api-services/therapistAvailability/therapistAvailability-api.service';
@@ -35,7 +35,7 @@ interface CalendarDayVm {
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
-export class ProfileComponent extends BaseComponent implements OnInit {
+export class ProfileComponent extends BaseComponent implements OnInit, OnDestroy {
 
   private therapistsApi = inject(TherapistsApiService);
   private therapistAvailabilityApi = inject(TherapistAvailabilityApiService);
@@ -79,7 +79,15 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   selectedProfileImageFile: File | null = null;
   selectedDocumentFile: File | null = null;
+  selectedDocumentType = 1;
   profileImagePreviewUrl: string | null = null;
+
+  documentTypeOptions = [
+    { value: 1, label: 'CV' },
+    { value: 2, label: 'Diploma' },
+    { value: 3, label: 'Certificate' },
+    { value: 4, label: 'License' }
+  ];
 
   currentMonth = new Date();
   selectedDateKey: string | null = null;
@@ -87,13 +95,23 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   selectedDocumentUrl: SafeResourceUrl | null = null;
   selectedDocumentName: string | null = null;
   private pendingDocumentObjectUrl: string | null = null;
+  private existingDocumentObjectUrl: string | null = null;
 
   isDraggingFile = false;
   isDraggingProfileImage = false;
-  
+
   ngOnInit(): void {
     this.loadProfile();
     this.generateTimeOptions();
+  }
+
+  ngOnDestroy(): void {
+    this.revokeExistingDocumentUrl();
+
+    if (this.pendingDocumentObjectUrl) {
+      URL.revokeObjectURL(this.pendingDocumentObjectUrl);
+      this.pendingDocumentObjectUrl = null;
+    }
   }
 
   private generateTimeOptions(): void {
@@ -525,6 +543,7 @@ selectDay(day: CalendarDayVm): void {
 
     this.selectedProfileImageFile = null;
     this.selectedDocumentFile = null;
+    this.selectedDocumentType = 1;
     this.profileImagePreviewUrl = null;
   }
 
@@ -535,6 +554,7 @@ selectDay(day: CalendarDayVm): void {
 
     this.selectedProfileImageFile = null;
     this.selectedDocumentFile = null;
+    this.selectedDocumentType = 1;
     this.profileImagePreviewUrl = null;
     this.isDraggingProfileImage = false;
 
@@ -636,7 +656,7 @@ selectDay(day: CalendarDayVm): void {
     }
 
     if(this.selectedDocumentFile) {
-      uploadCalls.push(this.therapistsApi.uploadTherapistDocument(this.selectedDocumentFile, 1));
+      uploadCalls.push(this.therapistsApi.uploadTherapistDocument(this.selectedDocumentFile, this.selectedDocumentType));
     }
 
     if(uploadCalls.length === 0) {
@@ -664,19 +684,27 @@ selectDay(day: CalendarDayVm): void {
     this.loadProfile();
   }
 
-  getAbsoluteFileUrl(relativePath: string): string {
-    if(!relativePath) 
-      return '';
-    if(relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
-      return relativePath;
-    }
-    return `${environment.apiUrl}${relativePath}`;
+  openExistingDocument(document: TherapistDocumentDto): void {
+    this.therapistsApi.getDocumentFile(document.id).subscribe({
+      next: (blob) => {
+        this.revokeExistingDocumentUrl();
+
+        this.existingDocumentObjectUrl = URL.createObjectURL(blob);
+        this.selectedDocumentUrl = this.sanitizier.bypassSecurityTrustResourceUrl(this.existingDocumentObjectUrl);
+        this.selectedDocumentName = document.fileName;
+      },
+      error: (error) => {
+        console.error('Error opening document:', error);
+        this.toaster.error('Failed to open document.');
+      }
+    });
   }
 
-  openExistingDocument(document: { filePath: string; fileName: string }): void {
-    const url = this.getAbsoluteFileUrl(document.filePath);
-    this.selectedDocumentUrl = this.sanitizier.bypassSecurityTrustResourceUrl(url);
-    this.selectedDocumentName = document.fileName;
+  private revokeExistingDocumentUrl(): void {
+    if (this.existingDocumentObjectUrl) {
+      URL.revokeObjectURL(this.existingDocumentObjectUrl);
+      this.existingDocumentObjectUrl = null;
+    }
   }
 
   openPendingDocument(): void {
@@ -687,6 +715,7 @@ selectDay(day: CalendarDayVm): void {
       URL.revokeObjectURL(this.pendingDocumentObjectUrl);
     }
 
+    this.revokeExistingDocumentUrl();
     this.pendingDocumentObjectUrl = URL.createObjectURL(this.selectedDocumentFile);
     this.selectedDocumentUrl = this.sanitizier.bypassSecurityTrustResourceUrl(this.pendingDocumentObjectUrl);
     this.selectedDocumentName = this.selectedDocumentFile.name;
@@ -739,6 +768,7 @@ selectDay(day: CalendarDayVm): void {
   }
 
   closeDocumentViewer(): void {
+    this.revokeExistingDocumentUrl();
     this.selectedDocumentUrl = null;
     this.selectedDocumentName = null;
   }

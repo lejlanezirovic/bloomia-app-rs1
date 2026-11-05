@@ -7,7 +7,7 @@ using Bloomia.Application.Modules.Users.Queries.GetById;
 
 namespace Bloomia.Application.Modules.Therapists.Queries.GetById
 {
-    public sealed class GetTherapistByIdQueryHandler(IAppDbContext context) : IRequestHandler<GetTherapistByIdQuery, GetTherapistByIdQueryDto>
+    public sealed class GetTherapistByIdQueryHandler(IAppDbContext context, IAppCurrentUser currentUser) : IRequestHandler<GetTherapistByIdQuery, GetTherapistByIdQueryDto>
     {
         public async Task<GetTherapistByIdQueryDto> Handle(GetTherapistByIdQuery request, CancellationToken ct)
         {
@@ -21,6 +21,9 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
 
             if (therapist == null)
                 throw new BloomiaNotFoundException("Therapist not found.");
+
+            var canSeeAllDocuments = currentUser.IsAdmin ||
+                                     (currentUser.IsTherapist && therapist.UserId == currentUser.UserId);
 
             var therapistDto = new GetTherapistByIdQueryDto
             {
@@ -37,12 +40,12 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
                 RatingAvg = therapist.RatingAvg,
                 IsVerified = therapist.IsVerified,
                 Documents = therapist.Documents
+                .Where(d => canSeeAllDocuments || d.IsVisibleToClients)
                 .Select(d => new TherapistDocumentDto
                 {
                     Id = d.Id,
                     DocumentType = d.DocumentType.ToString(),
-                    FileName = d.FileName,
-                    FilePath = d.FilePath
+                    FileName = d.FileName
                 }).ToList(),
                 TherapyTypes = therapist.MyTherapyTypesList
                             .Select(tt => new TherapyTypeDto

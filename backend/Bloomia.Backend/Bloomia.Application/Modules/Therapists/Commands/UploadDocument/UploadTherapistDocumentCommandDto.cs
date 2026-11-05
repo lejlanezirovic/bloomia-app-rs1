@@ -12,6 +12,5 @@ namespace Bloomia.Application.Modules.Therapists.Commands.UploadDocument
         public int DocumentId { get; set; }
         public string DocumentType { get; set; } = string.Empty;
         public string FileName { get; set; } = string.Empty;
-        public string FilePath { get; set; } = string.Empty;
     }
 }

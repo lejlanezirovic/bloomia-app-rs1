@@ -1,11 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { TherapistsApiService } from '../../../api-services/therapists/therapists-api.service';
 import { ReviewsApiService } from '../../../api-services/reviews/reviews-api.service';
 import { AppointmentsApiService } from '../../../api-services/appointments/appointments-api.service';
-import { GetTherapistByIdQueryDto } from '../../../api-services/therapists/therapists-api.models';
+import { GetTherapistByIdQueryDto, TherapistDocumentDto } from '../../../api-services/therapists/therapists-api.models';
 import {
   CreateReviewCommand,
   GetReviewsByTherapistIdQueryDto
@@ -36,7 +36,7 @@ interface CalendarDayVm {
   templateUrl: './therapist-details.component.html',
   styleUrl: './therapist-details.component.scss',
 })
-export class TherapistDetailsComponent extends BaseComponent implements OnInit {
+export class TherapistDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private therapistsApiService = inject(TherapistsApiService);
@@ -64,6 +64,7 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
 
   selectedDocumentUrl: SafeResourceUrl | null = null;
   selectedDocumentName: string | null = null;
+  private documentObjectUrl: string | null = null;
 
 
   isBooking = false;
@@ -454,26 +455,37 @@ export class TherapistDetailsComponent extends BaseComponent implements OnInit {
     return `${environment.apiUrl}${profileImage}`;
   }
 
-  getAbsoluteFileUrl(relativePath: string): string {
-    if(!relativePath) 
-      return '';
-    
-    if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
-      return relativePath;
-    }
+  openDocument(document: TherapistDocumentDto): void {
+    this.therapistsApiService.getDocumentFile(document.id).subscribe({
+      next: (blob) => {
+        this.revokeDocumentUrl();
 
-    return `${environment.apiUrl}${relativePath}`;
-  }
-
-  openDocument(document: { filePath: string; fileName: string }): void {
-    const url = this.getAbsoluteFileUrl(document.filePath);
-    this.selectedDocumentUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    this.selectedDocumentName = document.fileName;
+        this.documentObjectUrl = URL.createObjectURL(blob);
+        this.selectedDocumentUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.documentObjectUrl);
+        this.selectedDocumentName = document.fileName;
+      },
+      error: (err) => {
+        console.error('Error opening document:', err);
+        this.toasterService.error('Failed to open document.');
+      }
+    });
   }
 
   closeDocumentViewer(): void {
+    this.revokeDocumentUrl();
     this.selectedDocumentUrl = null;
     this.selectedDocumentName = null;
+  }
+
+  ngOnDestroy(): void {
+    this.revokeDocumentUrl();
+  }
+
+  private revokeDocumentUrl(): void {
+    if (this.documentObjectUrl) {
+      URL.revokeObjectURL(this.documentObjectUrl);
+      this.documentObjectUrl = null;
+    }
   }
 
   getTherapyTypeLabel(name: string): string {
