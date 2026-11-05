@@ -21,6 +21,10 @@ namespace Bloomia.Application.Modules.Appointments
             return query.Where(x => x.Status != AppointmentStatus.Cancelled && x.ScheduledAtUtc <= endedBefore);
         }
 
+        public static Task<bool> IsClientOfTherapistAsync(this IQueryable<AppointmentEntity> query, int therapistId, int clientId, CancellationToken ct)
+            => query.WhereNotCancelled()
+                    .AnyAsync(x => x.TherapistAvailability.TherapistId == therapistId && x.ClientId == clientId, ct);
+
         public static IQueryable<AppointmentEntity> WhereOverlapping(this IQueryable<AppointmentEntity> query, DateTime startUtc)
         {
             var earliestConflictingStart = startUtc - SessionRules.Duration;

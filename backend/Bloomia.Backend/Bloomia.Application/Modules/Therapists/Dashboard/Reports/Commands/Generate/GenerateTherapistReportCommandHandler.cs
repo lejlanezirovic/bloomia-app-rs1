@@ -38,9 +38,7 @@ namespace Bloomia.Application.Modules.Therapists.Dashboard.Reports.Commands.Gene
                 throw new BloomiaBusinessRuleException("CLIENT", "Client was not found.");
 
             var isTherapistsClient = await ctx.Appointments.AsNoTracking()
-                .WhereNotCancelled()
-                .AnyAsync(x => x.TherapistAvailability.TherapistId == therapist.Id &&
-                               x.ClientId == client.Id, ct);
+                .IsClientOfTherapistAsync(therapist.Id, client.Id, ct);
 
             if (!isTherapistsClient)
                 throw new BloomiaBusinessRuleException("CLIENT_NOT_ASSIGNED",

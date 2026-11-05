@@ -8,7 +8,7 @@ using System.Security.Claims;
 [ApiController]
 public sealed class ClientController(ISender sender) : ControllerBase
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "THERAPIST, ADMIN")]
     [HttpGet("get-by-id/{id:int}")]
     public async Task<GetClientByIdQueryDTO> GetById(int id, CancellationToken ct)
     {
@@ -35,7 +35,7 @@ public sealed class ClientController(ISender sender) : ControllerBase
 
     }
 
-    [AllowAnonymous]//promjeniti u authorize role admin
+    [Authorize(Roles = "ADMIN")]
     [HttpGet("search-by-fullname")]
     public async Task<PageResult<ListClientsQueryDto>> GetAllClients([FromQuery] ListClientsQuery request, CancellationToken ct)
     {

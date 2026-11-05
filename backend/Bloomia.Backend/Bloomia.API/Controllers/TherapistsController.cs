@@ -99,7 +99,7 @@ namespace Bloomia.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GetTherapistByIdQueryDto> GetById(int id, CancellationToken ct)
         {
             var user = await sender.Send(new GetTherapistByIdQuery { Id = id }, ct);

@@ -24,7 +24,7 @@ namespace Bloomia.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "ADMIN")]
         public async Task<PageResult<ListUsersQueryDto>> List([FromQuery] ListUsersQuery query, CancellationToken ct)
         {
             var result = await sender.Send(query, ct);
@@ -32,7 +32,7 @@ namespace Bloomia.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GetUserByIdQueryDto> GetById(int id, CancellationToken ct)
         {
             var user = await sender.Send(new GetUserByIdQuery { Id = id }, ct);
