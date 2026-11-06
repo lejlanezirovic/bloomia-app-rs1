@@ -15,8 +15,8 @@ namespace Bloomia.Infrastructure.Database.Configurations
 
             builder.HasKey(t => t.Id);
 
-            // Property preimenovan isVerified -> IsVerified (PascalCase konvencija);
-            // naziv kolone ostaje isti pa nije potrebna nova EF migracija.
+            // Property renamed isVerified -> IsVerified (PascalCase convention);
+            // the column name stays the same, so no new EF migration is needed.
             builder.Property(x => x.IsVerified).HasColumnName("isVerified");
 
             builder.HasMany(x=>x.Documents)

@@ -5,22 +5,22 @@ using System.Text.RegularExpressions;
 namespace Bloomia.Application.Common;
 
 /// <summary>
-/// Pretvara slobodan korisnicki unos (npr. "anksioznost san") u validan SQL Server
-/// full-text CONTAINS izraz sa prefiksnom pretragom po svakoj rijeci
-/// (npr. "\"anksioznost*\" OR \"san*\"").
-/// Koristi se zajedno sa EF.Functions.Contains(kolona, izraz) nad kolonama koje
-/// imaju kreiran FULLTEXT INDEX (vidi Bloomia.Infrastructure/Database/Scripts).
+/// Converts free user input (e.g. "anxiety sleep") into a valid SQL Server
+/// full-text CONTAINS expression with a prefix search on every word
+/// (e.g. "\"anxiety*\" OR \"sleep*\"").
+/// Used together with EF.Functions.Contains(column, expression) on columns that
+/// have a FULLTEXT INDEX (see Bloomia.Infrastructure/Database/Scripts).
 /// </summary>
 public static class FullTextSearchHelper
 {
-    /// <summary>Vraca null ako nakon ciscenja nema nijedne validne rijeci za pretragu.</summary>
+    /// <summary>Returns null if no valid search word remains after cleaning.</summary>
     public static string? BuildContainsExpression(string? rawSearch)
     {
         if (string.IsNullOrWhiteSpace(rawSearch))
             return null;
 
-        // Full-text CONTAINS ima svoju sintaksu (", *, AND/OR...), zato uklanjamo
-        // Remove all characters that are not letters or numbers from the user's input.
+        // Full-text CONTAINS has its own syntax (", *, AND/OR...), so remove all
+        // characters that are not letters or numbers from the user's input.
         var words = rawSearch
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
             .Select(w => Regex.Replace(w, "[^\\p{L}\\p{Nd}]", ""))

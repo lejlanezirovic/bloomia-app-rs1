@@ -10,9 +10,6 @@ import { RegisterNotificationTokenCommand } from "./notifications-api.models";
 export class NotificationTokenApiService{
     private baseUrl=`${environment.apiUrl}/api/NotificationToken`;
     private http=inject(HttpClient);
-   // constructor(private httpClient:HttpClient){
-
- //   }
 
     registerNotificationToken(command:RegisterNotificationTokenCommand){
 

@@ -41,6 +41,6 @@ export class SelfTestsComponent implements OnInit {
   }
   showSelfTestByid(id:number){
       this.router.navigate(['client/self-tests/self-test-details',id]);
-  }//ne moze se injektovati druga komponenta. samo navigacija. 
+  }
 }
 

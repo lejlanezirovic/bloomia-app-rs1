@@ -6,12 +6,12 @@
     <div class="questions">
         <div class="header">
              <p class="title">Journal title:</p>
-         <input class="title-input" type="text" placeholder="unesite naslov journala." (input)="onTitleInput($event)">
+         <input class="title-input" type="text" placeholder="Enter the journal title." (input)="onTitleInput($event)">
         </div>
         
          <div *ngFor="let q of questions.listOfQuestions"  class="question">
              <p>{{q.question}}</p>
-             <input type="text" placeholder="unesite svoj odgovor." class="answer-input" (input)="onAnswerInput(q.questionId,$event)" [disabled]="!isInputValid">
+             <input type="text" placeholder="Enter your answer." class="answer-input" (input)="onAnswerInput(q.questionId,$event)" [disabled]="!isInputValid">
         </div>
 
         <button class="button" (click)="submitJournal()" >Submit </button>

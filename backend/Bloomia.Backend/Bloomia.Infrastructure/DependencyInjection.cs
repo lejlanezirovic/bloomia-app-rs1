@@ -40,7 +40,7 @@ public static class DependencyInjection
         services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<DatabaseContext>());
 
         // Identity hasher
-        services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();//promjene
+        services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 
         // Token service (reads JwtOptions via IOptions<JwtOptions>)
         services.AddTransient<IJwtTokenService, JwtTokenService>();

@@ -22,7 +22,7 @@ export class JournalsComponent implements OnInit {
   ngOnInit(): void {
     this.showJournalQuestions();
   }
-  //1. getamo pitanja
+  // 1. Load the questions
   showJournalQuestions(){
     this.isLoading=true;
     this.errorMessage=null;

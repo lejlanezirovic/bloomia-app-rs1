@@ -56,7 +56,7 @@ export class SubmitSelfTestComponent implements OnInit {
       if(rating>=1 && rating<=5){
         this.answersMap[questionId]=rating;
       }
-  }//cuvamo stanje
+  } // Stores the rating for each question
 
   submitSelfTest(){
     if(!this.selfTest)
@@ -109,9 +109,4 @@ export class SubmitSelfTestComponent implements OnInit {
 
     return allAnswered && this.clientNoteControl.valid;
   }
-//e sada trebamo uzeti (on change maybe na inputu?) sve ratinge iz inputa 
-//moram kreirari answerDto preuzeti jedan po jedan rating i q_id
-
-//1. trebamo mapirati qid i rating
-//slusati i reagovati na event -> kad neko upise ocjenu onda mapirati
 }

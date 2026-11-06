@@ -13,8 +13,8 @@ export class JournalDetailsComponent implements OnInit {
   private apiService=inject(JournalsApiService);
   private route=inject(ActivatedRoute);
 
-//1.zelimo mapirati q_id i answer tipa text
-//2.reagujemo na input
+  // 1. Map each question id to its text answer
+  // 2. React to input changes
 
   questions:ListQuestionsQueryDto={
         listOfQuestions:[]
@@ -53,7 +53,7 @@ export class JournalDetailsComponent implements OnInit {
       this.answerMap[questionId]=answerText;
     }
     else{
-      this.errorMessage="Niste unijeli validan odgovor.";
+      this.errorMessage="You have not entered a valid answer.";
     }
   }
   onTitleInput(event:Event){
@@ -64,7 +64,7 @@ export class JournalDetailsComponent implements OnInit {
   }
   submitJournal(){
     if(!this.journalTitle || this.journalTitle.length===0){
-       this.errorMessage = 'Unesite naslov journala';
+       this.errorMessage = 'Please enter the journal title.';
        return;
     }
     

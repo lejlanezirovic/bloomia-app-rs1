@@ -26,17 +26,6 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register
             RuleFor(x => x.Lastname).NotEmpty().WithMessage("Lastname is required").MaximumLength(50);
 
             RuleFor(x => x.Username).NotEmpty().WithMessage("Username is required").MaximumLength(30);
-            //htjela bih za gender da stoji MALE FEMALE OTHER kao placeholder
-            //RuleFor(x=>x.GenderName).NotEmpty().WithMessage("Gender field is required");
-
-            //RuleFor(x => x.LocationCityName).NotEmpty().WithMessage("Location city is required");
-
-            //RuleFor(x => x.LocationCountryName).NotEmpty().WithMessage("Location country is required");
-
-            //RuleFor(x => x.LanguageName).NotEmpty().WithMessage("Language is required");
-          
-           //exposati exceptione
-
         }
     }
 }

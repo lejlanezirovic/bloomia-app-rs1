@@ -60,7 +60,7 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
             context.Therapists.Add(newTherapist);
             await context.SaveChangesAsync(ct);
 
-            //generisanje JWT tokena
+            // Issue JWT tokens
             newUser = await context.Users
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Id == newUser.Id, ct);

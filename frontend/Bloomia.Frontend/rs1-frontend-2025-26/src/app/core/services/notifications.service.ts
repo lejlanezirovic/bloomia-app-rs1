@@ -35,10 +35,6 @@ export class NotificationsService{
         serviceWorkerRegistration: registration  //we want the token to be tied to the service worker
       });//this generates the FCM token for this specific browser; this token is the address that journal reminder notifications will later be sent to
 
-    // if (!token) {
-      // console.warn('No FCM token available.');
-    //   return null;
-    //  }
       if(token){
           console.log('FCM token:', token);
           this.notificationTokenApiService.registerNotificationToken({

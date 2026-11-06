@@ -148,12 +148,6 @@ export class ListTherapistsComponent extends
     });
   }
 
-  //messageClick(therapistId:number){
-    //this.router.navigate(['client/direct-chats'], {
-      //queryParams:{therapistId}
-    //});
-  //}
-
   private updateNameSuggestions(items: ListTherapistsQueryDto[]): void {
     const newNames = items.map(t => t.fullname).filter((n): n is string => !!n);
     const merged = new Set([...this.nameSuggestions, ...newNames]);

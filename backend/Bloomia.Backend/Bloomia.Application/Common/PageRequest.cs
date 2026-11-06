@@ -14,9 +14,9 @@ public sealed class PageRequest
     [JsonIgnore]
     public int SkipCount => (Page - 1) * PageSize;
 
-    /// <summary>Naziv kolone po kojoj se sortira (npr. "title", "rating"). Null = default sortiranje.</summary>
+    /// <summary>Name of the column to sort by (e.g. "title", "rating"). Null = default sorting.</summary>
     public string? SortBy { get; init; }
 
-    /// <summary>true = opadajuce (Z-A, najnovije prvo); false = rastuce (A-Z).</summary>
+    /// <summary>true = descending (Z-A, newest first); false = ascending (A-Z).</summary>
     public bool SortDescending { get; init; } = false;
 }

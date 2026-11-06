@@ -54,7 +54,7 @@ public sealed class MarketExceptionHandler(
             ctx.Response.ContentType= "application/json";
             var json=JsonSerializer.Serialize(err);
             await ctx.Response.WriteAsync(json);
-            return true;//ovo znaci uspjesno odradjen exception ne salji dalje
+            return true; // Exception handled, do not pass it to other handlers
         }
         ctx.Response.StatusCode = ex switch
         {

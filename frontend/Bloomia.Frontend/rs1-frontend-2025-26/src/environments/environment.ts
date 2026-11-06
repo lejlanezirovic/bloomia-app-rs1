@@ -11,7 +11,7 @@ export const environment = {
     appId: "1:681467025172:web:fe1cd56423784a18145401",
     measurementId: "G-WK1TEJ1ZJ8"
   },
-  //dodan public vapid key odnosno web push kljuc
-  //vazan jer kada angular browser trazi FCM token mora dokazati da je aplikacija povezana sa firebase projektom i legitimna
+  // Public VAPID (web push) key.
+  // Required because when the browser requests an FCM token, it must prove the app belongs to the Firebase project and is legitimate.
   vapidKey:'BKMs_kQTxBeeaWNpjo-pWiJ8LidoaE7NNhAsIpNeR3bs6SeqTInVgJAaeHi12q5SDISLinX0Cs6S4g0xdB1R3UE'
 };

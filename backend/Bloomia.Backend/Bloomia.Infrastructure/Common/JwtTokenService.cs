@@ -44,7 +44,6 @@ public sealed class JwtTokenService : IJwtTokenService
             new(JwtRegisteredClaimNames.Aud, _jwt.Audience)
         };
 
-        //dodala
         if(user.Role.RoleName.Equals("Therapist", StringComparison.OrdinalIgnoreCase))
         {
             var therapist = _context.Therapists.FirstOrDefault(t => t.UserId == user.Id);
