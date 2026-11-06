@@ -16,19 +16,20 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [myAuthGuard],
+    data: myAuthData({ requireAuth: true, requireAdmin: true }),
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'client',
     canActivate: [myAuthGuard],
-    data: myAuthData({ requireAuth: true }),// bilo ko logiran
+    data: myAuthData({ requireAuth: true, requireClient: true }),
     loadChildren: () =>
       import('./modules/client/client-module').then(m => m.ClientModule)
   },
   {
     path: 'therapist',
     canActivate: [myAuthGuard],
-    data: myAuthData({ requireAuth: true }),// bilo ko logiran
+    data: myAuthData({ requireAuth: true, requireTherapist: true }),
     loadChildren: () =>
       import('./modules/therapist/therapist-module').then(m => m.TherapistModule)
   },

@@ -7,10 +7,12 @@ export const myAuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const currentUser = inject(CurrentUserService);
   const router = inject(Router);
 
-  const requireAuth = route.data['requireAuth'] === true;
-  const requireAdmin = route.data['requireAdmin'] === true;
-  const requireClient = route.data['requireClient'] === true;
-  const requireTherapist = route.data['requireTherapist'] === true;
+  const auth = (route.data['auth'] ?? {}) as MyAuthRouteData;
+
+  const requireAuth = auth.requireAuth === true;
+  const requireAdmin = auth.requireAdmin === true;
+  const requireClient = auth.requireClient === true;
+  const requireTherapist = auth.requireTherapist === true;
 
   const isAuth = currentUser.isAuthenticated();
 
