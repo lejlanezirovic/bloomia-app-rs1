@@ -27,6 +27,8 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Admin
             if (adminRole == null)
                 throw new BloomiaNotFoundException("Role 'ADMIN' does not exist in the database.");
 
+            await using var transaction = await context.Database.BeginTransactionAsync(ct);
+
             //create the UserEntity
             var newUser = new UserEntity
             {
@@ -74,6 +76,8 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Admin
 
             context.RefreshTokens.Add(refreshToken);
             await context.SaveChangesAsync(ct);
+
+            await transaction.CommitAsync(ct);
 
             var adminDto = new AdminRegisterCommandDto
             {

@@ -24,7 +24,9 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register
             var clientRole =await db.Roles.FirstOrDefaultAsync(x => x.RoleName == "CLIENT", cancellationToken);
             if (clientRole == null)
                 throw new BloomiaConflictException("Role does not exist in the database.");
-           
+
+            await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+
             var newUser = new UserEntity
             {
                 Firstname = request.Firstname,
@@ -64,6 +66,8 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register
             };
             db.RefreshTokens.Add(refreshTokenEnt);
             await db.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
 
             var newUserDto = new UserRegisterCommandDto
             {

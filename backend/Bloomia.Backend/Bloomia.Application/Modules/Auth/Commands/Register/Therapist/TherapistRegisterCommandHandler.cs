@@ -28,6 +28,8 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
             if (therapistRole == null)
                 throw new BloomiaNotFoundException("Role 'THERAPIST' does not exist in the database.");
 
+            await using var transaction = await context.Database.BeginTransactionAsync(ct);
+
             var newUser = new UserEntity
             {
                 Firstname = request.Firstname,
@@ -77,6 +79,8 @@ namespace Bloomia.Application.Modules.Auth.Commands.Register.Therapist
 
             context.RefreshTokens.Add(refreshToken);
             await context.SaveChangesAsync(ct);
+
+            await transaction.CommitAsync(ct);
 
             var therapistDto = new TherapistRegisterCommandDto
             {
