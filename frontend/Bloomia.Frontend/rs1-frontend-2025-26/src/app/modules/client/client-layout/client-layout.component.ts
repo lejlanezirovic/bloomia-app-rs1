@@ -9,12 +9,22 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class ClientLayoutComponent {
 
+  menuOpen = false;
+
   constructor(private router:Router){
    this.router.events.subscribe((event)=>{
       if(event instanceof NavigationEnd){
         console.log('Current route', event.url);
       }
    }) ;
+  }
+
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu(): void {
+    this.menuOpen = false;
   }
 
   onLogout(): void {
