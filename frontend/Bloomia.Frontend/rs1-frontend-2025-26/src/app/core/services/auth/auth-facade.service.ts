@@ -106,11 +106,11 @@ export class AuthFacadeService {
   }
 
   /**
-   * Utility for guards/interceptors – clears auth state and redirects to /login.
+   * Utility for guards/interceptors – clears auth state and redirects to /auth/login.
    */
   redirectToLogin(): void {
     this.clearUserState();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   // =========================================================

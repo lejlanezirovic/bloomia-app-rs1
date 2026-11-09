@@ -26,7 +26,7 @@ export class CurrentUserService {
     console.log('getDefaultRoute: user.role =', user?.role);
     console.log('getDefaultRoute: role.toUpperCase() =', user?.role?.toUpperCase());
 
-    if (!user) return '/login';
+    if (!user) return '/auth/login';
 
 
     if(user.role.toUpperCase()==='ADMIN') return '/admin';
