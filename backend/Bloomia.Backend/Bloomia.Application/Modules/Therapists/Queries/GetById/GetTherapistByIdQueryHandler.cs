@@ -22,8 +22,11 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
             if (therapist == null)
                 throw new BloomiaNotFoundException("Therapist not found.");
 
-            var canSeeAllDocuments = currentUser.IsAdmin ||
-                                     (currentUser.IsTherapist && therapist.UserId == currentUser.UserId);
+            var isAdminOrOwner = currentUser.IsAdmin ||
+                                 (currentUser.IsTherapist && therapist.UserId == currentUser.UserId);
+
+            if (!therapist.IsVerified && !isAdminOrOwner)
+                throw new BloomiaNotFoundException("Therapist not found.");
 
             var therapistDto = new GetTherapistByIdQueryDto
             {
@@ -40,7 +43,7 @@ namespace Bloomia.Application.Modules.Therapists.Queries.GetById
                 RatingAvg = therapist.RatingAvg,
                 IsVerified = therapist.IsVerified,
                 Documents = therapist.Documents
-                .Where(d => canSeeAllDocuments || d.IsVisibleToClients)
+                .Where(d => isAdminOrOwner || d.IsVisibleToClients)
                 .Select(d => new TherapistDocumentDto
                 {
                     Id = d.Id,

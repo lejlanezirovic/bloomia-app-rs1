@@ -19,7 +19,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Command.Add
                 throw new BloomiaNotFoundException("Client not found!");
             }
             var therapist=await context.Therapists.Include(x=>x.User).Include(x=>x.MyTherapyTypesList).ThenInclude(x=>x.TherapyType)
-                            .Where(x=>x.Id==request.TherapistId).FirstOrDefaultAsync(cancellationToken);
+                            .Where(x=>x.Id==request.TherapistId && x.IsVerified).FirstOrDefaultAsync(cancellationToken);
             if(therapist==null)
             {
                 throw new BloomiaNotFoundException("Therapist not found!");

@@ -25,7 +25,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetByName
                 var savedTherapist = await context.SavedTherapists.AsNoTracking()
                .Include(x => x.Therapist).ThenInclude(x => x.User)
                .Include(x => x.Therapist).ThenInclude(x => x.MyTherapyTypesList).ThenInclude(x => x.TherapyType)
-               .Include(x => x.Client).Where(x => x.ClientId == client.Id && (x.Therapist.User.Firstname.ToLower()
+               .Include(x => x.Client).Where(x => x.ClientId == client.Id && x.Therapist.IsVerified && (x.Therapist.User.Firstname.ToLower()
                .Contains(filter) || x.Therapist.User.Lastname.ToLower().Contains(filter)))
                .Select(x => new GetSavedTherapistByNameCommandDto
                {
@@ -54,7 +54,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.GetByName
                 var allSavedTherapists = await context.SavedTherapists.AsNoTracking()
                 .Include(x => x.Therapist).ThenInclude(x => x.User)
                 .Include(x => x.Therapist).ThenInclude(x => x.MyTherapyTypesList).ThenInclude(x => x.TherapyType)
-                .Include(x => x.Client).Where(x => x.ClientId == client.Id)
+                .Include(x => x.Client).Where(x => x.ClientId == client.Id && x.Therapist.IsVerified)
                 .Select(x => new GetSavedTherapistByNameCommandDto
                 {
                     TherapistId = x.TherapistId,

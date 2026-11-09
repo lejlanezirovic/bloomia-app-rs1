@@ -15,7 +15,7 @@ namespace Bloomia.Application.Modules.SavedTherapists.Queries.List
             {
                 throw new BloomiaNotFoundException("Client not found, you need to log in or register!");
             }
-            var query = context.SavedTherapists.Where(x => x.ClientId == client.Id)
+            var query = context.SavedTherapists.Where(x => x.ClientId == client.Id && x.Therapist.IsVerified)
                           .Select(x => new ListSavedTherapistInfoDto
                           {
                               TherapistId = x.Therapist.Id,
